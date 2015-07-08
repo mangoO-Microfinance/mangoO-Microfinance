@@ -53,7 +53,7 @@ header ('refresh:7; url=index.php');
 			<p>Luweero Diocese Savings and Credit Co-operative Limited (SACCO)<br/>Luweero, Uganda</p>
 			<h1>Logo designed using:</h1>
 			<p><a href="https://openclipart.org/detail/131485/mango-fruit-by-netalloy">"Mango Fruit by Netalloy"</a></p>	
-			<h1>To get more information or join the mangoO project <a href="https://github.com/mangoO-Microfinance/mangoO-stable">click here...</a></h1>
+			<h1>To get the latest version or become involved, find the mangoO project on <a href="https://github.com/mangoO-Microfinance/mangoO-stable">GitHub</a>.</h1>
 		</div>
 	</body>
 </html>
