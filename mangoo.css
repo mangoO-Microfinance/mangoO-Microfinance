@@ -1,0 +1,254 @@
+/* GENERAL SPECIFICATIONS */
+html { 
+	box-sizing: border-box;
+}
+
+* { 
+	margin:0; 
+	font: 14px arial, helvetica, sans-serif;
+	border-collapse:collapse;
+}
+
+*, ::before, ::after {
+	box-sizing: inherit;
+}
+
+body {
+	background-color:#e0e4cc;
+}
+
+/* HYPERLINK ANCHORS */
+a {
+	text-decoration: none; 
+	color: #000;
+}
+a:hover {
+	color:#69d2e7;
+	font-weight:bold; 
+}
+
+/* INPUT FIELDS */
+* input[type=text], * input[type=number], * input[type=password], * select {
+	width:160px;
+	height:24px;
+}
+input#delete{
+    background-color: #ccc url('ico/delete.png') no-repeat top left;
+    padding-left: 16px;
+    height: 16px;
+}
+
+/* MENU: Header */
+#menu_header {
+	line-height:90px; 
+	margin-bottom:-1.75em;
+}
+
+/* MENU: Tabs */
+#menu_tabs ul {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 0 1em;
+}
+#menu_tabs li {
+	float: left;
+	border-bottom-width: 0;
+	margin: 0 2em 0 0;
+}
+#menu_tabs a {
+	text-decoration: none;
+	display: block;
+	background-color: #6E6E6E;
+	padding: .5em .5em;
+	color:#fff;
+	width: 8em;
+	text-align: center;
+}
+#menu_tabs a:hover {
+	background-color: #f38630;
+}
+#menu_tabs #tab_selected {
+	background-color: #2e2e2e;
+}
+#menu_tabs #tab_selected a {
+	color: #fa6900;
+	font-weight: bold;
+	background-color: #2e2e2e;
+}
+
+/* MENU: Logout Button */
+#menu_logout {
+	float:right;
+	width:8em;
+	margin:0;
+	padding:.5em;
+	background-color:#f38630;
+	color:#fff;
+}
+#menu_logout a {
+	color:#fff;
+}
+#menu_logout ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+	text-align:center;
+}
+#menu_logout ul li ul {
+	margin-top:1em;
+	display:none;
+}
+#menu_logout ul li:hover ul {
+	display:block;
+}
+#menu_logout ul li ul li {
+	margin-top:.5em;
+}
+
+/* MENU: Main Part */
+#menu_main {
+	height:3em;
+	clear: both;
+	padding: .2em 1em;
+	line-height:2.75em;
+	vertical-align:middle;
+	background-color: #2e2e2e;
+	margin-bottom: 2.5em;
+}
+#menu_main a {
+	display:inline;
+	margin: 0;
+	padding: .2em 1em;
+	border-right: 1px dashed white;
+	font-size:1.1em;
+	font-weight:bold;
+	text-decoration:none;
+	color: #fff;
+}
+#menu_main a:last-child {
+	border:0;
+}
+#menu_main a:hover {
+	color:#fff;
+	background-color:#a7dbd8;
+}
+#menu_main #item_selected {
+	color: #69d2e7;
+}
+#menu_main #item_selected  a{
+	color: #69d2e7;
+	background-color: #2e2e2e;
+}
+
+/* MENU: Selection Bar */
+#menu_selection{
+	width:100%;
+	height:3em;
+	margin-top: -2.5em;
+	margin-bottom: 2em;
+	padding: 0.5em;
+	text-align:center;
+	background-color:#a7dbd8;
+}
+
+/* CONTENT AREA */
+.content_center {
+	width:75%; 
+	margin:auto; 
+	text-align:center;
+}
+.content_left {
+	width:40%;
+	margin: auto;
+	float:left; 
+	text-align:center;
+}
+.content_right {
+	width:60%; 
+	margin:auto;
+	float:right; 
+	text-align:center;
+	border-left: 1px white dashed;
+}
+#content_hidden {
+	background:#a7dbd8; 
+	padding:3%;
+	margin-top:1em;
+	margin-bottom:2em;
+	display:none;
+}
+
+/* STANDARD TABLE */
+#tb_table {
+	width:90%;
+	margin:auto;
+	margin-bottom:3em;
+}
+#tb_table td, #tb_table th  {
+	padding:3px;
+	text-align:center;
+	border:1px solid #2e2e2e;
+	background-color: #e0e4cc;
+}
+#tb_table th {
+	padding-top:1px;
+	padding-bottom:1px;
+	line-height:20px;
+	font-weight:bold;
+	background-color:#f38630;
+	color:#fff;
+}
+
+#tb_table th.title, #tb_table th.title a {
+	font-size:15px;
+	font-weight:bold;
+	line-height:30px;
+	background-color:#2e2e2e; 
+	color:#fff;
+}
+
+#tb_table  tr.alt td {
+	background-color:#fff;
+}
+#tb_table  tr.balance td {
+	background-color:#a7dbd8;
+	font-weight:bold;
+}
+
+/* TABLE FOR INPUT FIELDS */
+#tb_fields{
+	width:95%;
+	margin:auto;
+	margin-bottom:1em;
+	border-collapse:separate;
+	border-spacing: 1em 1.25em;
+}
+#tb_fields td, #tb_fields th {
+	text-align:left;
+}
+#tb_fields td.center {
+	text-align:center;
+	padding-top:3%;
+}
+
+/* TEXT-FORMATTING */
+.heading, .heading_narrow {
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:1.5em;
+	text-align:center;
+	font-weight:bold;
+	font-size:1.5em;
+	color:#fa6900;	
+}
+.heading_narrow {
+	margin-bottom: .5em;
+}
+.warn {
+	font-weight:bold;
+	color:red;
+}
+.export {
+	margin-bottom:2em;
+	text-align:center;
+}
