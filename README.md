@@ -5,3 +5,4 @@ The development was funded by the Christian Services International (Stuttgart, G
 
 ## Installation
 As mangoO is fully based on web technology, it requires a PHP-capable webserver and a MySQL database. For testing purposes, using XAMPP is recommended.
+To connect to the test database (mangoo.sql), the required configuration is as follows. Server: 127.0.0.1 ; Database user: root ; Database password: '' (password not set). This is also the default configuration in this version of mangoO.
