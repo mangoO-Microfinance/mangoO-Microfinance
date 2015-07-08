@@ -23,7 +23,7 @@ header ('refresh:7; url=index.php');
 		<div class="content_center" style="margin-top:2em;">
 			<img src="ico/mangoo_l.png" />
 			<h1>mangoO Microfinance Management is released under the</h1>
-			<p>GNU General Public Licence (GNU GPLv3)</p>
+			<p><a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="new">GNU General Public Licence (GNU GPLv3)</a></p>
 			<h1>Version:</h1>
 			<p>0.10 (26.06.2015)</p>
 			<h1>Developer:</h1>
@@ -53,7 +53,7 @@ header ('refresh:7; url=index.php');
 			<p>Luweero Diocese Savings and Credit Co-operative Limited (SACCO)<br/>Luweero, Uganda</p>
 			<h1>Logo designed using:</h1>
 			<p><a href="https://openclipart.org/detail/131485/mango-fruit-by-netalloy">"Mango Fruit by Netalloy"</a></p>	
-			<h1>To get more information or join the mangoO project <a href="http://www.sourceforge.com">click here...</a></h1>
+			<h1>To get more information or join the mangoO project <a href="https://github.com/mangoO-Microfinance/mangoO-stable">click here...</a></h1>
 		</div>
 	</body>
 </html>
