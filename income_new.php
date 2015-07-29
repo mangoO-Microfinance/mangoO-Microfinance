@@ -29,7 +29,7 @@
 	$lastDay = mktime(0, 0, 0, ($cur_month+1), 0, $cur_year);
 		
 	//Select current incomes from INCOMES
-	$sql_inccur = "SELECT * FROM incomes, inctype, customer WHERE incomes.inctype_id = inctype.inctype_id AND incomes.cust_id = customer.cust_id AND inc_date BETWEEN $firstDay AND $lastDay ORDER BY inc_date, incomes.cust_id";
+	$sql_inccur = "SELECT * FROM incomes, inctype, customer WHERE incomes.inctype_id = inctype.inctype_id AND incomes.cust_id = customer.cust_id AND inc_date BETWEEN $firstDay AND $lastDay ORDER BY inc_date, inc_receipt, incomes.cust_id";
 	$query_inccur = mysql_query($sql_inccur);
 	check_sql($query_inccur);
 	

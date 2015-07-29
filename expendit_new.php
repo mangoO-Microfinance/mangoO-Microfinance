@@ -30,7 +30,7 @@
 	$lastDay = mktime(0, 0, 0, ($cur_month+1), 0, $cur_year);
 			
 	//Select current expenditures from EXPENDITURES
-	$sql_expcur = "SELECT * FROM expenditures, exptype WHERE expenditures.exptype_id = exptype.exptype_id AND exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
+	$sql_expcur = "SELECT * FROM expenditures, exptype WHERE expenditures.exptype_id = exptype.exptype_id AND exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date, exp_voucher";
 	$query_expcur = mysql_query($sql_expcur);
 	check_sql($query_expcur);
 	
