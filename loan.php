@@ -58,7 +58,6 @@
 					$ltrans_principaldue = $loan_principaldue;
 					$ltrans_interestdue = $loan_interestdue;
 				}
-				
 				$ltrans_due = $ltrans_due + 2678400;	/* Add seconds for 31 days */
 				$e++;
 			}
@@ -215,10 +214,21 @@
 	$guarantors = array();
 	while ($row_guarant = mysql_fetch_assoc($query_guarant)) $guarantors[] = $row_guarant;
 	
+	//Select Securities from SECURITIES and get file paths for securities
+	$sql_secur = "SELECT * FROM securities WHERE loan_id = $_SESSION[loan_id]";
+	$query_secur = mysql_query($sql_secur);
+	check_sql($query_secur);
+	$securities = array();
+	while ($row_secur = mysql_fetch_assoc($query_secur)) $securities[] = $row_secur;
+	foreach ($securities as $s){
+		if ($s['sec_no'] == 1) $sec_path1 = $s['sec_path'];
+		elseif ($s['sec_no'] == 2) $sec_path2 = $s['sec_path'];
+	}
+	
 	//Get Savings Balance
 	$sav_balance = sav_balance();
 	
-	//Make array for exporting data
+	//Prepare array data export
 	$ltrans_exp_date = date("Y-m-d",time());
 	$_SESSION['ltrans_export'] = array();
 	$_SESSION['ltrans_exp_title'] = $_SESSION['cust_id'].'_loan_'.$ltrans_exp_date;
@@ -331,9 +341,21 @@
 					</tr>
 					<tr>
 						<td>Secur. 1:</td>
-						<td><input type="text" name="loan_sec1" disabled="disabled" value="<?PHP echo $result_loan['loan_sec1'] ?>" /></td>
+						<td>
+							<?PHP 
+							if (isset($sec_path1)) echo '<a href="'.$sec_path1.'" target=_blank>';
+							echo $result_loan['loan_sec1'];
+							if (isset($sec_path1)) echo '</a>';				
+							?>
+						</td>
 						<td>Secur. 2:</td>
-						<td><input type="text" name="loan_sec2" disabled="disabled" value="<?PHP echo $result_loan['loan_sec2'] ?>" /></td>
+						<td>
+							<?PHP
+							if (isset($sec_path2)) echo '<a href="'.$sec_path2.'" target=_blank>';
+							echo $result_loan['loan_sec2'];
+							if (isset($sec_path2)) echo '</a>';
+							?>
+						</td>
 					</tr>
 					<tr>
 						<td>Guarant.1:</td>
@@ -497,7 +519,7 @@
 				$_SESSION['p_balance'] = $p_due - $p_paid;					
 				$_SESSION['i_balance'] = $i_due - $i_paid;					
 				$_SESSION['balance'] = $p_due - $p_paid + $i_due - $i_paid;					
-				if ($_SESSION['interest_sum'] == 0) $_SESSION['interest_sum'] = $_SESSION['i_balance'];
+				if (isset($_SESSION['interest_sum']) AND $_SESSION['interest_sum'] == 0) $_SESSION['interest_sum'] = $_SESSION['i_balance'];
 				?>
 				
 				<tr class="balance">

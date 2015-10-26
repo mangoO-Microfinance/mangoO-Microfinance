@@ -65,7 +65,7 @@
 		check_sql($query_loanno);
 		$numberofloans = array();
 		while ($row_loanno = mysql_fetch_array($query_loanno)) $numberofloans[] = $row_loanno;
-		$loan_no = 'L '.$_SESSION['cust_id'].'-'.(count($numberofloans) + 1);
+		$loan_no = 'L-'.$_SESSION['cust_id'].'-'.(count($numberofloans) + 1);
 				
 		//Sanitize user input
 		$loan_date = strtotime(sanitize($_POST['loan_date']));
@@ -93,13 +93,23 @@
 		$query_insert_loan = mysql_query($sql_insert_loan);
 		check_sql($query_insert_loan);
 		
+		//Retrieve loan_id and loan_no of newly created loan from LOANS. Pass securities to SESSION variable.
+		$sql_newloanid = "SELECT loan_id, loan_no FROM loans WHERE cust_id = '$_SESSION[cust_id]' ORDER BY loan_id DESC LIMIT 1";
+		$query_newloanid = mysql_query($sql_newloanid);
+		check_sql($query_newloanid);
+		$result_newloanid = mysql_fetch_assoc($query_newloanid);
+		$_SESSION['loan_id'] = $result_newloanid['loan_id'];
+		$_SESSION['loan_no'] = $result_newloanid['loan_no'];
+		$_SESSION['loan_sec1'] = $loan_sec1;
+		$_SESSION['loan_sec2'] = $loan_sec2;
+		
 		//Insert Loan Application Fee into INCOMES
 		$sql_inc_laf = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '7', '$loan_appfee', '$loan_date', '$loan_appfee_receipt', $timestamp, '$_SESSION[log_id]')";
 		$query_inc_laf = mysql_query($sql_inc_laf);
 		check_sql($query_inc_laf);
 		
-		//Refer to CUSTOMER
-		header('Location: customer.php?cust='.$_SESSION['cust_id']);
+		//Refer to LOAN_SEC.PHP
+		header('Location: loan_sec.php');
 	}
 ?>
 
@@ -248,7 +258,7 @@
 				
 					<tr>
 						<td class="center" colspan="4">
-							<input type="submit" name="newloan" value="New Loan" />
+							<input type="submit" name="newloan" value="Continue" />
 						</td>
 					</tr>
 				

@@ -273,8 +273,8 @@
 							else $visibility = 'none';
 					?>
 				</table>
-				<input type="submit" name="update" value="Update" tabindex="13" />
-				<input type="button" name="renew" value="Renew" onclick="setVisibility('content_hidden', 'block');" />
+				<input type="submit" name="update" value="Update Data" tabindex="13" />
+				<input type="button" name="membership" value="Membership" onclick="setVisibility('content_hidden', 'block');" />
 			</form>
 			
 			<!-- MIDDLE PART: Renew Membership -->
@@ -384,7 +384,7 @@
 					$loan_balance = $loan_balance - $loan_paid;
 					
 					tr_colored($color);
-					echo '	<td><a href="loan.php?lid='.$row_loan['loan_id'].'" class="sacco">'.$row_loan['loan_no'].'</a></td>
+					echo '	<td><a href="loan.php?lid='.$row_loan['loan_id'].'">'.$row_loan['loan_no'].'</a></td>
 									<td>'.$row_loan['loanstatus_status'].'</td>
 									<td>'.number_format($row_loan['loan_repaytotal']).'</td>
 									<td>'.number_format($loan_balance).'</td>';
