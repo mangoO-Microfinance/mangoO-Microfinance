@@ -252,3 +252,14 @@ input#delete{
 	margin-bottom:2em;
 	text-align:center;
 }
+.alert{
+	padding: 8px 35px 8px 14px;
+	margin: 20px 0;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	color: #b94a48;
+  	background-color: #f2dede;
+  	border-color: #eed3d7;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}

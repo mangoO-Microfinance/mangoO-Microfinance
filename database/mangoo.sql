@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 26. Okt 2015 um 15:13
+-- Erstellungszeit: 05. Nov 2015 um 10:31
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -66,214 +66,216 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `cust_lastsub` int(15) DEFAULT NULL,
   `cust_active` int(1) DEFAULT NULL,
   `cust_lastupd` int(11) DEFAULT NULL,
+  `cust_pic` varchar(100) DEFAULT NULL,
   `user_id` int(6) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `customer`
 --
 
-INSERT INTO `customer` (`cust_id`, `cust_name`, `cust_dob`, `cust_sex`, `cust_address`, `cust_phone`, `cust_email`, `cust_occup`, `cust_married_id`, `cust_heir`, `cust_heirrel`, `cust_lengthres`, `cust_since`, `cust_sick`, `cust_lastsub`, `cust_active`, `cust_lastupd`, `user_id`) VALUES
-(1, 'Martin Luther', -25720000, 1, 'Wittenberg', NULL, '', 'Reformer', 3, '', '', NULL, 1157580000, 0, 1420070400, 1, 1427241600, 3),
-(2, 'Jan Hus', -707191200, 1, 'Prague', NULL, '', 'Reformer', 3, '', '', NULL, 1159401600, 0, 1420070400, 1, 1420070400, 1),
-(3, 'Jean Calvin', -256006800, 1, 'Geneva', '0760-548193', 'j.calvin@reformed.org', 'Reformer', 3, 'Marie Calvin', 'Wife', NULL, 1157587200, 0, 1420070400, 1, 1438330883, 1),
-(4, 'Huldrych Zwingli', -505620000, 1, 'Zurich', NULL, '', 'Reformer', 3, '', '', NULL, 1159747200, 0, 1420070400, 1, 1420070400, 1),
-(5, 'Heinrich Bullinger', -5662321, 1, 'Zurich', NULL, '', 'Reformer', 3, '', '', NULL, 1158710400, 0, 1420070400, 1, 1436350199, 3),
-(6, 'Ila Kimble  ', -362023200, 1, 'Luwero Diocese', '0772-349669', '', 'Clergy Man', 3, '', '', NULL, 1161820800, 0, 1420070400, 1, 1420070400, 1),
-(7, 'Lesha Detweiler  ', -7200, 1, 'Ndejje', '0782-453096', '', 'Clergy', 3, '', '', NULL, 1156377600, 0, 1420070400, 1, 1420070400, 1),
-(8, 'Ezra Singletary  ', 140043600, 1, 'St.Mark - Luweero', '0782-880948', '', 'Clergy Man / Teacher', 1, '', '', NULL, 1157587200, 0, 1420070400, 1, 1420070400, 1),
-(9, 'Aura Trim  ', -456976800, 1, 'Luteete Arch', '0782-347980', '', 'Pastor', 3, '', '', NULL, 1156377600, 0, 1420070400, 1, 1420070400, 1),
-(10, 'Marci Fleming  ', -285127200, 1, 'Bukalabi Mpwede Kasangombe', NULL, '', 'Pastor', 3, '', '', NULL, 1157580000, 0, 1420070400, 0, 1427241600, 3),
-(11, 'Nydia Melvin  ', -404791200, 1, 'Kiziba Kikyusa Arch', '0772-968444', '', 'Clergy Man', 3, '', '', NULL, 1157932800, 0, 1390070400, 0, 1420070400, 1),
-(12, 'Joshua Vandenburg  ', -552448800, 1, 'Kiziba Kikyusa Arch', '0772-551662', '', 'Clergy Man', 3, '', '', NULL, 1157587200, 0, 1420070400, 1, 1420070400, 1),
-(13, 'Melania Mitchem  ', 158364000, 1, 'Kalere', '0782-380513', '', 'Clergy', 2, '', '', NULL, 1158796800, 0, 1400070400, 0, 1420070400, 1),
-(14, 'Clemmie Ellithorpe  ', -929930400, 1, 'Kazinga Butuntumula', NULL, '', 'Clergy Man', 3, '', '', NULL, 1157580000, 0, 1420070400, 0, 1427241600, 3),
-(15, 'Kristofer Artis  ', -7200, 1, 'Kisenyi', NULL, '', '', 1, '', '', NULL, 1157580000, 0, 1420070400, 0, 1427241600, 3),
-(16, 'Lulu Obando  ', -440906400, 1, 'Sempa Parish ', '0782-096008', '', 'Clergy Man', 3, '', '', NULL, 1167782400, 0, 1420000400, 1, 1420070400, 1),
-(17, 'Kai Soriano  ', -86320800, 1, 'Luteete', NULL, '', 'Pastor / Teacher', 3, '', '', NULL, 1157580000, 0, 1420070400, 0, 1427241600, 3),
-(18, 'Lynne Pratico  ', 160264800, 1, 'Bwaziba', NULL, '', 'Clergy / Farmer', 3, '', '', NULL, 1158019200, 0, 1320070400, 0, 1420070400, 1),
-(19, 'Noella Holyfield  ', -633578400, 1, 'Kasana -Kiwogozi', '0772-984673', '', 'Clergy Man', 3, '', '', NULL, 1157587200, 0, 1420070400, 1, 1420070400, 1),
-(20, 'Berry Steve  ', -256525200, 1, 'Bombo', '0782-453477', '', 'Clergy Man', 3, '', '', NULL, 1157932800, 0, 1420070400, 1, 1427241600, 5),
-(21, 'Gregorio Schurr  ', -479527200, 1, 'Kasiso', '0772-532964', '', 'Clergy Man', 3, '', '', NULL, 1156377600, 0, 1420070400, 1, 1420070400, 1),
-(22, 'Arnetta Lobato  ', -744170400, 1, 'Bakijulura', NULL, '', 'Retired', 1, '', '', NULL, 1157932800, 0, 1380070400, 0, 1420070400, 1),
-(23, 'Ayana Mohammed  ', -368762400, 1, 'St. Mark Luweero', '0772-183125', '', 'Clergy Man', 3, '', '', NULL, 1157587200, 0, 1420070400, 1, 1420070400, 1),
-(24, 'Conrad Keitt  ', -748404000, 1, 'Namusale', NULL, '', 'Clergy Man', 3, '', '', NULL, 1160006400, 0, 1420070400, 1, 1420070400, 1),
-(25, 'Stephine Leitner  ', -559792800, 1, 'Buwana', '0773142217', '', 'Clergy Man', 3, '', '', NULL, 1158019200, 0, 1420070400, 1, 1420070400, 1),
-(26, 'Tequila Lino  ', -597549600, 1, 'Sekamuli Area', '0782-880521', '', 'Clergy Man', 3, '', '', NULL, 1195516800, 0, 1420070400, 1, 1420070400, 1),
-(27, 'Deena Hawes  ', -932349600, 1, 'Zirobwe', NULL, '', 'Clergy Man', 3, '', '', NULL, 1190160000, 0, 1420070400, 1, 1420070400, 1),
-(28, 'Kellye Whitley  ', -363924000, 1, 'Lukomera', '0779-253864', '', 'Clergy Man / Teacher', 3, '', '', NULL, 1166572800, 0, 1420070400, 1, 1420070400, 1),
-(29, 'Judi Spillman  ', -573703200, 1, 'Balitta- Lwogi', '0782-559766', '', 'Clergy Man', 3, '', '', NULL, 1189468800, 0, 1420070400, 1, 1420070400, 1),
-(30, 'Emily Ratley  ', -7200, 1, 'Kalere', NULL, '', 'Clergy Man', 3, '', '', NULL, 1159394400, 0, 1420070400, 0, 1427241600, 3),
-(31, 'Robena Burget  ', -7200, 1, 'Kasana', NULL, '', 'Clergy Man', 3, '', '', NULL, 1159394400, 0, 1420070400, 0, 1427241600, 3),
-(32, 'Milda Mcamis  ', -427860000, 1, 'Bweyeeyo-Luweero', NULL, '', 'Clergy Man', 3, '', '', NULL, 1159401600, 0, 1420070400, 1, 1420070400, 1),
-(33, 'Alec Kearl  ', -336794400, 1, 'Nakaseke', '0773-974456', '', 'Pastor / Teacher', 3, '', '', NULL, 1158019200, 0, 1420070400, 1, 1427241600, 3),
-(34, 'Ngoc Alcantar  ', -185335200, 1, 'Kasana Kvule-Luweero', NULL, '', 'Clergy Man', 3, '', '', NULL, 1157932800, 0, 1420070400, 1, 1420070400, 1),
-(35, 'Sharen Harr  ', -33271200, 2, 'Luweero Town Council', '0772-442574', '', 'Accounts Clerk', 3, '', '', NULL, 1156896000, 0, 1420070400, 1, 1420070400, 1),
-(36, 'Crysta Riebe  ', -320032800, 2, 'Kungu- Busula', NULL, '', '', 3, '', '', NULL, 1158796800, 0, 1420070400, 1, 1420070400, 1),
-(37, 'Ronni Knoles  ', -213069600, 1, 'Kungu-Busula', '0772-365951', '', 'Social Worker', 3, '', '', NULL, 1156723200, 0, 1420070400, 1, 1420070400, 1),
-(38, 'Ela Denmark  ', 401230800, 2, 'Kungu-Busula', NULL, '', 'Counsellor / Volunteer', 2, '', '', NULL, 1157241600, 0, 1420070400, 1, 1420070400, 1),
-(39, 'Grace Hamer  ', 55717200, 1, 'Busula', '0701-855942', '', 'Road Supervisor', 2, '', '', NULL, 1157328000, 0, 1420070400, 1, 1420070400, 1),
-(40, 'Emma Bermea  ', -340855200, 2, 'Wobulenzi', NULL, '', 'Teacher', 3, '', '', NULL, 1157328000, 0, 1420070400, 1, 1420070400, 1),
-(41, 'Rosana Breit  ', 534549600, 1, 'Busula', NULL, '', 'Student', 2, '', '', NULL, 1166659200, 0, 1420070400, 1, 1420070400, 1),
-(42, 'Evelynn Mickles  ', 292543200, 2, 'Kungu-Busula', NULL, '', 'Trader - Retail', 3, '', '', NULL, 1157328000, 0, 1420070400, 1, 1420070400, 1),
-(43, 'Tonie Maroney  ', 141858000, 2, 'Bendegere Namusaale', NULL, '', 'Customer Care Manager', 3, '', '', NULL, 1156550400, 0, 1420070400, 1, 1420070400, 1),
-(44, 'Fallon Rosendahl  ', -46231200, 1, 'Buwana Kinyogoga', NULL, '', 'Clergy Man', 3, '', '', NULL, 1158789600, 0, 1420070400, 0, 1427241600, 3),
-(45, 'Renato Loudon  ', -361072800, 1, 'Kaswa- Busula', '0774-764113', '', 'Lay-Reader', 3, '', '', NULL, 1157500800, 0, 1420070400, 1, 1420070400, 1),
-(46, 'Garth Swartwood  ', -184298400, 2, 'Kikoma C/U Wobulenzi Tc', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1157846400, 0, 1420070400, 1, 1420070400, 1),
-(47, 'Joannie Gust  ', 75589200, 2, 'Kikoma Wobulenzi', NULL, '', 'Peasant - Farmer', 3, '', '', NULL, 1157846400, 0, 1420070400, 1, 1420070400, 1),
-(48, 'Fermina Collazo  ', -240890400, 2, 'Kikona Wobulenzi Central', NULL, '', 'Peasant / Farmer', 3, '', '', NULL, 1157932800, 0, 1420070400, 1, 1420070400, 1),
-(49, 'Lavenia Byler  ', -252468000, 1, 'Kayindu C/U', '0785-772868', '', 'Lay-Reader', 3, '', '', NULL, 1157500800, 0, 1420070400, 1, 1420070400, 1),
-(50, 'Willetta Moreau  ', 167522400, 1, 'Katuugo Parish', '0782-447156', '', 'Lay-Reader / Tailor', 3, '', '', NULL, 1157414400, 0, 1420070400, 1, 1420070400, 1),
-(51, 'Alicia Wehner  ', -207453600, 2, 'Waluleeta Makulubita', '0782-461460', '', 'Trainer / Social Worker', 3, '', '', NULL, 1199664000, 0, 1420070400, 1, 1420070400, 1),
-(52, 'Ocie Edds  ', -605412000, 1, 'Administrator Luweero Diocese', NULL, '', 'Diocesan Bishop', 3, '', '', NULL, 1158796800, 0, 1420070400, 1, 1420070400, 1),
-(53, 'Darcy Read  ', 309736800, 2, 'Luwero TC', NULL, '', 'Secretary', 2, '', '', NULL, 1158796800, 0, 1420070400, 1, 1420070400, 1),
-(54, 'Augustina Shuman  ', -244605600, 2, 'Kaswa- Busula', NULL, '', 'Lay-Reader', 2, '', '', NULL, 1157846400, 0, 1420070400, 1, 1420070400, 1),
-(55, 'Catherine Adler  ', 0, 3, 'Luweero Diocese', NULL, '', '', 1, '', '', NULL, 1242086400, 0, 1420070400, 1, 1420070400, 1),
-(56, 'Shanae Bello  ', 77144400, 2, 'Luweero Boys School', NULL, '', 'Teacher', 2, '', '', NULL, 1197936000, 0, 1420070400, 1, 1420070400, 1),
-(57, 'Ferne Munson  ', -7200, 1, 'Bweyeyo', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1159826400, 0, 1420070400, 0, 1427241600, 3),
-(58, 'Ja Nordby  ', -7200, 2, 'Kungu- Kikoma', NULL, '', 'Housewife', 3, '', '', NULL, 1166572800, 0, 1420070400, 1, 1420070400, 1),
-(59, 'Illa Penaflor  ', -179632800, 2, 'Kiwogozi', '0772-662202', '', 'Teacher / MP', 1, '', '', NULL, 1166572800, 0, 1420070400, 1, 1420070400, 1),
-(60, 'Annabelle Bradham  ', -455680800, 1, 'Kiwoko Arc', '0772-657419', '', 'Clergy Man', 3, '', '', NULL, 1167782400, 0, 1420070400, 1, 1420070400, 1),
-(61, 'Tanner Wake  ', -539143200, 1, 'Bukalabi Parish', '0752-631706', '', 'Clergy Man', 3, '', '', NULL, 1157932800, 0, 1420070400, 1, 1420070400, 1),
-(62, 'Cristobal Passman  ', -399088800, 2, 'Luteete Arch', NULL, '', 'Housewife', 3, '', '', NULL, 1168387200, 0, 1420070400, 1, 1420070400, 1),
-(63, 'Rosita Pankratz  ', -394077600, 2, 'Ndejje Village', NULL, '', 'Peasant / Farmer', 3, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, 1),
-(64, 'Angila Gauldin  ', 404949600, 2, 'Nalinya Lwantale Girls P/S', NULL, '', 'Teacher', 2, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, 1),
-(65, 'Jerrica Darnell  ', 534981600, 1, 'Ndejje- Sambwe', NULL, '', 'Student', 2, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, 1),
-(66, 'Paul Mushrush  ', 513554400, 2, 'Ndejje - Sambwe', NULL, '', '', 2, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, 1),
-(67, 'Daren Konkol  ', 0, 0, '', NULL, '', '', 1, '', '', NULL, 0, 0, 0, 0, 1427241600, 0),
-(68, 'Kristin Lippard  ', 967323600, 2, 'Ndejje- Sambwe', NULL, '', '', 2, '', '', NULL, 1169510400, 0, 1420070400, 1, 1420070400, 1),
-(69, 'Frederic Marchese  ', 510012000, 1, 'Ndejje- Sambwe', NULL, '', '', 2, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, 1),
-(70, 'Gaynelle Busbee  ', -7200, 0, 'Kikoma Wobulenzi', NULL, '', 'Service Provider NAADS/AGRIC', 3, '', '', NULL, 1169938800, 0, 1420070400, 0, 1427241600, 3),
-(71, 'Remona Sheffler  ', -75693600, 2, 'Kisaawe Muyenga Wobulenzi', NULL, '', 'Teacher', 2, '', '', NULL, 1170111600, 0, 1420070400, 0, 1427241600, 3),
-(72, 'Federico Iliff  ', -115178400, 2, 'Luweero Child Devt Centre', NULL, '', 'Peasant', 2, '', '', NULL, 1156896000, 0, 1420070400, 1, 1420070400, 1),
-(73, 'Chan Milby  ', 864252000, 2, 'St.Peters-Kisugu', NULL, '', '', 2, '', '', NULL, 1200960000, 0, 1420070400, 1, 1420070400, 1),
-(74, 'Piedad Mcgonigal  ', -208231200, 2, 'Ndejje Arch', NULL, '', 'Health Coordinator', 3, '', '', NULL, 1170115200, 0, 1420070400, 1, 1420070400, 1),
-(75, 'Rhonda Pierpont  ', 0, 0, '', NULL, '', '', 1, '', '', NULL, 0, 0, 1420070400, 0, 1420070400, 1),
-(76, 'Celinda Dulac  ', -45194400, 1, 'Luweerotc- Kizito Zone', '0712-219411', '', 'Clergy Man / Teacher', 3, '', '', NULL, 1170115200, 0, 1420070400, 1, 1420070400, 1),
-(77, 'Edmond Kneeland  ', 120348000, 2, 'Luweero', NULL, '', 'Secretary', 3, '', '', NULL, 1170633600, 0, 1420070400, 1, 1420070400, 1),
-(78, 'Lyndia Kump  ', -872301600, 2, 'C/O DCA Kampala', NULL, '', 'Nurse', 2, '', '', NULL, 1170633600, 0, 1420070400, 1, 1420070400, 1),
-(79, 'Michael Poovey  ', -358740000, 2, 'Luweero Diocese', NULL, '', 'CBO Trainer', 3, '', '', NULL, 1170720000, 0, 1420070400, 1, 1420070400, 1),
-(80, 'Omega Prochnow  ', -121312800, 2, 'Luweero Diocese', '0782-352335', '', 'Nurse', 3, '', '', NULL, 1170115200, 0, 1420070400, 1, 1420070400, 1),
-(81, 'Sheri Stuck  ', -873770400, 1, 'Kiteredde Buyuki Katikamu', NULL, '', 'Peasant / Farmer', 3, '', '', NULL, 1188259200, 0, 1420070400, 1, 1420070400, 1),
-(82, 'Shellie Bromley  ', -24544800, 1, 'Kangulumira- Mpologoma ', NULL, '', 'Teacher', 3, '', '', NULL, 1188259200, 0, 1420070400, 0, 1420070400, 1),
-(83, 'Joshua Meiser  ', -1036803600, 1, 'Kikasa Wobulenzi Cetral', '0790-562315', '', 'Building Contractor', 3, 'Anne Meiser', 'Wife', NULL, 1174435200, 0, 1420070400, 1, 1445425402, 1),
-(84, 'Jean Piehl  ', 135727200, 1, 'Wobulenzi-Kigulu', NULL, '', '', 3, '', '', NULL, 1174867200, 0, 1420070400, 1, 1420070400, 1),
-(85, 'Lovella Canaday  ', 399934800, 1, 'Kiwoko - Kasana ', NULL, '', 'Primary Teacher', 2, '', '', NULL, 1175212800, 0, 1420070400, 1, 1420070400, 1),
-(86, 'Val Cauley  ', 200955600, 2, 'Luweero T/C', '0772-688874', '', 'Social Worker', 2, '', '', NULL, 1178236800, 0, 1420070400, 1, 1420070400, 1),
-(87, 'Michale Belvin  ', -600228000, 3, 'Kyatagali - Mabuye -Kamira', NULL, '', 'Lay-Reader / Peasant', 3, '', '', NULL, 1215043200, 0, 1420070400, 1, 1420070400, 1),
-(88, 'Vernon Shade  ', 252712800, 2, 'Kagoma', NULL, '', 'Social Worker', 3, '', '', NULL, 1181174400, 0, 1420070400, 1, 1420070400, 1),
-(89, 'Susie Cratty  ', 72054000, 2, 'Katikamu P/S', '0782-158039', '', 'Teacher', 3, '', '', NULL, 1182211200, 0, 1420070400, 1, 1427241600, 5),
-(90, 'Sima Cunningham  ', 188690400, 1, 'Luweero Town Council', '0772-305106', '', 'Social Worker', 2, '', '', NULL, 1182211200, 0, 1420070400, 1, 1420070400, 1),
-(91, 'Leonel Weitzman  ', -164941200, 1, 'Katikamu Trinity Church', '0774068617', '', 'Lay-Reader', 3, '', '', NULL, 1182384000, 0, 1420070400, 1, 1427241600, 5),
-(92, 'Corine Hansell  ', 135986400, 2, 'Katikamu- Sebamala', '0782-485545', '', 'Teacher', 3, '', '', NULL, 1182384000, 0, 1420070400, 1, 1420070400, 1),
-(93, 'Beatrice Cortez  ', 166744800, 1, 'Kibula LC1 Kabakeddi Parish', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1211241600, 0, 1420070400, 1, 1420070400, 1),
-(94, 'Lore Keltz  ', 16837200, 1, 'Katikamu', '0772-670909', '', 'Clergy Man', 3, '', '', NULL, 1182729600, 0, 1420070400, 1, 1420070400, 1),
-(95, 'Eda Edmonson  ', 261352800, 1, 'Kasoma Zone', '0772-641144', '', 'Health Worker', 2, '', '', NULL, 1182211200, 0, 1420070400, 1, 1420070400, 1),
-(96, 'Clotilde Fuqua  ', -83210400, 1, 'Kangulumira- Mpologoma ', '0773-266136', '', 'Business Man', 3, '', '', NULL, 1185840000, 0, 1420070400, 1, 1420070400, 1),
-(97, 'Rosamaria Hardeman  ', -7200, 1, 'Sempa C/U', '0772964823', '', 'Lay-Reader', 3, '', '', NULL, 1184025600, 0, 1420070400, 1, 1420070400, 1),
-(98, 'Wilfred Dinger  ', 24094800, 1, 'Nalulya Butuntumula Luweero Diocese', '0782-424243', '', 'Lay-Reader', 2, '', '', NULL, 1185840000, 0, 1420070400, 1, 1420070400, 1),
-(99, 'Minh Myrie  ', -161920800, 1, 'Mulilo Zone', NULL, '', 'Tailor', 3, '', '', NULL, 1187049600, 0, 1420070400, 1, 1420070400, 1),
-(100, 'Sherly Boudreau  ', 313974000, 2, 'Kasana T/C', '0782-415747', '', 'Child Development Officer', 2, 'Hans Wurst', '', NULL, 1187654400, 0, 1420070400, 1, 1445427949, 1),
-(101, 'Clay Facer  ', -474516000, 2, 'C/U Kyetume', NULL, '', 'Lay-Reader', 2, '', '', NULL, 1190073600, 0, 1420070400, 1, 1427241600, 3),
-(102, 'Roma Costales  ', 215388000, 1, 'Kidukulu - Makulubita', NULL, '', 'Lay-Reader / Coffe Trader', 3, '', '', NULL, 1194912000, 0, 1420070400, 1, 1427241600, 3),
-(103, 'Shad Kiger  ', -445312800, 2, 'Luweero Tc', '0782-116626', '', 'Teacher', 3, '', '', NULL, 1192492800, 0, 1420070400, 1, 1427241600, 3),
-(104, 'Dwayne Yeoman  ', -7200, 3, 'Kirema Village', NULL, '', '', 1, '', '', NULL, 1192492800, 0, 1420070400, 1, 1427241600, 3),
-(105, 'Latoya Ensley  ', 166658400, 2, 'Luweero Town Council', '0758-885228', '', 'Teacher', 3, '', '', NULL, 1203292800, 0, 1420070400, 1, 1427241600, 3),
-(106, 'Judie Walts  ', -361936800, 1, 'Bbale Central Kiyanda Parish', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1191456000, 0, 1420070400, 1, 1427241600, 3),
-(107, 'Gilda Shim  ', -26791200, 2, 'Wobulenzi Tc', NULL, '', 'Tailor', 3, '', '', NULL, 1193702400, 0, 1420070400, 1, 1427241600, 3),
-(108, 'Sharla Buhl  ', -7200, 0, 'Namba Village - Ziroobwe', NULL, '', 'Shoe-making', 2, '', '', NULL, 1192658400, 0, 1420070400, 0, 1427241600, 3),
-(109, 'Madalene Sunde  ', -56944800, 2, 'Luweero T/C', NULL, '', 'Peasant', 3, '', '', NULL, 1195084800, 0, 1420070400, 1, 1427241600, 3),
-(110, 'Etta Bergh  ', 152143200, 2, 'Luweero Girls'' School', '0772-472944', '', 'Teacher', 3, '', '', NULL, 1194912000, 0, 1420070400, 1, 1427241600, 3),
-(111, 'Thomasine Lash  ', -1167616800, 1, 'Dan Yawe- Vvumba', '0772-923534', '', 'Farmer', 3, '', '', NULL, 1195516800, 0, 1420070400, 1, 1427241600, 3),
-(112, 'Mireille Birdsall  ', 38527200, 1, 'Kasaala P/S - Voc St.Mark', '0782-489069', '', 'Teacher', 3, '', '', NULL, 1196121600, 0, 1420070400, 1, 1427241600, 3),
-(113, 'Shirly Cavalieri  ', 91749600, 2, 'Wobulenzi Town Council', '0774-569606', '', 'Farmer', 3, '', '', NULL, 1196121600, 0, 1420070400, 1, 1427241600, 3),
-(114, 'Lavinia Cavallo  ', -205984800, 1, 'Wakayamba P/S', '0774-085558', '', 'Teacher', 3, '', '', NULL, 1196294400, 0, 1420070400, 1, 1427241600, 3),
-(115, 'Tiny Mable  ', -128829600, 1, 'Luwero Boys'' PS', NULL, '', 'Teacher', 3, '', '', NULL, 1196294400, 0, 1420070400, 1, 1427241600, 3),
-(116, 'Alden Koval  ', -59709600, 1, 'Katikamu', '0781-703077', '', 'Farmer', 3, '', '', NULL, 1171238400, 0, 1420070400, 1, 1427241600, 3),
-(117, 'Romelia Rezentes  ', -482637600, 2, 'Namakofu -Nambi Zirobwe', '0783-016223', '', 'Extensive Farmer', 3, '', '', NULL, 1171756800, 0, 1420070400, 1, 1427241600, 3),
-(118, 'Kaylee Cate  ', 20638800, 2, 'Kalagala Kalanamu Parish', '0782-104384', '', 'Teacher', 3, '', '', NULL, 1198022400, 0, 1420070400, 1, 1427241600, 3),
-(119, 'Toya Rank  ', -7200, 1, 'unknown', NULL, '', 'Teacher', 3, '', '', NULL, 1199142000, 0, 1420070400, 0, 1420070400, 1),
-(120, 'Gregg Stillings  ', 30751200, 2, 'Binyonyi Zone Luweero T/C', '0782-424855', '', 'Secretary Luweero District Admin.', 3, '', '', NULL, 1200355200, 0, 1420070400, 1, 1427241600, 3),
-(121, 'Orville Serafino  ', 121039200, 2, 'Kiwoko Hospital', NULL, '', 'Midwife Kiwoko Hospital', 2, '', '', NULL, 1200960000, 0, 1420070400, 1, 1427241600, 3),
-(122, 'Shaneka Swinford  ', -7200, 2, 'Nabagaya Road Luweero', '0772-344445', '', 'Accounts Clerk (Water Sector)', 3, '', '', NULL, 1208822400, 0, 1420070400, 1, 1427241600, 3),
-(123, 'Margeret Pajak  ', -52797600, 1, 'Kyambogo Mixed PS, Luweero', '0772-949049', '', 'Teacher', 3, '', '', NULL, 1204070400, 0, 1420070400, 1, 1427241600, 3),
-(124, 'Stevie Perrigo  ', -919562400, 1, 'Bakijulura', '0779-544750', '', 'Lay-Reader', 3, '', '', NULL, 1194134400, 0, 1420070400, 1, 1427241600, 3),
-(125, 'Terrie Fassett  ', -1001728800, 1, 'Kande- Katikamu', '0774-647288', '', 'Farmer', 3, '', '', NULL, 1205971200, 0, 1420070400, 1, 1427241600, 3),
-(126, 'Angele Clancy  ', -7200, 2, 'C/O Kabyanga(Nakazzi Luweero)', '0774-446075', '', '', 1, '', '', NULL, 1216252800, 0, 1420070400, 1, 1427241600, 3),
-(127, 'Margarete Zuk  ', 248911200, 1, 'Bugabo - Kibanyi Bamunanika', '0774-639465', '', 'Boda-Boda Transporter', 3, '', '', NULL, 1202083200, 0, 1420070400, 1, 1427241600, 3),
-(128, 'Theresia Rutkowski  ', 149374800, 2, 'Luweero Town Council', '0774-956160', '', 'Teacher', 3, '', '', NULL, 1201737600, 0, 1420070400, 1, 1427241600, 3),
-(129, 'Raye Hambly  ', -7200, 2, 'Nakasero Zone Wobulenzi', '0772-601112', '', 'Teacher', 3, '', '', NULL, 1202342400, 0, 1420070400, 1, 1428392156, 6),
-(130, 'Almeda Vu  ', -555732000, 2, 'Malou Nsamuu Makulubita', NULL, '', 'Lay-Reader', 3, '', '', NULL, 0, 0, 1420070400, 1, 1427241600, 3),
-(131, 'Philomena Shumate  ', -284176800, 2, 'Kizito Lc1', NULL, '', 'Health Information Assistant', 3, '', '', NULL, 0, 0, 1420070400, 1, 1427241600, 3),
-(132, 'Valery Sola  ', -63165600, 2, 'Bunyonyi Zone (Luweero T/C)', NULL, '', '', 4, '', '', NULL, 0, 0, 1420070400, 1, 1427241600, 3),
-(133, 'Vanita Hymel  ', 120175200, 2, 'Kasana Kiwogozi', NULL, '', 'Peasant', 2, '', '', NULL, 1205884800, 0, 1420070400, 1, 1427241600, 3),
-(134, 'Karyn Rhoton  ', -7200, 2, 'Luweero Cdc', NULL, '', 'Peasant', 4, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(135, 'Valerie Laguerre  ', -7200, 2, 'Kasana - Kavule ', NULL, '', 'Peasant', 4, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(136, 'Arturo Cruz  ', 27036000, 2, 'Kasana- Kavule ', NULL, '', 'Restaurant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(137, 'Lue Hinkel  ', -7200, 2, 'Binyonyi Zone Luweero T/C', NULL, '', 'Farmer', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(138, 'Miesha Runions  ', 182034000, 2, 'Luweero Cdc', NULL, '', 'Peasant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(139, 'Katharina Clow  ', -1130400, 2, 'Kakinzi- Kakabala', NULL, '', 'Peasant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(140, 'Antoinette Ortego  ', -57808800, 2, 'Ngogolo', NULL, '', 'Peasant', 1, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(141, 'Scottie Mayhugh  ', -18324000, 1, 'Kigavu Kabakedi Luweero Tc', '0774-443579', '', 'Peasant', 3, '', '', NULL, 1231804800, 0, 1420070400, 1, 1427241600, 3),
-(142, 'Hester Janousek  ', -7200, 2, 'Kasomer Luwero Town Council', NULL, '', 'selfemployeed', 2, '', '', NULL, 1205794800, 0, 1420070400, 0, 1427241600, 3),
-(143, 'Criselda Curro  ', -59191200, 2, 'Nabagaya C/O Luweero Cdc', NULL, '', 'Police-Woman', 1, '', '', NULL, 1205798400, 0, 1420070400, 0, 1427241600, 3),
-(144, 'Kristi Ogren  ', -8215200, 2, 'Kasana- Kavule', NULL, '', 'Peasant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(145, 'Lesley Nardi  ', 143413200, 2, 'Nabagaya Luweero Tc', NULL, '', 'Peasant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, 3),
-(146, 'Kai Ridlon  ', -488340000, 1, 'Wakyato Luweero Diocese', NULL, '', 'Parish Priest', 3, '', '', NULL, 1220918400, 0, 1420070400, 1, 1427241600, 3),
-(147, 'Sammy Wrenn  ', -815191200, 1, 'Kikubajinja Lc1 C/O St Mark Luweero ', NULL, '', 'Priest in St. Mark', 3, '', '', NULL, 1204416000, 0, 1420070400, 1, 1427241600, 3),
-(148, 'Jacelyn Broker  ', 257292000, 2, 'Wobulenzi- Katikamu', NULL, '', 'Tailor', 2, '', '', NULL, 1207612800, 0, 1420070400, 1, 1427241600, 3),
-(149, 'Margarett Ingold  ', -386474400, 2, 'Butikwa Kiwoko Kikamulo', NULL, '', 'Nurse Aide', 4, '', '', NULL, 1204934400, 0, 1420070400, 1, 1427241600, 3),
-(150, 'Jefferson Pierson  ', -680061600, 2, 'Kamuli Kikamuloc/O Kiwoko Arch', '0782-884279', '', 'Farmer', 3, '', '', NULL, 1207612800, 0, 1420070400, 1, 1427241600, 3),
-(151, 'Glynda Delcambre  ', 141858000, 1, 'Kamuli-Kikamulo', '0773298713', '', 'Peasant', 3, '', '', NULL, 1210032000, 0, 1420070400, 1, 1427241600, 3),
-(152, 'Melina Zak  ', -7200, 1, 'Kamuli-Kikamulo', '0778-569954', '', 'Peasant / Lay-Reader', 3, '', '', NULL, 1210032000, 0, 1420070400, 1, 1427241600, 3),
-(153, 'Migdalia Windle  ', 283644000, 1, 'Pd Nsawo Cdc', NULL, '', 'Social Worker', 2, '', '', NULL, 1211414400, 0, 1420070400, 1, 1427241600, 3),
-(154, 'Marcellus Felipe  ', -295408800, 2, 'Buto Bamunanika', '0782-008255', '', 'Peasant', 3, '', '', NULL, 1210032000, 0, 1420070400, 0, 1427241600, 3),
-(155, 'Ulrike Graffam  ', 396046800, 2, 'Kibengo Umea P/S', NULL, '', 'Teacher', 3, '', '', NULL, 1210723200, 0, 1420070400, 0, 1427241600, 3),
-(156, 'Shawnta Deltoro  ', 129506400, 2, 'Luweero T/C', '0752-575266', '', 'CDO Finance', 3, '', '', NULL, 1210636800, 0, 1420070400, 1, 1427241600, 3),
-(157, 'Suzan Tibbs  ', 110408400, 2, 'Kalongo Miti Luweero Tc', NULL, '', 'Cook', 3, '', '', NULL, 1213660800, 0, 1420070400, 1, 1427241600, 3),
-(158, 'Louella Dancy  ', -506829600, 1, 'Mubulizi -Tweyanze C/U', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1240876800, 0, 1420070400, 1, 1427241600, 3),
-(159, 'Ruth Anstine  ', 460760400, 1, 'Nakasongola- Ssasira', NULL, '', 'Boda-Boda Man', 2, '', '', NULL, 1214265600, 0, 1420070400, 1, 1427241600, 3),
-(160, 'Nathanial Ruch  ', -538624800, 1, 'Kasoma Zone', NULL, '', 'Peasant', 2, '', '', NULL, 1214870400, 0, 1420070400, 1, 1427241600, 3),
-(161, 'Gwendolyn Kimbro  ', -167364000, 1, 'Kabeera- Kapeeka', '0788-458668', '', 'Peasant / Farmer', 3, '', '', NULL, 1219104000, 0, 1420070400, 1, 1427241600, 3),
-(162, 'Riley Paugh  ', 28850400, 1, 'Kalongomiti', NULL, '', 'Teacher', 3, '', '', NULL, 1219276800, 0, 1420070400, 1, 1427241600, 3),
-(163, 'Claretha Thibodeau  ', 448840800, 1, 'Kirema- Kapeeke', NULL, '', 'Peasant', 3, '', '', NULL, 1219276800, 0, 1420070400, 1, 1427241600, 3),
-(164, 'Iliana Arends  ', -7200, 2, 'Luweero Boys P/S', NULL, '', 'Deputy Head Teacher', 2, '', '', NULL, 1218499200, 0, 1420070400, 1, 1427241600, 3),
-(165, 'Anjelica Averett  ', -31543200, 2, 'Luweero Ss', '0772-843103', '', 'Teacher', 3, '', '', NULL, 1219881600, 0, 1420070400, 1, 1427241600, 3),
-(166, 'Juli Mey  ', -240026400, 2, 'Kakoola- Sekamuli', '0775-571944', '', 'Farmer', 3, '', '', NULL, 1216684800, 0, 1420070400, 1, 1427241600, 3),
-(167, 'Carlota Bennefield  ', -204170400, 1, 'Kizito Zone Luweero Tc', '0772-496690', '', 'Lecturer Kyambogo University', 3, '', '', NULL, 1220486400, 0, 1420070400, 1, 1427241600, 3),
-(168, 'Karisa Stockstill  ', -62647200, 2, 'Kikoma Village- Wobulenzi Tc', NULL, '', 'Lay-Reader', 2, '', '', NULL, 1170115200, 0, 1420070400, 1, 1427241600, 3),
-(169, 'Carolyn Randle  ', -292212000, 2, 'Kasana Market Zone', '0772-608854', '', 'Inspector of Schools', 3, '', '', NULL, 1221523200, 0, 1420070400, 1, 1427241600, 3),
-(170, 'Therese Conniff  ', 328222800, 2, 'Kasoma Zone', '0773-057019', '', 'CDO Sponsorship', 2, '', '', NULL, 1221523200, 0, 1420070400, 1, 1427241600, 3),
-(171, 'Dagmar Lembo  ', 390690000, 2, 'Namirembe -Kirema Parish', '0774-012894', '', 'Business Woman', 3, '', '', NULL, 1222128000, 0, 1420070400, 1, 1427241600, 3),
-(172, 'Rachelle Ponton  ', -33271200, 1, 'Ndejje', NULL, '', 'Teacher', 3, '', '', NULL, 1223337600, 0, 1420070400, 1, 1427241600, 3),
-(173, 'Zetta Zambrano  ', -251344800, 2, 'Kalongo Miti', '0772-344440', '', 'Business', 3, '', '', NULL, 0, 0, 1420070400, 1, 1427241600, 3),
-(174, 'Hoyt Wolverton  ', 336258000, 1, 'Katuugo Cdc', NULL, '', 'Social Worker', 2, '', '', NULL, 1224547200, 0, 1420070400, 0, 1427241600, 3),
-(175, 'Meagan Spore  ', 399416400, 2, 'Nabagaya', '0774-061011', '', 'Social Worker', 2, '', '', NULL, 1328745600, 0, 1420070400, 1, 1427241600, 3),
-(176, 'Trenton Moreira  ', -221104800, 1, 'Buzzibwera', '0779-268607', '', 'Lay-Reader', 3, '', '', NULL, 1226534400, 0, 1420070400, 1, 1427241600, 3),
-(177, 'Chery Schirmer  ', -42429600, 2, 'Wampewo', NULL, '', 'Teacher', 3, '', '', NULL, 1226966400, 0, 1420070400, 1, 1427241600, 3),
-(178, 'Adah Brumbaugh  ', 218584800, 2, 'Busula', NULL, '', 'Peasant', 2, '', '', NULL, 1329350400, 0, 1420070400, 1, 1427241600, 3),
-(179, 'Albina Ono  ', 292024800, 1, 'Nsawo Cdc', NULL, '', 'Social Worker', 2, '', '', NULL, 1227830400, 0, 1420070400, 1, 1427241600, 3),
-(180, 'Marva Poll  ', 397861200, 1, 'State Anthony-Nakaseke', NULL, '', 'State Attorney Nakaseke', 3, '', '', NULL, 1227744000, 0, 1420070400, 0, 1427241600, 3),
-(181, 'Renata Lamothe  ', 48891600, 2, 'Kiwoko Mixed P/S', '0788-717356', '', 'Teacher', 3, '', '', NULL, 1236038400, 0, 1420070400, 1, 1427241600, 3),
-(182, 'Sharell Mccormick  ', -473047200, 1, 'Timuna Parish', '0772-949273', '', 'Priest', 3, '', '', NULL, 1234828800, 0, 1420070400, 1, 1427241600, 3),
-(183, 'Sharan Beacham  ', -371959200, 1, 'Ndeeba Ss', '0782-065219', '', 'Teacher', 3, '', '', NULL, 1236038400, 0, 1420070400, 1, 1427241600, 3),
-(184, 'Annamae Morano  ', -43380000, 1, 'Kampala Road', NULL, '', 'Business Man', 3, '', '', NULL, 1235001600, 0, 1420070400, 1, 1427241600, 3),
-(185, 'Frederic Capone  ', -338436000, 1, 'Kyetume- Nakaseeta', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1228521600, 0, 1420070400, 1, 1427241600, 3),
-(186, 'Lorina Olden  ', 180565200, 1, 'Kamuli - Kikamulo', '0782-375463', '', 'Business Man', 2, '', '', NULL, 1234828800, 0, 1420070400, 1, 1427241600, 3),
-(187, 'Ty Stgelais  ', -7200, 2, 'Luweero Boys P/S', '0758-888415', '', 'Teacher', 2, '', '', NULL, 1242086400, 0, 1420070400, 1, 1427241600, 3),
-(188, 'Brigette Hathaway  ', 0, 2, 'Kyankonnwa Katuugo Kakooge', '0781577505', '', '', 1, '', '', NULL, 1237248000, 0, 1420070400, 1, 1420070400, 1),
-(189, 'Vanita Eaves  ', -496202400, 2, 'Kasana Market Ltc', '0774-285085', '', 'Teacher', 4, '', '', NULL, 1237248000, 0, 1420070400, 1, 1427241600, 3),
-(190, 'Valentin Kenna  ', 607125600, 1, 'Namirembe -Kirema Parish', '0774-012894', '', 'Mechanic', 2, '', '', NULL, 1245628800, 0, 1420070400, 0, 1443692389, 3),
-(191, 'Fredia Grissett  ', 330296400, 1, 'Kiwoko- Kasana ', '0772-647451', '', 'Business', 2, '', '', NULL, 1250553600, 0, 1420070400, 1, 1427241600, 3),
-(192, 'Lettie Amezcua  ', -916192800, 1, 'Kigavu-Kabaledi, Luweero', '0752-624769', '', 'Lay-Reader', 3, '', '', NULL, 1232409600, 0, 1420070400, 1, 1427241600, 3),
-(193, 'Jayson Reader  ', -179892000, 1, 'Buzzibwera', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1231977600, 0, 1420070400, 1, 1427241600, 3),
-(194, 'Shonna Montenegro  ', 383263200, 1, 'Lumu Zone C/O Luweero S S', NULL, '', 'Teacher', 2, '', '', NULL, 1253145600, 0, 1420070400, 1, 1427241600, 3),
-(195, 'Janell Zager  ', -303530400, 2, 'Kasaala Lc1', '0779-294359', '', 'Peasant', 3, '', '', NULL, 1252368000, 0, 1420070400, 1, 1427241600, 3),
-(196, 'Nan Amarante  ', -176176800, 2, 'St.Luke Ndabilako - Sekamuli', NULL, '', 'Lay-Reader', 1, '', '', NULL, 1252886400, 0, 1420070400, 1, 1427241600, 3),
-(197, 'Cheryll Stiger  ', 0, 2, 'Busula /Wobulenzi', NULL, '', '', 1, '', '', NULL, 1254787200, 0, 1420070400, 1, 1420070400, 1),
-(198, 'Rolland Martines  ', -38800800, 1, 'Kasana- Kavule', NULL, '', 'Business', 3, '', '', NULL, 1254787200, 0, 1420070400, 1, 1427241600, 3),
-(199, 'Conrad Crowl  ', 231022800, 1, 'Kasoma Zone', '0772-554570', '', 'Teacher', 3, '', '', NULL, 1255392000, 0, 1420070400, 1, 1427241600, 3),
-(200, 'Laraine Ceasar  ', -7200, 3, 'Ndejje Archdeaconary Health Centre', '0752-631266', '', '', 1, '', '', NULL, 1257379200, 0, 1420070400, 1, 1427241600, 3);
+INSERT INTO `customer` (`cust_id`, `cust_name`, `cust_dob`, `cust_sex`, `cust_address`, `cust_phone`, `cust_email`, `cust_occup`, `cust_married_id`, `cust_heir`, `cust_heirrel`, `cust_lengthres`, `cust_since`, `cust_sick`, `cust_lastsub`, `cust_active`, `cust_lastupd`, `cust_pic`, `user_id`) VALUES
+(1, 'Martin Luther', -25720000, 1, 'Wittenberg', NULL, '', 'Reformer', 3, '', '', NULL, 1157580000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(2, 'Jan Hus', -707191200, 1, 'Prague', NULL, '', 'Reformer', 3, '', '', NULL, 1159401600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(3, 'Jean Calvin', -256006800, 1, 'Geneva', '0760-548193', 'j.calvin@reformed.org', 'Reformer', 3, 'Marie Calvin', 'Wife', NULL, 1157587200, 0, 1420070400, 1, 1438330883, NULL, 1),
+(4, 'Huldrych Zwingli', -505620000, 1, 'Zurich', NULL, '', 'Reformer', 3, '', '', NULL, 1159747200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(5, 'Heinrich Bullinger', -5662321, 1, 'Zurich', NULL, '', 'Reformer', 3, '', '', NULL, 1158710400, 0, 1420070400, 1, 1436350199, NULL, 3),
+(6, 'Ila Kimble  ', -362023200, 1, 'Luwero Diocese', '0772-349669', '', 'Clergy Man', 3, '', '', NULL, 1161820800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(7, 'Lesha Detweiler  ', -7200, 1, 'Ndejje', '0782-453096', '', 'Clergy', 3, '', '', NULL, 1156377600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(8, 'Ezra Singletary  ', 140043600, 1, 'St.Mark - Luweero', '0782-880948', '', 'Clergy Man / Teacher', 1, '', '', NULL, 1157587200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(9, 'Aura Trim  ', -456976800, 1, 'Luteete Arch', '0782-347980', '', 'Pastor', 3, '', '', NULL, 1156377600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(10, 'Marci Fleming  ', -285127200, 1, 'Bukalabi Mpwede Kasangombe', NULL, '', 'Pastor', 3, '', '', NULL, 1157580000, 0, 1420070400, 0, 1427241600, NULL, 3),
+(11, 'Nydia Melvin  ', -404791200, 1, 'Kiziba Kikyusa Arch', '0772-968444', '', 'Clergy Man', 3, '', '', NULL, 1157932800, 0, 1390070400, 0, 1420070400, NULL, 1),
+(12, 'Joshua Vandenburg  ', -552448800, 1, 'Kiziba Kikyusa Arch', '0772-551662', '', 'Clergy Man', 3, '', '', NULL, 1157587200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(13, 'Melania Mitchem  ', 158364000, 1, 'Kalere', '0782-380513', '', 'Clergy', 2, '', '', NULL, 1158796800, 0, 1400070400, 0, 1420070400, NULL, 1),
+(14, 'Clemmie Ellithorpe  ', -929930400, 1, 'Kazinga Butuntumula', NULL, '', 'Clergy Man', 3, '', '', NULL, 1157580000, 0, 1420070400, 0, 1427241600, NULL, 3),
+(15, 'Kristofer Artis  ', -7200, 1, 'Kisenyi', NULL, '', '', 1, '', '', NULL, 1157580000, 0, 1420070400, 0, 1427241600, NULL, 3),
+(16, 'Lulu Obando  ', -440906400, 1, 'Sempa Parish ', '0782-096008', '', 'Clergy Man', 3, '', '', NULL, 1167782400, 0, 1420000400, 1, 1420070400, NULL, 1),
+(17, 'Kai Soriano  ', -86320800, 1, 'Luteete', NULL, '', 'Pastor / Teacher', 3, '', '', NULL, 1157580000, 0, 1420070400, 0, 1427241600, NULL, 3),
+(18, 'Lynne Pratico  ', 160264800, 1, 'Bwaziba', NULL, '', 'Clergy / Farmer', 3, '', '', NULL, 1158019200, 0, 1320070400, 0, 1420070400, NULL, 1),
+(19, 'Noella Holyfield  ', -633578400, 1, 'Kasana -Kiwogozi', '0772-984673', '', 'Clergy Man', 3, '', '', NULL, 1157587200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(20, 'Berry Steve  ', -256525200, 1, 'Bombo', '0782-453477', '', 'Clergy Man', 3, '', '', NULL, 1157932800, 0, 1420070400, 1, 1427241600, NULL, 5),
+(21, 'Gregorio Schurr  ', -479527200, 1, 'Kasiso', '0772-532964', '', 'Clergy Man', 3, '', '', NULL, 1156377600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(22, 'Arnetta Lobato  ', -744170400, 1, 'Bakijulura', NULL, '', 'Retired', 1, '', '', NULL, 1157932800, 0, 1380070400, 0, 1420070400, NULL, 1),
+(23, 'Ayana Mohammed  ', -368762400, 1, 'St. Mark Luweero', '0772-183125', '', 'Clergy Man', 3, '', '', NULL, 1157587200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(24, 'Conrad Keitt  ', -748404000, 1, 'Namusale', NULL, '', 'Clergy Man', 3, '', '', NULL, 1160006400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(25, 'Stephine Leitner  ', -559792800, 1, 'Buwana', '0773142217', '', 'Clergy Man', 3, '', '', NULL, 1158019200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(26, 'Tequila Lino  ', -597549600, 1, 'Sekamuli Area', '0782-880521', '', 'Clergy Man', 3, '', '', NULL, 1195516800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(27, 'Deena Hawes  ', -932349600, 1, 'Zirobwe', NULL, '', 'Clergy Man', 3, '', '', NULL, 1190160000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(28, 'Kellye Whitley  ', -363924000, 1, 'Lukomera', '0779-253864', '', 'Clergy Man / Teacher', 3, '', '', NULL, 1166572800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(29, 'Judi Spillman  ', -573703200, 1, 'Balitta- Lwogi', '0782-559766', '', 'Clergy Man', 3, '', '', NULL, 1189468800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(30, 'Emily Ratley  ', -7200, 1, 'Kalere', NULL, '', 'Clergy Man', 3, '', '', NULL, 1159394400, 0, 1420070400, 0, 1427241600, NULL, 3),
+(31, 'Robena Burget  ', -7200, 1, 'Kasana', NULL, '', 'Clergy Man', 3, '', '', NULL, 1159394400, 0, 1420070400, 0, 1427241600, NULL, 3),
+(32, 'Milda Mcamis  ', -427860000, 1, 'Bweyeeyo-Luweero', NULL, '', 'Clergy Man', 3, '', '', NULL, 1159401600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(33, 'Alec Kearl  ', -336794400, 1, 'Nakaseke', '0773-974456', '', 'Pastor / Teacher', 3, '', '', NULL, 1158019200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(34, 'Ngoc Alcantar  ', -185335200, 1, 'Kasana Kvule-Luweero', NULL, '', 'Clergy Man', 3, '', '', NULL, 1157932800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(35, 'Sharen Harr  ', -33271200, 2, 'Luweero Town Council', '0772-442574', '', 'Accounts Clerk', 3, '', '', NULL, 1156896000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(36, 'Crysta Riebe  ', -320032800, 2, 'Kungu- Busula', NULL, '', '', 3, '', '', NULL, 1158796800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(37, 'Ronni Knoles  ', -213069600, 1, 'Kungu-Busula', '0772-365951', '', 'Social Worker', 3, '', '', NULL, 1156723200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(38, 'Ela Denmark  ', 401230800, 2, 'Kungu-Busula', NULL, '', 'Counsellor / Volunteer', 2, '', '', NULL, 1157241600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(39, 'Grace Hamer  ', 55717200, 1, 'Busula', '0701-855942', '', 'Road Supervisor', 2, '', '', NULL, 1157328000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(40, 'Emma Bermea  ', -340855200, 2, 'Wobulenzi', NULL, '', 'Teacher', 3, '', '', NULL, 1157328000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(41, 'Rosana Breit  ', 534549600, 1, 'Busula', NULL, '', 'Student', 2, '', '', NULL, 1166659200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(42, 'Evelynn Mickles  ', 292543200, 2, 'Kungu-Busula', NULL, '', 'Trader - Retail', 3, '', '', NULL, 1157328000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(43, 'Tonie Maroney  ', 141858000, 2, 'Bendegere Namusaale', NULL, '', 'Customer Care Manager', 3, '', '', NULL, 1156550400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(44, 'Fallon Rosendahl  ', -46231200, 1, 'Buwana Kinyogoga', NULL, '', 'Clergy Man', 3, '', '', NULL, 1158789600, 0, 1420070400, 0, 1427241600, NULL, 3),
+(45, 'Renato Loudon  ', -361072800, 1, 'Kaswa- Busula', '0774-764113', '', 'Lay-Reader', 3, '', '', NULL, 1157500800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(46, 'Garth Swartwood  ', -184298400, 2, 'Kikoma C/U Wobulenzi Tc', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1157846400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(47, 'Joannie Gust  ', 75589200, 2, 'Kikoma Wobulenzi', NULL, '', 'Peasant - Farmer', 3, '', '', NULL, 1157846400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(48, 'Fermina Collazo  ', -240890400, 2, 'Kikona Wobulenzi Central', NULL, '', 'Peasant / Farmer', 3, '', '', NULL, 1157932800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(49, 'Lavenia Byler  ', -252468000, 1, 'Kayindu C/U', '0785-772868', '', 'Lay-Reader', 3, '', '', NULL, 1157500800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(50, 'Willetta Moreau  ', 167522400, 1, 'Katuugo Parish', '0782-447156', '', 'Lay-Reader / Tailor', 3, '', '', NULL, 1157414400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(51, 'Alicia Wehner  ', -207453600, 2, 'Waluleeta Makulubita', '0782-461460', '', 'Trainer / Social Worker', 3, '', '', NULL, 1199664000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(52, 'Ocie Edds  ', -605412000, 1, 'Administrator Luweero Diocese', NULL, '', 'Diocesan Bishop', 3, '', '', NULL, 1158796800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(53, 'Darcy Read  ', 309736800, 2, 'Luwero TC', NULL, '', 'Secretary', 2, '', '', NULL, 1158796800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(54, 'Augustina Shuman  ', -244605600, 2, 'Kaswa- Busula', NULL, '', 'Lay-Reader', 2, '', '', NULL, 1157846400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(55, 'Catherine Adler  ', 0, 3, 'Luweero Diocese', NULL, '', '', 1, '', '', NULL, 1242086400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(56, 'Shanae Bello  ', 77144400, 2, 'Luweero Boys School', NULL, '', 'Teacher', 2, '', '', NULL, 1197936000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(57, 'Ferne Munson  ', -7200, 1, 'Bweyeyo', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1159826400, 0, 1420070400, 0, 1427241600, NULL, 3),
+(58, 'Ja Nordby  ', -7200, 2, 'Kungu- Kikoma', NULL, '', 'Housewife', 3, '', '', NULL, 1166572800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(59, 'Illa Penaflor  ', -179632800, 2, 'Kiwogozi', '0772-662202', '', 'Teacher / MP', 1, '', '', NULL, 1166572800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(60, 'Annabelle Bradham  ', -455680800, 1, 'Kiwoko Arc', '0772-657419', '', 'Clergy Man', 3, '', '', NULL, 1167782400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(61, 'Tanner Wake  ', -539143200, 1, 'Bukalabi Parish', '0752-631706', '', 'Clergy Man', 3, '', '', NULL, 1157932800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(62, 'Cristobal Passman  ', -399088800, 2, 'Luteete Arch', NULL, '', 'Housewife', 3, '', '', NULL, 1168387200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(63, 'Rosita Pankratz  ', -394077600, 2, 'Ndejje Village', NULL, '', 'Peasant / Farmer', 3, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(64, 'Angila Gauldin  ', 404949600, 2, 'Nalinya Lwantale Girls P/S', NULL, '', 'Teacher', 2, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(65, 'Jerrica Darnell  ', 534981600, 1, 'Ndejje- Sambwe', NULL, '', 'Student', 2, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(66, 'Paul Mushrush  ', 513554400, 2, 'Ndejje - Sambwe', NULL, '', '', 2, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(67, 'Daren Konkol  ', 0, 0, '', NULL, '', '', 1, '', '', NULL, 0, 0, 0, 0, 1427241600, NULL, 0),
+(68, 'Kristin Lippard  ', 967323600, 2, 'Ndejje- Sambwe', NULL, '', '', 2, '', '', NULL, 1169510400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(69, 'Frederic Marchese  ', 510012000, 1, 'Ndejje- Sambwe', NULL, '', '', 2, '', '', NULL, 1168732800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(70, 'Gaynelle Busbee  ', -7200, 0, 'Kikoma Wobulenzi', NULL, '', 'Service Provider NAADS/AGRIC', 3, '', '', NULL, 1169938800, 0, 1420070400, 0, 1427241600, NULL, 3),
+(71, 'Remona Sheffler  ', -75693600, 2, 'Kisaawe Muyenga Wobulenzi', NULL, '', 'Teacher', 2, '', '', NULL, 1170111600, 0, 1420070400, 0, 1427241600, NULL, 3),
+(72, 'Federico Iliff  ', -115178400, 2, 'Luweero Child Devt Centre', NULL, '', 'Peasant', 2, '', '', NULL, 1156896000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(73, 'Chan Milby  ', 864252000, 2, 'St.Peters-Kisugu', NULL, '', '', 2, '', '', NULL, 1200960000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(74, 'Piedad Mcgonigal  ', -208231200, 2, 'Ndejje Arch', NULL, '', 'Health Coordinator', 3, '', '', NULL, 1170115200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(75, 'Rhonda Pierpont  ', 0, 0, '', NULL, '', '', 1, '', '', NULL, 0, 0, 1420070400, 0, 1420070400, NULL, 1),
+(76, 'Celinda Dulac  ', -45194400, 1, 'Luweerotc- Kizito Zone', '0712-219411', '', 'Clergy Man / Teacher', 3, '', '', NULL, 1170115200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(77, 'Edmond Kneeland  ', 120348000, 2, 'Luweero', NULL, '', 'Secretary', 3, '', '', NULL, 1170633600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(78, 'Lyndia Kump  ', -872301600, 2, 'C/O DCA Kampala', NULL, '', 'Nurse', 2, '', '', NULL, 1170633600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(79, 'Michael Poovey  ', -358740000, 2, 'Luweero Diocese', NULL, '', 'CBO Trainer', 3, '', '', NULL, 1170720000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(80, 'Omega Prochnow  ', -121312800, 2, 'Luweero Diocese', '0782-352335', '', 'Nurse', 3, '', '', NULL, 1170115200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(81, 'Sheri Stuck  ', -873770400, 1, 'Kiteredde Buyuki Katikamu', NULL, '', 'Peasant / Farmer', 3, '', '', NULL, 1188259200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(82, 'Shellie Bromley  ', -24544800, 1, 'Kangulumira- Mpologoma ', NULL, '', 'Teacher', 3, '', '', NULL, 1188259200, 0, 1420070400, 0, 1420070400, NULL, 1),
+(83, 'Joshua Meiser  ', -1036803600, 1, 'Kikasa Wobulenzi Cetral', '0790-562315', '', 'Building Contractor', 3, 'Anne Meiser', 'Wife', NULL, 1174435200, 0, 1420070400, 1, 1445425402, NULL, 1),
+(84, 'Jean Piehl  ', 135727200, 1, 'Wobulenzi-Kigulu', NULL, '', '', 3, '', '', NULL, 1174867200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(85, 'Lovella Canaday  ', 399934800, 1, 'Kiwoko - Kasana ', NULL, '', 'Primary Teacher', 2, '', '', NULL, 1175212800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(86, 'Val Cauley  ', 200955600, 2, 'Luweero T/C', '0772-688874', '', 'Social Worker', 2, '', '', NULL, 1178236800, 0, 1420070400, 1, 1420070400, NULL, 1),
+(87, 'Michale Belvin  ', -600228000, 3, 'Kyatagali - Mabuye -Kamira', NULL, '', 'Lay-Reader / Peasant', 3, '', '', NULL, 1215043200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(88, 'Vernon Shade  ', 252712800, 2, 'Kagoma', NULL, '', 'Social Worker', 3, '', '', NULL, 1181174400, 0, 1420070400, 1, 1420070400, NULL, 1),
+(89, 'Susie Cratty  ', 72054000, 2, 'Katikamu P/S', '0782-158039', '', 'Teacher', 3, '', '', NULL, 1182211200, 0, 1420070400, 1, 1427241600, NULL, 5),
+(90, 'Sima Cunningham  ', 188690400, 1, 'Luweero Town Council', '0772-305106', '', 'Social Worker', 2, '', '', NULL, 1182211200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(91, 'Leonel Weitzman  ', -164941200, 1, 'Katikamu Trinity Church', '0774068617', '', 'Lay-Reader', 3, '', '', NULL, 1182384000, 0, 1420070400, 1, 1427241600, NULL, 5),
+(92, 'Corine Hansell  ', 135986400, 2, 'Katikamu- Sebamala', '0782-485545', '', 'Teacher', 3, '', '', NULL, 1182384000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(93, 'Beatrice Cortez  ', 166744800, 1, 'Kibula LC1 Kabakeddi Parish', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1211241600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(94, 'Lore Keltz  ', 16837200, 1, 'Katikamu', '0772-670909', '', 'Clergy Man', 3, '', '', NULL, 1182729600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(95, 'Eda Edmonson  ', 261352800, 1, 'Kasoma Zone', '0772-641144', '', 'Health Worker', 2, '', '', NULL, 1182211200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(96, 'Clotilde Fuqua  ', -83210400, 1, 'Kangulumira- Mpologoma ', '0773-266136', '', 'Business Man', 3, '', '', NULL, 1185840000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(97, 'Rosamaria Hardeman  ', -7200, 1, 'Sempa C/U', '0772964823', '', 'Lay-Reader', 3, '', '', NULL, 1184025600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(98, 'Wilfred Dinger  ', 24094800, 1, 'Nalulya Butuntumula Luweero Diocese', '0782-424243', '', 'Lay-Reader', 2, '', '', NULL, 1185840000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(99, 'Minh Myrie  ', -161920800, 1, 'Mulilo Zone', NULL, '', 'Tailor', 3, '', '', NULL, 1187049600, 0, 1420070400, 1, 1420070400, NULL, 1),
+(100, 'Sherly Boudreau  ', 313974000, 2, 'Kasana T/C', '0782-415747', '', 'Child Development Officer', 2, 'Hans Wurst', '', NULL, 1187654400, 0, 1420070400, 1, 1445427949, NULL, 1),
+(101, 'Clay Facer  ', -474516000, 2, 'C/U Kyetume', NULL, '', 'Lay-Reader', 2, '', '', NULL, 1190073600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(102, 'Roma Costales  ', 215388000, 1, 'Kidukulu - Makulubita', NULL, '', 'Lay-Reader / Coffe Trader', 3, '', '', NULL, 1194912000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(103, 'Shad Kiger  ', -445312800, 2, 'Luweero Tc', '0782-116626', '', 'Teacher', 3, '', '', NULL, 1192492800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(104, 'Dwayne Yeoman  ', -7200, 3, 'Kirema Village', NULL, '', '', 1, '', '', NULL, 1192492800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(105, 'Latoya Ensley  ', 166658400, 2, 'Luweero Town Council', '0758-885228', '', 'Teacher', 3, '', '', NULL, 1203292800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(106, 'Judie Walts  ', -361936800, 1, 'Bbale Central Kiyanda Parish', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1191456000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(107, 'Gilda Shim  ', -26791200, 2, 'Wobulenzi Tc', NULL, '', 'Tailor', 3, '', '', NULL, 1193702400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(108, 'Sharla Buhl  ', -7200, 0, 'Namba Village - Ziroobwe', NULL, '', 'Shoe-making', 2, '', '', NULL, 1192658400, 0, 1420070400, 0, 1427241600, NULL, 3),
+(109, 'Madalene Sunde  ', -56944800, 2, 'Luweero T/C', NULL, '', 'Peasant', 3, '', '', NULL, 1195084800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(110, 'Etta Bergh  ', 152143200, 2, 'Luweero Girls'' School', '0772-472944', '', 'Teacher', 3, '', '', NULL, 1194912000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(111, 'Thomasine Lash  ', -1167616800, 1, 'Dan Yawe- Vvumba', '0772-923534', '', 'Farmer', 3, '', '', NULL, 1195516800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(112, 'Mireille Birdsall  ', 38527200, 1, 'Kasaala P/S - Voc St.Mark', '0782-489069', '', 'Teacher', 3, '', '', NULL, 1196121600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(113, 'Shirly Cavalieri  ', 91749600, 2, 'Wobulenzi Town Council', '0774-569606', '', 'Farmer', 3, '', '', NULL, 1196121600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(114, 'Lavinia Cavallo  ', -205984800, 1, 'Wakayamba P/S', '0774-085558', '', 'Teacher', 3, '', '', NULL, 1196294400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(115, 'Tiny Mable  ', -128829600, 1, 'Luwero Boys'' PS', NULL, '', 'Teacher', 3, '', '', NULL, 1196294400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(116, 'Alden Koval  ', -59709600, 1, 'Katikamu', '0781-703077', '', 'Farmer', 3, '', '', NULL, 1171238400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(117, 'Romelia Rezentes  ', -482637600, 2, 'Namakofu -Nambi Zirobwe', '0783-016223', '', 'Extensive Farmer', 3, '', '', NULL, 1171756800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(118, 'Kaylee Cate  ', 20638800, 2, 'Kalagala Kalanamu Parish', '0782-104384', '', 'Teacher', 3, '', '', NULL, 1198022400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(119, 'Toya Rank  ', -7200, 1, 'unknown', NULL, '', 'Teacher', 3, '', '', NULL, 1199142000, 0, 1420070400, 0, 1420070400, NULL, 1),
+(120, 'Gregg Stillings  ', 30751200, 2, 'Binyonyi Zone Luweero T/C', '0782-424855', '', 'Secretary Luweero District Admin.', 3, '', '', NULL, 1200355200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(121, 'Orville Serafino  ', 121039200, 2, 'Kiwoko Hospital', NULL, '', 'Midwife Kiwoko Hospital', 2, '', '', NULL, 1200960000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(122, 'Shaneka Swinford  ', -7200, 2, 'Nabagaya Road Luweero', '0772-344445', '', 'Accounts Clerk (Water Sector)', 3, '', '', NULL, 1208822400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(123, 'Margeret Pajak  ', -52797600, 1, 'Kyambogo Mixed PS, Luweero', '0772-949049', '', 'Teacher', 3, '', '', NULL, 1204070400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(124, 'Stevie Perrigo  ', -919562400, 1, 'Bakijulura', '0779-544750', '', 'Lay-Reader', 3, '', '', NULL, 1194134400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(125, 'Terrie Fassett  ', -1001728800, 1, 'Kande- Katikamu', '0774-647288', '', 'Farmer', 3, '', '', NULL, 1205971200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(126, 'Angele Clancy  ', -7200, 2, 'C/O Kabyanga(Nakazzi Luweero)', '0774-446075', '', '', 1, '', '', NULL, 1216252800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(127, 'Margarete Zuk  ', 248911200, 1, 'Bugabo - Kibanyi Bamunanika', '0774-639465', '', 'Boda-Boda Transporter', 3, '', '', NULL, 1202083200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(128, 'Theresia Rutkowski  ', 149374800, 2, 'Luweero Town Council', '0774-956160', '', 'Teacher', 3, '', '', NULL, 1201737600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(129, 'Raye Hambly  ', -7200, 2, 'Nakasero Zone Wobulenzi', '0772-601112', '', 'Teacher', 3, '', '', NULL, 1202342400, 0, 1420070400, 1, 1428392156, NULL, 6),
+(130, 'Almeda Vu  ', -555732000, 2, 'Malou Nsamuu Makulubita', NULL, '', 'Lay-Reader', 3, '', '', NULL, 0, 0, 1420070400, 1, 1427241600, NULL, 3),
+(131, 'Philomena Shumate  ', -284176800, 2, 'Kizito Lc1', NULL, '', 'Health Information Assistant', 3, '', '', NULL, 0, 0, 1420070400, 1, 1427241600, NULL, 3),
+(132, 'Valery Sola  ', -63165600, 2, 'Bunyonyi Zone (Luweero T/C)', NULL, '', '', 4, '', '', NULL, 0, 0, 1420070400, 1, 1427241600, NULL, 3),
+(133, 'Vanita Hymel  ', 120175200, 2, 'Kasana Kiwogozi', NULL, '', 'Peasant', 2, '', '', NULL, 1205884800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(134, 'Karyn Rhoton  ', -7200, 2, 'Luweero Cdc', NULL, '', 'Peasant', 4, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(135, 'Valerie Laguerre  ', -7200, 2, 'Kasana - Kavule ', NULL, '', 'Peasant', 4, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(136, 'Arturo Cruz  ', 27036000, 2, 'Kasana- Kavule ', NULL, '', 'Restaurant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(137, 'Lue Hinkel  ', -7200, 2, 'Binyonyi Zone Luweero T/C', NULL, '', 'Farmer', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(138, 'Miesha Runions  ', 182034000, 2, 'Luweero Cdc', NULL, '', 'Peasant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(139, 'Katharina Clow  ', -1130400, 2, 'Kakinzi- Kakabala', NULL, '', 'Peasant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(140, 'Antoinette Ortego  ', -57808800, 2, 'Ngogolo', NULL, '', 'Peasant', 1, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(141, 'Scottie Mayhugh  ', -18324000, 1, 'Kigavu Kabakedi Luweero Tc', '0774-443579', '', 'Peasant', 3, '', '', NULL, 1231804800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(142, 'Hester Janousek  ', -7200, 2, 'Kasomer Luwero Town Council', NULL, '', 'selfemployeed', 2, '', '', NULL, 1205794800, 0, 1420070400, 0, 1427241600, NULL, 3),
+(143, 'Criselda Curro  ', -59191200, 2, 'Nabagaya C/O Luweero Cdc', NULL, '', 'Police-Woman', 1, '', '', NULL, 1205798400, 0, 1420070400, 0, 1427241600, NULL, 3),
+(144, 'Kristi Ogren  ', -8215200, 2, 'Kasana- Kavule', NULL, '', 'Peasant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(145, 'Lesley Nardi  ', 143413200, 2, 'Nabagaya Luweero Tc', NULL, '', 'Peasant', 2, '', '', NULL, 1205798400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(146, 'Kai Ridlon  ', -488340000, 1, 'Wakyato Luweero Diocese', NULL, '', 'Parish Priest', 3, '', '', NULL, 1220918400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(147, 'Sammy Wrenn  ', -815191200, 1, 'Kikubajinja Lc1 C/O St Mark Luweero ', NULL, '', 'Priest in St. Mark', 3, '', '', NULL, 1204416000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(148, 'Jacelyn Broker  ', 257292000, 2, 'Wobulenzi- Katikamu', NULL, '', 'Tailor', 2, '', '', NULL, 1207612800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(149, 'Margarett Ingold  ', -386474400, 2, 'Butikwa Kiwoko Kikamulo', NULL, '', 'Nurse Aide', 4, '', '', NULL, 1204934400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(150, 'Jefferson Pierson  ', -680061600, 2, 'Kamuli Kikamuloc/O Kiwoko Arch', '0782-884279', '', 'Farmer', 3, '', '', NULL, 1207612800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(151, 'Glynda Delcambre  ', 141858000, 1, 'Kamuli-Kikamulo', '0773298713', '', 'Peasant', 3, '', '', NULL, 1210032000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(152, 'Melina Zak  ', -7200, 1, 'Kamuli-Kikamulo', '0778-569954', '', 'Peasant / Lay-Reader', 3, '', '', NULL, 1210032000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(153, 'Migdalia Windle  ', 283644000, 1, 'Pd Nsawo Cdc', NULL, '', 'Social Worker', 2, '', '', NULL, 1211414400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(154, 'Marcellus Felipe  ', -295408800, 2, 'Buto Bamunanika', '0782-008255', '', 'Peasant', 3, '', '', NULL, 1210032000, 0, 1420070400, 0, 1427241600, NULL, 3),
+(155, 'Ulrike Graffam  ', 396046800, 2, 'Kibengo Umea P/S', NULL, '', 'Teacher', 3, '', '', NULL, 1210723200, 0, 1420070400, 0, 1427241600, NULL, 3),
+(156, 'Shawnta Deltoro  ', 129506400, 2, 'Luweero T/C', '0752-575266', '', 'CDO Finance', 3, '', '', NULL, 1210636800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(157, 'Suzan Tibbs  ', 110408400, 2, 'Kalongo Miti Luweero Tc', NULL, '', 'Cook', 3, '', '', NULL, 1213660800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(158, 'Louella Dancy  ', -506829600, 1, 'Mubulizi -Tweyanze C/U', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1240876800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(159, 'Ruth Anstine  ', 460760400, 1, 'Nakasongola- Ssasira', NULL, '', 'Boda-Boda Man', 2, '', '', NULL, 1214265600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(160, 'Nathanial Ruch  ', -538624800, 1, 'Kasoma Zone', NULL, '', 'Peasant', 2, '', '', NULL, 1214870400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(161, 'Gwendolyn Kimbro  ', -167364000, 1, 'Kabeera- Kapeeka', '0788-458668', '', 'Peasant / Farmer', 3, '', '', NULL, 1219104000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(162, 'Riley Paugh  ', 28850400, 1, 'Kalongomiti', NULL, '', 'Teacher', 3, '', '', NULL, 1219276800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(163, 'Claretha Thibodeau  ', 448840800, 1, 'Kirema- Kapeeke', NULL, '', 'Peasant', 3, '', '', NULL, 1219276800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(164, 'Iliana Arends  ', -7200, 2, 'Luweero Boys P/S', NULL, '', 'Deputy Head Teacher', 2, '', '', NULL, 1218499200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(165, 'Anjelica Averett  ', -31543200, 2, 'Luweero Ss', '0772-843103', '', 'Teacher', 3, '', '', NULL, 1219881600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(166, 'Juli Mey  ', -240026400, 2, 'Kakoola- Sekamuli', '0775-571944', '', 'Farmer', 3, '', '', NULL, 1216684800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(167, 'Carlota Bennefield  ', -204170400, 1, 'Kizito Zone Luweero Tc', '0772-496690', '', 'Lecturer Kyambogo University', 3, '', '', NULL, 1220486400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(168, 'Karisa Stockstill  ', -62647200, 2, 'Kikoma Village- Wobulenzi Tc', NULL, '', 'Lay-Reader', 2, '', '', NULL, 1170115200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(169, 'Carolyn Randle  ', -292212000, 2, 'Kasana Market Zone', '0772-608854', '', 'Inspector of Schools', 3, '', '', NULL, 1221523200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(170, 'Therese Conniff  ', 328222800, 2, 'Kasoma Zone', '0773-057019', '', 'CDO Sponsorship', 2, '', '', NULL, 1221523200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(171, 'Dagmar Lembo  ', 390690000, 2, 'Namirembe -Kirema Parish', '0774-012894', '', 'Business Woman', 3, '', '', NULL, 1222128000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(172, 'Rachelle Ponton  ', -33271200, 1, 'Ndejje', NULL, '', 'Teacher', 3, '', '', NULL, 1223337600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(173, 'Zetta Zambrano  ', -251344800, 2, 'Kalongo Miti', '0772-344440', '', 'Business', 3, '', '', NULL, 0, 0, 1420070400, 1, 1427241600, NULL, 3),
+(174, 'Hoyt Wolverton  ', 336258000, 1, 'Katuugo Cdc', NULL, '', 'Social Worker', 2, '', '', NULL, 1224547200, 0, 1420070400, 0, 1427241600, NULL, 3),
+(175, 'Meagan Spore  ', 399416400, 2, 'Nabagaya', '0774-061011', '', 'Social Worker', 2, '', '', NULL, 1328745600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(176, 'Trenton Moreira  ', -221104800, 1, 'Buzzibwera', '0779-268607', '', 'Lay-Reader', 3, '', '', NULL, 1226534400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(177, 'Chery Schirmer  ', -42429600, 2, 'Wampewo', NULL, '', 'Teacher', 3, '', '', NULL, 1226966400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(178, 'Adah Brumbaugh  ', 218584800, 2, 'Busula', NULL, '', 'Peasant', 2, '', '', NULL, 1329350400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(179, 'Albina Ono  ', 292024800, 1, 'Nsawo Cdc', NULL, '', 'Social Worker', 2, '', '', NULL, 1227830400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(180, 'Marva Poll  ', 397861200, 1, 'State Anthony-Nakaseke', NULL, '', 'State Attorney Nakaseke', 3, '', '', NULL, 1227744000, 0, 1420070400, 0, 1427241600, NULL, 3),
+(181, 'Renata Lamothe  ', 48891600, 2, 'Kiwoko Mixed P/S', '0788-717356', '', 'Teacher', 3, '', '', NULL, 1236038400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(182, 'Sharell Mccormick  ', -473047200, 1, 'Timuna Parish', '0772-949273', '', 'Priest', 3, '', '', NULL, 1234828800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(183, 'Sharan Beacham  ', -371959200, 1, 'Ndeeba Ss', '0782-065219', '', 'Teacher', 3, '', '', NULL, 1236038400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(184, 'Annamae Morano  ', -43380000, 1, 'Kampala Road', NULL, '', 'Business Man', 3, '', '', NULL, 1235001600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(185, 'Frederic Capone  ', -338436000, 1, 'Kyetume- Nakaseeta', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1228521600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(186, 'Lorina Olden  ', 180565200, 1, 'Kamuli - Kikamulo', '0782-375463', '', 'Business Man', 2, '', '', NULL, 1234828800, 0, 1420070400, 1, 1427241600, NULL, 3),
+(187, 'Ty Stgelais  ', -7200, 2, 'Luweero Boys P/S', '0758-888415', '', 'Teacher', 2, '', '', NULL, 1242086400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(188, 'Brigette Hathaway  ', 0, 2, 'Kyankonnwa Katuugo Kakooge', '0781577505', '', '', 1, '', '', NULL, 1237248000, 0, 1420070400, 1, 1420070400, NULL, 1),
+(189, 'Vanita Eaves  ', -496202400, 2, 'Kasana Market Ltc', '0774-285085', '', 'Teacher', 4, '', '', NULL, 1237248000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(190, 'Valentin Kenna  ', 607125600, 1, 'Namirembe -Kirema Parish', '0774-012894', '', 'Mechanic', 2, '', '', NULL, 1245628800, 0, 1420070400, 0, 1443692389, NULL, 3),
+(191, 'Fredia Grissett  ', 330296400, 1, 'Kiwoko- Kasana ', '0772-647451', '', 'Business', 2, '', '', NULL, 1250553600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(192, 'Lettie Amezcua  ', -916192800, 1, 'Kigavu-Kabaledi, Luweero', '0752-624769', '', 'Lay-Reader', 3, '', '', NULL, 1232409600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(193, 'Jayson Reader  ', -179892000, 1, 'Buzzibwera', NULL, '', 'Lay-Reader', 3, '', '', NULL, 1231977600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(194, 'Shonna Montenegro  ', 383263200, 1, 'Lumu Zone C/O Luweero S S', NULL, '', 'Teacher', 2, '', '', NULL, 1253145600, 0, 1420070400, 1, 1427241600, NULL, 3),
+(195, 'Janell Zager  ', -303530400, 2, 'Kasaala Lc1', '0779-294359', '', 'Peasant', 3, '', '', NULL, 1252368000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(196, 'Nan Amarante  ', -176176800, 2, 'St.Luke Ndabilako - Sekamuli', NULL, '', 'Lay-Reader', 1, '', '', NULL, 1252886400, 0, 1420070400, 1, 1427241600, NULL, 3),
+(197, 'Cheryll Stiger  ', 0, 2, 'Busula /Wobulenzi', NULL, '', '', 1, '', '', NULL, 1254787200, 0, 1420070400, 1, 1420070400, NULL, 1),
+(198, 'Rolland Martines  ', -38800800, 1, 'Kasana- Kavule', NULL, '', 'Business', 3, '', '', NULL, 1254787200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(199, 'Conrad Crowl  ', 231022800, 1, 'Kasoma Zone', '0772-554570', '', 'Teacher', 3, '', '', NULL, 1255392000, 0, 1420070400, 1, 1427241600, NULL, 3),
+(200, 'Laraine Ceasar  ', -7200, 3, 'Ndejje Archdeaconary Health Centre', '0752-631266', '', '', 1, '', '', NULL, 1257379200, 0, 1420070400, 1, 1427241600, NULL, 3),
+(201, 'St. Martin of Tours', -604026000, 1, 'Tours', '0', '', 'Bishop', 2, '', '', NULL, 1446678000, 0, 1446678000, 1, 1446715769, 'uploads/photos/cust201_200x260.jpg', 3);
 
 -- --------------------------------------------------------
 
@@ -411,7 +413,7 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   `inc_text` varchar(200) NOT NULL,
   `inc_created` int(11) NOT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=375 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=395 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `incomes`
@@ -543,7 +545,9 @@ INSERT INTO `incomes` (`inc_id`, `cust_id`, `inctype_id`, `inc_amount`, `inc_dat
 (371, 83, 4, 20000, 1445378400, 200, '', 1445426358, 1),
 (372, 83, 4, 5000, 1456009200, 120, '', 1445426419, 1),
 (373, 21, 7, 0, 1445551200, 123, '', 1445589504, 3),
-(374, 183, 7, 0, 1445551200, 561, '', 1445591264, 3);
+(374, 183, 7, 0, 1445551200, 561, '', 1445591264, 3),
+(393, 201, 1, 10000, 1446678000, 123, '', 1446713714, 3),
+(394, 201, 6, 2000, 1446678000, 123, '', 1446713714, 3);
 
 -- --------------------------------------------------------
 
@@ -617,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `loan_feepaid` int(1) NOT NULL DEFAULT '0',
   `loan_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `loans`
@@ -725,7 +729,7 @@ CREATE TABLE IF NOT EXISTS `logrec` (
   `logrec_start` int(11) DEFAULT NULL,
   `logrec_end` int(11) DEFAULT NULL,
   `logrec_logout` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `logrec`
@@ -764,7 +768,10 @@ INSERT INTO `logrec` (`logrec_id`, `user_id`, `logrec_start`, `logrec_end`, `log
 (30, 1, 1445851659, 1445853303, 1),
 (31, 1, 1445866890, 1445866893, 1),
 (32, 3, 1445867897, 1445867901, 1),
-(33, 3, 1445868136, NULL, 0);
+(33, 3, 1445868136, 1445870449, 1),
+(34, 1, 1445868949, 1445871011, 1),
+(35, 3, 1446199433, 1446199755, 1),
+(36, 3, 1446707610, 1446715844, 1);
 
 -- --------------------------------------------------------
 
@@ -785,7 +792,7 @@ CREATE TABLE IF NOT EXISTS `ltrans` (
   `ltrans_receipt` int(11) DEFAULT NULL,
   `ltrans_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=459 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `ltrans`
@@ -1270,7 +1277,7 @@ CREATE TABLE IF NOT EXISTS `shares` (
   `share_transfrom` int(11) DEFAULT NULL,
   `share_created` int(15) DEFAULT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=203 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=208 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `shares`
@@ -1478,7 +1485,8 @@ INSERT INTO `shares` (`share_id`, `cust_id`, `share_date`, `share_amount`, `shar
 (199, 200, 1420070400, 3, 60000, 0, 0, 0, NULL, 1),
 (200, 3, 1430863200, 3, 60000, 1213, 0, NULL, 1443691128, 3),
 (201, 3, 1443692344, 1, 20000, 0, 1, 190, 1443692344, 3),
-(202, 190, 1443692344, -1, -20000, 0, 1, NULL, 1443692344, 3);
+(202, 190, 1443692344, -1, -20000, 0, 1, NULL, 1443692344, 3),
+(207, 201, 1446678000, 1, 20000, 123, 0, NULL, 1446713722, 3);
 
 -- --------------------------------------------------------
 
@@ -1547,7 +1555,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_name`, `user_pw`, `ugroup_id`, `user_created`) VALUES
-(1, 'admin', '3c29a3c4aff054d9557eea510df85960712812d2', 1, 1436350616),
+(1, 'admin', '3c29a3c4aff054d9557eea510df85960712812d2', 1, 1445869349),
 (2, 'ext-admin', '3c29a3c4aff054d9557eea510df85960712812d2', 4, 1436350622),
 (3, 'John Doe', '3c29a3c4aff054d9557eea510df85960712812d2', 2, 1436350633);
 
@@ -1694,7 +1702,7 @@ MODIFY `cur_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT für Tabelle `customer`
 --
 ALTER TABLE `customer`
-MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
+MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=202;
 --
 -- AUTO_INCREMENT für Tabelle `cust_married`
 --
@@ -1719,7 +1727,7 @@ MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 -- AUTO_INCREMENT für Tabelle `incomes`
 --
 ALTER TABLE `incomes`
-MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=375;
+MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=395;
 --
 -- AUTO_INCREMENT für Tabelle `inctype`
 --
@@ -1734,7 +1742,7 @@ MODIFY `loan-sec_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `loans`
 --
 ALTER TABLE `loans`
-MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
+MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=182;
 --
 -- AUTO_INCREMENT für Tabelle `loanstatus`
 --
@@ -1744,12 +1752,12 @@ MODIFY `loanstatus_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT für Tabelle `logrec`
 --
 ALTER TABLE `logrec`
-MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT für Tabelle `ltrans`
 --
 ALTER TABLE `ltrans`
-MODIFY `ltrans_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=459;
+MODIFY `ltrans_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=402;
 --
 -- AUTO_INCREMENT für Tabelle `savings`
 --
@@ -1774,7 +1782,7 @@ MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT für Tabelle `shares`
 --
 ALTER TABLE `shares`
-MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=203;
+MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=208;
 --
 -- AUTO_INCREMENT für Tabelle `shareval`
 --

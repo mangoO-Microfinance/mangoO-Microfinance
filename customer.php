@@ -164,12 +164,15 @@
 
 		<!-- HEADING -->	
 		<p class="heading">
-			<?PHP	echo $result_cust['cust_name'].' ('.$result_cust['cust_id'].'/'.date("Y", $result_cust['cust_since']).')'; ?>
+			<?PHP	
+			echo $result_cust['cust_name'].' ('.$result_cust['cust_id'].'/'.date("Y", $result_cust['cust_since']).')'; 
+			if (isset($result_cust['cust_pic'])) echo '<a href="'.$result_cust['cust_pic'].'" target="popup" onclick="window.open(\''.$result_cust['cust_pic'].'\',\''.$result_cust['cust_name'].'\',\'width=200px,height=260px\')"> <img src="./ico/photo.png"></a>';
+			?>
 		</p>
 		
 		<!-- LEFT SIDE: Customer Details -->
 		<div class="content_left" style="width:60%;">
-			
+
 			<form action="customer.php" method="post" onSubmit="return validate(this)">
 				
 				<table id ="tb_fields" style="border-spacing:0.1em 1.25em;">

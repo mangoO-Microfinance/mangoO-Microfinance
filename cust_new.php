@@ -31,7 +31,7 @@
 		//$cust_lengthres = sanitize($_POST['cust_lengthres']);
 		$cust_sick = sanitize($_POST['cust_sick']);
 		$cust_since = strtotime(sanitize($_POST['cust_since']));
-		$receipt_no = sanitize($_POST['receipt_no']);
+		$_SESSION['receipt_no'] = sanitize($_POST['receipt_no']);
 		
 		//Insert new Customer into CUSTOMER
 		$sql_insert = "INSERT INTO customer (cust_name, cust_dob, cust_sex, cust_address, cust_phone, cust_email, cust_occup, cust_married_id, cust_heir, cust_heirrel, cust_since, cust_sick, cust_lastsub, cust_active, cust_lastupd, user_id) VALUES ('$cust_name', '$cust_dob', '$cust_sex', '$cust_address', '$cust_phone', '$cust_email', '$cust_occup', '$cust_married_id', '$cust_heir', '$cust_heirrel', '$cust_since', '$cust_sick', '$cust_since', '1', '$timestamp', '$_SESSION[log_id]')";
@@ -43,20 +43,20 @@
 		$query_maxid = mysql_query ($sql_maxid);
 		check_sql($query_maxid);
 		$maxid = mysql_fetch_assoc($query_maxid);
-		$cust_id = $maxid['MAX(cust_id)'];
+		$_SESSION['cust_id'] = $maxid['MAX(cust_id)'];
 		
 		//Insert Entrance Fee into INCOMES
-		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ($cust_id, '1', $fee_entry, $cust_since, $receipt_no, $timestamp, '$_SESSION[log_id]')";
+		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '1', $fee_entry, $cust_since, '$_SESSION[receipt_no]', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
 		check_sql($query_insert_fee);
 		
 		//Insert Stationary Sales into INCOMES
-		$sql_insert_sales = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ($cust_id, '6', $fee_stationary, $cust_since, '$receipt_no', $timestamp, '$_SESSION[log_id]')";
+		$sql_insert_sales = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '6', $fee_stationary, $cust_since, '$_SESSION[receipt_no]', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_sales = mysql_query ($sql_insert_sales);
 		check_sql($query_insert_sales);
 		
-		//Refer to customer.php
-		header('Location: acc_share.php?cust='.$cust_id.'&rec='.$receipt_no);
+		//Refer to cust_new_pic.php
+		header('Location: cust_new_pic.php');
 	}
 	
 	//Select Marital Status for Drop-down-Menu
@@ -107,13 +107,13 @@
 		
 		<!-- CONTENT -->
 		<div class="content_center">
-			<form action="cust_new.php" method="post" onSubmit="return validate(this)">
+			<form action="cust_new.php" method="post" onSubmit="return validate(this)" enctype="multipart/form-data">
 				
 				<table id ="tb_fields">
 					<tr>
-						<td><b>Name</b>:</td>
+						<td>Name:</td>
 						<td><input type="text" name="cust_name" placeholder="Full Name" tabindex="1" /></td>
-						<td><b>Residence</b>:</td>
+						<td>Residence:</td>
 						<td><input type="text" name="cust_address" placeholder="Place of Residence" tabindex="6" /></td>
 						<td>Sickness:</td>
 						<td>
@@ -127,19 +127,19 @@
 						</td>
 					</tr>
 					<tr>
-						<td><b>Gender</b>:</td>
+						<td>Gender:</td>
 						<td>
 							<input type="radio" name="cust_sex" value="1" checked="checked" tabindex="2" /> Male
 							<input type="radio" name="cust_sex" value="2"> Female
 							<input type="radio" name="cust_sex" value="3"> Instit.
 						</td>
-						<td><b>Phone No</b>:</td>
+						<td>Phone No:</td>
 						<td><input type="text" name="cust_phone" tabindex="7"/></td>
 						<td>Member since:</td>
 						<td><input type="text" name="cust_since" value="<?PHP echo date("d.m.Y", $timestamp) ?>" tabindex="12" /></td>
 					</tr>
 					<tr>
-						<td><b>DoB</b>:</td>
+						<td>DoB:</td>
 						<td><input type="text" name="cust_dob" placeholder="DD.MM.YYYY" tabindex="3" /></td>
 						<td>E-Mail:</td>
 						<td><input type="text" name="cust_email" placeholder="abc@xyz.com" tabindex="8"/></td>
@@ -147,7 +147,7 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td><b>Marital Status</b>:</td>			
+						<td>Marital Status:</td>			
 						<td>
 							<select name="cust_married_id" class="defaultfield" size="1" tabindex="4">';
 								<?PHP
@@ -183,7 +183,7 @@
 					</tr>
 					<tr>
 						<td colspan="6" class="center">
-							<input type="submit" name="create" value="Create" tabindex="14" />
+							<input type="submit" name="create" value="Create Customer" tabindex="15" />
 						</td>
 					</tr>
 				</table>

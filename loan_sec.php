@@ -63,10 +63,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('New Loan',0) ?>	
-		<script type="text/javascript">
-		</script>
-	</head>
+	<?PHP htmlHead('New Loan',1) ?>
 	
 	<body>
 		<!-- MENU HEADER & TABS -->
