@@ -25,6 +25,8 @@
 			<a href="rep_expenditures.php">Expenditures Report</a>
 			<a href="rep_loans.php">Loans Report</a>
 			<a href="rep_capital.php" id="item_selected">Capital Report</a>
+			<a href="rep_monthly.php">Monthly Report</a>
+			<a href="rep_annual.php">Annual Report</a>
 		</div>
 			
 		<!-- MENU: Selection Bar -->
