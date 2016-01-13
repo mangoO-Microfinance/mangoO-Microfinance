@@ -12,6 +12,7 @@
 	while($row_settings = mysql_fetch_assoc($query_settings)){
 		if ($row_settings['set_id'] == 4) $_SESSION['set_cur'] = $row_settings['set_value'];
 		if ($row_settings['set_id'] == 5) $_SESSION['set_auf'] = $row_settings['set_value'];
+		if ($row_settings['set_id'] == 6) $_SESSION['set_deact'] = $row_settings['set_value'];
 	}
 	
 	//Select Overdue Loan Instalments from LTRANS
@@ -67,15 +68,9 @@
 									<td>'.$row_subscrdef['cust_name'].'</td>
 									<td>'.date("d.m.Y", $row_subscrdef['cust_lastsub']).'</td>
 								</tr>';
-					
-					//Set customer to "inactive" after 18 months of delaying subscription
-					if ($row_subscrdef['cust_lastsub'] < ($timestamp - 47347200) && $row_subscrdef['cust_active'] == 1){
-						$sql_deactivate = "UPDATE customer SET cust_active = '0' WHERE cust_id = '$row_subscrdef[cust_id]'";
-						$query_deactiate = mysql_query($sql_deactivate);
-						echo "<script>
-										alert('The membership for ".$row_subscrdef['cust_name']." (".$row_subscrdef['cust_id'].") has been set to INACTIVE.')
-									</script>";
-					}
+								
+					// Module for automatic account deactivation if customer failed to renew subscription 
+					if ($_SESSION['set_deact'] == 1) include 'modules/mod_deactivate.php';
 				}
 				?>
 			</table>
@@ -108,8 +103,8 @@
 									<td>'.date("d.m.Y",$row_overd['ltrans_due']).'</td>
 									<td>'.number_format($row_overd['ltrans_principaldue']+$row_overd['ltrans_interestdue']).' '.$_SESSION['set_cur'].'</td>
 								</tr>';
-				// Module for automatic fine charging
-				if ($_SESSION['set_auf'] == 1) include 'modules/mod_autofine.php';
+					// Module for automatic fine charging
+					if ($_SESSION['set_auf'] == 1) include 'modules/mod_autofine.php';
 				}
 				?>
 			</table>

@@ -69,7 +69,6 @@
 		check_sql($query_upd_auf);
 		echo '<script>alert(\'Auto-fine option updated successfully.\')</script>';
 	}
-
 	
 	/* SELECTIONS */
 	
@@ -181,7 +180,7 @@
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Auto-fine Defaulters</p>
 			<form action="set_loans.php" method="post">
 				<label for="autofine">
-					<input type="checkbox" name="autofine" id="autofine" value="1" <?PHP if ($auf[0] == 1) echo 'checked="checked"' ?> /> Auto-fine
+					<input type="checkbox" name="autofine" id="autofine" value="1" <?PHP if ($auf[0] == 1) echo 'checked="checked"' ?> /> Auto-charge Default Fine
 				</label>
 				<input type="submit" name="upd_auf" value="Update" />
 			</form>

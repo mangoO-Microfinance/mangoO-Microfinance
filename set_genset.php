@@ -33,6 +33,17 @@
 		echo '<script>alert(\'Minimum Savings Balance updated successfully.\')</script>';
 	}
 	
+	//Update Account Deactivation option
+	if (isset($_POST['upd_deact'])){
+		if (isset($_POST['deactivate'])) $new_deact = 1;
+			else $new_deact = 0;
+		$sql_upd_deact = "UPDATE settings SET set_value = '$new_deact' WHERE set_short = 'DEACT'";
+		$query_upd_deact = mysql_query($sql_upd_deact);
+		check_sql($query_upd_deact);
+		echo '<script>alert(\'Account Deactivation option updated successfully.\')</script>';
+	}
+	
+	
 	/* SELECTIONS */
 	
 	//Select Currency Abbreviation from SETTINGS
@@ -52,6 +63,12 @@
 	$query_minsavbal = mysql_query($sql_minsavbal);
 	check_sql($query_minsavbal);
 	$minsavbal = mysql_fetch_row($query_minsavbal);
+	
+	//Select Auto-fine from SETTINGS
+	$sql_deact = "SELECT set_value FROM settings WHERE set_short = 'DEACT'";
+	$query_deact = mysql_query($sql_deact);
+	check_sql($query_deact);
+	$deact = mysql_fetch_row($query_deact);
 ?>
 
 <html>
@@ -98,7 +115,15 @@
 		
 		<!-- RIGHT SIDE: General Settings -->	
 		<div class="content_right" style="width:50%;">
-		
+			
+			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Account Deactivation</p>
+			<form action="set_genset.php" method="post">
+				<label for="deactivate">
+					<input type="checkbox" name="deactivate" id="deactivate" value="1" <?PHP if ($deact[0] == 1) echo 'checked="checked"' ?> /> Deactivate unsubscribed accounts
+				</label>
+				<input type="submit" name="upd_deact" value="Update" />
+			</form>
+			
 		</div>
 	</body>
 </html>

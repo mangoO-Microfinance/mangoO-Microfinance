@@ -6,7 +6,7 @@
 	connect();
 	
 	//Variable $year provides the pre-set values for input fields
-	$year = date("Y",time()); 
+	$year = (date("Y",time()))-1; 
 ?>
 <html>
 	<?PHP htmlHead('Annual Report',1) ?>	
