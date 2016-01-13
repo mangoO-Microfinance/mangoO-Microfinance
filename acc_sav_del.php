@@ -7,7 +7,6 @@
 	//DELETE-Button
 	if (isset($_POST['del_sav'])){
 		
-		
 		//Select information on transaction from SAVINGS
 		$sql_savtransaction = "SELECT sav_id, sav_date, sav_receipt FROM savings WHERE cust_id = '$_SESSION[cust_id]' ORDER BY sav_id DESC LIMIT 1";
 		$query_savtransaction = mysql_query($sql_savtransaction);

@@ -73,8 +73,8 @@
 									<td>'.$row_loanpend['cust_name'].' ('.$row_loanpend['cust_id'].'/'.date("Y",$row_loanpend['cust_since']).')</td>
 									<td>'.$row_loanpend['loanstatus_status'].'</td>
 									<td>'.$row_loanpend['loan_period'].'</td>
-									<td>'.number_format($row_loanpend['loan_principal']).' UGX</td>
-									<td>'.number_format(($row_loanpend['loan_repaytotal'] - $row_loanpend['loan_principal'])).' UGX</td>
+									<td>'.number_format($row_loanpend['loan_principal']).' '.$_SESSION['set_cur'].'</td>
+									<td>'.number_format(($row_loanpend['loan_repaytotal'] - $row_loanpend['loan_principal'])).' '.$_SESSION['set_cur'].'</td>
 									<td>'.date("d.m.Y",$row_loanpend['loan_date']).'</td>
 								</tr>';
 					array_push($_SESSION['rep_export'], array("Loan No." => $row_loanpend['loan_no'], "Customer" => $row_loanpend['cust_name'].' ('.$row_loanpend['cust_id'].'/'.date("Y",$row_loanpend['cust_since']).')', "Status" => $row_loanpend['loanstatus_status'], "Loan Period" => $row_loanpend['loan_period'], "Principal" => $row_loanpend['loan_principal'], "Interest" => ($row_loanpend['loan_repaytotal'] - $row_loanpend['loan_principal']), "Repay Total" => $row_loanpend['loan_repaytotal'], "Applied for on" => date("d.m.Y",$row_loanpend['loan_date'])));

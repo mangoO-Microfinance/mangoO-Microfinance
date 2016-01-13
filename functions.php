@@ -108,8 +108,8 @@
 				if ($_SESSION['log_report'] == 1 && $tab_no == 5) echo '<li id="tab_selected"><a href="rep_incomes.php">Reports</a></li>';
 				elseif ($_SESSION['log_report'] == 1) echo '<li><a href="rep_incomes.php">Reports</a></li>';
 				
-				if ($_SESSION['log_admin'] == 1 && $tab_no == 6) echo '<li id="tab_selected"><a href="admin_logrec.php">Settings</a></li>';
-				elseif ($_SESSION['log_admin'] == 1) echo '<li><a href="admin_logrec.php">Settings</a></li>';
+				if ($_SESSION['log_admin'] == 1 && $tab_no == 6) echo '<li id="tab_selected"><a href="set_logrec.php">Settings</a></li>';
+				elseif ($_SESSION['log_admin'] == 1) echo '<li><a href="set_logrec.php">Settings</a></li>';
 		echo '</ul>
 		</div>';
 	}
@@ -128,13 +128,13 @@
 	
 	//Calculate Savings Balance
 	function sav_balance(){
-		$sql_sav = "SELECT * FROM savings, savtype, currency WHERE savings.savtype_id = savtype.savtype_id AND savings.cur_id = currency.cur_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
+		$sql_sav = "SELECT * FROM savings, savtype WHERE savings.savtype_id = savtype.savtype_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
 		$query_sav = mysql_query($sql_sav);
 		check_sql($query_sav);
 		$sav_balance = 0;
 		while($row_query_sav = mysql_fetch_assoc($query_sav)){
 			$row_sav[] = $row_query_sav;
-			$sav_balance = $sav_balance + ($row_query_sav['sav_amount'] * $row_query_sav['cur_rate']);
+			$sav_balance = $sav_balance + $row_query_sav['sav_amount'];
 		}
 		return $sav_balance;
 	}

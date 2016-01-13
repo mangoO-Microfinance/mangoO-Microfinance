@@ -51,7 +51,7 @@
 		
 		//Insert Subscription Fee into SAVINGS
 		if ($_POST['subscr_from_sav'] == 1){
-			$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', '1', '5', '$subscr_receipt')";
+			$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', '5', '$subscr_receipt')";
 			$query_insert_fee = mysql_query ($sql_insert_fee);
 			check_sql($query_insert_fee);
 		}
@@ -99,14 +99,14 @@
 	}
 	
 	//Select Savings from SAVINGS
-	$sql_sav = "SELECT * FROM savings, savtype, currency WHERE savings.savtype_id = savtype.savtype_id AND savings.cur_id = currency.cur_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
+	$sql_sav = "SELECT * FROM savings, savtype WHERE savings.savtype_id = savtype.savtype_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
 	$query_sav = mysql_query($sql_sav);
 	check_sql($query_sav);
 	
 	$balance = 0;		//Calculate Balance on Savings account
 	while($row_query_sav = mysql_fetch_assoc($query_sav)){
 		$row_sav[] = $row_query_sav;
-		$balance = $balance + ($row_query_sav['sav_amount'] * $row_query_sav['cur_rate']);
+		$balance = $balance + ($row_query_sav['sav_amount']);
 	}
 	
 	if (isset($row_sav)) $row_sav = array_slice($row_sav, -5, 5);	//Take last five items from array only
@@ -327,14 +327,14 @@
 						tr_colored($color);
 						echo '	<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>
 										<td>'.$row_sav['savtype_type'].'</td>
-										<td>'.number_format($row_sav['sav_amount']).' '.$row_sav['cur_short'].'</td>';
+										<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>';
 						if ($row_sav['savtype_id'] == 2) echo '<td>S '.$row_sav['sav_slip'].'</td>';
 							else echo '<td>R '.$row_sav['sav_receipt'].'</td>';
 						echo '</tr>';
 					}
 				}
 				echo '<tr class="balance">
-								<td colspan="4" >Balance: '.number_format($balance).' UGX</td>
+								<td colspan="4" >Balance: '.number_format($balance).' '.$_SESSION['set_cur'].'</td>
 							</tr>';
 			 ?>
 			</table>
@@ -421,7 +421,7 @@
 			</tr>
 			<tr>
 				<td><?PHP echo $share_amount ?></td>
-				<td><?PHP echo number_format($share_value) ?> UGX</td>
+				<td><?PHP echo number_format($share_value).' '.$_SESSION['set_cur'] ?></td>
 			</tr>
 		</table>
 	

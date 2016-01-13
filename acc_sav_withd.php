@@ -29,7 +29,7 @@
 		$sav_deduct = sanitize($_POST['sav_deduct']);
 		
 		//Insert into SAVINGS
-		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', $sav_amount, '1', '2', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', $sav_amount, '2', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		if (!$query_insert) die ('INSERT failed: '.mysql_error());
 		
@@ -41,7 +41,7 @@
 		//Insert Fee into SAVINGS
 		if($sav_deduct == 1){
 			$withdrawfee_neg = ($withdrawfee[0] * -1);
-			$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$withdrawfee_neg', '1', '4', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
+			$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$withdrawfee_neg', '4', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
 			$query_insert_fee = mysql_query($sql_insert_fee);
 			check_sql($query_insert_fee);
 		}
@@ -50,13 +50,6 @@
 		header('Location: acc_sav_withd.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	/*
-	//Select Currencies from CURRENCY
-	$sql_cur = "SELECT * FROM currency";
-	$query_cur = mysql_query($sql_cur);
-	check_sql($query_cur);
-	*/
-	
 	//Select Customer from CUSTOMER
 	$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
 	$query_cust = mysql_query($sql_cust);
@@ -64,7 +57,7 @@
 	$result_cust = mysql_fetch_assoc($query_cust);
 
 	//Select Savings Transactions from SAVINGS
-	$sql_sav = "SELECT * FROM savings, savtype, currency, user WHERE savings.savtype_id = savtype.savtype_id AND savings.cur_id = currency.cur_id AND savings.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
+	$sql_sav = "SELECT * FROM savings, savtype, user WHERE savings.savtype_id = savtype.savtype_id AND savings.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
 	$query_sav = mysql_query($sql_sav);
 	check_sql($query_sav);
 	
@@ -72,7 +65,7 @@
 	$sav_balance = 0;
 	while($row_query_sav = mysql_fetch_assoc($query_sav)){
 		$row_sav[] = $row_query_sav;
-		$sav_balance = $sav_balance + ($row_query_sav['sav_amount'] * $row_query_sav['cur_rate']);
+		$sav_balance = $sav_balance + $row_query_sav['sav_amount'];
 	}
 	
 	//Make array for exporting data
@@ -139,7 +132,7 @@
 					</tr>
 					<tr>
 						<td>Amount:</td>
-						<td><input type="number" name="sav_amount" placeholder="UGX" class="defaultnumber" min=1 required="required" /></td>
+						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur'] ?>" class="defaultnumber" min=1 required="required" /></td>
 					</tr>
 					<tr>
 						<td>Receipt No:</td>
@@ -183,7 +176,7 @@
 					tr_colored($color);
 					echo '<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>';
 					echo '<td>'.$row_sav['savtype_type'].'</td>';
-					echo '<td>'.number_format($row_sav['sav_amount']).' '.$row_sav['cur_short'].'</td>';
+					echo '<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>';
 					echo '<td>'.$row_sav['sav_receipt'].'</td>';
 					echo '<td>'.$row_sav['sav_slip'].'</td>';
 					echo '<td>'.$row_sav['user_name'].'</td>';
@@ -193,7 +186,7 @@
 					array_push($_SESSION['sav_export'], array("Date" => date("d.m.Y",$row_sav['sav_date']), "Transaction Type" => $row_sav['savtype_type'], "Amount" => $row_sav['sav_amount'], "Receipt" => $row_sav['sav_receipt'], "W/draw Slip" => $row_sav['sav_slip']));
 				}
 				echo '<tr class="balance">
-								<td colspan="6">Balance: '.number_format($sav_balance).' UGX</td>
+								<td colspan="6">Balance: '.number_format($sav_balance).' '.$_SESSION['set_cur'].'</td>
 							</tr>';
 			 ?>
 			</table>

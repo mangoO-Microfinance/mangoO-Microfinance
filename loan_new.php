@@ -89,7 +89,7 @@
 		//Insert Loan into LOANS
 		$loan_repaytotal = $loan_principal + $loan_interesttotal;
 		$loan_rate = $loan_principaldue + $loan_interestdue;
-		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, cur_id, loan_appfee_receipt, loan_fee, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '1', '$loan_appfee_receipt', '$loan_fee', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$_SESSION[log_id]')";
+		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_loan = mysql_query($sql_insert_loan);
 		check_sql($query_insert_loan);
 		
@@ -177,7 +177,7 @@
 
 					<tr>
 						<td style="font-weight:bold;">Principal:</td>
-						<td><input type="number" class="defaultnumber" name="loan_principal" id="loan_principal" placeholder="Loan Sum in UGX" min="<?PHP echo $minLP[0]; ?>" max="<?PHP echo $maxLP[0]; ?>" onChange="calc_rate(<?PHP echo $loan_feerate ?>)" /></td>
+						<td><input type="number" class="defaultnumber" name="loan_principal" id="loan_principal" placeholder="Loan Sum in <?PHP echo $_SESSION['set_cur']; ?>" min="<?PHP echo $minLP[0]; ?>" max="<?PHP echo $maxLP[0]; ?>" onChange="calc_rate(<?PHP echo $loan_feerate ?>)" /></td>
 						<td style="font-weight:bold;">Period:</td>
 						<td><input type="number" class="defaultnumber" name="loan_period" id="loan_period" placeholder="Number of Months" onChange="calc_rate(<?PHP echo $loan_feerate ?>)" /></td>
 					</tr>

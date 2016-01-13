@@ -73,8 +73,8 @@
 								<td>'.$row_loansearch['cust_name'].' (<a href="customer.php?cust='.$row_loansearch['cust_id'].'">'.$row_loansearch['cust_id'].'/'.date("Y",$row_loansearch['cust_since']).'</a>)</td>
 								<td>'.$row_loansearch['loanstatus_status'].'</td>
 								<td>'.$row_loansearch['loan_period'].'</td>
-								<td>'.number_format($row_loansearch['loan_principal']).' UGX</td>
-								<td>'.number_format(($row_loansearch['loan_repaytotal'] - $row_loansearch['loan_principal'])).' UGX</td>
+								<td>'.number_format($row_loansearch['loan_principal']).' '.$_SESSION['set_cur'].'</td>
+								<td>'.number_format(($row_loansearch['loan_repaytotal'] - $row_loansearch['loan_principal'])).' '.$_SESSION['set_cur'].'</td>
 								<td>'.date("d.m.Y",$row_loansearch['loan_date']).'</td>
 								<td>';
 								

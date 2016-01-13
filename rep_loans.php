@@ -112,12 +112,12 @@
 					echo '	<td><a href="loan.php?lid='.$row_loandue['loan_id'].'">'.$row_loandue['loan_no'].'</a></td>
 									<td>'.$row_loandue['loanstatus_status'].'</td>
 									<td>'.date("d.m.Y",$row_loandue['ltrans_due']).'</td>
-									<td>'.number_format($row_loandue['ltrans_principaldue'] + $row_loandue['ltrans_interestdue']).' UGX</td>										
+									<td>'.number_format($row_loandue['ltrans_principaldue'] + $row_loandue['ltrans_interestdue']).' '.$_SESSION['set_cur'].'</td>										
 								</tr>';
 					$total_loandue = $total_loandue + $row_loandue['ltrans_principaldue'] + $row_loandue['ltrans_interestdue'];
 				}
 				echo '<tr class="balance">
-								<td colspan="4">Total Due Payments: '.number_format($total_loandue).' UGX</td>
+								<td colspan="4">Total Due Payments: '.number_format($total_loandue).' '.$_SESSION['set_cur'].'</td>
 							</tr>';
 				
 				//Prepare data for export to Excel file
@@ -149,15 +149,15 @@
 				while($row_loanrec = mysql_fetch_assoc($query_loanrec)){
 					tr_colored($color);
 					echo '	<td><a href="loan.php?lid='.$row_loanrec['loan_id'].'">'.$row_loanrec['loan_no'].'</a></td>
-									<td>'.number_format($row_loanrec['ltrans_principaldue'] + $row_loanrec['ltrans_interestdue']).' UGX</td>
-									<td>'.number_format($row_loanrec['ltrans_principal'] + $row_loanrec['ltrans_interest']).' UGX</td>
+									<td>'.number_format($row_loanrec['ltrans_principaldue'] + $row_loanrec['ltrans_interestdue']).' '.$_SESSION['set_cur'].'</td>
+									<td>'.number_format($row_loanrec['ltrans_principal'] + $row_loanrec['ltrans_interest']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.date("d.m.Y",$row_loanrec['ltrans_date']).'</td>
 								</tr>';
 					$total_loanrec = $total_loanrec + $row_loanrec['ltrans_principal'] + $row_loanrec['ltrans_interest'];
 				}
 				echo '<tr class="balance">
 								<td colspan="4">
-									Total Recoveries: '.number_format($total_loanrec).' UGX';
+									Total Recoveries: '.number_format($total_loanrec).' '.$_SESSION['set_cur'];
 				if ($total_loandue != 0) echo '<br/>Loan Recovery Rate: '.number_format($total_loanrec / $total_loandue * 100).'%';
 				echo '	</td>
 							</tr>';
@@ -197,16 +197,16 @@
 					tr_colored($color);
 					echo '	<td><a href="loan.php?lid='.$row_loanout['loan_id'].'">'.$row_loanout['loan_no'].'</a></td>
 									<td>'.$row_loanout['cust_name'].' ('.$row_loanout['cust_id'].'/'.date("Y",$row_loanout['cust_since']).')</td>
-									<td>'.number_format($row_loanout['loan_principal']).' UGX</td>
+									<td>'.number_format($row_loanout['loan_principal']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.$row_loanout['loan_interest'].'%</td>
 									<td>'.$row_loanout['loan_period'].'</td>
-									<td>'.number_format($row_loanout['loan_repaytotal']).' UGX</td>
+									<td>'.number_format($row_loanout['loan_repaytotal']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.date("d.m.Y", $row_loanout['loan_dateout']).'</td>
 								</tr>';
 					$total_loanout = $total_loanout + $row_loanout['loan_principal'];
 				}
 				echo '<tr class="balance">
-								<td colspan="7">Total Loans Out: '.number_format($total_loanout).' UGX</td>
+								<td colspan="7">Total Loans Out: '.number_format($total_loanout).' '.$_SESSION['set_cur'].'</td>
 							</tr>';
 				array_push($_SESSION['rep_export'], array("Type" => "Loans Out", "Amount" => $total_loanout));
 				array_push($_SESSION['rep_export'], array("Type" => "", "Amount" => ""));

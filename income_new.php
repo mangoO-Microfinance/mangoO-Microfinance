@@ -104,7 +104,7 @@
 					</tr>
 					<tr>
 						<td>Amount:</td>
-						<td><input type="number" name="inc_amount" placeholder="UGX" style="width:158px; height:24px;" /></td>
+						<td><input type="number" name="inc_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" style="width:158px; height:24px;" /></td>
 						<td>Receipt No:</td>
 						<td><input type="text" name="inc_receipt" /></td>
 					</tr>
@@ -157,7 +157,7 @@
 				tr_colored($color); 		//Alternating row colors
 				echo '	<td>'.date("d.m.Y",$row_inccur['inc_date']).'</td>
 								<td>'.$row_inccur['inctype_type'].'</td>
-								<td>'.number_format($row_inccur['inc_amount']).' UGX</td>
+								<td>'.number_format($row_inccur['inc_amount']).' '.$_SESSION['set_cur'].'</td>
 								<td>'.$row_inccur['cust_name'].' ('.$row_inccur['cust_id'].')</td>
 								<td>'.$row_inccur['inc_receipt'].'</td>
 								<td>'.$row_inccur['inc_text'].'</td>

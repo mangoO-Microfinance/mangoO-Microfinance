@@ -66,16 +66,17 @@
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="admin_genset.php">General Settings</a>
-			<a href="admin_fees.php">Fees</a>
-			<a href="admin_user.php" id="item_selected">Users</a>
-			<a href="admin_ugroup.php">Usergroups</a>
-			<a href="admin_logrec.php">Log Records</a>
+			<a href="set_genset.php">General Settings</a>
+			<a href="set_loans.php">Loan Settings</a>
+			<a href="set_fees.php">Fees</a>
+			<a href="set_user.php" id="item_selected">Users</a>
+			<a href="set_ugroup.php">Usergroups</a>
+			<a href="set_logrec.php">Log Records</a>
 		</div>
 				
 		<div class="content_center">
 			<p class="heading_narrow">Edit User "<?PHP echo $result_user['user_name'] ?>"</p>
-			<form action="admin_user_edit.php" method="post">
+			<form action="set_user_edit.php" method="post">
 				<table id="tb_fields" style="width:35%;">
 					<?PHP
 					//Show entry to be edited

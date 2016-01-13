@@ -5,13 +5,14 @@
 	connect();	
 	$timestamp = time();
 	
-	//Select Loan Default Fine from FEES
-	$sql_ld = "SELECT fee_value FROM fees WHERE fee_id = 7";
-	$query_ld = mysql_query($sql_ld);
-	check_sql($query_ld);
-	$result_fees = mysql_fetch_assoc($query_ld);
-	$loandefault_sav = ($result_fees['fee_value']) * (-1);
-	$loandefault_inc = $result_fees['fee_value'];
+	//Read system settings and apply to SESSION variables
+	$sql_settings = "SELECT * FROM settings";
+	$query_settings = mysql_query($sql_settings);
+	check_sql($query_settings);
+	while($row_settings = mysql_fetch_assoc($query_settings)){
+		if ($row_settings['set_id'] == 4) $_SESSION['set_cur'] = $row_settings['set_value'];
+		if ($row_settings['set_id'] == 5) $_SESSION['set_auf'] = $row_settings['set_value'];
+	}
 	
 	//Select Overdue Loan Instalments from LTRANS
 	$sql_overd = "SELECT * FROM loans, ltrans, customer WHERE loans.cust_id = customer.cust_id AND loans.loan_id = ltrans.loan_id AND ltrans_due <= $timestamp AND ltrans_date IS NULL AND loanstatus_id = 2 ORDER BY ltrans_due";
@@ -102,31 +103,13 @@
 				$color = 0;
 				while ($row_overd = mysql_fetch_assoc($query_overd)){
 					tr_colored($color);
-					echo '	<td><a href="loan.php?lid='.$row_overd['loan_id'].'" class="sacco">'.$row_overd['loan_no'].'</a></td>
+					echo '	<td><a href="loan.php?lid='.$row_overd['loan_id'].'">'.$row_overd['loan_no'].'</a></td>
 									<td>'.$row_overd['cust_name'].'</td>
 									<td>'.date("d.m.Y",$row_overd['ltrans_due']).'</td>
-									<td>'.number_format($row_overd['ltrans_principaldue']+$row_overd['ltrans_interestdue']).' UGX</td>
+									<td>'.number_format($row_overd['ltrans_principaldue']+$row_overd['ltrans_interestdue']).' '.$_SESSION['set_cur'].'</td>
 								</tr>';
-					/*			
-					//Automatically charge Loan Default Fine if Customer has defaulted for more than 30 days
-					if((time() - $row_overd['ltrans_due']) > 2592000 && $row_overd['ltrans_fined'] != 1){
-						$timestamp = time();
-						
-						//Withdraw Fine from SAVINGS
-						$sql_fine_sav = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt) VALUES ('$row_overd[cust_id]', '$timestamp', '$loandefault_sav', '1', '6', '')";
-						$query_fine_sav = mysql_query($sql_fine_sav);
-						check_sql($query_fine_sav);
-						
-						//Insert Fine into INCOMES
-						$sql_fine_inc = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt) VALUES ('$row_overd[cust_id]', '5', '$loandefault_inc', '$timestamp', '')";
-						$query_fine_inc = mysql_query($sql_fine_inc);
-						check_sql($query_fine_inc);
-						
-						//Set Flag in LTRANS for Fine charged
-						$sql_update_ltrans = "UPDATE ltrans SET ltrans_fined = '1' WHERE ltrans_id = '$row_overd[ltrans_id]'";
-						$query_update_ltrans = mysql_query($sql_update_ltrans);
-					}
-					*/
+				// Module for automatic fine charging
+				if ($_SESSION['set_auf'] == 1) include 'modules/mod_autofine.php';
 				}
 				?>
 			</table>

@@ -53,11 +53,12 @@
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="admin_genset.php">General Settings</a>
-			<a href="admin_fees.php">Fees</a>
-			<a href="admin_user.php" id="item_selected">Users</a>
-			<a href="admin_ugroup.php">Usergroups</a>
-			<a href="admin_logrec.php">Log Records</a>
+			<a href="set_genset.php">General Settings</a>
+			<a href="set_loans.php">Loan Settings</a>
+			<a href="set_fees.php">Fees</a>
+			<a href="set_user.php" id="item_selected">Users</a>
+			<a href="set_ugroup.php">Usergroups</a>
+			<a href="set_logrec.php">Log Records</a>
 		</div>
 		
 		<!-- LEFT SIDE: Create New User Form -->
@@ -65,7 +66,7 @@
 	
 			<p class="heading_narrow">Create New User</p>
 			
-			<form action="admin_user.php" method="post" onSubmit="return validate(this)">
+			<form action="set_user.php" method="post" onSubmit="return validate(this)">
 				<table id="tb_fields">
 					<tr>
 						<td class="center"><input type="text" name="user_name" placeholder="Username"/></td>
@@ -102,7 +103,7 @@
 		
 		<!-- RIGHT SIDE: List of Users -->
 		<div class="content_right">
-			<form action="admin_ugroup.php" method="post">
+			<form action="set_ugroup.php" method="post">
 				<table id="tb_table">				
 					<colgroup>
 						<col width="35%">
@@ -129,7 +130,7 @@
 								echo '<td>'.$row_user['user_name'].'</td>';
 								echo '<td>'.$row_user['ugroup_name'].'</td>';
 								echo '<td>'.date('d.m.Y',$row_user['user_created']).'</td>';
-								echo '<td><a href="admin_user_edit.php?id='.$row_user['user_id'].'"><img src="ico/edit.png"></td>';
+								echo '<td><a href="set_user_edit.php?id='.$row_user['user_id'].'"><img src="ico/edit.png"></td>';
 							echo '</tr>';
 						}
 					?>

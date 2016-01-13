@@ -122,7 +122,7 @@
 						foreach ($incomes as $ic) if ($ic['inctype_id'] == $it['inctype_id']) $total_row = $total_row + $ic['inc_amount'];
 						tr_colored($color);	//Function for alternating Row Colors
 						echo '	<td>'.$it['inctype_type'].'</td>
-										<td>'.number_format($total_row).' UGX</td>
+										<td>'.number_format($total_row).' '.$_SESSION['set_cur'].'</td>
 									</tr>';	
 						$total_inc = $total_inc + $total_row;	
 						
@@ -131,7 +131,7 @@
 					}
 					echo '	<tr class="balance">
 										<td>Total Incomes:</td>
-										<td>'.number_format($total_inc).' UGX</td>
+										<td>'.number_format($total_inc).' '.$_SESSION['set_cur'].'</td>
 									</tr>';
 			}
 			
@@ -171,7 +171,7 @@
 					while($row_incomes = mysql_fetch_assoc($query_incomes)){
 						tr_colored($color);	//Function for alternating Row Colors
 						echo '	<td>'.date("d.m.Y",$row_incomes['inc_date']).'</td>
-										<td>'.number_format($row_incomes['inc_amount']).' UGX</td>
+										<td>'.number_format($row_incomes['inc_amount']).' '.$_SESSION['set_cur'].'</td>
 										<td>'.$row_incomes['inctype_type'].'</td>
 										<td>'.$row_incomes['cust_name'].'</td>
 										<td>'.$row_incomes['inc_receipt'].'</td>
@@ -182,7 +182,7 @@
 						array_push($_SESSION['rep_export'], array("Date" => date("d.m.Y",$row_incomes['inc_date']), "Amount" => $row_incomes['inc_amount'], "Type" => $row_incomes['inctype_type'], "From" => $row_incomes['cust_name'], "Receipt No" => $row_incomes['inc_receipt']));
 					}
 					echo '<tr class="balance">
-									<td colspan="5">Total Incomes: '.number_format($total_inc).' UGX</td>
+									<td colspan="5">Total Incomes: '.number_format($total_inc).' '.$_SESSION['set_cur'].'</td>
 								</tr>';
 			}
 		}

@@ -147,16 +147,16 @@
 						<td>Number of Shares:</td>
 						<td>
 							<select name="share_amount" class="defaultfield">
-								<option value="1">1 @ <?PHP echo number_format($_SESSION['shareval_value']); ?> UGX</option>
-								<option value="2">2 @ <?PHP echo number_format($_SESSION['shareval_value']*2); ?> UGX</option>
-								<option value="3">3 @ <?PHP echo number_format($_SESSION['shareval_value']*3); ?> UGX</option>
-								<option value="4">4 @ <?PHP echo number_format($_SESSION['shareval_value']*4); ?> UGX</option>
-								<option value="5">5 @ <?PHP echo number_format($_SESSION['shareval_value']*5); ?> UGX</option>
-								<option value="6">6 @ <?PHP echo number_format($_SESSION['shareval_value']*6); ?> UGX</option>
-								<option value="7">7 @ <?PHP echo number_format($_SESSION['shareval_value']*7); ?> UGX</option>
-								<option value="8">8 @ <?PHP echo number_format($_SESSION['shareval_value']*8); ?> UGX</option>
-								<option value="9">9 @ <?PHP echo number_format($_SESSION['shareval_value']*9); ?> UGX</option>
-								<option value="10">10 @ <?PHP echo number_format($_SESSION['shareval_value']*10); ?> UGX</option>
+								<option value="1">1 @ <?PHP echo number_format($_SESSION['shareval_value']).' '.$_SESSION['set_cur']; ?></option>
+								<option value="2">2 @ <?PHP echo number_format($_SESSION['shareval_value']*2).' '.$_SESSION['set_cur']; ?></option>
+								<option value="3">3 @ <?PHP echo number_format($_SESSION['shareval_value']*3).' '.$_SESSION['set_cur']; ?></option>
+								<option value="4">4 @ <?PHP echo number_format($_SESSION['shareval_value']*4).' '.$_SESSION['set_cur']; ?></option>
+								<option value="5">5 @ <?PHP echo number_format($_SESSION['shareval_value']*5).' '.$_SESSION['set_cur']; ?></option>
+								<option value="6">6 @ <?PHP echo number_format($_SESSION['shareval_value']*6).' '.$_SESSION['set_cur']; ?></option>
+								<option value="7">7 @ <?PHP echo number_format($_SESSION['shareval_value']*7).' '.$_SESSION['set_cur']; ?></option>
+								<option value="8">8 @ <?PHP echo number_format($_SESSION['shareval_value']*8).' '.$_SESSION['set_cur']; ?></option>
+								<option value="9">9 @ <?PHP echo number_format($_SESSION['shareval_value']*9).' '.$_SESSION['set_cur']; ?></option>
+								<option value="10">10 @ <?PHP echo number_format($_SESSION['shareval_value']*10).' '.$_SESSION['set_cur']; ?></option>
 							</select>
 						</td>
 					</tr>
@@ -218,7 +218,7 @@
 					tr_colored($color);
 					echo '<td>'.date("d.m.Y",$row_sha['share_date']).'</td>
 								<td>'.$row_sha['share_amount'].'</td>
-								<td>'.number_format($row_sha['share_value']).' UGX</td>
+								<td>'.number_format($row_sha['share_value']).' '.$_SESSION['set_cur'].'</td>
 								<td>'.$row_sha['share_receipt'].'</td>
 								<td>'.$row_sha['user_name'].'</td>
 							</tr>';
@@ -231,7 +231,7 @@
 				echo '<tr class="balance">
 								<td>Balance:</td>
 								<td>'.$amount_balance.'</td>
-								<td>'.number_format($value_balance).' UGX</td>
+								<td>'.number_format($value_balance).'</td>
 								<td colspan="2"></td>
 							</tr>';
 				?>

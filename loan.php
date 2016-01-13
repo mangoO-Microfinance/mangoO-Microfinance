@@ -151,13 +151,13 @@
 		//If Payment is made from savings, withdraw the amount from there
 		if ($loan_repay_sav == 1) {
 			$loan_repay_amount_sav = $loan_repay_amount * (-1);
-			$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', $loan_repay_date, $loan_repay_amount_sav, 1, 8, $loan_repay_receipt, $timestamp, '$_SESSION[log_id]')";
+			$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', $loan_repay_date, $loan_repay_amount_sav, 8, $loan_repay_receipt, $timestamp, '$_SESSION[log_id]')";
 			$query_insert = mysql_query($sql_insert);
 		}
 		
 		//If amount paid exceeds the remaining balance for that loan, put the rest in SAVINGS.
 		if(isset($loan_repay_savings)){
-			$sql_restsav = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt, sav_created, user_id) VALUES ($_SESSION[cust_id], $loan_repay_date, $loan_repay_savings, '1', '1', $loan_repay_receipt, $timestamp, '$_SESSION[log_id]')";
+			$sql_restsav = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ($_SESSION[cust_id], $loan_repay_date, $loan_repay_savings, '1', $loan_repay_receipt, $timestamp, '$_SESSION[log_id]')";
 			$query_restsav = mysql_query($sql_restsav);
 			check_sql($query_restsav);
 		}
@@ -181,7 +181,7 @@
 		
 		//Deduct Fine from Savings Account
 		if($fine_sav == 1){
-			$sql_fine_sav = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$fine_date', ('$fine_amount' * -1), '1', '6', '$fine_receipt', $timestamp, '$_SESSION[log_id]')";
+			$sql_fine_sav = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$fine_date', ('$fine_amount' * -1), 6, '$fine_receipt', $timestamp, '$_SESSION[log_id]')";
 			$query_fine_sav = mysql_query($sql_fine_sav);
 			check_sql($query_fine_sav);
 		}
@@ -323,7 +323,7 @@
 					</tr>
 					<tr>
 						<td>Principal:</td>
-						<td><input type="text" name="loan_principal" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_principal'])?> UGX" /></td>
+						<td><input type="text" name="loan_principal" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_principal']).' '.$_SESSION['set_cur'] ?>" /></td>
 						<td>Period:</td>
 						<td><input type="text" name="loan_period" disabled="disabled" value="<?PHP echo $result_loan['loan_period']?>" /></td>
 					</tr>
@@ -331,13 +331,13 @@
 						<td>Interest:</td>
 						<td><input type="text" name="loan_interest" disabled="disabled" value="<?PHP echo $result_loan['loan_interest'].'% per Month'?>" /></td>
 						<td>Loan Fee:</td>
-						<td><input type="text" name="loan_fee" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_fee']).' UGX' ?>" /></td>
+						<td><input type="text" name="loan_fee" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_fee']).' '.$_SESSION['set_cur'] ?>" /></td>
 					</tr>
 					<tr>
 						<td>Monthly Rate:</td>
-						<td><input type="text" name="loan_rate" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_rate']) ?> UGX" /></td>
+						<td><input type="text" name="loan_rate" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_rate']).' '.$_SESSION['set_cur'] ?>" /></td>
 						<td>Repay Total:</td>
-						<td><input type="text" name="loan_repaytotal" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_repaytotal']) ?> UGX"/></td>
+						<td><input type="text" name="loan_repaytotal" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_repaytotal']).' '.$_SESSION['set_cur'] ?>"/></td>
 					</tr>
 					<tr>
 						<td>Secur. 1:</td>
@@ -555,7 +555,7 @@
 						<td>Date Paid:</td>
 						<td><input type="text" name="loan_repay_date" value="'.date("d.m.Y", $timestamp).'" placeholder="DD.MM.YYYY" /></td>
 						<td>Amount Paid:</td>
-						<td><input type="number" name="loan_repay_amount" class="defaultnumber" placeholder="UGX" /></td>
+						<td><input type="number" name="loan_repay_amount" class="defaultnumber" placeholder="'.$_SESSION['set_cur'].'" /></td>
 					</tr>
 					<tr>
 						<td>Receipt No:</td>
@@ -584,7 +584,7 @@
 										</td>
 										<td>Amount fined:</td>
 										<td>
-											<input type="number" name="fine_amount" class="defaultnumber" placeholder="UGX" />
+											<input type="number" name="fine_amount" class="defaultnumber" placeholder="'.$_SESSION['set_cur'].'" />
 										</td>
 									</tr>
 									<tr>

@@ -114,7 +114,7 @@
 						foreach ($expendit as $ex) if ($ex['exptype_id'] == $et['exptype_id']) $total_row = $total_row + $ex['exp_amount'];
 						tr_colored($color);	//Function for alternating Row Colors
 						echo '	<td>'.$et['exptype_type'].'</td>
-										<td>'.number_format($total_row).' UGX</td>
+										<td>'.number_format($total_row).' '.$_SESSION['set_cur'].'</td>
 									</tr>';
 						$total_exp = $total_exp + $total_row;	
 						
@@ -123,7 +123,7 @@
 					}
 					echo '<tr class="balance">
 									<td>Total Expenditures:</td>
-									<td>'.number_format($total_exp).' UGX</td>
+									<td>'.number_format($total_exp).' '.$_SESSION['set_cur'].'</td>
 								</tr>';
 			}
 			
@@ -172,7 +172,7 @@
 										<td>'.$row_expendit['exp_text'].'</td>
 										<td>'.$row_expendit['exp_receipt'].'</td>
 										<td>'.$row_expendit['exp_voucher'].'</td>
-										<td>'.number_format($row_expendit['exp_amount']).' UGX</td>
+										<td>'.number_format($row_expendit['exp_amount']).' '.$_SESSION['set_cur'].'</td>
 									</tr>';
 						$total_exp = $total_exp + $row_expendit['exp_amount'];
 						
@@ -180,7 +180,7 @@
 						array_push($_SESSION['rep_export'], array("Date" => date("d.m.Y",$row_expendit['exp_date']), "Type" => $row_expendit['exptype_type'], "Recipient" => $row_expendit['exp_recipient'], "Details" => $row_expendit['exp_text'], "Receipt No" => $row_expendit['exp_receipt'], "Voucher No" => $row_expendit['exp_voucher'],"Amount" => $row_expendit['exp_amount']));
 					}
 					echo '<tr class="balance">
-									<td colspan="7">Total Expenditures: '.number_format($total_exp).' UGX</td>
+									<td colspan="7">Total Expenditures: '.number_format($total_exp).' '.$_SESSION['set_cur'].'</td>
 								</tr>';
 			}
 		}

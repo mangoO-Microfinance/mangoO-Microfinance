@@ -146,19 +146,19 @@
 				</tr>
 				<tr>
 					<td>Shares</td>
-					<td><?PHP echo number_format($total_shares) ?> UGX</td>
+					<td><?PHP echo number_format($total_shares).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 				<tr class="alt">
 					<td>Saving Deposits</td>
-					<td><?PHP echo number_format($total_savdep) ?> UGX</td>
+					<td><?PHP echo number_format($total_savdep).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 				<tr>
 					<td>Loan Recoveries</td>
-					<td><?PHP echo number_format($total_loanrec) ?> UGX</td>
+					<td><?PHP echo number_format($total_loanrec).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 				<tr class="balance">
 					<td>Total Capital Additions:</td>
-					<td><?PHP echo number_format($total_shares + $total_savdep + $total_loanrec) ?> UGX</td>
+					<td><?PHP echo number_format($total_shares + $total_savdep + $total_loanrec).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 			</table>
 			
@@ -177,15 +177,15 @@
 				</tr>
 				<tr>
 					<td>Loans Out</td>
-					<td><?PHP echo number_format($total_loanout) ?> UGX</td>
+					<td><?PHP echo number_format($total_loanout).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 				<tr class="alt">
 					<td>Saving Withdrawals</td>
-					<td><?PHP echo number_format($total_savwithd) ?> UGX</td>
+					<td><?PHP echo number_format($total_savwithd).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 				<tr class="balance">
 					<td>Total Capital Deductions:</td>
-					<td><?PHP echo number_format($total_loanout+$total_savwithd) ?> UGX</td>
+					<td><?PHP echo number_format($total_loanout+$total_savwithd).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 			</table>
 		<?PHP

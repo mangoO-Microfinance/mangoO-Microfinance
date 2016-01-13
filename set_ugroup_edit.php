@@ -68,17 +68,18 @@
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="admin_genset.php">General Settings</a>
-			<a href="admin_fees.php">Fees</a>
-			<a href="admin_user.php">Users</a>
-			<a href="admin_ugroup.php" id="item_selected">Usergroups</a>
-			<a href="admin_logrec.php">Log Records</a>
+			<a href="set_genset.php">General Settings</a>
+			<a href="set_loans.php">Loan Settings</a>
+			<a href="set_fees.php">Fees</a>
+			<a href="set_user.php">Users</a>
+			<a href="set_ugroup.php" id="item_selected">Usergroups</a>
+			<a href="set_logrec.php">Log Records</a>
 		</div>
 		
 		<!-- CONTENT: Usergroup Details -->
 		<div class="content_center">
 			<p class="heading_narrow">Edit Usergroup "<?PHP echo $result_uged['ugroup_name'] ?>"</p>
-			<form action="admin_ugroup_edit.php" method="post">
+			<form action="set_ugroup_edit.php" method="post">
 				<table id="tb_fields" style="width:40%;">
 					<tr>
 						<td class="center" colspan="2"><input type="text" name="ugroup_name" value="<?PHP echo $result_uged['ugroup_name'] ?>" /></td>

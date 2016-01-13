@@ -87,9 +87,9 @@
 					echo '	<td><a href="loan.php?lid='.$row_loans['loan_id'].'">'.$row_loans['loan_no'].'</a></td>
 									<td>'.$row_loans['cust_name'].' (<a href="customer.php?cust='.$row_loans['cust_id'].'">'.$row_loans['cust_id'].'/'.date("Y",$row_loans['cust_since']).')</a></td>
 									<td>'.$row_loans['loan_period'].'</td>
-									<td>'.number_format($row_loans['loan_principal']).' UGX</td>
-									<td>'.number_format(($row_loans['loan_repaytotal'] - $row_loans['loan_principal'])).' UGX</td>
-									<td>'.number_format($loan_balance).' UGX</td>
+									<td>'.number_format($row_loans['loan_principal']).' '.$_SESSION['set_cur'].'</td>
+									<td>'.number_format(($row_loans['loan_repaytotal'] - $row_loans['loan_principal'])).' '.$_SESSION['set_cur'].'</td>
+									<td>'.number_format($loan_balance).' '.$_SESSION['set_cur'].'</td>
 									<td>'.date("d.m.Y", $row_loans['loan_dateout']).'</td>				
 								</tr>';
 					array_push($_SESSION['rep_export'], array("Loan No." => $row_loans['loan_no'], "Customer" => $row_loans['cust_name'].' ('.$row_loans['cust_id'].'/'.date("Y",$row_loans['cust_since']).')', "Status" => $row_loans['loanstatus_status'],"Loan Period" => $row_loans['loan_period'], "Principal" => $row_loans['loan_principal'], "Interest" => ($row_loans['loan_repaytotal'] - $row_loans['loan_principal']), "Remaining" => $loan_balance, "Issued on" => date("d.m.Y", $row_loans['loan_dateout'])));

@@ -33,24 +33,6 @@
 		echo '<script>alert(\'Minimum Savings Balance updated successfully.\')</script>';
 	}
 	
-	//Update Minimum Loan Principal
-	if (isset($_POST['upd_minLP'])){
-		$new_minLP = sanitize($_POST['minLP']);
-		$sql_upd_minLP = "UPDATE settings SET set_value = '$new_minLP' WHERE set_short = 'MinLP'";
-		$query_upd_minLP = mysql_query($sql_upd_minLP);
-		check_sql($query_upd_minLP);
-		echo '<script>alert(\'Minimum Loan Principal updated successfully.\')</script>';
-	}
-
-	//Update Maximum Loan Principal
-	if (isset($_POST['upd_maxLP'])){
-		$new_minLP = sanitize($_POST['maxLP']);
-		$sql_upd_maxLP = "UPDATE settings SET set_value = '$new_maxLP' WHERE set_short = 'MaxLP'";
-		$query_upd_maxLP = mysql_query($sql_upd_maxLP);
-		check_sql($query_upd_maxLP);
-		echo '<script>alert(\'Maximum Loan Principal updated successfully.\')</script>';
-	}
-	
 	/* SELECTIONS */
 	
 	//Select Currency Abbreviation from SETTINGS
@@ -70,19 +52,8 @@
 	$query_minsavbal = mysql_query($sql_minsavbal);
 	check_sql($query_minsavbal);
 	$minsavbal = mysql_fetch_row($query_minsavbal);
-
-	//Select Minimum Loan Principal from SETTINGS
-	$sql_minLP = "SELECT set_value FROM settings WHERE set_short = 'MinLP'";
-	$query_minLP = mysql_query($sql_minLP);
-	check_sql($query_minLP);
-	$minLP = mysql_fetch_row($query_minLP);
-	
-	//Select Maximum Loan Principal from SETTINGS
-	$sql_maxLP = "SELECT set_value FROM settings WHERE set_short = 'MaxLP'";
-	$query_maxLP = mysql_query($sql_maxLP);
-	check_sql($query_maxLP);
-	$maxLP = mysql_fetch_row($query_maxLP);
 ?>
+
 <html>
 	<?PHP htmlHead('Settings | General Settings',1) ?>
 	
@@ -94,30 +65,31 @@
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="admin_genset.php" id="item_selected">General Settings</a>
-			<a href="admin_fees.php">Fees</a>
-			<a href="admin_user.php">Users</a>
-			<a href="admin_ugroup.php">Usergroups</a>
-			<a href="admin_logrec.php">Log Records</a>
+			<a href="set_genset.php" id="item_selected">General Settings</a>
+			<a href="set_loans.php">Loan Settings</a>
+			<a href="set_fees.php">Fees</a>
+			<a href="set_user.php">Users</a>
+			<a href="set_ugroup.php">Usergroups</a>
+			<a href="set_logrec.php">Log Records</a>
 		</div>
 	
 		<!-- LEFT SIDE: General Settings -->	
 		<div class="content_left" style="width:50%; margin-bottom:5em;">
 			
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Currency Abbreviation</p>
-			<form action="admin_genset.php" method="post">
+			<form action="set_genset.php" method="post">
 				<input type="text" min="0" name="cur_short" value="<?PHP echo $cur_short[0] ?>" />
 				<input type="submit" name="upd_cur_short" value="Update" />
 			</form>
 			
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Value of Shares</p>
-			<form action="admin_genset.php" method="post">
+			<form action="set_genset.php" method="post">
 				<input type="number" min="0" name="shareval" value="<?PHP echo $shareval[0] ?>" />
 				<input type="submit" name="upd_shareval" value="Update" />
 			</form>
 			
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Minimum Savings Balance</p>
-			<form action="admin_genset.php" method="post">
+			<form action="set_genset.php" method="post">
 				<input type="number" min="0" name="minsavbal" value="<?PHP echo $minsavbal[0] ?>" />
 				<input type="submit" name="upd_minsavbal" value="Update" />
 			</form>
@@ -126,18 +98,6 @@
 		
 		<!-- RIGHT SIDE: General Settings -->	
 		<div class="content_right" style="width:50%;">
-		
-			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Minimum Loan Principal</p>
-			<form action="admin_genset.php" method="post">
-				<input type="number" min="0" name="minLP" value="<?PHP echo $minLP[0] ?>" />
-				<input type="submit" name="upd_minLP" value="Update" />
-			</form>
-			
-			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Maximum Loan Principal</p>
-			<form action="admin_genset.php" method="post">
-				<input type="number" min="0" name="maxLP" value="<?PHP echo $maxLP[0] ?>" />
-				<input type="submit" name="upd_maxLP" value="Update" />
-			</form>
 		
 		</div>
 	</body>

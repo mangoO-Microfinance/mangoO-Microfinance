@@ -48,7 +48,7 @@ function validateAmount(field) {
 function validateOverdraft(field, balance, wd_fee, minsavbal){
 	field = (field * 1) + (wd_fee * 1)
 	balance = (balance * 1) + (minsavbal * -1)
-	if (field > balance) return "No Overdrafts on Savings Account allowed.\n\n The minimum balance is " + minsavbal + " UGX."
+	if (field > balance) return "No Overdrafts on Savings Account allowed.\n\n The minimum balance is " + minsavbal + "."
 	return ""
 }
 

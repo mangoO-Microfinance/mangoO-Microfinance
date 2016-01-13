@@ -16,20 +16,13 @@
 		$timestamp = time();
 		
 		//Insert into SAVINGS
-		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '1', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		if (!$query_insert) die ('INSERT failed: '.mysql_error());
 		
 		//Refer to acc_sav_depos.php
 		header('Location: acc_sav_depos.php?cust='.$_SESSION['cust_id']);
 	}
-	
-	/*
-	//Select Currencies from database
-	$sql_cur = "SELECT * FROM currency";
-	$query_cur = mysql_query($sql_cur);
-	if (!$query_cur) die ('SELECT failed: '.mysql_error());
-	*/
 	
 	//Select Customer from CUSTOMER
 	$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
@@ -38,7 +31,7 @@
 	$result_cust = mysql_fetch_assoc($query_cust);
 	
 	//Select Savings Transactions from SAVINGS
-	$sql_sav = "SELECT * FROM savings, savtype, currency, user WHERE savings.savtype_id = savtype.savtype_id AND savings.cur_id = currency.cur_id AND savings.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
+	$sql_sav = "SELECT * FROM savings, savtype, user WHERE savings.savtype_id = savtype.savtype_id AND savings.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
 	$query_sav = mysql_query($sql_sav);
 	check_sql($query_sav);
 	
@@ -100,7 +93,7 @@
 					</tr>
 					<tr>
 						<td>Amount:</td>
-						<td><input type="number" name="sav_amount" placeholder="UGX" class="defaultnumber" min=1 required="required" /></td>
+						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" class="defaultnumber" min=1 required="required" /></td>
 					</tr>
 					<tr>
 						<td colspan="2" class="center"><input type="submit" name="deposit" value="Deposit" /></td>
@@ -137,18 +130,18 @@
 					tr_colored($color);
 					echo '<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>';
 					echo '<td>'.$row_sav['savtype_type'].'</td>';
-					echo '<td>'.number_format($row_sav['sav_amount']).' '.$row_sav['cur_short'].'</td>';
+					echo '<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>';
 					echo '<td>'.$row_sav['sav_receipt'].'</td>';
 					echo '<td>'.$row_sav['sav_slip'].'</td>';
 					echo '<td>'.$row_sav['user_name'].'</td>';
-					$balance = $balance + ($row_sav['sav_amount']*$row_sav['cur_rate']);
+					$balance = $balance + $row_sav['sav_amount'];
 					echo '</tr>';
 					
 					//Prepare data for export to Excel file
 					array_push($_SESSION['sav_export'], array("Date" => date("d.m.Y",$row_sav['sav_date']), "Transaction Type" => $row_sav['savtype_type'], "Amount" => $row_sav['sav_amount'], "Receipt" => $row_sav['sav_receipt'], "W/draw Slip" => $row_sav['sav_slip']));
 				}
 				echo '<tr class="balance">
-								<td colspan="6">Balance: '.number_format($balance).' UGX</td>
+								<td colspan="6">Balance: '.number_format($balance).' '.$_SESSION['set_cur'].'</td>
 							</tr>';
 			 ?>
 			</table>

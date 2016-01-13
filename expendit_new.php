@@ -95,7 +95,7 @@
 					</tr>
 					<tr>
 						<td>Amount:</td>
-						<td><input type="number" name="exp_amount" placeholder="UGX" /></td>
+						<td><input type="number" name="exp_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" /></td>
 						<td>Recipient:</td>
 						<td><input type="text" name="exp_recipient"/></td>
 					</tr>
@@ -135,7 +135,7 @@
 				tr_colored($color); 		//Alternating row colors
 				echo '	<td>'.date("d.m.Y",$row_expcur['exp_date']).'</td>
 								<td>'.$row_expcur['exptype_type'].'</td>
-								<td>'.number_format($row_expcur['exp_amount']).'/=</td>
+								<td>'.number_format($row_expcur['exp_amount']).' '.$_SESSION['set_cur'].'</td>
 								<td>'.$row_expcur['exp_recipient'].'</td>
 								<td>'.$row_expcur['exp_text'].'</td>
 								<td>'.$row_expcur['exp_voucher'].'</td>
@@ -145,6 +145,7 @@
 			</table>
 			<form action="expendit_del.php" method="post" style="margin-top:5%">
 				<input type="submit" name="del_exp" value="Delete Last Expenditure" onClick="return randCheck()"/>
+			</form>
 			</form>
 		</div>
 	</body>	
