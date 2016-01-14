@@ -21,10 +21,10 @@
 		$cust_married_id = sanitize($_POST['cust_married_id']);
 		$cust_heir = sanitize($_POST['cust_heir']);
 		$cust_heirrel = sanitize($_POST['cust_heirrel']);
-		//$cust_lengthres = sanitize($_POST['cust_lengthres']);
 		if ($cust_lengthres == 0 OR $cust_lengthres == NULL) $cust_lengthres = NULL;
 		$cust_sick = sanitize($_POST['cust_sick']);
 		$cust_active = sanitize($_POST['cust_active']);
+		$timestamp = time();
 		
 		//Update table CUSTOMER
 		$sql_update = "UPDATE customer SET cust_name = '$cust_name', cust_dob = '$cust_dob', cust_sex = '$cust_sex', cust_address = '$cust_address', cust_phone = '$cust_phone', cust_email = '$cust_email', cust_occup = '$cust_occup', cust_married_id = '$cust_married_id', cust_heir = '$cust_heir', cust_heirrel = '$cust_heirrel', cust_sick = '$cust_sick', cust_active = '$cust_active', cust_lastupd = '$timestamp', user_id = '$_SESSION[log_id]' WHERE cust_id = '$_SESSION[cust_id]'";
@@ -39,6 +39,7 @@
 		//Sanitize user input
 		$subscr_date = strtotime(sanitize($_POST['subscr_date']));
 		$subscr_receipt = sanitize($_POST['subscr_receipt']);
+		$timestamp = time();
 		
 		//Select Subscription Fee from FEES
 		$sql_fee = "SELECT * FROM fees WHERE fee_id = 4";
@@ -51,13 +52,13 @@
 		
 		//Insert Subscription Fee into SAVINGS
 		if ($_POST['subscr_from_sav'] == 1){
-			$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', '5', '$subscr_receipt')";
+			$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', '5', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
 			$query_insert_fee = mysql_query ($sql_insert_fee);
 			check_sql($query_insert_fee);
 		}
 		
 		//Insert Subscription Fee into INCOMES
-		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt) VALUES ('$_SESSION[cust_id]', '8', '$fee_subscr', '$subscr_date', '$subscr_receipt')";
+		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '8', '$fee_subscr', '$subscr_date', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
 		check_sql($query_insert_fee);
 		

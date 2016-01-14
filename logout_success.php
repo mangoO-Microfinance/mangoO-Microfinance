@@ -25,7 +25,7 @@ header ('refresh:7; url=index.php');
 			<h1>mangoO Microfinance Management is released under the</h1>
 			<p><a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="new">GNU General Public Licence (GNU GPLv3)</a></p>
 			<h1>Version:</h1>
-			<p>v2.1.1 (13.01.2016)</p>
+			<p>v2.1.2 (14.01.2016)</p>
 			<h1>Developer:</h1>
 			<p>Johannes M. R&ouml;skamp</p>
 			<h1>Development funded by:</h1>
