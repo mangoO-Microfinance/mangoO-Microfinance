@@ -7,15 +7,6 @@
 	
 	//CREATE-Button
 	if (isset($_POST['create'])){
-		
-		//Select Entrance Fee and Stationary Sales from FEES
-		$sql_fee = "SELECT * FROM fees";
-		$query_fee = mysql_query($sql_fee);
-		check_sql($query_fee); 
-		while ($row_fee = mysql_fetch_array($query_fee)){
-			if ($row_fee['fee_id'] == 1) $fee_entry = $row_fee['fee_value'];
-			if ($row_fee['fee_id'] == 3) $fee_stationary = $row_fee['fee_value'];
-		}
 				
 		//Sanitize user input
 		$cust_name = sanitize($_POST['cust_name']);
@@ -28,7 +19,6 @@
 		$cust_married_id = sanitize($_POST['cust_married_id']);
 		$cust_heir = sanitize($_POST['cust_heir']);
 		$cust_heirrel = sanitize($_POST['cust_heirrel']);
-		//$cust_lengthres = sanitize($_POST['cust_lengthres']);
 		$cust_sick = sanitize($_POST['cust_sick']);
 		$cust_since = strtotime(sanitize($_POST['cust_since']));
 		$_SESSION['receipt_no'] = sanitize($_POST['receipt_no']);
@@ -46,12 +36,12 @@
 		$_SESSION['cust_id'] = $maxid['MAX(cust_id)'];
 		
 		//Insert Entrance Fee into INCOMES
-		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '1', $fee_entry, $cust_since, '$_SESSION[receipt_no]', $timestamp, '$_SESSION[log_id]')";
+		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '1', $_SESSION[fee_entry], $cust_since, '$_SESSION[receipt_no]', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
 		check_sql($query_insert_fee);
 		
 		//Insert Stationary Sales into INCOMES
-		$sql_insert_sales = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '6', $fee_stationary, $cust_since, '$_SESSION[receipt_no]', $timestamp, '$_SESSION[log_id]')";
+		$sql_insert_sales = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '6', $_SESSION[fee_stationary], $cust_since, '$_SESSION[receipt_no]', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_sales = mysql_query ($sql_insert_sales);
 		check_sql($query_insert_sales);
 		

@@ -41,31 +41,7 @@
 		echo '<script>alert(\'Annual Subscription Fee updated successfully.\')</script>';
 	}
 	
-	/* SELECTIONS */
-	
-	//Select Entry Fee from FEES
-	$sql_entryfee = "SELECT fee_value FROM fees WHERE fee_id = 1";
-	$query_entryfee = mysql_query($sql_entryfee);
-	check_sql($query_entryfee);
-	$entryfee = mysql_fetch_row($query_entryfee);
-	
-	//Select Withdrawal Fee from FEES
-	$sql_withdrawfee = "SELECT fee_value FROM fees WHERE fee_id = 2";
-	$query_withdrawfee = mysql_query($sql_withdrawfee);
-	check_sql($query_withdrawfee);
-	$withdrawfee = mysql_fetch_row($query_withdrawfee);
-		
-	//Select Price for Stationary Sales from FEES
-	$sql_stationary = "SELECT fee_value FROM fees WHERE fee_id = 3";
-	$query_stationary = mysql_query($sql_stationary);
-	check_sql($query_stationary);
-	$stationary = mysql_fetch_row($query_stationary);
-	
-	//Select Annual Subscription Rate from FEES
-	$sql_subscripfee = "SELECT fee_value FROM fees WHERE fee_id = 4";
-	$query_subscripfee = mysql_query($sql_subscripfee);
-	check_sql($query_subscripfee);
-	$subscripfee = mysql_fetch_row($query_subscripfee);
+	get_fees();
 ?>
 
 
@@ -93,19 +69,19 @@
 			
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Entry Fee</p>
 			<form action="set_fees.php" method="post">
-				<input type="number" min="0" name="entryfee" value="<?PHP echo $entryfee[0] ?>" />
+				<input type="number" min="0" name="entryfee" value="<?PHP echo $_SESSION['fee_entry'] ?>" />
 				<input type="submit" name="upd_entryfee" value="Update" />
 			</form>
 					
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Stationary Sales</p>
 			<form action="set_fees.php" method="post">
-				<input type="number" min="0" name="stationary" value="<?PHP echo $stationary[0] ?>" />
+				<input type="number" min="0" name="stationary" value="<?PHP echo $_SESSION['fee_stationary'] ?>" />
 				<input type="submit" name="upd_stationary" value="Update" />
 			</form>
 					
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Annual Subscription Fee</p>
 			<form action="set_fees.php" method="post">
-				<input type="number" min="0" name="subscripfee" value="<?PHP echo $subscripfee[0] ?>" />
+				<input type="number" min="0" name="subscripfee" value="<?PHP echo $_SESSION['fee_subscr'] ?>" />
 				<input type="submit" name="upd_subscripfee" value="Update" />
 			</form>
 			
@@ -116,7 +92,7 @@
 		
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Withdrawal Fee</p>
 			<form action="set_fees.php" method="post">
-				<input type="number" min="0" name="withdrawfee" value="<?PHP echo $withdrawfee[0] ?>" />
+				<input type="number" min="0" name="withdrawfee" value="<?PHP echo $_SESSION['fee_withdraw'] ?>" />
 				<input type="submit" name="upd_withdrawfee" value="Update" />
 			</form>
 			

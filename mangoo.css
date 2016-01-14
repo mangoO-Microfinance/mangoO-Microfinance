@@ -263,3 +263,13 @@ input#delete{
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
+
+.content_center h1 {
+	margin-top:1.5em;
+	font-size:1.1em;
+}
+.content_center p, .content_center a {
+	margin-top:.25em;
+	font-weight:bold;
+	color:#fa6900;
+}

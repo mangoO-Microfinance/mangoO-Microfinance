@@ -108,8 +108,8 @@
 				if ($_SESSION['log_report'] == 1 && $tab_no == 5) echo '<li id="tab_selected"><a href="rep_incomes.php">Reports</a></li>';
 				elseif ($_SESSION['log_report'] == 1) echo '<li><a href="rep_incomes.php">Reports</a></li>';
 				
-				if ($_SESSION['log_admin'] == 1 && $tab_no == 6) echo '<li id="tab_selected"><a href="set_logrec.php">Settings</a></li>';
-				elseif ($_SESSION['log_admin'] == 1) echo '<li><a href="set_logrec.php">Settings</a></li>';
+				if ($_SESSION['log_admin'] == 1 && $tab_no == 6) echo '<li id="tab_selected"><a href="set_genset.php">Settings</a></li>';
+				elseif ($_SESSION['log_admin'] == 1) echo '<li><a href="set_genset.php">Settings</a></li>';
 		echo '</ul>
 		</div>';
 	}
@@ -144,6 +144,7 @@
 		echo '<script language=javascript>alert(\''.$text.'\')</script>';
 	}
 	
+	//Resizing uploaded images	
 	function resize_img($width, $height){
 		/* Get original image x y*/		
 		list($w, $h) = getimagesize($_FILES['image']['tmp_name']);
@@ -178,4 +179,100 @@
 		imagedestroy($image);
 		imagedestroy($tmp_img);
 	}
+	
+	//Get settings from SETTINGS and apply to SESSION variables
+	function get_settings(){
+		$sql_settings = "SELECT * FROM settings";
+		$query_settings = mysql_query($sql_settings);
+		check_sql($query_settings);
+		while($row_settings = mysql_fetch_assoc($query_settings)){
+			
+			switch ($row_settings['set_id']){
+				case 1:
+					$_SESSION['set_msb'] = $row_settings['set_value'];
+					break;
+				case 2:
+					$_SESSION['set_minlp'] = $row_settings['set_value'];
+					break;
+				case 3:
+					$_SESSION['set_maxlp'] = $row_settings['set_value'];
+					break;
+				case 4:
+					$_SESSION['set_cur'] = $row_settings['set_value'];
+					break;
+				case 5:
+					$_SESSION['set_auf'] = $row_settings['set_value'];
+					break;
+				case 6:
+					$_SESSION['set_deact'] = $row_settings['set_value'];
+					break;
+				case 7:
+					$_SESSION['set_dashl'] = $row_settings['set_value'];
+					break;
+				case 8:
+					$_SESSION['set_dashr'] = $row_settings['set_value'];
+					break;
+			}
+		}
+	}
+	
+	//Get current Share Value from SHAREVAL
+	function get_sharevalue(){
+		$sql_shareval = "SELECT shareval_id, shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
+		$query_shareval = mysql_query($sql_shareval);
+		check_sql($query_shareval);
+		$result_shareval = mysql_fetch_assoc($query_shareval);
+		$_SESSION['share_value'] = $result_shareval['shareval_value'];
+	}
+	
+	//Get Fees from FEES and apply to SESSION variables
+	function get_fees(){
+		$sql_fees = "SELECT * FROM fees";
+		$query_fees = mysql_query($sql_fees);
+		check_sql($query_fees);
+		while ($row_fees = mysql_fetch_assoc($query_fees)){
+			switch ($row_fees['fee_id']){
+				case 1:
+					$_SESSION['fee_entry'] = $row_fees['fee_value'];
+					break;
+				case 2:
+					$_SESSION['fee_withdraw'] = $row_fees['fee_value'];
+					break;
+				case 3:
+					$_SESSION['fee_stationary'] = $row_fees['fee_value'];
+					break;
+				case 4:
+					$_SESSION['fee_subscr'] = $row_fees['fee_value'];
+					break;
+				case 5:
+					$_SESSION['fee_loan'] = $row_fees['fee_value'];
+					break;
+				case 6:
+					$_SESSION['fee_loanappl'] = $row_fees['fee_value'];
+					break;
+				case 7:
+					$_SESSION['fee_loanfine'] = $row_fees['fee_value'];
+					break;
+				case 8:
+					$_SESSION['fee_loaninterestrate'] = $row_fees['fee_value'];
+					break;
+			}
+		}
+	}
+		
+	//Calculate current customer's savings account balance
+	function get_savbalance(){
+		$sql_savbal = "SELECT sav_amount FROM savings WHERE cust_id = '$_SESSION[cust_id]'";
+		$query_savbal = mysql_query($sql_savbal);
+		check_sql($query_savbal);
+		
+		$sav_balance = 0;
+		while($row_savbal = mysql_fetch_assoc($query_savbal)){
+			$sav_balance = $sav_balance + $row_savbal['sav_amount'];
+		}
+		
+		return $sav_balance;
+	}
+	
+	
 ?>

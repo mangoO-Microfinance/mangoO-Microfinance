@@ -43,32 +43,32 @@
 		echo '<script>alert(\'Account Deactivation option updated successfully.\')</script>';
 	}
 	
+	//Update Dashboard Settings Left
+	if(isset($_POST['upd_dashl'])){
+		$new_dash_left = sanitize($_POST['dash_left']);
+		$sql_upd_dashl = "UPDATE settings SET set_value = '$new_dash_left' WHERE set_short = 'DashL'";
+		$query_upd_dashl = mysql_query($sql_upd_dashl);
+		check_sql($query_upd_dashl);
+		echo '<script>alert(\'Left dashboard section updated successfully.\')</script>';
+	}
 	
-	/* SELECTIONS */
+	//Update Dashboard Settings Right
+	if(isset($_POST['upd_dashr'])){
+		$new_dash_right = sanitize($_POST['dash_right']);
+		$sql_upd_dashr = "UPDATE settings SET set_value = '$new_dash_right' WHERE set_short = 'DashR'";
+		$query_upd_dashr = mysql_query($sql_upd_dashr);
+		check_sql($query_upd_dashr);
+		echo '<script>alert(\'Right dashboard section updated successfully.\')</script>';
+	}
 	
-	//Select Currency Abbreviation from SETTINGS
-	$sql_cur_short = "SELECT set_value FROM settings WHERE set_short = 'CUR'";
-	$query_cur_short = mysql_query($sql_cur_short);
-	check_sql($query_cur_short);
-	$cur_short = mysql_fetch_row($query_cur_short);
-
+	// Get Settings and fill variables
+	get_settings();
+	
 	//Select Value of Shares from SHAREVAL
 	$sql_shareval = "SELECT shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
 	$query_shareval = mysql_query($sql_shareval);
 	check_sql($query_shareval);
 	$shareval = mysql_fetch_row($query_shareval);
-	
-	//Select Minimum Savings Balance from SETTINGS
-	$sql_minsavbal = "SELECT set_value FROM settings WHERE set_short = 'MSB'";
-	$query_minsavbal = mysql_query($sql_minsavbal);
-	check_sql($query_minsavbal);
-	$minsavbal = mysql_fetch_row($query_minsavbal);
-	
-	//Select Auto-fine from SETTINGS
-	$sql_deact = "SELECT set_value FROM settings WHERE set_short = 'DEACT'";
-	$query_deact = mysql_query($sql_deact);
-	check_sql($query_deact);
-	$deact = mysql_fetch_row($query_deact);
 ?>
 
 <html>
@@ -95,7 +95,7 @@
 			
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Currency Abbreviation</p>
 			<form action="set_genset.php" method="post">
-				<input type="text" min="0" name="cur_short" value="<?PHP echo $cur_short[0] ?>" />
+				<input type="text" min="0" name="cur_short" value="<?PHP echo $_SESSION['set_cur'] ?>" />
 				<input type="submit" name="upd_cur_short" value="Update" />
 			</form>
 			
@@ -107,7 +107,7 @@
 			
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Minimum Savings Balance</p>
 			<form action="set_genset.php" method="post">
-				<input type="number" min="0" name="minsavbal" value="<?PHP echo $minsavbal[0] ?>" />
+				<input type="number" min="0" name="minsavbal" value="<?PHP echo $_SESSION['set_msb'] ?>" />
 				<input type="submit" name="upd_minsavbal" value="Update" />
 			</form>
 			
@@ -116,10 +116,33 @@
 		<!-- RIGHT SIDE: General Settings -->	
 		<div class="content_right" style="width:50%;">
 			
+			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Dashboard Left</p>
+			<form action="set_genset.php" method="post">
+				<select name="dash_left">
+					<option value="dashboard/dash_none.php" <?PHP if ($dashL == "dashboard/dash_none.php") echo "selected='selected'" ?> >Empty</option>
+					<option value="dashboard/dash_subscr.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_subscr.php") echo "selected='selected'" ?> >Overdue Subscriptions</option>
+					<option value="dashboard/dash_loandefaults.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_loandefaults.php") echo "selected='selected'" ?>>Defaulted Loan Instalments</option>
+					<option value="dashboard/dash_statistics.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_statistics.php") echo "selected='selected'" ?>>Statistics</option>
+				</select>
+				<input type="submit" name="upd_dashl" value="Update" />
+			</form>
+			
+			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Dashboard Right</p>
+			<form action="set_genset.php" method="post">
+				<select name="dash_right">
+					<option value="dashboard/dash_none.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_none.php") echo "selected='selected'" ?> >Empty</option>
+					<option value="dashboard/dash_subscr.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_subscr.php") echo "selected='selected'" ?> >Overdue Subscriptions</option>
+					<option value="dashboard/dash_loandefaults.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_loandefaults.php") echo "selected='selected'" ?>>Defaulted Loan Instalments</option>
+					<option value="dashboard/dash_statistics.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_statistics.php") echo "selected='selected'" ?>>Statistics</option>
+				</select>
+				<input type="submit" name="upd_dashr" value="Update" />
+			</form>
+			
+			
 			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Account Deactivation</p>
 			<form action="set_genset.php" method="post">
 				<label for="deactivate">
-					<input type="checkbox" name="deactivate" id="deactivate" value="1" <?PHP if ($deact[0] == 1) echo 'checked="checked"' ?> /> Deactivate unsubscribed accounts
+					<input type="checkbox" name="deactivate" id="deactivate" value="1" <?PHP if ($_SESSION['set_deact'] == 1) echo 'checked="checked"' ?> /> Deactivate unsubscribed accounts
 				</label>
 				<input type="submit" name="upd_deact" value="Update" />
 			</form>

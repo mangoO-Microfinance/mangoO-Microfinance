@@ -4,6 +4,7 @@
 	check_logon();	
 	connect();
 	check_custid();
+	get_sharevalue();
 	$timestamp = time();
 	
 	//ADD SHARE-Button
@@ -13,7 +14,7 @@
 		$share_date = strtotime(sanitize($_POST['share_date']));
 		$share_receipt = sanitize($_POST['share_receipt']);
 		$share_amount = sanitize($_POST['share_amount']);
-		$share_value = $_SESSION['shareval_value'] * $share_amount;
+		$share_value = $_SESSION['share_value'] * $share_amount;
 		
 		//Insert into SHARES
 		$sql_insert_sh = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_receipt, share_created, user_id) VALUES ('$_SESSION[cust_id]', '$share_date', '$share_amount', '$share_value', '$share_receipt', $timestamp, '$_SESSION[log_id]')";
@@ -61,13 +62,6 @@
 	$query_cust = mysql_query($sql_cust);
 	if (!$query_cust) die ('SELECT failed: '.mysql_error());
 	$result_cust = mysql_fetch_assoc($query_cust);
-	
-	//Select current SHARE VALUE from database
-	$sql_shareval = "SELECT shareval_id, shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
-	$query_shareval = mysql_query($sql_shareval);
-	check_sql($query_shareval);
-	$result_shareval = mysql_fetch_assoc($query_shareval);
-	$_SESSION['shareval_value'] = $result_shareval['shareval_value'];
 	
 	//Select SHARES from database
 	$sql_sha = "SELECT * FROM shares, user WHERE shares.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]'";
@@ -147,16 +141,16 @@
 						<td>Number of Shares:</td>
 						<td>
 							<select name="share_amount" class="defaultfield">
-								<option value="1">1 @ <?PHP echo number_format($_SESSION['shareval_value']).' '.$_SESSION['set_cur']; ?></option>
-								<option value="2">2 @ <?PHP echo number_format($_SESSION['shareval_value']*2).' '.$_SESSION['set_cur']; ?></option>
-								<option value="3">3 @ <?PHP echo number_format($_SESSION['shareval_value']*3).' '.$_SESSION['set_cur']; ?></option>
-								<option value="4">4 @ <?PHP echo number_format($_SESSION['shareval_value']*4).' '.$_SESSION['set_cur']; ?></option>
-								<option value="5">5 @ <?PHP echo number_format($_SESSION['shareval_value']*5).' '.$_SESSION['set_cur']; ?></option>
-								<option value="6">6 @ <?PHP echo number_format($_SESSION['shareval_value']*6).' '.$_SESSION['set_cur']; ?></option>
-								<option value="7">7 @ <?PHP echo number_format($_SESSION['shareval_value']*7).' '.$_SESSION['set_cur']; ?></option>
-								<option value="8">8 @ <?PHP echo number_format($_SESSION['shareval_value']*8).' '.$_SESSION['set_cur']; ?></option>
-								<option value="9">9 @ <?PHP echo number_format($_SESSION['shareval_value']*9).' '.$_SESSION['set_cur']; ?></option>
-								<option value="10">10 @ <?PHP echo number_format($_SESSION['shareval_value']*10).' '.$_SESSION['set_cur']; ?></option>
+								<option value="1">1 @ <?PHP echo number_format($_SESSION['share_value']).' '.$_SESSION['set_cur']; ?></option>
+								<option value="2">2 @ <?PHP echo number_format($_SESSION['share_value']*2).' '.$_SESSION['set_cur']; ?></option>
+								<option value="3">3 @ <?PHP echo number_format($_SESSION['share_value']*3).' '.$_SESSION['set_cur']; ?></option>
+								<option value="4">4 @ <?PHP echo number_format($_SESSION['share_value']*4).' '.$_SESSION['set_cur']; ?></option>
+								<option value="5">5 @ <?PHP echo number_format($_SESSION['share_value']*5).' '.$_SESSION['set_cur']; ?></option>
+								<option value="6">6 @ <?PHP echo number_format($_SESSION['share_value']*6).' '.$_SESSION['set_cur']; ?></option>
+								<option value="7">7 @ <?PHP echo number_format($_SESSION['share_value']*7).' '.$_SESSION['set_cur']; ?></option>
+								<option value="8">8 @ <?PHP echo number_format($_SESSION['share_value']*8).' '.$_SESSION['set_cur']; ?></option>
+								<option value="9">9 @ <?PHP echo number_format($_SESSION['share_value']*9).' '.$_SESSION['set_cur']; ?></option>
+								<option value="10">10 @ <?PHP echo number_format($_SESSION['share_value']*10).' '.$_SESSION['set_cur']; ?></option>
 							</select>
 						</td>
 					</tr>
@@ -231,7 +225,7 @@
 				echo '<tr class="balance">
 								<td>Balance:</td>
 								<td>'.$amount_balance.'</td>
-								<td>'.number_format($value_balance).'</td>
+								<td>'.number_format($value_balance).' '.$_SESSION['set_cur'].'</td>
 								<td colspan="2"></td>
 							</tr>';
 				?>

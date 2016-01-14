@@ -441,7 +441,7 @@
 			
 		<!--- RIGHT SIDE: Payment Transactions --->
 		<div class="content_right">
-			
+		
 			<table id="tb_table">
 				<tr>
 					<th class="title" colspan="9">Loan Payment Transactions</th>

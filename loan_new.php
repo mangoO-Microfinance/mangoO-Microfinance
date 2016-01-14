@@ -5,57 +5,7 @@
 	connect();
 	check_custid();
 	$timestamp = time();
-	
-	//Selections from Database
-	
-		//Select Customer from CUSTOMER
-		$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
-		$query_cust = mysql_query($sql_cust);
-		if (!$query_cust) die ('SELECT failed: '.mysql_error());
-		$result_cust = mysql_fetch_assoc($query_cust);
 		
-		//Select Guarantors from CUSTOMER
-		$sql_guarant = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_active = 1 AND cust_id != '$_SESSION[cust_id]'";
-		$query_guarant = mysql_query($sql_guarant);
-		if (!$query_guarant) die ('SELECT failed: '.mysql_error());
-		$guarantors = array();
-		while ($row_guarant = mysql_fetch_assoc($query_guarant)){
-			$guarantors[] = $row_guarant;
-		};
-				
-		//Select Minimum Loan Principal from SETTINGS
-		$sql_minLP = "SELECT set_value FROM settings WHERE set_short = 'MinLP'";
-		$query_minLP = mysql_query($sql_minLP);
-		check_sql($query_minLP);
-		$minLP = mysql_fetch_row($query_minLP);
-		
-		//Select Maximum Loan Principal from SETTINGS
-		$sql_maxLP = "SELECT set_value FROM settings WHERE set_short = 'MaxLP'";
-		$query_maxLP = mysql_query($sql_maxLP);
-		check_sql($query_maxLP);
-		$maxLP = mysql_fetch_row($query_maxLP);
-			
-		//Select Loan Fee Rate
-		$sql_feerate = "SELECT * FROM fees WHERE fee_id = 5";
-		$query_feerate = mysql_query($sql_feerate);
-		check_sql($query_feerate);
-		$result_feerate = mysql_fetch_assoc($query_feerate);
-		$loan_feerate = $result_feerate['fee_value'];
-		
-		//Select Loan Application Fee
-		$sql_laf = "SELECT * FROM fees WHERE fee_id = 6";
-		$query_laf = mysql_query($sql_laf);
-		check_sql($query_laf);
-		$result_laf = mysql_fetch_assoc($query_laf);
-		$loan_appfee = $result_laf['fee_value'];
-		
-		//Select Loan Interest Rate
-		$sql_intrate = "SELECT * FROM fees WHERE fee_id = 8";
-		$query_intrate = mysql_query($sql_intrate);
-		check_sql($query_intrate);
-		$result_intrate = mysql_fetch_assoc($query_intrate);
-		$loan_intrate = $result_intrate['fee_value'];
-	
 	//NEW LOAN-Button
 	if (isset($_POST['newloan'])){
 		
@@ -84,7 +34,7 @@
 		$loan_interesttotal = ceil((($loan_principal / 100 * $loan_interest) * $loan_period)/50)*50;		
 		$loan_principaldue = round($loan_principal / $loan_period);
 		$loan_interestdue = round($loan_principal / 100 * $loan_interest);
-		$loan_fee = $loan_principal / 100 * $loan_feerate;
+		$loan_fee = $loan_principal / 100 * $_SESSION['fee_loan'];
 		
 		//Insert Loan into LOANS
 		$loan_repaytotal = $loan_principal + $loan_interesttotal;
@@ -104,13 +54,30 @@
 		$_SESSION['loan_sec2'] = $loan_sec2;
 		
 		//Insert Loan Application Fee into INCOMES
-		$sql_inc_laf = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '7', '$loan_appfee', '$loan_date', '$loan_appfee_receipt', $timestamp, '$_SESSION[log_id]')";
+		$sql_inc_laf = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '7', '$_SESSION[fee_loanappl]', '$loan_date', '$loan_appfee_receipt', $timestamp, '$_SESSION[log_id]')";
 		$query_inc_laf = mysql_query($sql_inc_laf);
 		check_sql($query_inc_laf);
 		
 		//Refer to LOAN_SEC.PHP
 		header('Location: loan_sec.php');
 	}
+	
+	//Selections from Database
+
+	//Select Customer from CUSTOMER
+	$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
+	$query_cust = mysql_query($sql_cust);
+	if (!$query_cust) die ('SELECT failed: '.mysql_error());
+	$result_cust = mysql_fetch_assoc($query_cust);
+	
+	//Select Guarantors from CUSTOMER
+	$sql_guarant = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_active = 1 AND cust_id != '$_SESSION[cust_id]'";
+	$query_guarant = mysql_query($sql_guarant);
+	if (!$query_guarant) die ('SELECT failed: '.mysql_error());
+	$guarantors = array();
+	while ($row_guarant = mysql_fetch_assoc($query_guarant)){
+		$guarantors[] = $row_guarant;
+	};	
 ?>
 
 <html>
@@ -177,13 +144,13 @@
 
 					<tr>
 						<td style="font-weight:bold;">Principal:</td>
-						<td><input type="number" class="defaultnumber" name="loan_principal" id="loan_principal" placeholder="Loan Sum in <?PHP echo $_SESSION['set_cur']; ?>" min="<?PHP echo $minLP[0]; ?>" max="<?PHP echo $maxLP[0]; ?>" onChange="calc_rate(<?PHP echo $loan_feerate ?>)" /></td>
+						<td><input type="number" class="defaultnumber" name="loan_principal" id="loan_principal" placeholder="Loan Sum in <?PHP echo $_SESSION['set_cur']; ?>" min="<?PHP echo $_SESSION['set_minlp']; ?>" max="<?PHP echo $_SESSION['set_maxlp']; ?>" onChange="calc_rate(<?PHP echo $_SESSION['fee_loan']; ?>)" /></td>
 						<td style="font-weight:bold;">Period:</td>
-						<td><input type="number" class="defaultnumber" name="loan_period" id="loan_period" placeholder="Number of Months" onChange="calc_rate(<?PHP echo $loan_feerate ?>)" /></td>
+						<td><input type="number" class="defaultnumber" name="loan_period" id="loan_period" placeholder="Number of Months" onChange="calc_rate(<?PHP echo $_SESSION['fee_loan']; ?>)" /></td>
 					</tr>
 					<tr>
 						<td style="font-weight:bold;">Interest Rate:</td>
-						<td><input type="text" name="loan_interest" id="loan_interest" value="<?PHP echo $loan_intrate; ?>" placeholder="% per month" onChange="calc_rate(<?PHP echo $loan_feerate ?>)" /></td>
+						<td><input type="text" name="loan_interest" id="loan_interest" value="<?PHP echo $_SESSION['fee_loaninterestrate']; ?>" placeholder="% per month" onChange="calc_rate(<?PHP echo $_SESSION['fee_loan']; ?>)" /></td>
 						<td style="font-weight:bold;">Purpose:</td>
 						<td><input type="text" name="loan_purpose" placeholder="Purpose for the Loan" /></td>
 					</tr>
