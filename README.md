@@ -1,7 +1,7 @@
 # mangoO-stable
 
-This is the stable branch of mangoO Microfinance Management. mangoO was initially developed for the SACCO (Savings and Credit Cooperative) of the Anglican Luweero Diocese in Luweero, Uganda.
-The development was funded by the Christian Services International (Stuttgart, Germany) and the German government.
+This is the stable branch of mangoO Microfinance Management. mangoO was designed to work in small and medium sized microfinance institutions. Typically, customers will have to buy shares to become members of the society. These members will then hold both a savings and a loans account with the financial institution. 
+mangoO was initially developed for the SACCO (Savings and Credit Cooperative) of the Anglican Luweero Diocese in Luweero, Uganda and the development was funded by the Christian Services International (Stuttgart, Germany) and the German government.
 
 ## Installation
 As mangoO is fully based on web technology, it requires a PHP-capable webserver and a MySQL database. For testing purposes, using XAMPP is recommended.
@@ -15,6 +15,8 @@ These are the current default settings included in functions.php. They should on
 The default login for the program GUI is:
 Username: admin /
 Password: password
+
+It his highly recommended to change the password salt in each new installation by editing salt.php.
 
 ## Licence
 This software is licensed under the GNU General Public License 3.0, a copy of which can be found in the LICENSE file.
