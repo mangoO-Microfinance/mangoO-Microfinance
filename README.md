@@ -10,7 +10,7 @@ To connect to the test database included in this repository (mangoo.sql), the re
 Server: 127.0.0.1 /
 Database user: root /
 Database password: '' (empty password).
-These are the current default settings included in functions.php. They should only be used for test installations. Make sure to change database user and password for any productive environment!
+These are the current default settings included in mng_settings.php. They should only be used for test installations. Make sure to change database user and password for any productive environment!
 
 The default login for the program GUI is:
 Username: admin /
