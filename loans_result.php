@@ -24,10 +24,9 @@
 	<?PHP htmlHead('Loans Search Result',1) ?>	
 	<body>
 		
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(3);
+				menu_Tabs(3);
 		?>
 		
 		<!-- MENU MAIN -->

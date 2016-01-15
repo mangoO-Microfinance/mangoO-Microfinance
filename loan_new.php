@@ -113,10 +113,9 @@
 	</head>
 	
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(2);
+				menu_Tabs(2);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

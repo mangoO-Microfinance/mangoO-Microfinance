@@ -4,7 +4,7 @@
 	check_logon();
 	connect();
 	if(isset($_GET['id'])) $_SESSION['ugroup_id'] = sanitize($_GET['id']);
-	else header('Location:admin_ugroup.php');
+	else header('Location:set_ugroup.php');
 	
 	//UPDATE Button
 	if (isset($_POST['update'])){
@@ -61,10 +61,9 @@
 	<?PHP htmlHead('Settings | Edit Usergroup',1); ?>
 	<body>
 		
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(6);
+				menu_Tabs(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

@@ -8,10 +8,9 @@
 <html>
 	<?PHP htmlHead('Settings | Log Records',1) ?>
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(6);
+				menu_Tabs(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

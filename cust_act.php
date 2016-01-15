@@ -21,10 +21,9 @@
 	<?PHP htmlHead('Active Customers',1) ?>	
 	
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(2);
+				menu_Tabs(2);
 		?>
 		
 		<!-- MENU MAIN -->
@@ -37,7 +36,7 @@
 		
 		<!-- Export Button -->
 		<form class="export" action="rep_export.php" method="post">
-			<input type="submit" name="export_rep" value="Export Active Customers" />
+			<input type="submit" name="export_rep" value="Export List" />
 		</form>	
 		
 		<!-- TABLE: Active Customers -->

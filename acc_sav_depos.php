@@ -47,10 +47,9 @@
 	</head>
 	
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(2);
+				menu_Tabs(2);
 		?>
 		
 		<!-- MENU MAIN -->
@@ -95,7 +94,7 @@
 		<!-- RIGHT SIDE: Statement for Savings Account -->
 		<div class="content_right">			
 			
-			<?PHP include 'modules/mod_savings.php'; ?>
+			<?PHP include 'acc_sav_list.php'; ?>
 			
 		</div>
 	</body>

@@ -65,10 +65,9 @@
 	
 	<body>
 	
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(4);
+				menu_Tabs(4);
 		?>
 	
 		<!-- MENU MAIN -->
@@ -124,7 +123,7 @@
 						<td><input type="text" name="inc_text"/></td>
 					</tr>
 				</table>
-				<input type="submit" name="incnew" value="New Income" />
+				<input type="submit" name="incnew" value="New Entry" />
 			</form>
 		</div>
 		
@@ -166,7 +165,7 @@
 			?>
 			</table>
 			<form action="income_del.php" method="post" style="margin-top:5%">
-				<input type="submit" name="del_inc" value="Delete Last Income" onClick="return randCheck()"/>
+				<input type="submit" name="del_inc" value="Delete Last Entry" onClick="return randCheck()"/>
 			</form>
 		</div>
 	</body>	

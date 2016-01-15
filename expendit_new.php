@@ -58,10 +58,9 @@
 	
 	<body>
 	
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(4);
+				menu_Tabs(4);
 		?>
 	
 		<!-- MENU MAIN -->
@@ -110,7 +109,7 @@
 						<td><input type="text" name="exp_text"/></td>
 					</tr>
 				</table>
-				<input type="submit" name="expnew" value="New Expenditure" />
+				<input type="submit" name="expnew" value="New Entry" />
 			</form>
 		</div>
 		
@@ -144,7 +143,7 @@
 			?>
 			</table>
 			<form action="expendit_del.php" method="post" style="margin-top:5%">
-				<input type="submit" name="del_exp" value="Delete Last Expenditure" onClick="return randCheck()"/>
+				<input type="submit" name="del_exp" value="Delete Last Entry" onClick="return randCheck()"/>
 			</form>
 			</form>
 		</div>

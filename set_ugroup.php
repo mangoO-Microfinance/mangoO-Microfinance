@@ -38,10 +38,9 @@
 <html>
 	<?PHP htmlHead('Settings | Usergroups',1) ?>		
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(6);
+				menu_Tabs(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -55,73 +54,72 @@
 		
 		<!-- LEFT SIDE: Create New Usergroup Form -->
 		<div class="content_left">
+			<div class="content_settings" style="text-align:left; width:80%;">
+				<p class="heading">Create Usergroup</p>
 			
-			<!-- HEADING -->
-			<p class="heading_narrow">Create New Usergroup</p>
-			
-			<form action="set_ugroup.php" method="post">
-				<table id="tb_fields" style="width:36%;">	
-					<tr>
-						<td class="center" colspan="2"><input type="text" name="ugroup_name" placeholder="Usergroup Name" /></td>
-					</tr>
-					<tr>
-						<td class="center"><input type="checkbox" name="ugroup_report" /> Reports</td>
-						<td class="center"><input type="checkbox" name="ugroup_admin" /> Admin</td>
-					</tr>
-					<tr>
-						<td colspan="2" class="center"><input type="submit" name="create_ugroup" value="Create Usergroup" /></td>
-					</tr>
-				</table>
-			</form>
-			
+				<form action="set_ugroup.php" method="post">
+					<table id="tb_set" style="margin:auto;">	
+						<tr>
+							<td>Usergroup Name</td>
+							<td><input type="text" name="ugroup_name" placeholder="Usergroup Name" /></td>
+						</tr>
+						<tr>
+							<td>Permissions</td>
+							<td><input type="checkbox" name="ugroup_admin" /> Administrator</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type="checkbox" name="ugroup_report" /> Reports</td>
+						</tr>
+					</table>
+					<input type="submit" name="create_ugroup" value="Save Changes" />
+				</form>
+			</div>
 		</div>
 	
 		<!-- RIGHT SIDE: TABLE: Existing Usergroups -->
 		<div class="content_right">
-		
-			<form action="set_ugroup.php" method="post">
-				<table id="tb_table">				
-					<colgroup>
-						<col width="30%">
-						<col width="20%">
-						<col width="20%">
-						<col width="10%">
-					</colgroup>
-					<tr>
-						<th colspan="4" class="title">Existing Usergroups</th>
-					</tr>
-					<tr>
-						<th rowspan="2">User Group Name</th>
-						<th colspan="2">Permissions</th>
-						<th rowspan="2">Edit</th>
-					</tr>
-					<tr>
-						<th style="background-color:#a7dbd8">Reports</th>
-						<th style="background-color:#a7dbd8">Admin</th>
-					</tr>
-					<?PHP
-						$sql_ugroups = "SELECT * FROM ugroup";
-						$query_ugroups = mysql_query($sql_ugroups);
-						if (!$query_ugroups) {
-									die('SELECT failed: ' . mysql_error());
-							}
-						$color=0;
-						while ($row_ugroups = mysql_fetch_assoc($query_ugroups)){
-							tr_colored($color);						
-							echo '<td>'.$row_ugroups['ugroup_name'].'</td>';
-							
-							if ($row_ugroups['ugroup_report'] == '1') echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="1" checked></td>';
-								else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="0"></td>';
-			
-							if($row_ugroups['ugroup_admin']==1) echo '<td><input type="checkbox" disabled="disabled" name="ugroup_admin" value="1" checked></td>';
-								else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_admin" value="0"></td>';
-								
-							echo '<td><a href="set_ugroup_edit.php?id='.$row_ugroups['ugroup_id'].'"><img src="ico/edit.png"></td>
-								</tr>';
+			<table id="tb_table">				
+				<colgroup>
+					<col width="30%">
+					<col width="20%">
+					<col width="20%">
+					<col width="10%">
+				</colgroup>
+				<tr>
+					<th colspan="4" class="title">Existing Usergroups</th>
+				</tr>
+				<tr>
+					<th rowspan="2">User Group Name</th>
+					<th colspan="2">Permissions</th>
+					<th rowspan="2">Edit</th>
+				</tr>
+				<tr>
+					<th style="background-color:#a7dbd8">Reports</th>
+					<th style="background-color:#a7dbd8">Admin</th>
+				</tr>
+				<?PHP
+					$sql_ugroups = "SELECT * FROM ugroup";
+					$query_ugroups = mysql_query($sql_ugroups);
+					if (!$query_ugroups) {
+								die('SELECT failed: ' . mysql_error());
 						}
-					?>
-				</table>
-			</form>				
+					$color=0;
+					while ($row_ugroups = mysql_fetch_assoc($query_ugroups)){
+						tr_colored($color);						
+						echo '<td>'.$row_ugroups['ugroup_name'].'</td>';
+						
+						if ($row_ugroups['ugroup_report'] == '1') echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="1" checked></td>';
+							else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="0"></td>';
+		
+						if($row_ugroups['ugroup_admin']==1) echo '<td><input type="checkbox" disabled="disabled" name="ugroup_admin" value="1" checked></td>';
+							else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_admin" value="0"></td>';
+							
+						echo '<td><a href="set_ugroup_edit.php?id='.$row_ugroups['ugroup_id'].'"><img src="ico/edit.png"></td>
+							</tr>';
+					}
+				?>
+			</table>
 		</div>		
 	</body>
 </html>

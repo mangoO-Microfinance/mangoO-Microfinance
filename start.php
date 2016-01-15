@@ -13,10 +13,9 @@
 	
 	<!-- HTML BODY -->
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(1);
+				menu_Tabs(1);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

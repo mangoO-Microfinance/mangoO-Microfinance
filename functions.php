@@ -1,10 +1,12 @@
 <?PHP	
+	
 	//Establish Server & Database Connection
 	function connect() {
-		$connect_srv = mysql_connect('127.0.0.1', 'root', '');
+		include 'mng_settings.php';
+		$connect_srv = mysql_connect($db_host, $db_user, $db_passwd);
 		if (!$connect_srv) die ('DB connection failed: '.mysql_error());
-		$connect_db = mysql_select_db('mangoo', $connect_srv);
-		if (!$connect_db) die ('Database "mangoo" cannot be selected: '.mysql_error());
+		$connect_db = mysql_select_db($db_name, $connect_srv);
+		if (!$connect_db) die ('Database "'.$db_name.'" cannot be selected: '.mysql_error());
 	}
 
 	//Sanitize and secure user input	
@@ -89,7 +91,24 @@
 	
 	//Include Menu Tabs
 	function menu_Tabs($tab_no){
+		
+		echo '		
+		<!-- MENU HEADER -->
+		<div id="menu_header">
+			<img src="ico/mangoo_logo_m.png" style="margin: 1em 0 0 .75em;"/>
+			<div id="menu_logout">
+				<ul>
+					<li>'.$_SESSION['log_user'].'
+						<ul>
+							<li><a href="logout.php">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>';
+		
 		echo '
+		<!-- MENU TABS -->
 		<div id="menu_tabs"> 
 			<ul>
 				<li'; 
@@ -105,12 +124,18 @@
 				if ($tab_no == 4) echo ' id="tab_selected"';
 				echo '><a href="expendit_new.php">Accounting</a></li>';
 				
-				if ($_SESSION['log_report'] == 1 && $tab_no == 5) echo '<li id="tab_selected"><a href="rep_incomes.php">Reports</a></li>';
-				elseif ($_SESSION['log_report'] == 1) echo '<li><a href="rep_incomes.php">Reports</a></li>';
+				if ($_SESSION['log_report'] == 1){
+					echo '<li';
+					if ($tab_no == 5) echo ' id="tab_selected"';
+					echo '><a href="rep_incomes.php">Reports</a></li>';
+				}
 				
-				if ($_SESSION['log_admin'] == 1 && $tab_no == 6) echo '<li id="tab_selected"><a href="set_basic.php">Settings</a></li>';
-				elseif ($_SESSION['log_admin'] == 1) echo '<li><a href="set_basic.php">Settings</a></li>';
-		echo '</ul>
+				if ($_SESSION['log_admin'] == 1){
+					echo '<li';
+					if ($tab_no == 6) echo ' id="tab_selected"';
+					echo '><a href="set_basic.php">Settings</a></li>';
+				}
+			echo '</ul>
 		</div>';
 	}
 	
@@ -272,7 +297,5 @@
 		}
 		
 		return $sav_balance;
-	}
-	
-	
+	}	
 ?>

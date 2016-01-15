@@ -60,10 +60,9 @@
 	<?PHP htmlHead('Settings | Basic Settings',1) ?>
 	
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(6);
+				menu_Tabs(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -83,28 +82,6 @@
 				
 				<table id="tb_set">
 					
-					<tr>
-						<td><span>Currency Abbreviation</span></td>
-						<td>
-							<input type="text" min="0" name="cur_short" value="<?PHP echo $_SESSION['set_cur'] ?>" />
-						</td>
-					</tr>
-					
-					<tr>
-						<td><span>Value of Shares</span>
-						<td>
-							<input type="number" min="0" name="shareval" value="<?PHP echo $shareval[0] ?>" />
-						</td>
-					</tr>
-					
-					<tr>
-						<td><span>Minimum Savings Balance</span>
-						<td>
-							<input type="number" min="0" name="minsavbal" value="<?PHP echo $_SESSION['set_msb'] ?>" />
-						</td>
-					</tr>
-				
-			
 					<tr>
 						<td><span>Dashboard Left</span></td>
 						<td>
@@ -126,6 +103,27 @@
 								<option value="dashboard/dash_loandefaults.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_loandefaults.php") echo "selected='selected'" ?>>Defaulted Loan Instalments</option>
 								<option value="dashboard/dash_statistics.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_statistics.php") echo "selected='selected'" ?>>Statistics</option>
 							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Currency Abbreviation</span></td>
+						<td>
+							<input type="text" min="0" name="cur_short" value="<?PHP echo $_SESSION['set_cur'] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Value of Shares</span>
+						<td>
+							<input type="number" min="0" name="shareval" value="<?PHP echo $shareval[0] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Minimum Savings Balance</span>
+						<td>
+							<input type="number" min="0" name="minsavbal" value="<?PHP echo $_SESSION['set_msb'] ?>" />
 						</td>
 					</tr>
 					

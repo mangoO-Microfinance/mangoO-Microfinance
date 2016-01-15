@@ -79,10 +79,9 @@
 		<script src="functions_validate.js"></script>
 	</head>
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(2);
+				menu_Tabs(2);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -173,7 +172,7 @@
 					</tr>
 					<tr>
 						<td colspan="6" class="center">
-							<input type="submit" name="create" value="Create Customer" tabindex="15" />
+							<input type="submit" name="create" value="Continue" tabindex="15" />
 						</td>
 					</tr>
 				</table>

@@ -21,10 +21,9 @@
 	
 	<body>
 		
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(3);
+				menu_Tabs(3);
 		?>
 		
 		<!-- MENU MAIN -->
@@ -39,7 +38,7 @@
 			
 			<!-- Export Button -->
 			<form class="export" action="rep_export.php" method="post">
-				<input type="submit" name="export_rep" value="Export Pending Loans" />
+				<input type="submit" name="export_rep" value="Export List" />
 			</form>
 			
 			<table id="tb_table">

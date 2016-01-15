@@ -46,10 +46,9 @@
 	</head>
 	
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(6);
+				menu_Tabs(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -63,22 +62,26 @@
 		
 		<!-- LEFT SIDE: Create New User Form -->
 		<div class="content_left">
-			<div class="content_settings">
-				<p class="heading_narrow" style="text-align:center;">Create New User</p>
+			<div class="content_settings" style="text-align:left; width:80%;">
+				<p class="heading">Create New User</p>
 			
 				<form action="set_user.php" method="post" onSubmit="return validate(this)">
 				
-					<table id="tb_set">
+					<table id="tb_set" style="margin:auto;">
 						<tr>
-							<td class="center"><input type="text" name="user_name" placeholder="Username"/></td>
+							<td>Username</td>
+							<td><input type="text" name="user_name" placeholder="Username"/></td>
 						</tr>
 						<tr>
-							<td class="center"><input type="password" name="user_pw" placeholder="Password" /></td>
+							<td>Password</td>
+							<td><input type="password" name="user_pw" placeholder="Password" /></td>
 						</tr>
 						<tr>
-							<td class="center"><input type="password" name="user_pw_conf" placeholder="Repeat Password" /></td>
+							<td>Repeat Password</td>
+							<td><input type="password" name="user_pw_conf" placeholder="Repeat Password" /></td>
 						</tr>
 						<tr>
+							<td>Usergroup</td>
 							<td class="center">
 								<select name="ugroup" size="1">
 									<?PHP
@@ -92,12 +95,8 @@
 								</select>
 							</td>
 						</tr>
-						<tr>
-							<td class="center">
-								<input type="submit" name="newuser" value="Save Changes" />
-							</td>
-						</tr>
 					</table>
+					<input type="submit" name="newuser" value="Save Changes" />
 				</form>			
 			</div>
 		</div>

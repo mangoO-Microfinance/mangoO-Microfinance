@@ -11,10 +11,9 @@
 ?>
 <html>
 	<?PHP htmlHead('Expenditures Report',1) ?>	
-	<!-- MENU HEADER & TABS -->
+	<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(5);
+				menu_Tabs(5);
 		?>
 		
 		<!-- MENU MAIN -->

@@ -37,19 +37,19 @@ input#delete{
     padding-left: 16px;
     height: 16px;
 }
-* input[type=submit]{
-	padding:3px 12px; 
+* input[type=submit], input[type=button]{
+	padding:3px 9px; 
   background:#6e6e6e; 
   color:#fff;
 	border:0 none;
   cursor:pointer;
-  border-radius: 3px; 
+  border-radius: 3px;
 }
-* input[type=submit]:hover{
+* input[type=submit]:hover, input[type=button]:hover{
 	background-color:#f38630;
 }
 
-* input[type=submit]:active{
+* input[type=submit]:active, input[type=button]:active{
 	background-color:#2e2e2e;
 }
 

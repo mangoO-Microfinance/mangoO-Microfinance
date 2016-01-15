@@ -13,10 +13,9 @@
 	<?PHP htmlHead('Capital Report',1) ?>	
 	<body>
 			
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(5);
+				menu_Tabs(5);
 		?>
 		
 		<!-- MENU MAIN -->

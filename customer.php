@@ -142,10 +142,9 @@
 	</head>
 	
 	<body>
-		<!-- MENU HEADER & TABS -->
+		<!-- MENU -->
 		<?PHP 
-		include 'menu_header.php';
-		menu_Tabs(2);
+				menu_Tabs(2);
 		?>
 		
 		<!-- MENU MAIN -->
@@ -277,11 +276,11 @@
 							else $visibility = 'none';
 					?>
 				</table>
-				<input type="submit" name="update" value="Update Data" tabindex="13" />
-				<input type="button" name="membership" value="Membership" onclick="setVisibility('content_hidden', 'block');" />
+				<input type="submit" name="update" value="Save Changes" tabindex="13" />
+				<input type="button" name="membership" value="Subscription" onclick="setVisibility('content_hidden', 'block');" />
 			</form>
 			
-			<!-- MIDDLE PART: Renew Membership -->
+			<!-- MIDDLE PART: Renew Subscription -->
 			<div id="content_hidden" style="display:<?PHP echo $visibility; ?>;">
 				<form action=customer.php method=post onSubmit="validateSubscr(this)">
 					<input type=text name="subscr_date" value="<?PHP echo date('d.m.Y', $timestamp); ?>" placeholder="DD.MM.YYYY" />
