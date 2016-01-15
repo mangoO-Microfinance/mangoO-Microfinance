@@ -8,13 +8,13 @@
 	//Check for USER_ID
 	if (!isset($_SESSION['user_edit_id'])){
 		if (isset($_GET['id'])) $_SESSION['user_edit_id'] = sanitize($_GET['id']);
-		else header('Location: admin_user.php');
+		else header('Location: set_user.php');
 	}
 
 	//CANCEL-Button
 	if (isset($_POST['cancel'])) {
 		unset($_SESSION['user_edit_id']);
-		header('Location: admin_user.php');
+		header('Location: set_user.php');
 	}
 	
 	//UPDATE Button
@@ -40,7 +40,7 @@
 			$query_update = mysql_query($sql_update);
 			check_sql($query_update);
 			unset($_SESSION['user_edit_id']);
-			header('Location: admin_user.php');
+			header('Location: set_user.php');
 		}
 	}
 	
@@ -66,7 +66,7 @@
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="set_genset.php">General Settings</a>
+			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>
 			<a href="set_fees.php">Fees</a>
 			<a href="set_user.php" id="item_selected">Users</a>
@@ -105,7 +105,7 @@
 					?>
 					<tr>
 						<td class="center" colspan="2">
-							<input type="submit" name="update" value="Update User" />
+							<input type="submit" name="update" value="Save Changes" />
 							<input type="submit" name="cancel" value="Cancel" />
 						</td>
 					</tr>

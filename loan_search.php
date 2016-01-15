@@ -28,7 +28,7 @@
 			<form action="loans_result.php" method="post">
 				<p class="heading_narrow">Search Loan by Number</p>
 				<input type="text" name="loan_no" placeholder="Loan Number" />
-				<input type="submit" value="Search Loan" />
+				<input type="submit" value="Search" />
 			</form>
 			
 			<form action="loans_result.php" method="post" style="margin-top:4.5em;">
@@ -40,7 +40,7 @@
 					<option value="4">Abandoned</option>
 					<option value="5">Cleared</option>
 				</select>
-				<input type="submit" value="Search Loan" />
+				<input type="submit" value="Search" />
 			</form>
 			
 		</div>

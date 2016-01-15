@@ -28,7 +28,11 @@
 		</tr>
 	</table>
 	<h1>mangoO Microfinance Management was initially developed for:</h1>
-	<p>Luweero Diocese Savings and Credit Co-operative Limited (SACCO)<br/>Luweero, Uganda</p>
+	<p>
+		<a href="http://www.luweerodiocese.org/sacco" target="new">
+			Luweero Diocese Savings and Credit Co-operative Limited (SACCO)<br/>Luweero, Uganda
+		</a>
+	</p>
 	<h1>Logo designed using:</h1>
-	<p><a href="https://openclipart.org/detail/131485/mango-fruit-by-netalloy">"Mango Fruit by Netalloy"</a></p>	
-	<h1>To get the latest version or become involved, find the mangoO project on <a href="https://github.com/mangoO-Microfinance/mangoO-stable">GitHub</a>.</h1>
+	<p><a href="https://openclipart.org/detail/131485/mango-fruit-by-netalloy" target="new">"Mango Fruit by Netalloy"</a></p>	
+	<h1>To get the latest version or become involved, find the mangoO project on <a href="https://github.com/mangoO-Microfinance/mangoO-stable" target="new">GitHub</a>.</h1>

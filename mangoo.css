@@ -37,6 +37,21 @@ input#delete{
     padding-left: 16px;
     height: 16px;
 }
+* input[type=submit]{
+	padding:3px 12px; 
+  background:#6e6e6e; 
+  color:#fff;
+	border:0 none;
+  cursor:pointer;
+  border-radius: 3px; 
+}
+* input[type=submit]:hover{
+	background-color:#f38630;
+}
+
+* input[type=submit]:active{
+	background-color:#2e2e2e;
+}
 
 /* MENU: Header */
 #menu_header {
@@ -58,7 +73,7 @@ input#delete{
 #menu_tabs a {
 	text-decoration: none;
 	display: block;
-	background-color: #6E6E6E;
+	background-color: #6e6e6e;
 	padding: .5em .5em;
 	color:#fff;
 	width: 8em;
@@ -151,7 +166,7 @@ input#delete{
 	background-color:#a7dbd8;
 }
 
-/* CONTENT AREA */
+/* CONTENT DIVs */
 .content_center {
 	width:75%; 
 	margin:auto; 
@@ -169,6 +184,17 @@ input#delete{
 	float:right; 
 	text-align:center;
 	border-left: 1px white dashed;
+}
+.content_settings {
+	width:40%;
+	margin:auto;
+}
+.content_settings p {
+	text-align:left;
+	margin-bottom:0.1em;
+}
+.content_settings input[type=submit]{
+	margin-top:.8em;
 }
 #content_hidden {
 	background:#a7dbd8; 
@@ -229,6 +255,18 @@ input#delete{
 #tb_fields td.center {
 	text-align:center;
 	padding-top:3%;
+}
+
+/* TABLE FOR SETTINGS */
+#tb_set{
+	width:90%;
+	border-collapse:separate;
+	border-spacing: 2em .75em;
+	color:#2e2e2e;
+	/* background:#a7dbd8; */
+}
+#tb_set span{
+	/* font-weight:bold; */
 }
 
 /* TEXT-FORMATTING */

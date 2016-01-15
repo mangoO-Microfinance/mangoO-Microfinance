@@ -53,7 +53,7 @@
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="set_genset.php">General Settings</a>
+			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>
 			<a href="set_fees.php">Fees</a>
 			<a href="set_user.php" id="item_selected">Users</a>
@@ -63,42 +63,43 @@
 		
 		<!-- LEFT SIDE: Create New User Form -->
 		<div class="content_left">
-	
-			<p class="heading_narrow">Create New User</p>
+			<div class="content_settings">
+				<p class="heading_narrow" style="text-align:center;">Create New User</p>
 			
-			<form action="set_user.php" method="post" onSubmit="return validate(this)">
-				<table id="tb_fields">
-					<tr>
-						<td class="center"><input type="text" name="user_name" placeholder="Username"/></td>
-					</tr>
-					<tr>
-						<td class="center"><input type="password" name="user_pw" placeholder="Password" /></td>
-					</tr>
-					<tr>
-						<td class="center"><input type="password" name="user_pw_conf" placeholder="Repeat Password" /></td>
-					</tr>
-					<tr>
-						<td class="center">
-							<select name="ugroup" size="1">
-								<?PHP
-								$sql_ugroup = "SELECT ugroup_name, ugroup_id FROM ugroup";
-								$query_ugroup = mysql_query($sql_ugroup);
-								check_sql($query_ugroup);
-								while ($row_ugroup = mysql_fetch_assoc($query_ugroup)){
-										echo '<option value="'.$row_ugroup['ugroup_id'].'">'.$row_ugroup['ugroup_name'].'</option>';
-									}
-								?>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="center">
-							<input type="submit" name="newuser" value="Create New User" />
-						</td>
-					</tr>
-				</table>
-			</form>
-			
+				<form action="set_user.php" method="post" onSubmit="return validate(this)">
+				
+					<table id="tb_set">
+						<tr>
+							<td class="center"><input type="text" name="user_name" placeholder="Username"/></td>
+						</tr>
+						<tr>
+							<td class="center"><input type="password" name="user_pw" placeholder="Password" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input type="password" name="user_pw_conf" placeholder="Repeat Password" /></td>
+						</tr>
+						<tr>
+							<td class="center">
+								<select name="ugroup" size="1">
+									<?PHP
+									$sql_ugroup = "SELECT ugroup_name, ugroup_id FROM ugroup";
+									$query_ugroup = mysql_query($sql_ugroup);
+									check_sql($query_ugroup);
+									while ($row_ugroup = mysql_fetch_assoc($query_ugroup)){
+											echo '<option value="'.$row_ugroup['ugroup_id'].'">'.$row_ugroup['ugroup_name'].'</option>';
+										}
+									?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="center">
+								<input type="submit" name="newuser" value="Save Changes" />
+							</td>
+						</tr>
+					</table>
+				</form>			
+			</div>
 		</div>
 		
 		<!-- RIGHT SIDE: List of Users -->

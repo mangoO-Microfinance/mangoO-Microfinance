@@ -5,40 +5,31 @@
 	check_admin();
 	connect();
 	
-	//Update Entry Fee
-	if (isset($_POST['upd_entryfee'])){
+	//UPDATE-Button
+	if (isset($_POST['upd_fees'])){
+		//Update Entry Fee
 		$new_entryfee = sanitize($_POST['entryfee']);
 		$sql_upd_entryfee = "UPDATE fees SET fee_value = '$new_entryfee' WHERE fee_id = 1";
 		$query_upd_entryfee = mysql_query($sql_upd_entryfee);
 		check_sql($query_upd_entryfee);
-		echo '<script>alert(\'Entry Fee updated successfully.\')</script>';
-	}
 	
-	//Update Withdrawal Fee
-	if (isset($_POST['upd_withdrawfee'])){
+		//Update Withdrawal Fee
 		$new_withdrawfee = sanitize($_POST['withdrawfee']);
 		$sql_upd_withdrawfee = "UPDATE fees SET fee_value = '$new_withdrawfee' WHERE fee_id = 2";
 		$query_upd_withdrawfee = mysql_query($sql_upd_withdrawfee);
-		check_sql($query_upd_withdrawfee);
-		echo '<script>alert(\'Withdrawal Fee updated successfully.\')</script>';
-	}
+		check_sql($query_upd_withdrawfee);	
 		
-	//Update Price for Stationary Sales
-	if (isset($_POST['upd_stationary'])){
+		//Update Price for Stationary Sales
 		$new_stationary = sanitize($_POST['stationary']);
 		$sql_upd_stationary = "UPDATE fees SET fee_value = '$new_stationary' WHERE fee_id = 3";
 		$query_upd_stationary = mysql_query($sql_upd_stationary);
 		check_sql($query_upd_stationary);
-		echo '<script>alert(\'Price for Stationary sales updated successfully.\')</script>';
-	}
-		
-	//Update Annual Subscription Fee
-	if (isset($_POST['upd_subscripfee'])){
+				
+		//Update Annual Subscription Fee
 		$new_subscripfee = sanitize($_POST['subscripfee']);
 		$sql_upd_subscripfee = "UPDATE fees SET fee_value = '$new_subscripfee' WHERE fee_id = 4";
 		$query_upd_subscripfee = mysql_query($sql_upd_subscripfee);
 		check_sql($query_upd_subscripfee);
-		echo '<script>alert(\'Annual Subscription Fee updated successfully.\')</script>';
 	}
 	
 	get_fees();
@@ -56,7 +47,7 @@
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="set_genset.php">General Settings</a>
+			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>
 			<a href="set_fees.php" id="item_selected">Fees</a>
 			<a href="set_user.php">Users</a>
@@ -64,38 +55,49 @@
 			<a href="set_logrec.php">Log Records</a>
 		</div>
 	
-		<!-- LEFT SIDE: Fees -->	
-		<div class="content_left" style="width:50%; margin-bottom:5em;">
+		<!-- LEFT SIDE -->	
+		<div class="content_settings">
 			
-			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Entry Fee</p>
 			<form action="set_fees.php" method="post">
-				<input type="number" min="0" name="entryfee" value="<?PHP echo $_SESSION['fee_entry'] ?>" />
-				<input type="submit" name="upd_entryfee" value="Update" />
-			</form>
-					
-			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Stationary Sales</p>
-			<form action="set_fees.php" method="post">
-				<input type="number" min="0" name="stationary" value="<?PHP echo $_SESSION['fee_stationary'] ?>" />
-				<input type="submit" name="upd_stationary" value="Update" />
-			</form>
-					
-			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Annual Subscription Fee</p>
-			<form action="set_fees.php" method="post">
-				<input type="number" min="0" name="subscripfee" value="<?PHP echo $_SESSION['fee_subscr'] ?>" />
-				<input type="submit" name="upd_subscripfee" value="Update" />
-			</form>
 			
+				<p class="heading">Fee Settings</p>
+				
+				<table id="tb_set">
+					<tr>
+						<td><span>Entry Fee</span></td>
+						<td>
+							<input type="number" min="0" name="entryfee" value="<?PHP echo $_SESSION['fee_entry'] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Stationary Sales</span></td>
+						<td>
+							<input type="number" min="0" name="stationary" value="<?PHP echo $_SESSION['fee_stationary'] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Annual Subscription Fee</span></td>
+						<td>
+							<input type="number" min="0" name="subscripfee" value="<?PHP echo $_SESSION['fee_subscr'] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Withdrawal Fee</span></td>
+						<td>
+							<input type="number" min="0" name="withdrawfee" value="<?PHP echo $_SESSION['fee_withdraw'] ?>" />
+						</td>
+					</tr>
+				
+				</table>	
+				
+				<input type="submit" name="upd_fees" value="Save Changes">
+			
+			</form>
+		
 		</div>
 		
-		<!-- RIGHT SIDE: Fees -->	
-		<div class="content_right" style="width:50%;">
-		
-			<p class="heading" style="margin-top:2em; margin-bottom:.8em;">Withdrawal Fee</p>
-			<form action="set_fees.php" method="post">
-				<input type="number" min="0" name="withdrawfee" value="<?PHP echo $_SESSION['fee_withdraw'] ?>" />
-				<input type="submit" name="upd_withdrawfee" value="Update" />
-			</form>
-			
-		</div>
 	</body>
 </html>

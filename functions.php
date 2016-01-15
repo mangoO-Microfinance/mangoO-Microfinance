@@ -108,8 +108,8 @@
 				if ($_SESSION['log_report'] == 1 && $tab_no == 5) echo '<li id="tab_selected"><a href="rep_incomes.php">Reports</a></li>';
 				elseif ($_SESSION['log_report'] == 1) echo '<li><a href="rep_incomes.php">Reports</a></li>';
 				
-				if ($_SESSION['log_admin'] == 1 && $tab_no == 6) echo '<li id="tab_selected"><a href="set_genset.php">Settings</a></li>';
-				elseif ($_SESSION['log_admin'] == 1) echo '<li><a href="set_genset.php">Settings</a></li>';
+				if ($_SESSION['log_admin'] == 1 && $tab_no == 6) echo '<li id="tab_selected"><a href="set_basic.php">Settings</a></li>';
+				elseif ($_SESSION['log_admin'] == 1) echo '<li><a href="set_basic.php">Settings</a></li>';
 		echo '</ul>
 		</div>';
 	}
