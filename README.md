@@ -1,7 +1,8 @@
 # mangoO-stable
 
-This is the stable branch of mangoO Microfinance Management. mangoO was designed to work in small microfinance institutions. Typically, customers will have to buy shares to become members of the society. These members will then hold both a savings and a loans account with the financial institution. 
-mangoO was initially developed for the SACCO (Savings and Credit Cooperative) of the Anglican Luweero Diocese in Luweero, Uganda and the development was funded by the Christian Services International (Stuttgart, Germany) and the German government.
+mangoO Microfinance Management was designed to work in small single branch microfinance institutions. Typically, customers will have to buy shares to become members of the society. These members will then hold both a savings and a loans account with the financial institution.
+
+mangoO was initially developed for [Luweero Diocese SACCO (Savings and Credit Cooperative)](http://www.luweerodiocese.org/sacco) of the Anglican Luweero Diocese in Uganda. The development was funded by [Christian Services International (Stuttgart, Germany)](http://www.gottes-liebe-weltweit.de).
 
 ## Features
 - Customer management
