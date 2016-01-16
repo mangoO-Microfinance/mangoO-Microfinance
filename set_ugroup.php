@@ -95,8 +95,8 @@
 					<th rowspan="2">Edit</th>
 				</tr>
 				<tr>
+					<th style="background-color:#a7dbd8">Administrator</th>
 					<th style="background-color:#a7dbd8">Reports</th>
-					<th style="background-color:#a7dbd8">Admin</th>
 				</tr>
 				<?PHP
 					$sql_ugroups = "SELECT * FROM ugroup";
@@ -109,12 +109,12 @@
 						tr_colored($color);						
 						echo '<td>'.$row_ugroups['ugroup_name'].'</td>';
 						
-						if ($row_ugroups['ugroup_report'] == '1') echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="1" checked></td>';
-							else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="0"></td>';
-		
 						if($row_ugroups['ugroup_admin']==1) echo '<td><input type="checkbox" disabled="disabled" name="ugroup_admin" value="1" checked></td>';
 							else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_admin" value="0"></td>';
-							
+						
+						if ($row_ugroups['ugroup_report'] == '1') echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="1" checked></td>';
+							else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="0"></td>';
+			
 						echo '<td><a href="set_ugroup_edit.php?id='.$row_ugroups['ugroup_id'].'"><img src="ico/edit.png"></td>
 							</tr>';
 					}
