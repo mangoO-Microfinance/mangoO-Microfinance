@@ -68,13 +68,15 @@
 	$query_sav = mysql_query($sql_sav);
 	check_sql($query_sav);
 	
-	$balance = 0;		//Calculate Balance on Savings account
+	//Calculate Balance on Savings account
+	$balance = 0;		
 	while($row_query_sav = mysql_fetch_assoc($query_sav)){
 		$row_sav[] = $row_query_sav;
 		$balance = $balance + ($row_query_sav['sav_amount']);
 	}
 	
-	if (isset($row_sav)) $row_sav = array_slice($row_sav, -5, 5);	//Take last five items from array only
+	//Take last five items from array only
+	if (isset($row_sav)) $row_sav = array_slice($row_sav, -5, 5);
 ?>
 
 <html>
@@ -108,7 +110,7 @@
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(2);
+				include_Menu(2);
 		?>
 		
 		<!-- MENU MAIN -->
@@ -130,7 +132,8 @@
 		<p class="heading">
 			<?PHP	
 			echo $result_cust['cust_name'].' ('.$result_cust['cust_id'].'/'.date("Y", $result_cust['cust_since']).')'; 
-			if (isset($result_cust['cust_pic'])) echo '<a href="'.$result_cust['cust_pic'].'" target="popup" onclick="window.open(\''.$result_cust['cust_pic'].'\',\''.$result_cust['cust_name'].'\',\'width=200px,height=260px\')"> <img src="./ico/photo.png"></a>';
+			if (isset($result_cust['cust_pic'])) echo '<a href="'.$result_cust['cust_pic'].'" target="popup" onclick="window.open(\''.$result_cust['cust_pic'].'\',\''.$result_cust['cust_name'].'\',\'width=200px,height=260px\')"> <img src="./ico/photo.png" title="View customer\'s picture"></a>';
+			else echo '<a href="cust_new_pic.php?from=customer"> <img src="ico/photo_none.png" title="Choose new picture" /></a>';
 			?>
 		</p>
 		

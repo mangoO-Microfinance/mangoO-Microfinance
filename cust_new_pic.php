@@ -4,15 +4,21 @@
 	check_logon();
 	connect();
 	
+	//Check where Re-direct comes from
+	if(isset($_GET['from'])){
+		$from = sanitize($_GET['from']);
+	}
+	
 	//SKIP-Button
 	if (isset($_POST['skip'])){
-		header('Location: acc_share.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
+		if ($from == "new") header('Location: acc_share.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
+		else header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 	
 	//UPLOAD-Button
 	if (isset($_POST['upload']) AND isset($_FILES['image'])){
 		// Settings
-		$max_file_size = 1024*200; // 200kb
+		$max_file_size = 1024*400; // 400kb
 		$valid_exts = array('jpeg', 'jpg', 'png', 'tif', 'tiff');
 		
 		// Thumbnail Sizes
@@ -32,21 +38,22 @@
 				$query_picpath = mysql_query($sql_picpath);
 				check_sql($query_picpath);
 				
-				header('Location: acc_share.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
+				if ($from == "new")	header('Location: acc_share.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
+				else header('Location:customer.php?cust='.$_SESSION['cust_id']);
 			}
 			else $error_msg = 'Unsupported file';
 		}
-		else $error_msg = 'Please choose an image smaller than 200kB';
+		else $error_msg = 'Please choose an image smaller than 400kB.';
 	}
 ?>
 
 <html>
-	<?PHP htmlHead('New Loan',1) ?>
+	<?PHP htmlHead('New Picture Upload',1) ?>
 	
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(2);
+				include_Menu(2);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -57,7 +64,7 @@
 		</div>
 			
 		<div class="content_center">
-			<p class="heading">Upload Photo for New Customer <?PHP echo $_SESSION['cust_id']?></p>
+			<p class="heading">Upload Photo for Customer <?PHP echo $_SESSION['cust_id']?></p>
 			
 			<?php if(isset($error_msg)): ?>
 			<p class="alert"><?php echo $error_msg ?></p>
@@ -71,7 +78,7 @@
 				</label>
 				<br/><br/>
 				<input type="submit" name="upload" value="Upload" />
-				<input type="submit" name="skip" value="Skip Upload" />
+				<input type="submit" name="skip" value="Cancel" />
 			</form>
 		</div>
 	</body>

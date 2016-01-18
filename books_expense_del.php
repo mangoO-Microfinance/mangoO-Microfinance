@@ -10,12 +10,12 @@
 		$query_delexp = mysql_query($sql_delexp);
 		check_sql($query_delexp);
 		
-		//Refer to expendit_new.php
-		header('Location: expendit_new.php');
+		//Refer to books_expense_new.php
+		header('Location: books_expense_new.php');
 	}
 	
 	else{
 		echo '<script>alert(\'Entry cannot be deleted!\');</script>';
-		header('Location: expendit_new.php');
+		header('Location: books_expense_new.php');
 	}
 ?>

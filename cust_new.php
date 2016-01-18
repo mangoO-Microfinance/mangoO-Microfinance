@@ -46,7 +46,7 @@
 		check_sql($query_insert_sales);
 		
 		//Refer to cust_new_pic.php
-		header('Location: cust_new_pic.php');
+		header('Location: cust_new_pic.php?from=new');
 	}
 	
 	//Select Marital Status for Drop-down-Menu
@@ -81,7 +81,7 @@
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(2);
+				include_Menu(2);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

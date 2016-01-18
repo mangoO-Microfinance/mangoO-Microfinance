@@ -12,7 +12,7 @@
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(2);
+				include_Menu(2);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

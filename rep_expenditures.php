@@ -13,7 +13,7 @@
 	<?PHP htmlHead('Expense Report',1) ?>	
 	<!-- MENU -->
 		<?PHP 
-				menu_Tabs(5);
+				include_Menu(5);
 		?>
 		
 		<!-- MENU MAIN -->

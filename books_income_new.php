@@ -67,14 +67,14 @@
 	
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(4);
+				include_Menu(4);
 		?>
 	
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="start.php">Back</a>
-			<a href="expendit_new.php">New Expense</a>
-			<a href="income_new.php" id="item_selected">New Income</a>
+			<a href="books_expense_new.php">New Expense</a>
+			<a href="books_income_new.php" id="item_selected">New Income</a>
 		</div>
 		
 			
@@ -82,7 +82,7 @@
 		<div class="content_left">
 			
 			<p class="heading_narrow">New Income</p>
-			<form action="income_new.php" method="post" onSubmit="return validate(this)">
+			<form action="books_income_new.php" method="post" onSubmit="return validate(this)">
 				
 				<table id="tb_fields">
 					<tr>
@@ -92,7 +92,7 @@
 						</td>
 						<td>Type:</td>
 						<td>
-							<select name="inctype_id" style="width:158px; height:24px;"/>
+							<select name="inctype_id" />
 								<?PHP
 								while ($row_inctype = mysql_fetch_assoc($query_inctype)){
 									echo '<option value="'.$row_inctype['inctype_id'].'">'.$row_inctype['inctype_type'].'</option>';
@@ -103,7 +103,7 @@
 					</tr>
 					<tr>
 						<td>Amount:</td>
-						<td><input type="number" name="inc_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" style="width:158px; height:24px;" /></td>
+						<td><input type="number" name="inc_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" /></td>
 						<td>Receipt No:</td>
 						<td><input type="text" name="inc_receipt" /></td>
 					</tr>
@@ -140,7 +140,7 @@
 					<col width="15%">
 				</colgroup>
 				<tr>
-					<th class="title" colspan="7">Incomes for Current Month</th>
+					<th class="title" colspan="7">Current Incomes</th>
 				</tr>
 				<tr>
 					<th>Date</th>
@@ -162,9 +162,10 @@
 								<td>'.number_format($row_inccur['inc_amount']).' '.$_SESSION['set_cur'].'</td>
 								<td>'.$row_inccur['cust_name'].' ('.$row_inccur['cust_id'].')</td>
 								<td>'.$row_inccur['inc_receipt'].'</td>
-								<td>'.$row_inccur['inc_text'].'</td>
-								<td><a href="income_del.php?inc_id='.$row_inccur['inc_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a></td>
-							</tr>';
+								<td>'.$row_inccur['inc_text'].'</td>';
+								if ($row_inccur['inctype_id'] == 9 or $row_inccur['cust_id'] == 0) echo '<td><a href="books_income_del.php?inc_id='.$row_inccur['inc_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a></td>';
+								else echo '<td></td>';
+				echo '</tr>';
 			}
 			?>
 			</table>

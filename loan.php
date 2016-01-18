@@ -291,7 +291,7 @@
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(3);
+				include_Menu(3);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -444,7 +444,7 @@
 			<table id="tb_table">
 				<tr>
 					<form class="export" action="ltrans_export.php" method="post">
-						<th class="title" colspan="9">Loan Payment Transactions
+						<th class="title" colspan="10">Loan Payment Transactions
 						<!-- Export Button -->
 						<input type="submit" name="export_rep" value="Export" />
 						</th>
@@ -460,6 +460,7 @@
 					<th>Receipt</th>
 					<th>Fined</th>
 					<th>Updated</th>
+					<th>Delete</th>
 				</tr>
 				<?PHP
 				$p_due = 0;
@@ -491,6 +492,7 @@
 						echo 'disabled="disabled" /></td>';
 						
 					echo '<td>'.$row_duedates['user_name'].'</td>';
+					echo '<td><a href="ltrans_del.php?lt_id='.$row_duedates['ltrans_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a></td>';
 					echo '</tr>';
 
 					$p_due = $p_due + $row_duedates['ltrans_principaldue'];
@@ -533,7 +535,7 @@
 					<td><?PHP echo number_format($p_paid); ?></td>
 					<td><?PHP echo number_format($i_due); ?></td>
 					<td><?PHP echo number_format($i_paid); ?></td>
-					<td colspan="3"></td>
+					<td colspan="4"></td>
 				</tr>
 				<tr style="">
 					<td style="font-style:italic;">Remaining:</td>
@@ -541,15 +543,10 @@
 					<td style="font-style:italic"><?PHP echo number_format($p_due - $p_paid); ?></td>
 					<td></td>
 					<td style="font-style:italic"><?PHP echo number_format($i_due - $i_paid); ?></td>
-					<td colspan="4"></td>
+					<td colspan="5	"></td>
 				</tr>
 			</table>
-			
-			<!-- DELETE Button -->
-			<form action="ltrans_del.php" method="post" style="margin-bottom:1.5em;">
-				<input type="submit" name="del_ltrans" value="Delete Last Transaction" onClick="return randCheck()"/>
-			</form>
-			
+
 			<!-- MAKE REPAYMENT Form -->
 			<?PHP
 			if ($result_loan['loanstatus_id'] == 2 && $_SESSION['balance'] > 0) echo '

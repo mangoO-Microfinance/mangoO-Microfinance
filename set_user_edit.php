@@ -61,7 +61,7 @@
 	
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(6);
+				include_Menu(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

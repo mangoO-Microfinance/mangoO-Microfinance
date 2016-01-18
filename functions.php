@@ -90,7 +90,7 @@
 	}
 	
 	//Include Menu Tabs
-	function menu_Tabs($tab_no){
+	function include_Menu($tab_no){
 		
 		echo '		
 		<!-- MENU HEADER -->
@@ -122,7 +122,7 @@
 				echo '><a href="loan_search.php">Loans</a></li>
 				<li';
 				if ($tab_no == 4) echo ' id="tab_selected"';
-				echo '><a href="expendit_new.php">Accounting</a></li>';
+				echo '><a href="books_expense_new.php">Accounting</a></li>';
 				
 				if ($_SESSION['log_report'] == 1){
 					echo '<li';

@@ -10,11 +10,11 @@
 		$query_delinc = mysql_query($sql_delinc);
 		check_sql($query_delinc);
 		
-		//Refer to income_new.php
-		header('Location: income_new.php');
+		//Refer to books_income_new.php
+		header('Location: books_income_new.php');
 	}
 	else{
 		echo '<script>alert(\'Entry cannot be deleted!\');</script>';
-		header('Location: income_new.php');
+		header('Location: books_income_new.php');
 	}
 ?>

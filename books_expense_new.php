@@ -60,14 +60,14 @@
 	
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(4);
+				include_Menu(4);
 		?>
 	
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="start.php">Back</a>
-			<a href="expendit_new.php" id="item_selected">New Expense</a>
-			<a href="income_new.php">New Income</a>
+			<a href="books_expense_new.php" id="item_selected">New Expense</a>
+			<a href="books_income_new.php">New Income</a>
 		</div>
 		
 			
@@ -75,7 +75,7 @@
 		<div class="content_left">
 			
 			<p class="heading_narrow">New Expense</p>
-			<form action="expendit_new.php" method="post" onSubmit="return validate(this)">
+			<form action="books_expense_new.php" method="post" onSubmit="return validate(this)">
 				
 				<table id="tb_fields">
 					<tr>
@@ -118,7 +118,7 @@
 			
 			<table id="tb_table">
 				<tr>
-					<th class="title" colspan="7">Expenses for Current Month</th>
+					<th class="title" colspan="7">Current Expenses</th>
 				</tr>
 				<tr>
 					<th>Date</th>
@@ -139,7 +139,7 @@
 								<td>'.$row_expcur['exp_recipient'].'</td>
 								<td>'.$row_expcur['exp_text'].'</td>
 								<td>'.$row_expcur['exp_voucher'].'</td>
-								<td><a href="expendit_del.php?exp_id='.$row_expcur['exp_id'].'" onClick="return randCheck();" ><img src="ico/delete.png" /></a></td>
+								<td><a href="books_expense_del.php?exp_id='.$row_expcur['exp_id'].'" onClick="return randCheck();" ><img src="ico/delete.png" /></a></td>
 							</tr>';
 			}
 			?>

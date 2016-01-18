@@ -71,7 +71,7 @@
 	$result_cust = mysql_fetch_assoc($query_cust);
 	
 	//Select Guarantors from CUSTOMER
-	$sql_guarant = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_active = 1 AND cust_id != '$_SESSION[cust_id]'";
+	$sql_guarant = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_active = 1 AND cust_id != '$_SESSION[cust_id]' AND cust_id != 0";
 	$query_guarant = mysql_query($sql_guarant);
 	if (!$query_guarant) die ('SELECT failed: '.mysql_error());
 	$guarantors = array();
@@ -115,7 +115,7 @@
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(2);
+				include_Menu(2);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

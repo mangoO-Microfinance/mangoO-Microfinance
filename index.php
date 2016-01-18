@@ -23,8 +23,9 @@
 			$_SESSION['log_time'] = time();
 			$_SESSION['log_id'] = $result_log['user_id'];
 			$_SESSION['log_ugroup'] = $result_log['ugroup_name'];
-			$_SESSION['log_report'] = $result_log['ugroup_report'];
 			$_SESSION['log_admin'] = $result_log['ugroup_admin'];
+			$_SESSION['log_delete'] = $result_log['ugroup_delete'];
+			$_SESSION['log_report'] = $result_log['ugroup_report'];
 			$_SESSION['log_fingerprint'] = $fingerprint;
 			
 			//Check if user logged out properly last time
@@ -76,13 +77,19 @@
 			<form action="index.php" method="post">
 				<table id="tb_fields" style="margin:0; border-spacing:0em 1.25em;">
 					<tr>
-						<td><input type="text" name="log_user"  placeholder="Username"/></td>
+						<td>
+							<input type="text" name="log_user"  placeholder="Username" />
+						</td>
 					</tr>
 					<tr>
-						<td><input type="password" name="log_pw" placeholder="Password"></td>
+						<td>
+							<input type="password" name="log_pw" placeholder="Password" />
+						</td>
 					</tr>
 					<tr>
-						<td><input type="submit" name="login" value="Login"></td>
+						<td>
+							<input type="submit" name="login" value="Login">
+						</td>
 					</tr>
 				</table>
 			</form>

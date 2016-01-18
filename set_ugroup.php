@@ -4,34 +4,67 @@
 	check_logon();
 	check_admin();
 	connect();
+	$ugroup_id = 0;
+	$error = "no";
 	
-	//CREATE-Button
-	if(isset($_POST['create_ugroup'])){
+	//Select all Usergroups from UGROUP
+	$ugroups = array();
+	$sql_ugroups = "SELECT * FROM ugroup";
+	$query_ugroups = mysql_query($sql_ugroups);
+	check_sql($query_ugroups);
+	while($row_ugroups = mysql_fetch_assoc($query_ugroups)){
+		$ugroups[] = $row_ugroups;
+	}
+	
+	//Check for error from set_ugroup_del.php
+	if(isset($_GET['error'])){
+		$error =  sanitize($_GET['error']);
+	}
+	
+	//Set heading and variable according to selection
+	if(isset($_GET['ugroup'])){
+		$ugroup_id = sanitize($_GET['ugroup']);
+		$heading = "Edit Usergroup";
+		foreach ($ugroups as $row_ugroup){
+			if ($row_ugroup['ugroup_id'] == $ugroup_id){
+				$ugroup_name = $row_ugroup['ugroup_name'];
+				$ugroup_admin = $row_ugroup['ugroup_admin'];
+				$ugroup_delete = $row_ugroup['ugroup_delete'];
+				$ugroup_report = $row_ugroup['ugroup_report'];
+			}
+		}
+	}
+	else $heading = "Create Usergroup";
+	
+	//SAVE-Button
+	if(isset($_POST['save_changes'])){
 		
 		//Sanitize user input
+		$ugroup_id = sanitize($_POST['ugroup_id']);
 		$ugroup_name = sanitize($_POST['ugroup_name']);
-		$timestamp = time();
-		
-		if(isset ($_POST['ugroup_report'])) $ugroup_report = '1';
-			else $ugroup_report = '0';
 		if(isset($_POST['ugroup_admin'])) $ugroup_admin = '1';
 			else $ugroup_admin = '0';
-		
-		//Check if Usergroup already exists
-		$sql= "SELECT ugroup_id FROM ugroup WHERE ugroup_name = '$ugroup_name'";
-		$query = mysql_query($sql);
-		if($ausgabe = mysql_fetch_array($query)){
-			echo "<script>alert('Usergroup already exits. Please choose a different name.')</script>";
-			die;
+		if(isset($_POST['ugroup_delete'])) $ugroup_delete = '1';
+			else $ugroup_delete = '0';
+		if(isset ($_POST['ugroup_report'])) $ugroup_report = '1';
+			else $ugroup_report = '0';
+		$timestamp = time();
+
+		if ($ugroup_id == 0){
+			//Insert new usergroup into UGROUP		
+			$sql_ugroup_insert = "INSERT INTO ugroup (ugroup_name, ugroup_admin, ugroup_delete, ugroup_report, ugroup_created) VALUES ('$ugroup_name', '$ugroup_admin', '$ugroup_delete', '$ugroup_report', '$timestamp')";
+			$query_ugroup_insert = mysql_query($sql_ugroup_insert);
+			check_sql($query_ugroup_insert);
 		}
 		
-		//Insert new Usergroup into UGROUP
-		else {
-			$sql_insert = "INSERT INTO ugroup (ugroup_name, ugroup_report, ugroup_admin, ugroup_created) VALUES ('$ugroup_name', '$ugroup_report', '$ugroup_admin', '$timestamp')";
-			$query_insert = mysql_query($sql_insert);
-			if(!$query_insert) die ('INSERT failed');
-			else echo "<script>alert('Usergroup created successfully.')</script>";
+		else{
+			//Update existing usergroup
+			$sql_ugroup_upd = "UPDATE ugroup SET ugroup_name = '$ugroup_name',  ugroup_admin=$ugroup_admin, ugroup_delete=$ugroup_delete, ugroup_report=$ugroup_report, ugroup_created=$timestamp WHERE ugroup_id = $ugroup_id";
+			$query_ugroup_upd = mysql_query($sql_ugroup_upd);
+			check_sql($query_ugroup_upd);
 		}
+		
+		header('Location:set_ugroup.php');
 	}
 ?>
 
@@ -40,7 +73,7 @@
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(6);
+				include_Menu(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -55,24 +88,35 @@
 		<!-- LEFT SIDE: Create New Usergroup Form -->
 		<div class="content_left">
 			<div class="content_settings" style="text-align:left; width:80%;">
-				<p class="heading">Create Usergroup</p>
+				<?PHP echo '<p class="heading">'.$heading.'</p>'; ?>
 			
 				<form action="set_ugroup.php" method="post">
 					<table id="tb_set" style="margin:auto;">	
 						<tr>
 							<td>Usergroup Name</td>
-							<td><input type="text" name="ugroup_name" placeholder="Usergroup Name" /></td>
+							<td><input type="text" name="ugroup_name" placeholder="Usergroup Name" value="<?PHP if (isset($ugroup_name)) echo $ugroup_name; ?>"/></td>
 						</tr>
 						<tr>
 							<td>Permissions</td>
-							<td><input type="checkbox" name="ugroup_admin" /> Administrator</td>
+							<td>
+								<input type="checkbox" name="ugroup_admin" <?PHP if(isset($ugroup_admin) AND $ugroup_admin == 1) echo 'checked="checked" '; ?> /> 
+								Administrator</td>
 						</tr>
 						<tr>
 							<td></td>
-							<td><input type="checkbox" name="ugroup_report" /> Reports</td>
+							<td>
+								<input type="checkbox" name="ugroup_delete" <?PHP if(isset($ugroup_delete) AND $ugroup_delete == 1) echo 'checked="checked" '; ?> /> 
+								Deleting</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type="checkbox" name="ugroup_report" <?PHP if(isset($ugroup_report) AND $ugroup_report == 1) echo 'checked="checked" '; ?> /> 
+								Reports</td>
 						</tr>
 					</table>
-					<input type="submit" name="create_ugroup" value="Save Changes" />
+					<input type="submit" name="save_changes" value="Save Changes" />
+					<input type="hidden" name="ugroup_id" value="<?PHP echo $ugroup_id; ?>" />
 				</form>
 			</div>
 		</div>
@@ -81,43 +125,62 @@
 		<div class="content_right">
 			<table id="tb_table">				
 				<colgroup>
-					<col width="30%">
-					<col width="20%">
-					<col width="20%">
-					<col width="10%">
+					<col width="27%">
+					<col width="19%">
+					<col width="19%">
+					<col width="19%">
+					<col width="8%">
+					<col width="8%">
 				</colgroup>
 				<tr>
-					<th colspan="4" class="title">Existing Usergroups</th>
+					<th colspan="6" class="title">Existing Usergroups</th>
 				</tr>
 				<tr>
 					<th rowspan="2">User Group Name</th>
-					<th colspan="2">Permissions</th>
+					<th colspan="3">Permissions</th>
 					<th rowspan="2">Edit</th>
+					<th rowspan="2">Delete</th>
 				</tr>
 				<tr>
 					<th style="background-color:#a7dbd8">Administrator</th>
+					<th style="background-color:#a7dbd8">Deleting</th>
 					<th style="background-color:#a7dbd8">Reports</th>
 				</tr>
 				<?PHP
-					$sql_ugroups = "SELECT * FROM ugroup";
-					$query_ugroups = mysql_query($sql_ugroups);
-					if (!$query_ugroups) {
-								die('SELECT failed: ' . mysql_error());
-						}
 					$color=0;
-					while ($row_ugroups = mysql_fetch_assoc($query_ugroups)){
+					foreach ($ugroups as $row_ugroups){
 						tr_colored($color);						
-						echo '<td>'.$row_ugroups['ugroup_name'].'</td>';
-						
-						if($row_ugroups['ugroup_admin']==1) echo '<td><input type="checkbox" disabled="disabled" name="ugroup_admin" value="1" checked></td>';
-							else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_admin" value="0"></td>';
-						
-						if ($row_ugroups['ugroup_report'] == '1') echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="1" checked></td>';
-							else echo '<td><input type="checkbox" disabled="disabled" name="ugroup_report" value="0"></td>';
-			
-						echo '<td><a href="set_ugroup_edit.php?id='.$row_ugroups['ugroup_id'].'"><img src="ico/edit.png"></td>
+						echo '<td>'.$row_ugroups['ugroup_name'].'</td>
+									<td>
+										<input type="checkbox" disabled="disabled" ';
+										if ($row_ugroups['ugroup_admin']==1) echo 'checked="checked" ';
+						echo 		'/>
+									</td>
+									<td>
+										<input type="checkbox" disabled="disabled" ';
+										if ($row_ugroups['ugroup_delete'] == '1') echo 'checked="checked" ';
+						echo 		'/>
+									</td>
+									<td>
+										<input type="checkbox" disabled="disabled" ';
+										if ($row_ugroups['ugroup_report'] == '1') echo 'checked="checked" ';
+						echo 		'/>
+									</td>';
+						echo '<td>
+										<a href="set_ugroup.php?ugroup='.$row_ugroups['ugroup_id'].'">
+											<img src="ico/edit.png" />
+										</a>
+									</td>
+									<td>
+										<a href="set_ugroup_del.php?ugroup='.$row_ugroups['ugroup_id'].'">
+											<img src="ico/delete.png" />
+										</a>
+									</td>
 							</tr>';
 					}
+					
+					//Error message, if user tries to delete a usergroup that still has members.
+					if ($error == "dep") echo '<script>alert(\'One or more users are still members of this usergroup. Usergroup cannot be deleted!\')</script>';
 				?>
 			</table>
 		</div>		

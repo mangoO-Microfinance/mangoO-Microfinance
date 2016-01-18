@@ -15,13 +15,13 @@
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				menu_Tabs(1);
+				include_Menu(1);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="cust_search.php">Search Customers</a>
+			<a href="cust_search.php">Search Customer</a>
 			<a href="cust_new.php">New Customer</a>
-			<a href="loan_search.php">Search Loans</a>
+			<a href="loan_search.php">Search Loan</a>
 		</div>
 		
 		<!-- Left Side of Dashboard -->
