@@ -35,12 +35,7 @@
 		
 		<!-- CONTENT: Pending Loans -->
 		<div class="content-center">
-			
-			<!-- Export Button -->
-			<form class="export" action="rep_export.php" method="post">
-				<input type="submit" name="export_rep" value="Export List" />
-			</form>
-			
+	
 			<table id="tb_table">
 				<colgroup>
 					<col width="10%"/>
@@ -52,7 +47,12 @@
 					<col width="10%"/>
 				</colgroup>
 				<tr>
-					<th class="title" colspan="7">Pending Loans</th>
+					<form class="export" action="rep_export.php" method="post">
+						<th class="title" colspan="7">Pending Loans
+						<!-- Export Button -->
+						<input type="submit" name="export_rep" value="Export" />
+						</th>
+					</form>
 				</tr>
 				<tr>
 					<th>Loan No.</th>

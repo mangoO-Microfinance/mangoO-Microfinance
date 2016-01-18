@@ -34,11 +34,6 @@
 			<a href="cust_inact.php" id="item_selected">Inactive Customers</a>
 		</div>
 		
-		<!-- BUTTON: Export List -->
-		<form class="export" action="rep_export.php" method="post">
-			<input type="submit" name="export_rep" value="Export List" />
-		</form>
-		
 		<!-- TABLE: Inactive Customers -->
 		<table id="tb_table">				
 			<colgroup>
@@ -52,7 +47,12 @@
 				<col width="8%" />
 			</colgroup>
 			<tr>
-				<th class="title" colspan="8">Inactive Customers</th>
+				<form class="export" action="rep_export.php" method="post">
+					<th class="title" colspan="8">Inactive Customers
+					<!-- Export Button -->
+					<input type="submit" name="export_rep" value="Export" />
+					</th>
+				</form>
 			</tr>
 			<tr>
 				<th>Cust. No.</th>

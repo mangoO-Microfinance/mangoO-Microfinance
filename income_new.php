@@ -140,7 +140,7 @@
 					<col width="15%">
 				</colgroup>
 				<tr>
-					<th class="title" colspan="6">Incomes for Current Month</th>
+					<th class="title" colspan="7">Incomes for Current Month</th>
 				</tr>
 				<tr>
 					<th>Date</th>
@@ -149,24 +149,25 @@
 					<th>From</th>
 					<th>Receipt</th>
 					<th>Details</th>
+					<th>Delete</th>
 				</tr>
 			<?PHP
 			$color=0;
 			while ($row_inccur = mysql_fetch_assoc($query_inccur)){
+				
+				//echo '<tr onClick="return randCheck(); window.document.location=\'start.php?inc='.$row_inccur['inc_id'].'\';">';
 				tr_colored($color); 		//Alternating row colors
-				echo '	<td>'.date("d.m.Y",$row_inccur['inc_date']).'</td>
+				echo '	<td>'.date("d.m.Y",$row_inccur['inc_date']).'</a></td>
 								<td>'.$row_inccur['inctype_type'].'</td>
 								<td>'.number_format($row_inccur['inc_amount']).' '.$_SESSION['set_cur'].'</td>
 								<td>'.$row_inccur['cust_name'].' ('.$row_inccur['cust_id'].')</td>
 								<td>'.$row_inccur['inc_receipt'].'</td>
 								<td>'.$row_inccur['inc_text'].'</td>
+								<td><a href="income_del.php?inc_id='.$row_inccur['inc_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a></td>
 							</tr>';
 			}
 			?>
 			</table>
-			<form action="income_del.php" method="post" style="margin-top:5%">
-				<input type="submit" name="del_inc" value="Delete Last Entry" onClick="return randCheck()"/>
-			</form>
 		</div>
 	</body>	
 </html>

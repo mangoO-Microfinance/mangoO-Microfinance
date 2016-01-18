@@ -83,11 +83,6 @@
 				if (!$query_inctype) die('SELECT failed: ' . mysql_error());
 				?>
 				
-				<!-- Export Button -->					
-				<form class="export" action="rep_export.php" method="post">
-					<input type="submit" name="export_rep" value="Export Report" />
-				</form>
-				
 				<!-- TABLE: Results -->
 				<table id="tb_table" style="width:50%">
 					<colspan>
@@ -95,7 +90,12 @@
 						<col width="50%">
 					</colspan>
 					<tr>
-						<th class="title" colspan="2">Aggregated Incomes Report for <?PHP echo $rep_month.'/'.$rep_year; ?></th>
+						<form class="export" action="rep_export.php" method="post">
+							<th class="title" colspan="2">Aggregated Incomes Report for <?PHP echo $rep_month.'/'.$rep_year; ?>
+								<!-- Export Button -->					
+								<input type="submit" name="export_rep" value="Export" />
+							</th>
+						</form>
 					</tr>
 					<tr>
 						<th>Type</th>
@@ -140,12 +140,7 @@
 				$query_incomes = mysql_query($sql_incomes);
 				if (!$query_incomes) die ('SELECT failed: '.mysql_error());
 				?>
-				
-				<!-- Export Button -->					
-				<form class="export" action="rep_export.php" method="post">
-					<input type="submit" name="export_rep" value="Export Report" />
-				</form>
-				
+
 				<!-- TABLE: Results -->
 				<table id="tb_table">
 					<colspan>
@@ -156,7 +151,12 @@
 						<col width="15%">
 					</colspan>
 					<tr>
-						<th class="title" colspan="5">Detailed Incomes Report for <?PHP echo $rep_month.'/'.$rep_year; ?></th>
+						<form class="export" action="rep_export.php" method="post">						
+							<th class="title" colspan="5">Detailed Incomes Report for <?PHP echo $rep_month.'/'.$rep_year; ?>
+							<!-- Export Button -->					
+							<input type="submit" name="export_rep" value="Export" />
+							</th>
+						</form>
 					</tr>
 					<tr>
 						<th>Date</th>

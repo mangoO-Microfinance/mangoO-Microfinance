@@ -33,12 +33,7 @@
 		</div>
 		
 		<!-- CONTENT -->
-		<div class="content-center">
-				
-			<!-- Export Button -->
-			<form class="export" action="rep_export.php" method="post">
-				<input type="submit" name="export_rep" value="Export List" />
-			</form>	
+		<div class="content-center">	
 				
 			<table id="tb_table">
 				<colgroup>
@@ -51,7 +46,12 @@
 					<col width="7.5%">
 				</colgroup>
 				<tr>
-					<th class="title" colspan="7">Active Loans</th>
+					<form class="export" action="rep_export.php" method="post">
+						<th class="title" colspan="7">Active Loans
+						<!-- Export Button -->
+						<input type="submit" name="export_rep" value="Export" />
+						</th>
+					</form>
 				</tr>
 				<tr>
 					<th>Loan No.</th>

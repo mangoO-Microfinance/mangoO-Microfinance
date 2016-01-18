@@ -34,14 +34,14 @@
 	$query_expcur = mysql_query($sql_expcur);
 	check_sql($query_expcur);
 	
-	//Select Types of Expenditures from EXPTYPE
+	//Select Types of Expenses from EXPTYPE
 	$sql_exptype = "SELECT * FROM exptype";
 	$query_exptype = mysql_query($sql_exptype);
 	check_sql($query_exptype);
 ?>
 
 <html>
-	<?PHP htmlHead('Expenditures',0) ?>	
+	<?PHP htmlHead('Expenses',0) ?>	
 		<script>
 			function validate(form){
 				fail = validateDate(form.exp_date.value)
@@ -113,12 +113,12 @@
 			</form>
 		</div>
 		
-		<!-- RIGHT SIDE: Expenditures of the current month -->
+		<!-- RIGHT SIDE: Expenses of the current month -->
 		<div class="content_right">
 			
 			<table id="tb_table">
 				<tr>
-					<th class="title" colspan="6">Expenditures for Current Month</th>
+					<th class="title" colspan="7">Expenses for Current Month</th>
 				</tr>
 				<tr>
 					<th>Date</th>
@@ -127,6 +127,7 @@
 					<th>Recipient</th>
 					<th>Details</th>
 					<th>Voucher</th>
+					<th>Delete</th>
 				</tr>
 			<?PHP
 			$color=0;
@@ -138,14 +139,11 @@
 								<td>'.$row_expcur['exp_recipient'].'</td>
 								<td>'.$row_expcur['exp_text'].'</td>
 								<td>'.$row_expcur['exp_voucher'].'</td>
+								<td><a href="expendit_del.php?exp_id='.$row_expcur['exp_id'].'" onClick="return randCheck();" ><img src="ico/delete.png" /></a></td>
 							</tr>';
 			}
 			?>
 			</table>
-			<form action="expendit_del.php" method="post" style="margin-top:5%">
-				<input type="submit" name="del_exp" value="Delete Last Entry" onClick="return randCheck()"/>
-			</form>
-			</form>
 		</div>
 	</body>	
 </html>

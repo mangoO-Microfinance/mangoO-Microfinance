@@ -22,7 +22,12 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 		<col width="15%">
 	</colgroup>
 	<tr>
-		<th class="title" colspan="6">Savings Account</th>
+		<form class="export" action="acc_sav_export.php" method="post">
+			<th class="title" colspan="7">Savings Account
+			<!-- Export Button -->
+			<input type="submit" name="export_rep" value="Export" />
+			</th>
+		</form>
 	</tr>
 	<tr>
 		<th>Date</th>
@@ -31,6 +36,7 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 		<th>Receipt</th>
 		<th>W/draw Slip</th>
 		<th>Authorised by</th>
+		<th>Delete</th>
 	</tr>
  <?PHP
 	$balance = 0;
@@ -41,26 +47,16 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 		echo '<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>';
 		echo '<td>'.$row_sav['sav_receipt'].'</td>';
 		echo '<td>'.$row_sav['sav_slip'].'</td>';
-		echo '<td>'.$row_sav['user_name'].'</td>';
+		echo '<td>'.$row_sav['user_name'].'</td>
+			<td><a href="acc_sav_del.php?sav_id='.$row_sav['sav_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a></td>
+			</tr>';
 		$balance = $balance + $row_sav['sav_amount'];
-		echo '</tr>';
 		
 		//Prepare data for export to Excel file
 		array_push($_SESSION['sav_export'], array("Date" => date("d.m.Y",$row_sav['sav_date']), "Transaction Type" => $row_sav['savtype_type'], "Amount" => $row_sav['sav_amount'], "Receipt" => $row_sav['sav_receipt'], "W/draw Slip" => $row_sav['sav_slip']));
 	}
 	echo '<tr class="balance">
-					<td colspan="6">Balance: '.number_format($balance).' '.$_SESSION['set_cur'].'</td>
+					<td colspan="7">Balance: '.number_format($balance).' '.$_SESSION['set_cur'].'</td>
 				</tr>';
  ?>
 </table>
-
-<!-- Delete Button -->
-<form action="acc_sav_del.php" method="post" style="margin-top:5%">
-	<input type="submit" name="del_sav" value="Delete Last Entry" onClick="return randCheck()"/>
-	<input type="hidden" name="origin" value="d" />
-</form>
-
-<!-- Export Button -->
-<form class="export" action="acc_sav_export.php" method="post" style="margin-top:3%">
-	<input type="submit" name="export_rep" value="Export Statement" />
-</form>

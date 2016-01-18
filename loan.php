@@ -443,7 +443,12 @@
 		
 			<table id="tb_table">
 				<tr>
-					<th class="title" colspan="9">Loan Payment Transactions</th>
+					<form class="export" action="ltrans_export.php" method="post">
+						<th class="title" colspan="9">Loan Payment Transactions
+						<!-- Export Button -->
+						<input type="submit" name="export_rep" value="Export" />
+						</th>
+					</form>
 				</tr>
 				<tr>
 					<th>Date due</th>
@@ -603,11 +608,6 @@
 									</tr>
 								</table>';
 				?>
-			</form>
-			
-			<!-- Export Button -->
-			<form class="export" action="ltrans_export.php" method="post" style="margin-top:3%">
-				<input type="submit" name="export_rep" value="Export Statement" />
 			</form>
 			
 		</div>
