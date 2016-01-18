@@ -112,14 +112,29 @@ function validateGuarantors(field1, field2, field3) {
 	return returnstring
 }
 
-function validateUser(field) {
+function validateUser(field, usernames, user_id) {
 	if (field == "") return "Please enter a Username.\n\n"
+	if (user_id == 0){
+		for (i = 0, len = usernames.length; i < len; i++){
+			if (usernames[i] == field) return "Username already exists.\nPlease choose a different username.\n\n"
+		}
+	}
 	return ""
 }
 
 function validatePw(pw, pw_conf) {
 	if (pw == "") return "Please enter a Password.\n\n"
 	if (pw_conf == "") return "Please reconfirm Password.\n\n"
-	if (pw != pw_conf) return "Passwords do not match! Please try again.\n\n"
+	if (pw != pw_conf) return "Passwords do not match.\n\n"
+	return ""
+}
+
+function validateUsergroup(field, ugroupnames, ugroup_id) {
+	if (field == "") return "Please enter a Usergroup name.\n\n"
+	if (ugroup_id == 0){
+		for (i = 0, len = ugroupnames.length; i < len; i++){
+			if (ugroupnames[i] == field) return "Usergroup name already exists.\nPlease choose a different usergroup name.\n\n"
+		}
+	}
 	return ""
 }

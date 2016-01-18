@@ -14,6 +14,7 @@
 	check_sql($query_ugroups);
 	while($row_ugroups = mysql_fetch_assoc($query_ugroups)){
 		$ugroups[] = $row_ugroups;
+		$ugroup_names[] = $row_ugroups['ugroup_name'];
 	}
 	
 	//Check for error from set_ugroup_del.php
@@ -24,7 +25,6 @@
 	//Set heading and variable according to selection
 	if(isset($_GET['ugroup'])){
 		$ugroup_id = sanitize($_GET['ugroup']);
-		$heading = "Edit Usergroup";
 		foreach ($ugroups as $row_ugroup){
 			if ($row_ugroup['ugroup_id'] == $ugroup_id){
 				$ugroup_name = $row_ugroup['ugroup_name'];
@@ -33,6 +33,7 @@
 				$ugroup_report = $row_ugroup['ugroup_report'];
 			}
 		}
+		$heading = "Edit Usergroup";
 	}
 	else $heading = "Create Usergroup";
 	
@@ -69,7 +70,17 @@
 ?>
 
 <html>
-	<?PHP htmlHead('Settings | Usergroups',1) ?>		
+	<?PHP htmlHead('Settings | Usergroups',0) ?>
+	<script>
+			function validate(form){
+				fail = validateUsergroup(form.ugroup_name.value, <?PHP echo json_encode($ugroup_names).', '.$ugroup_id; ?>)
+				if (fail == "") return true
+				else { alert(fail); return false }
+			}
+		</script>
+		<script src="functions_validate.js"></script>
+	</head>	
+	
 	<body>
 		<!-- MENU -->
 		<?PHP 
@@ -90,7 +101,7 @@
 			<div class="content_settings" style="text-align:left; width:80%;">
 				<?PHP echo '<p class="heading">'.$heading.'</p>'; ?>
 			
-				<form action="set_ugroup.php" method="post">
+				<form action="set_ugroup.php" method="post" onSubmit="return validate(this)">
 					<table id="tb_set" style="margin:auto;">	
 						<tr>
 							<td>Usergroup Name</td>

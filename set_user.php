@@ -4,39 +4,70 @@
 	check_logon();
 	check_admin();
 	connect();
+	$user_id = 0;
+	$error = "no";
 	
-	//NEW USER Button
-	if(isset($_POST["newuser"])){
+	//Select all users from USER
+	$users = array();
+	$user_names = array();
+	$sql_users = "SELECT * FROM user, ugroup WHERE ugroup.ugroup_id = user.ugroup_id ORDER BY user_name";
+	$query_users = mysql_query($sql_users);
+	check_sql ($query_users);
+	while($row_users = mysql_fetch_assoc($query_users)){
+		$users[] = $row_users;
+		$user_names[] = $row_users['user_name'];
+	}
+	
+	//Select all usergroup from UGROUP
+	$sql_ugroup = "SELECT ugroup_name, ugroup_id FROM ugroup";
+	$query_ugroup = mysql_query($sql_ugroup);
+	check_sql($query_ugroup);
+	
+	//Set heading and variable according to selection
+	if(isset($_GET['user'])){
+		$user_id = sanitize($_GET['user']);
+		foreach ($users as $row_user){
+			if ($row_user['user_id'] == $user_id){
+				$user_name = $row_user['user_name'];
+				$user_ugroup = $row_user['ugroup_id'];
+			}
+		}
+		$heading = "Edit User";
+	}
+	else $heading = "Create User";
+	
+	//SAVE Button
+	if(isset($_POST["save_changes"])){
 		
 		//Sanitize user input
-		include 'salt.php';
+		$user_id = sanitize($_POST['user_id']);
 		$user_name = sanitize($_POST['user_name']);
+		include 'salt.php';
 		$user_pw = sha1($salt1.(sanitize($_POST['user_pw'])).$salt2);
 		$user_pw_conf = sha1($salt1.(sanitize($_POST['user_pw_conf'])).$salt2);
 		$ugroup = sanitize($_POST['ugroup']);
 		$timestamp = time();	
 		
-		//Check if Username already exists
-		$sql_check = "SELECT user_id FROM user WHERE user_name = '$user_name'";
-		$query_check = mysql_query($sql_check);
-		if($ausgabe = mysql_fetch_array($query_check)){
-			echo '<script>alert(\'Username already exists. Please choose a different Username.\')</script>';
-		}
-		
-		//Insert new user into USER
-		else {			
+		if($user_id == 0){
+			//Insert new user into USER
 			$sql_insert = "INSERT INTO user (user_name, user_pw, ugroup_id, user_created) VALUES ('$user_name', '$user_pw', '$ugroup', '$timestamp')";
 			$query_insert = mysql_query($sql_insert);
-			echo '<script>alert(\'User '.$user_name.' created successfully.\')</script>';
 		}
+		else {
+			//Update existing user
+			$sql_user_upd = "UPDATE user SET user_name = '$user_name', user_pw = '$user_pw', ugroup_id = $ugroup, user_created = $timestamp WHERE user_id = $user_id";
+			$query_user_upd = mysql_query($sql_user_upd);
+			check_sql($query_user_upd);
+		}
+		header('Location:set_user.php');
 	}
 ?>
 
 <html>
 	<?PHP htmlHead('Settings | Users', 0) ?>
-	<script>
+		<script>
 			function validate(form){
-				fail = validateUser(form.user_name.value)
+				fail = validateUser(form.user_name.value, <?PHP echo json_encode($user_names).', '.$user_id; ?>)
 				fail += validatePw(form.user_pw.value, form.user_pw_conf.value)
 				if (fail == "") return true
 				else { alert(fail); return false }
@@ -63,14 +94,14 @@
 		<!-- LEFT SIDE: Create New User Form -->
 		<div class="content_left">
 			<div class="content_settings" style="text-align:left; width:80%;">
-				<p class="heading">Create New User</p>
+				<?PHP echo '<p class="heading">'.$heading.'</p>'; ?>
 			
 				<form action="set_user.php" method="post" onSubmit="return validate(this)">
 				
 					<table id="tb_set" style="margin:auto;">
 						<tr>
 							<td>Username</td>
-							<td><input type="text" name="user_name" placeholder="Username"/></td>
+							<td><input type="text" name="user_name" placeholder="Username" value="<?PHP if(isset($user_name)) echo $user_name;?>" /></td>
 						</tr>
 						<tr>
 							<td>Password</td>
@@ -85,18 +116,18 @@
 							<td class="center">
 								<select name="ugroup" size="1">
 									<?PHP
-									$sql_ugroup = "SELECT ugroup_name, ugroup_id FROM ugroup";
-									$query_ugroup = mysql_query($sql_ugroup);
-									check_sql($query_ugroup);
 									while ($row_ugroup = mysql_fetch_assoc($query_ugroup)){
-											echo '<option value="'.$row_ugroup['ugroup_id'].'">'.$row_ugroup['ugroup_name'].'</option>';
+											echo '<option value="'.$row_ugroup['ugroup_id'].'"';
+											if (isset($user_ugroup) AND $row_ugroup['ugroup_id'] == $user_ugroup) echo ' selected="selected"';
+											echo '>'.$row_ugroup['ugroup_name'].'</option>';
 										}
 									?>
 								</select>
 							</td>
 						</tr>
 					</table>
-					<input type="submit" name="newuser" value="Save Changes" />
+					<input type="submit" name="save_changes" value="Save Changes" />
+					<input type="hidden" name="user_id" value="<?PHP echo $user_id; ?>" />
 				</form>			
 			</div>
 		</div>
@@ -121,23 +152,18 @@
 						<th>Edit</th> 
 					</tr>
 					<?PHP
-						$sql_user = "SELECT * FROM user, ugroup WHERE ugroup.ugroup_id = user.ugroup_id ORDER BY user_name";
-						$query_user = mysql_query($sql_user);
-						check_sql ($query_user);
-						$color=0;
-						while ($row_user = mysql_fetch_assoc($query_user)){					
-							tr_colored($color);		//Alternating row colors
-								echo '<td>'.$row_user['user_name'].'</td>';
-								echo '<td>'.$row_user['ugroup_name'].'</td>';
-								echo '<td>'.date('d.m.Y',$row_user['user_created']).'</td>';
-								echo '<td><a href="set_user_edit.php?id='.$row_user['user_id'].'"><img src="ico/edit.png"></td>';
-							echo '</tr>';
-						}
+					$color=0;
+					foreach ($users as $row_user){					
+						tr_colored($color);		//Alternating row colors
+							echo '<td>'.$row_user['user_name'].'</td>';
+							echo '<td>'.$row_user['ugroup_name'].'</td>';
+							echo '<td>'.date('d.m.Y',$row_user['user_created']).'</td>';
+							echo '<td><a href="set_user.php?user='.$row_user['user_id'].'"><img src="ico/edit.png"></td>';
+						echo '</tr>';
+					}
 					?>
 				</table>
 			</form>
-		
 		</div>
-
 	</body>
 </html>
