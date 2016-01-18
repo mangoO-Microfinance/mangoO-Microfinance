@@ -10,7 +10,7 @@
 	$month = date("m",time());
 ?>
 <html>
-	<?PHP htmlHead('Expenditures Report',1) ?>	
+	<?PHP htmlHead('Expense Report',1) ?>	
 	<!-- MENU -->
 		<?PHP 
 				menu_Tabs(5);
@@ -18,8 +18,8 @@
 		
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="rep_incomes.php">Incomes Report</a>
-			<a href="rep_expenditures.php" id="item_selected">Expenditures Report</a>
+			<a href="rep_incomes.php">Income Report</a>
+			<a href="rep_expenditures.php" id="item_selected">Expense Report</a>
 			<a href="rep_loans.php">Loans Report</a>
 			<a href="rep_capital.php">Capital Report</a>
 			<a href="rep_monthly.php">Monthly Report</a>
@@ -85,7 +85,7 @@
 					</colspan>
 					<tr>
 						<form class="export" action="rep_export.php" method="post">
-							<th class="title" colspan="2">Aggregated Expenditures for <?PHP echo $rep_month.'/'.$rep_year ?>
+							<th class="title" colspan="2">Aggregated Expenses for <?PHP echo $rep_month.'/'.$rep_year ?>
 							<!-- Export Button -->
 							<input type="submit" name="export_rep" value="Export" />		
 							</th>
@@ -146,7 +146,7 @@
 					</colspan>
 					<tr>
 						<form class="export" action="rep_export.php" method="post">
-							<th class="title" colspan="7">Detailed Expenditures for <?PHP echo $rep_month.'/'.$rep_year ?>
+							<th class="title" colspan="7">Detailed Expenses for <?PHP echo $rep_month.'/'.$rep_year ?>
 							<!-- Export Button -->					
 							<input type="submit" name="export_rep" value="Export" />
 							</th>

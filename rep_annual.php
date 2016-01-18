@@ -19,8 +19,8 @@
 		
 		<!-- MENU MAIN -->
 		<div id="menu_main">
-			<a href="rep_incomes.php">Incomes Report</a>
-			<a href="rep_expenditures.php">Expenditures Report</a>
+			<a href="rep_incomes.php">Income Report</a>
+			<a href="rep_expenditures.php">Expense Report</a>
 			<a href="rep_loans.php">Loans Report</a>
 			<a href="rep_capital.php">Capital Report</a>
 			<a href="rep_monthly.php">Monthly Report</a>

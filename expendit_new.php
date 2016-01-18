@@ -66,15 +66,15 @@
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="start.php">Back</a>
-			<a href="expendit_new.php" id="item_selected">New Expenditure</a>
+			<a href="expendit_new.php" id="item_selected">New Expense</a>
 			<a href="income_new.php">New Income</a>
 		</div>
 		
 			
-		<!-- LEFT SIDE: Form for entering new expenditure -->
+		<!-- LEFT SIDE: Form for entering new expense -->
 		<div class="content_left">
 			
-			<p class="heading_narrow">New Expenditure</p>
+			<p class="heading_narrow">New Expense</p>
 			<form action="expendit_new.php" method="post" onSubmit="return validate(this)">
 				
 				<table id="tb_fields">

@@ -73,7 +73,7 @@
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="start.php">Back</a>
-			<a href="expendit_new.php">New Expenditure</a>
+			<a href="expendit_new.php">New Expense</a>
 			<a href="income_new.php" id="item_selected">New Income</a>
 		</div>
 		
