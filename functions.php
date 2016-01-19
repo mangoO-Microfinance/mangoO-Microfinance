@@ -245,6 +245,9 @@
 				case 8:
 					$_SESSION['set_dashr'] = $row_settings['set_value'];
 					break;
+				case 9:
+					$_SESSION['set_intcalc'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}

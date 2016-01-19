@@ -21,51 +21,18 @@
 		
 		if($loan_status == 2 AND $loan_issued == 0){
 			
-			//Update the Loan to "Approved" and "Issued"
-			$sql_issue = "UPDATE loans SET loanstatus_id = '$loan_status', loan_issued = '1', loan_dateout = '$loan_dateout', loan_fee_receipt = '$loan_fee_receipt' WHERE loan_id = '$_SESSION[loan_id]'";
-			$query_issue = mysql_query($sql_issue);
-			check_sql($query_issue);
-
-			//Calculate expected total interest, monthly rates
-			$loan_interesttotal = ceil((($loan_principal / 100 * $loan_interest) * $loan_period)/50)*50;		
-			$loan_principaldue = round($loan_principal / $loan_period);
-			$loan_interestdue = round($loan_principal / 100 * $loan_interest);
-			
-			//Check if monthly rates multiplied by number of months sums up to the expected total repay amounts exactly. Calculate difference.
-			$difference_principal = $loan_principal - ($loan_principaldue * $loan_period);
-			$difference_interest = $loan_interesttotal - ($loan_interestdue * $loan_period);
-			
-			//Calculate Due Dates & Due Payments and insert them into LTRANS
-			$ltrans_due = $loan_dateout + 2678400;
-			$ltrans_principaldue = $loan_principaldue;
-			$ltrans_interestdue = $loan_interestdue;
-			$e = 1;
-			while ($e <= $loan_period) {	
-				
-				//Add differences on first iteration. 
-				if ($e == 1) {
-					$ltrans_principaldue = $ltrans_principaldue + $difference_principal;
-					$ltrans_interestdue = $ltrans_interestdue + $difference_interest;
-				}
-				
-				//Insert into LTRANS
-				$sql_insert_ltrans = "INSERT INTO ltrans (loan_id, ltrans_due, ltrans_principaldue, ltrans_interestdue, user_id) VALUES ('$_SESSION[loan_id]', '$ltrans_due', '$ltrans_principaldue', '$ltrans_interestdue', '$_SESSION[log_id]')";
-				$query_insert_ltrans = mysql_query ($sql_insert_ltrans);
-				check_sql($query_insert_ltrans);
-				
-				//Reset both due amounts to standard value after first iteration
-				if ($e == 1) {
-					$ltrans_principaldue = $loan_principaldue;
-					$ltrans_interestdue = $loan_interestdue;
-				}
-				$ltrans_due = $ltrans_due + 2678400;	/* Add seconds for 31 days */
-				$e++;
-			}
+			//Include module for interest calculation method according to system settings
+			include ($_SESSION['set_intcalc']);
 			
 			//Insert Loan Fee into INCOMES
 			$sql_inc_lf = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '3', '$loan_fee', '$loan_dateout', '$loan_fee_receipt', '$timestamp', '$_SESSION[log_id]')";
 			$query_inc_lf = mysql_query($sql_inc_lf);
 			check_sql($query_inc_lf);
+			
+			//Update the Loan to "Approved" and "Issued"
+			$sql_issue = "UPDATE loans SET loanstatus_id = '$loan_status', loan_issued = '1', loan_dateout = '$loan_dateout', loan_fee_receipt = '$loan_fee_receipt' WHERE loan_id = '$_SESSION[loan_id]'";
+			$query_issue = mysql_query($sql_issue);
+			check_sql($query_issue);
 		}
 		
 		else {		
@@ -397,8 +364,8 @@
 							<input type="text" name="loan_dateout"
 								<?PHP 
 								if($result_loan['loan_issued'] == 1) {
-									echo 'disabled="disabled"';
-									echo 'value="'.date("d.m.Y", $result_loan['loan_dateout']).'"';
+									echo ' disabled="disabled"';
+									echo ' value="'.date("d.m.Y", $result_loan['loan_dateout']).'" ';
 								}
 								?>
 							placeholder="DD.MM.YYYY" />
@@ -438,7 +405,7 @@
 			</form>
 		</div>
 			
-		<!--- RIGHT SIDE: Payment Transactions --->
+		<!-- RIGHT SIDE: Payment Transactions -->
 		<div class="content_right">
 		
 			<table id="tb_table">

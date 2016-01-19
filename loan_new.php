@@ -31,14 +31,16 @@
 		$loan_appfee_receipt = sanitize($_POST['loan_appfee_receipt']);
 		
 		//Calculate expected total interest, monthly rates, and loan fee
+		$loan_principaldue = round($loan_principal / $loan_period, -3);
+		
 		$loan_interesttotal = ceil((($loan_principal / 100 * $loan_interest) * $loan_period)/50)*50;		
-		$loan_principaldue = round($loan_principal / $loan_period);
 		$loan_interestdue = round($loan_principal / 100 * $loan_interest);
+		$loan_repaytotal = $loan_principal + $loan_interesttotal;
+		$loan_rate = $loan_principaldue + $loan_interestdue;
+		
 		$loan_fee = $loan_principal / 100 * $_SESSION['fee_loan'];
 		
 		//Insert Loan into LOANS
-		$loan_repaytotal = $loan_principal + $loan_interesttotal;
-		$loan_rate = $loan_principaldue + $loan_interestdue;
 		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_loan = mysql_query($sql_insert_loan);
 		check_sql($query_insert_loan);
@@ -89,10 +91,10 @@
 				interest = (document.getElementById("loan_interest").value * 1);
 				instal = (document.getElementById("loan_period").value * 1);
 				repaytotal = Math.ceil((amount + (amount/100*interest*instal)) / 50) * 50;
-				rate = repaytotal / instal;
+				rate = Math.round(repaytotal / instal);
 				fee = (amount/100*feerate);
 				document.getElementById("loan_repaytotal").value = repaytotal;
-				document.getElementById("loan_rate").value = Math.round(rate);
+				document.getElementById("loan_rate").value = rate;
 				document.getElementById("loan_fee").value = fee;
 			}
 			

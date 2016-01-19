@@ -7,6 +7,18 @@
 	
 	//Save Changes
 	if (isset($_POST['upd_loans'])){
+		//Update Interest Calculation Method
+		$new_intcalcmethod = sanitize($_POST['intcalcmethod']);
+		$sql_upd_intcalcmethod = "UPDATE settings SET set_value = '$new_intcalcmethod' WHERE set_id = 9";
+		$query_upd_intcalcmethod = mysql_query($sql_upd_intcalcmethod);
+		check_sql($query_upd_intcalcmethod);
+		
+		//Update Loan Interest Rate
+		$new_loaninterest = sanitize($_POST['loaninterest']);
+		$sql_upd_loaninterest = "UPDATE fees SET fee_value = '$new_loaninterest' WHERE fee_id = 8";
+		$query_upd_loaninterest = mysql_query($sql_upd_loaninterest);
+		check_sql($query_upd_loaninterest);
+
 		//Update Loan Fee Rate
 		$new_loanfeerate = sanitize($_POST['loanfeerate']);
 		$sql_upd_loanfeerate = "UPDATE fees SET fee_value = '$new_loanfeerate' WHERE fee_id = 5";
@@ -18,13 +30,7 @@
 		$sql_upd_lappfee = "UPDATE fees SET fee_value = '$new_lappfee' WHERE fee_id = 6";
 		$query_upd_lappfee = mysql_query($sql_upd_lappfee);
 		check_sql($query_upd_lappfee);
-	
-		//Update Loan Interest Rate
-		$new_loaninterest = sanitize($_POST['loaninterest']);
-		$sql_upd_loaninterest = "UPDATE fees SET fee_value = '$new_loaninterest' WHERE fee_id = 8";
-		$query_upd_loaninterest = mysql_query($sql_upd_loaninterest);
-		check_sql($query_upd_loaninterest);
-		
+			
 		//Update Loan Default Fine
 		$new_ldefaultfine = sanitize($_POST['ldefaultfine']);
 		$sql_upd_ldefaultfine = "UPDATE fees SET fee_value = '$new_ldefaultfine' WHERE fee_id = 7";
@@ -82,43 +88,54 @@
 				<p class="heading">Loan Settings</p>
 				
 				<table id="tb_set">
+					
 					<tr>
-						<td><span>Loan Application Fee</p>
+						<td>Interest Calculation Method</p>
+						<td>
+							<select name="intcalcmethod" />
+								<option value="modules/mod_inter_fixed.php" <?PHP if ($_SESSION['set_intcalc']=="modules/mod_inter_fixed.php") echo 'selected="selected"'; ?> >Fixed</option>
+								<option value="modules/mod_inter_float.php" <?PHP if ($_SESSION['set_intcalc']=="modules/mod_inter_float.php") echo 'selected="selected"'; ?>>Floating</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Loan Interest Rate (%)</p>
+						<td>
+							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Loan Application Fee</p>
 						<td>
 							<input type="number" min="0" name="lappfee" value="<?PHP echo $_SESSION['fee_loanappl'] ?>" />
 						</td>
 					</tr>
 				
 					<tr>
-						<td><span>Loan Fee Rate (%)</p>
+						<td>Loan Fee Rate (%)</p>
 						<td>
 							<input type="text" min="0" name="loanfeerate" value="<?PHP echo $_SESSION['fee_loan'] ?>" />
 						</td>
 					</tr>
 				
 					<tr>
-						<td><span>Loan Interest Rate (%)</p>
-						<td>
-							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" />
-						</td>
-					</tr>
-			
-					<tr>
-						<td><span>Loan Default Fine</span></td>
+						<td>Loan Default Fine</span></td>
 						<td>
 							<input type="number" min="0" name="ldefaultfine" value="<?PHP echo $_SESSION['fee_loanfine'] ?>" />
 						</td>
 					</tr>
 			
 					<tr>
-						<td><span>Minimum Loan Principal</p>
+						<td>Minimum Loan Principal</p>
 						<td>
 							<input type="number" min="0" name="minLP" value="<?PHP echo $_SESSION['set_minlp'] ?>" />
 						</td>
 					</tr>
 			
 					<tr>
-						<td><span>Maximum Loan Principal</p>
+						<td>Maximum Loan Principal</p>
 						<td>
 							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" />
 						</td>
@@ -126,7 +143,7 @@
 			
 			
 					<tr>
-						<td><span>Auto-charge Fine</p>
+						<td>Auto-charge Fine</p>
 						<td>
 							<input type="checkbox" name="autofine" id="autofine" value="1" <?PHP if ($_SESSION['set_auf'] == 1) echo 'checked="checked"' ?> /> on defaulted instalments
 						</td>
