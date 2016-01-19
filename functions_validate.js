@@ -123,8 +123,9 @@ function validateUser(field, usernames, user_id) {
 }
 
 function validatePw(pw, pw_conf) {
-	if (pw == "") return "Please enter a Password.\n\n"
-	if (pw_conf == "") return "Please reconfirm Password.\n\n"
+	if (pw == "") return "Please enter a password.\n\n"
+	if (pw.length < 6) return "Password is too short. Please use at least 6 characters.\n\n"
+	if (pw_conf == "") return "Please repeat password for confirmation.\n\n"
 	if (pw != pw_conf) return "Passwords do not match.\n\n"
 	return ""
 }

@@ -159,7 +159,7 @@
 							echo '<td>'.$row_user['user_name'].'</td>';
 							echo '<td>'.$row_user['ugroup_name'].'</td>';
 							echo '<td>'.date('d.m.Y',$row_user['user_created']).'</td>';
-							echo '<td><a href="set_user.php?user='.$row_user['user_id'].'"><img src="ico/edit.png"></td>';
+							echo '<td><a href="set_user.php?user='.$row_user['user_id'].'"><img src="ico/edit.png"></a></td>';
 						echo '</tr>';
 					}
 					?>
