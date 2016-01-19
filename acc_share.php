@@ -220,7 +220,9 @@
 								<td>'.number_format($row_sha['share_value']).' '.$_SESSION['set_cur'].'</td>
 								<td>'.$row_sha['share_receipt'].'</td>
 								<td>'.$row_sha['user_name'].'</td>
-								<td><a href="acc_share_del.php?sha_id='.$row_sha['share_id'].'" onClick="return randCheck()"><img src="ico/delete.png" /></a></td>
+								<td>';
+								if($_SESSION['log_delete'] == 1) echo '<a href="acc_share_del.php?sha_id='.$row_sha['share_id'].'" onClick="return randCheck()"><img src="ico/delete.png" /></a>';
+					echo '</td>
 							</tr>';
 					$amount_balance = $amount_balance + $row_sha['share_amount'];
 					$value_balance = $value_balance + $row_sha['share_value'];

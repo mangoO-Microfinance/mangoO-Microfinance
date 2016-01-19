@@ -2,6 +2,7 @@
 <?PHP
 	include 'functions.php';
 	check_logon();
+	check_delete();
 	connect();
 
 	//Delete from SHARES
@@ -10,10 +11,8 @@
 		$sql_delsav = "DELETE FROM shares WHERE share_id = $sha_id";
 		$query_delsav = mysql_query($sql_delsav);
 		check_sql($query_delsav);
-		
-		//Refer to customer.php
-		header('Location: acc_share.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	else header('Location: acc_share.php?cust='.$_SESSION['cust_id']);
+	//Refer to customer.php
+	header('Location: acc_share.php?cust='.$_SESSION['cust_id']);
 ?>

@@ -39,6 +39,14 @@
 		}
 	}
 	
+	//Check for Permission to delete entries
+	function check_delete() {
+		if ($_SESSION['log_delete']!=='1'){
+			header('Location: start.php');
+			die();
+		}
+	}
+	
 	//Check for Permission to access Reports
 	function check_report() {
 		if ($_SESSION['log_report']!=='1'){
@@ -122,7 +130,7 @@
 				echo '><a href="loan_search.php">Loans</a></li>
 				<li';
 				if ($tab_no == 4) echo ' id="tab_selected"';
-				echo '><a href="books_expense_new.php">Accounting</a></li>';
+				echo '><a href="books_expense.php">Accounting</a></li>';
 				
 				if ($_SESSION['log_report'] == 1){
 					echo '<li';

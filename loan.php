@@ -151,7 +151,7 @@
 		//If Payment is made from savings, withdraw the amount from there
 		if ($loan_repay_sav == 1) {
 			$loan_repay_amount_sav = $loan_repay_amount * (-1);
-			$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', $loan_repay_date, $loan_repay_amount_sav, 8, $loan_repay_receipt, $timestamp, '$_SESSION[log_id]')";
+			$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ($_SESSION[cust_id], $loan_repay_date, $loan_repay_amount_sav, 8, $loan_repay_receipt, $timestamp, $_SESSION[log_id])";
 			$query_insert = mysql_query($sql_insert);
 		}
 		
@@ -491,9 +491,12 @@
 						if ($row_duedates['ltrans_fined'] == 1) echo ' checked="checked" ';
 						echo 'disabled="disabled" /></td>';
 						
-					echo '<td>'.$row_duedates['user_name'].'</td>';
-					echo '<td><a href="ltrans_del.php?lt_id='.$row_duedates['ltrans_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a></td>';
-					echo '</tr>';
+					echo '<td>'.$row_duedates['user_name'].'</td>
+								<td>';
+					if ($_SESSION['log_delete'] == 1) 
+						echo '<a href="ltrans_del.php?lt_id='.$row_duedates['ltrans_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a>';
+					echo '</td>
+							</tr>';
 
 					$p_due = $p_due + $row_duedates['ltrans_principaldue'];
 					$p_paid = $p_paid + $row_duedates['ltrans_principal'];

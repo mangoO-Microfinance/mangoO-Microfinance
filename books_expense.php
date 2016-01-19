@@ -66,8 +66,8 @@
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="start.php">Back</a>
-			<a href="books_expense_new.php" id="item_selected">New Expense</a>
-			<a href="books_income_new.php">New Income</a>
+			<a href="books_expense.php" id="item_selected">New Expense</a>
+			<a href="books_income.php">New Income</a>
 		</div>
 		
 			
@@ -75,7 +75,7 @@
 		<div class="content_left">
 			
 			<p class="heading_narrow">New Expense</p>
-			<form action="books_expense_new.php" method="post" onSubmit="return validate(this)">
+			<form action="books_expense.php" method="post" onSubmit="return validate(this)">
 				
 				<table id="tb_fields">
 					<tr>
@@ -139,7 +139,9 @@
 								<td>'.$row_expcur['exp_recipient'].'</td>
 								<td>'.$row_expcur['exp_text'].'</td>
 								<td>'.$row_expcur['exp_voucher'].'</td>
-								<td><a href="books_expense_del.php?exp_id='.$row_expcur['exp_id'].'" onClick="return randCheck();" ><img src="ico/delete.png" /></a></td>
+								<td>';
+								if ($_SESSION['log_delete']) echo '<a href="books_expense_del.php?exp_id='.$row_expcur['exp_id'].'" onClick="return randCheck();" ><img src="ico/delete.png" /></a>';
+				echo '	</td>
 							</tr>';
 			}
 			?>

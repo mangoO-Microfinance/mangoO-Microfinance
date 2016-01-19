@@ -22,7 +22,7 @@ if(isset($_POST['subscr_renew'])){
 	}
 	$fee_subscr_sav = $fee_subscr*(-1);
 	
-	//Insert Subscription Fee into SAVINGS
+	//Insert Subscription Fee into SAVINGS if applicable
 	if ($_POST['subscr_from_sav'] == 1){
 		$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', '5', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
