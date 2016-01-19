@@ -18,16 +18,17 @@
 		$user_names[] = $row_users['user_name'];
 	}
 	
-	//Select all usergroup from UGROUP
+	//Select all usergroups from UGROUP
 	$sql_ugroup = "SELECT ugroup_name, ugroup_id FROM ugroup";
 	$query_ugroup = mysql_query($sql_ugroup);
 	check_sql($query_ugroup);
 	
-	//Set heading and variable according to selection
+	//Set heading and variables according to selection
 	if(isset($_GET['user'])){
 		$user_id = sanitize($_GET['user']);
 		foreach ($users as $row_user){
 			if ($row_user['user_id'] == $user_id){
+				$user_id = $row_user['user_id'];
 				$user_name = $row_user['user_name'];
 				$user_ugroup = $row_user['ugroup_id'];
 			}
@@ -114,11 +115,11 @@
 						<tr>
 							<td>Usergroup</td>
 							<td class="center">
-								<select name="ugroup" size="1">
+								<select name="ugroup" size="1" <?PHP if ($user_id == 1) echo ' disabled="disabled"'; ?> >
 									<?PHP
 									while ($row_ugroup = mysql_fetch_assoc($query_ugroup)){
 											echo '<option value="'.$row_ugroup['ugroup_id'].'"';
-											if (isset($user_ugroup) AND $row_ugroup['ugroup_id'] == $user_ugroup) echo ' selected="selected"';
+											if (isset($user_ugroup) and $row_ugroup['ugroup_id'] == $user_ugroup) echo ' selected="selected	"';
 											echo '>'.$row_ugroup['ugroup_name'].'</option>';
 										}
 									?>

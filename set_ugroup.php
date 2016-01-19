@@ -177,16 +177,18 @@
 										if ($row_ugroups['ugroup_report'] == '1') echo 'checked="checked" ';
 						echo 		'/>
 									</td>';
-						echo '<td>
+						echo '<td>';
+						if ($row_ugroups['ugroup_id'] != 1) echo '
 										<a href="set_ugroup.php?ugroup='.$row_ugroups['ugroup_id'].'">
 											<img src="ico/edit.png" />
-										</a>
-									</td>
-									<td>
+										</a>';
+						echo '</td>
+									<td>';
+						if ($row_ugroups['ugroup_id'] != 1) echo '
 										<a href="set_ugroup_del.php?ugroup='.$row_ugroups['ugroup_id'].'">
 											<img src="ico/delete.png" />
-										</a>
-									</td>
+										</a>';
+						echo '</td>
 							</tr>';
 					}
 					
