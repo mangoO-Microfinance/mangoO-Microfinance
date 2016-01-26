@@ -43,11 +43,11 @@
 			
 			//Calculate UNIX TIMESTAMP for first and last day of selected month
 			$firstDay = mktime(0, 0, 0, 1, 1, $rep_year);
-			$lastDay = mktime(0, 0, 0, 0, 0, ($rep_year+1));
+			$lastDay = mktime(0, 0, 0, 1, 0, ($rep_year+1));
 			
 			//Make array for exporting data
 			$_SESSION['rep_export'] = array();
-			$_SESSION['rep_exp_title'] = $rep_year.'_annual';
+			$_SESSION['rep_exp_title'] = $rep_year.'_annual-report';
 			
 			
 			/**** INCOME RELATED DATA ****/
@@ -55,11 +55,11 @@
 			//Select INCOMES and INCTYPE
 			$sql_incomes = "SELECT * FROM incomes WHERE inc_date BETWEEN $firstDay AND $lastDay";
 			$query_incomes = mysql_query($sql_incomes);
-			if (!$query_incomes) die('SELECT failed: ' . mysql_error());
+			check_sql($query_incomes);
 			
 			$sql_inctype = "SELECT * FROM inctype";
 			$query_inctype = mysql_query($sql_inctype);
-			if (!$query_inctype) die('SELECT failed: ' . mysql_error());
+			check_sql($query_inctype);
 			
 			
 			/**** EXPENDITURE RELATED DATA ****/
@@ -67,11 +67,11 @@
 			//Select EXPENDITURES and EXPTYPE
 			$sql_expendit = "SELECT * FROM expenditures WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 			$query_expendit = mysql_query($sql_expendit);
-			if (!$query_expendit) die ('SELECT failed: '.mysql_error());
+			check_sql($query_expendit);
 			
 			$sql_exptype = "SELECT * FROM exptype";
 			$query_exptype = mysql_query($sql_exptype);
-			if (!$query_exptype) die ('SELECT failed: '.mysql_error());
+			check_sql($query_exptype);
 			
 			
 			/**** CAPITAL RELATED DATA ****/
@@ -145,8 +145,7 @@
 			<form class="export" action="rep_export.php" method="post">
 				<input type="submit" name="export_rep" value="Export Report" />
 			</form>
-			
-
+				
 			<!-- INCOMES: Table 1 -->
 			<?PHP array_push($_SESSION['rep_export'], array("Type" => "INCOMES", "Amount" => "")); ?>
 			<table id="tb_table" style="width:50%">

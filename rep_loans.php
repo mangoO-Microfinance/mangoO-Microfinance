@@ -32,7 +32,7 @@
 		<div id="menu_selection">			
 			<form action="rep_loans.php" method="post">
 				<input type="number" min="2006" max="2206" name="rep_year" style="width:100px;" value="<?PHP if ($month == 01) echo $year-1; else echo $year; ?>" placeholder="Give Year" />
-				<select name="rep_month" style="height:24px">
+				<select name="rep_month">
 					<option value="01" <?PHP if ($month == 02) echo 'selected="selected"' ?> >January</option>
 					<option value="02" <?PHP if ($month == 03) echo 'selected="selected"' ?> >February</option>
 					<option value="03" <?PHP if ($month == 04) echo 'selected="selected"' ?> >March</option>
