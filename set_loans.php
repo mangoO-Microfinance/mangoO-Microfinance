@@ -150,7 +150,7 @@
 			
 			
 					<tr>
-						<td>Auto-charge Fine defaulted<br/>instalments after X days</td>
+						<td>Auto-fine defaulted loan<br/>instalments after X days</td>
 						<td>
 							<input type="number" name="autofine" id="autofine" min="0" value="<?PHP echo $_SESSION['set_auf'] ?>" placeholder="Auto fine charging off"/>
 						</td>
