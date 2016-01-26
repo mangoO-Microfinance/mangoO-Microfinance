@@ -4,12 +4,37 @@
 	check_logon();
 	connect();
 	
-	//Select from CUSTOMER depending on Search or not Search
+	//Select from CUSTOMER
 	if (isset($_POST['cust_search'])){
-		$cust_search = sanitize($_POST['cust_search']);
-		$sql_custsearch = "SELECT * FROM customer WHERE cust_name LIKE '%$cust_search%'";
+		$cust_search_name = sanitize($_POST['cust_search_name']);
+		$cust_search_addr = sanitize($_POST['cust_search_addr']);
+		$cust_search_occup = sanitize($_POST['cust_search_occup']);
+		
+		//Defining WHERE condition
+		$where = "";
+		$title = "Customers";
+		if ($cust_search_name != ""){
+			$where = "cust_name LIKE '%$cust_search_name%'";
+			$title = $title.' named "'.ucwords($cust_search_name).'"';
+		}
+		if ($cust_search_name != "" AND $cust_search_addr != "") $where = $where.' AND ';
+		if ($cust_search_addr != ""){
+			$where = $where."cust_address LIKE '%$cust_search_addr%'";
+			$title = $title.' from "'.ucwords($cust_search_addr).'"';
+		}
+		if (($cust_search_name != "" OR $cust_search_addr != "") AND $cust_search_occup != "") $where = $where.' AND ';
+		if ($cust_search_occup != ""){
+			$where = $where."cust_occup LIKE '%$cust_search_occup%'";
+			$title = $title.' working as "'.ucwords($cust_search_occup).'"';
+		}
+		$sql_custsearch = "SELECT * FROM customer WHERE $where";
 		$query_custsearch = mysql_query($sql_custsearch);
 		check_sql ($query_custsearch);
+		
+		//Make array for exporting data
+		$cust_exp_date = date("Y-m-d",time());
+		$_SESSION['cust_export'] = array();
+		$_SESSION['cust_exp_title'] = 'customers-search_'.$cust_exp_date;
 	}
 	else header('Location: start.php');
 ?>
@@ -37,34 +62,58 @@
 			<table id="tb_table">				
 				<colgroup>
 					<col width="10%">
-					<col width="35%">
+					<col width="20%">
 					<col width="10%">
 					<col width="10%">
-					<col width="35%">
+					<col width="20%">
+					<col width="20%">
+					<col width="10%">
 				</colgroup>
 				<tr>
-					<th class="title" colspan="5">Customer Search Results</th>
+					<form class="export" action="cust_export.php" method="post">
+						<th class="title" colspan="7"><?PHP echo $title; ?>
+						<!-- Export Button -->
+						<input type="submit" name="export_cust" value="Export" />
+						</th>
+					</form>
 				</tr>
 				<tr>
 					<th>Cust. No.</th>
 					<th>Name</th>					
 					<th>DoB</th> 
 					<th>Gender</th> 
-					<th>Place of Residence</th> 
+					<th>Occupation</th>
+					<th>Place of Residence</th>
+					<th>Phone No.</th>
 				</tr>
 				<?PHP		
 				$color = 0;
 				while ($row_custsearch = mysql_fetch_assoc($query_custsearch)){					
 					//Alternating row colors
 					tr_colored($color);
-					echo '<td><a class="sacco" href="customer.php?cust='.$row_custsearch['cust_id'].'">'.$row_custsearch['cust_id'].'/'.date("Y",$row_custsearch['cust_since']).'</a></td>';
-					echo '<td>'.$row_custsearch['cust_name'].'</td>';
-					echo '<td>'.date("d.m.Y",$row_custsearch['cust_dob']).'</td>';
-					if ($row_custsearch['cust_sex'] == 1) echo '<td>Male</td>';
-					elseif ($row_custsearch['cust_sex'] == 2) echo '<td>Female</td>';
-					else echo '<td>Institution</td>';
-					echo '<td>'.$row_custsearch['cust_address'].'</td>';
-					echo '</tr>';
+					echo '<td><a href="customer.php?cust='.$row_custsearch['cust_id'].'">'.$row_custsearch['cust_id'].'/'.date("Y",$row_custsearch['cust_since']).'</a></td>
+								<td>'.$row_custsearch['cust_name'].'</td>
+								<td>'.date("d.m.Y",$row_custsearch['cust_dob']).'</td>';
+					if ($row_custsearch['cust_sex'] == 1){
+						echo '<td>Male</td>';
+						$cust_sex = 'Male';
+					}
+					elseif ($row_custsearch['cust_sex'] == 2){
+						echo '<td>Female</td>';
+						$cust_sex = 'Female';
+					}
+					elseif ($row_custsearch['cust_sex'] == 3){
+						echo '<td>Institution</td>';
+						$cust_sex = 'Institution';
+					}
+					else echo '<td></td>';
+					echo '<td>'.$row_custsearch['cust_occup'].'</td>
+								<td>'.$row_custsearch['cust_address'].'</td>
+								<td>'.$row_custsearch['cust_phone'].'</td>
+							</tr>';
+					
+					//Prepare data for export to Excel file
+					array_push($_SESSION['cust_export'], array("Cust No." => $row_custsearch['cust_id'], "Name" => $row_custsearch['cust_name'], "DoB" => date("d.m.Y", $row_custsearch['cust_dob']), "Gender" => $cust_sex, "Occupation" => $row_custsearch['cust_occup'], "Address" => $row_custsearch['cust_address'], "Phone No." => $row_custsearch['cust_phone']));
 				}
 				?>
 			</table>

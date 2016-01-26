@@ -26,15 +26,20 @@
 		<div class="content_center">
 	
 			<form action="customer.php" method="get">
-				<p class="heading_narrow">Search Customer by Number</p>
-				<input type="text" name="cust" placeholder="Number" />
+				<p class="heading_narrow">Quick Search by Number</p>
+				<input type="text" name="cust" placeholder="Customer Number" />
 				<input type="submit" value="Search" />
 			</form>
 			
 			<form action="cust_result.php" method="post" style="margin-top:4.5em;">
-				<p class="heading_narrow">Search Customer by Name</p>
-				<input type="text" name="cust_search" placeholder="Name or name part"/>
-				<input type="submit" value="Search" />
+				<p class="heading_narrow">Detailed Customer Search</p>
+				<input type="text" name="cust_search_name" placeholder="Name or name part"/>
+				<br/><br/>
+				<input type="text" name="cust_search_occup" placeholder="Occupation or part"/>
+				<br/><br/>
+				<input type="text" name="cust_search_addr" placeholder="Address or address part"/>
+				<br/><br/>
+				<input type="submit" name="cust_search" value="Search" />
 			</form>
 		</div>
 	</body>
