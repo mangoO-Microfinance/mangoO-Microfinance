@@ -32,7 +32,7 @@ check_sql($query_subscrdef);
 					</tr>';
 					
 		// Module for automatic account deactivation if customer failed to renew subscription 
-		if ($_SESSION['set_deact'] == 1) include 'modules/mod_deactivate.php';
+		if ($_SESSION['set_deact'] != NULL) include './modules/mod_deactivate.php';
 	}
 	?>
 </table>

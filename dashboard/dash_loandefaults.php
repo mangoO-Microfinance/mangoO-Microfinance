@@ -35,7 +35,7 @@ check_sql($query_overd);
 					</tr>';
 		
 		// Module for automatic fine charging
-		if ($_SESSION['set_auf'] == 1) include './modules/mod_autofine.php';
+		if ($_SESSION['set_auf'] != NULL) include './modules/mod_autofine.php';
 		
 	}
 	?>

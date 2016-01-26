@@ -1,7 +1,11 @@
 <?PHP
 
-//Set customer to "inactive" after 18 months of delaying subscription
-if ($row_subscrdef['cust_lastsub'] < ($timestamp - 47347200) && $row_subscrdef['cust_active'] == 1){
+//Calculating grace period before deactivation in months (seconds for 30.5 days)
+$timestamp = time();
+$graceperiod = 31536000 + ($_SESSION['set_deact'] * 2635200);
+
+//Set customer to "inactive" after grace period for subscription payment expired
+if ($row_subscrdef['cust_lastsub'] < ($timestamp - $graceperiod) && $row_subscrdef['cust_active'] == 1){
 	$sql_deactivate = "UPDATE customer SET cust_active = '0' WHERE cust_id = '$row_subscrdef[cust_id]'";
 	$query_deactiate = mysql_query($sql_deactivate);
 	echo "<script>

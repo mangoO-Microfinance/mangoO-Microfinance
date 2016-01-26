@@ -7,9 +7,12 @@ $result_fees = mysql_fetch_assoc($query_ld);
 $loandefault_sav = ($result_fees['fee_value']) * (-1);
 $loandefault_inc = $result_fees['fee_value'];
 
+//Calculate grace period in days
+$graceperiod = $_SESSION['set_auf'] * 86400;
+$timestamp = time();
+
 //Automatically charge Loan Default Fine if Customer has defaulted for more than 30 days										
-if((time() - $row_overd['ltrans_due']) > 2592000 && $row_overd['ltrans_fined'] != 1){
-	$timestamp = time();
+if($row_overd['ltrans_due'] < ($timestamp - $graceperiod) AND $row_overd['ltrans_fined'] != 1){
 	
 	//Withdraw Fine from SAVINGS
 	$sql_fine_sav = "INSERT INTO savings (cust_id, sav_date, sav_amount, cur_id, savtype_id, sav_receipt) VALUES ('$row_overd[cust_id]', '$timestamp', '$loandefault_sav', '1', '6', '')";

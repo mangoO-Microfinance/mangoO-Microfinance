@@ -7,7 +7,7 @@
 	
 	//UPDATE-Button
 	if (isset($_POST['upd_fees'])){
-		//Update Entry Fee
+		//Update Entrance Fee
 		$new_entryfee = sanitize($_POST['entryfee']);
 		$sql_upd_entryfee = "UPDATE fees SET fee_value = '$new_entryfee' WHERE fee_id = 1";
 		$query_upd_entryfee = mysql_query($sql_upd_entryfee);
@@ -63,7 +63,7 @@
 				
 				<table id="tb_set">
 					<tr>
-						<td><span>Entry Fee</span></td>
+						<td><span>Entrance Fee</span></td>
 						<td>
 							<input type="number" min="0" name="entryfee" value="<?PHP echo $_SESSION['fee_entry'] ?>" />
 						</td>

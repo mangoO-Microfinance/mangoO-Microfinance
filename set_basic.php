@@ -27,20 +27,21 @@
 		check_sql($query_upd_minsavbal);
 		
 		//Update Account Deactivation option
-		if (isset($_POST['deactivate'])) $new_deact = 1;
-			else $new_deact = 0;
+		$new_deact = sanitize($_POST['deactivate']);
 		$sql_upd_deact = "UPDATE settings SET set_value = '$new_deact' WHERE set_short = 'DEACT'";
 		$query_upd_deact = mysql_query($sql_upd_deact);
 		check_sql($query_upd_deact);
 		
 		//Update Dashboard Settings Left
 		$new_dash_left = sanitize($_POST['dash_left']);
+		if ($new_deact != NULL )$new_dash_left = "dashboard/dash_subscr.php";
 		$sql_upd_dashl = "UPDATE settings SET set_value = '$new_dash_left' WHERE set_short = 'DashL'";
 		$query_upd_dashl = mysql_query($sql_upd_dashl);
 		check_sql($query_upd_dashl);
 	
 		//Update Dashboard Settings Right
 		$new_dash_right = sanitize($_POST['dash_right']);
+		if ($_SESSION['set_auf'] != NULL) $new_dash_right = "dashboard/dash_loandefaults.php";
 		$sql_upd_dashr = "UPDATE settings SET set_value = '$new_dash_right' WHERE set_short = 'DashR'";
 		$query_upd_dashr = mysql_query($sql_upd_dashr);
 		check_sql($query_upd_dashr);
@@ -116,21 +117,21 @@
 					<tr>
 						<td><span>Value of Shares</span>
 						<td>
-							<input type="number" min="0" name="shareval" value="<?PHP echo $shareval[0] ?>" />
+							<input type="number" min="0" name="shareval" value="<?PHP echo $shareval[0]; ?>" />
 						</td>
 					</tr>
 					
 					<tr>
 						<td><span>Minimum Savings Balance</span>
 						<td>
-							<input type="number" min="0" name="minsavbal" value="<?PHP echo $_SESSION['set_msb'] ?>" />
+							<input type="number" min="0" name="minsavbal" value="<?PHP echo $_SESSION['set_msb']; ?>" />
 						</td>
 					</tr>
 					
 					<tr>
-						<td><span>Automatic Deactivation</span></td>
+						<td><span>Auto-deactivate unrenewed<br/>accounts after X months</span></td>
 						<td>
-							<input type="checkbox" name="deactivate" id="deactivate" value="1" <?PHP if ($_SESSION['set_deact'] == 1) echo 'checked="checked"' ?> /> of unsubscribed accounts
+							<input type="number" name="deactivate" min="0" value="<?PHP echo $_SESSION['set_deact']; ?>" placeholder="Auto-deactivation off" />
 						</td>
 					</tr>
 					

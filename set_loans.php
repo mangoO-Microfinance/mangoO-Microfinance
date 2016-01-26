@@ -50,11 +50,18 @@
 		check_sql($query_upd_maxLP);
 		
 		//Update Auto-fine option
-		if (isset($_POST['autofine'])) $new_auf = 1;
-			else $new_auf = 0;
+		$new_auf = sanitize($_POST['autofine']);
 		$sql_upd_auf = "UPDATE settings SET set_value = '$new_auf' WHERE set_short = 'AUF'";
 		$query_upd_auf = mysql_query($sql_upd_auf);
 		check_sql($query_upd_auf);
+		
+		//If auto-fine option is enabled, make sure dashboard shows loan default list
+		if ($new_auf != NULL){
+			$new_dash_right = "dashboard/dash_loandefaults.php";
+			$sql_upd_dashr = "UPDATE settings SET set_value = '$new_dash_right' WHERE set_short = 'DashR'";
+			$query_upd_dashr = mysql_query($sql_upd_dashr);
+			check_sql($query_upd_dashr);
+		}
 	}
 	
 	//Get Settings and Fees
@@ -85,12 +92,12 @@
 			
 			<form action="set_loans.php" method="post">
 			
-				<p class="heading">Loan Settings</p>
+				<p class="heading">Loan Settings</td>
 				
 				<table id="tb_set">
 					
 					<tr>
-						<td>Interest Calculation Method</p>
+						<td>Interest Calculation Method</td>
 						<td>
 							<select name="intcalcmethod" />
 								<option value="modules/mod_inter_fixed.php" <?PHP if ($_SESSION['set_intcalc']=="modules/mod_inter_fixed.php") echo 'selected="selected"'; ?> >Fixed</option>
@@ -100,42 +107,42 @@
 					</tr>
 					
 					<tr>
-						<td>Loan Interest Rate (%)</p>
+						<td>Loan Interest Rate (%)</td>
 						<td>
 							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" />
 						</td>
 					</tr>
 					
 					<tr>
-						<td>Loan Application Fee</p>
+						<td>Loan Application Fee</td>
 						<td>
 							<input type="number" min="0" name="lappfee" value="<?PHP echo $_SESSION['fee_loanappl'] ?>" />
 						</td>
 					</tr>
 				
 					<tr>
-						<td>Loan Fee Rate (%)</p>
+						<td>Loan Fee Rate (%)</td>
 						<td>
 							<input type="text" min="0" name="loanfeerate" value="<?PHP echo $_SESSION['fee_loan'] ?>" />
 						</td>
 					</tr>
 				
 					<tr>
-						<td>Loan Default Fine</span></td>
+						<td>Loan Default Fine</td>
 						<td>
 							<input type="number" min="0" name="ldefaultfine" value="<?PHP echo $_SESSION['fee_loanfine'] ?>" />
 						</td>
 					</tr>
 			
 					<tr>
-						<td>Minimum Loan Principal</p>
+						<td>Minimum Loan Principal</td>
 						<td>
 							<input type="number" min="0" name="minLP" value="<?PHP echo $_SESSION['set_minlp'] ?>" />
 						</td>
 					</tr>
 			
 					<tr>
-						<td>Maximum Loan Principal</p>
+						<td>Maximum Loan Principal</td>
 						<td>
 							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" />
 						</td>
@@ -143,9 +150,9 @@
 			
 			
 					<tr>
-						<td>Auto-charge Fine</p>
+						<td>Auto-charge Fine defaulted<br/>instalments after X days</td>
 						<td>
-							<input type="checkbox" name="autofine" id="autofine" value="1" <?PHP if ($_SESSION['set_auf'] == 1) echo 'checked="checked"' ?> /> on defaulted instalments
+							<input type="number" name="autofine" id="autofine" min="0" value="<?PHP echo $_SESSION['set_auf'] ?>" placeholder="Auto fine charging off"/>
 						</td>
 					</tr>
 					
