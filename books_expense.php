@@ -68,6 +68,7 @@
 			<a href="start.php">Back</a>
 			<a href="books_expense.php" id="item_selected">New Expense</a>
 			<a href="books_income.php">New Income</a>
+			<a href="books_dividend.php">Share Dividend</a>
 		</div>
 		
 			

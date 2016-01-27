@@ -85,16 +85,16 @@
 			<a href="start.php">Back</a>
 			<a href="books_expense.php">New Expense</a>
 			<a href="books_income.php">New Income</a>
-			<a href="books_dividend.php" id="item_selected">End of Year</a>
+			<a href="books_dividend.php" id="item_selected">Share Dividend</a>
 		</div>
 		
 		<div class="content_center">
-			<p class="heading">Distribute Dividend</p>
+			<p class="heading">Distribute Share Dividend</p>
 			<form action="books_dividend.php" method="post">
 				<input type="number" name="div_year" min="2000" max="<?PHP echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP echo $lastyear; ?>"/>
 				<br/><br/>
 				<select name="div_type">
-					<option value="1">Per Capita Dividend</option>
+					<option value="1">Dividend per share</option>
 					<option value="2">Grand Total Dividend</option>
 				</select>
 				<br/><br/>
