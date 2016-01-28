@@ -107,6 +107,13 @@
 					</tr>
 					
 					<tr>
+						<td>Auto-fine defaulted loan<br/>instalments after X days</td>
+						<td>
+							<input type="number" name="autofine" id="autofine" min="0" value="<?PHP echo $_SESSION['set_auf'] ?>" placeholder="Auto-fining off"/>
+						</td>
+					</tr>
+					
+					<tr>
 						<td>Loan Interest Rate (%)</td>
 						<td>
 							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" />
@@ -145,14 +152,6 @@
 						<td>Maximum Loan Principal</td>
 						<td>
 							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" />
-						</td>
-					</tr>
-			
-			
-					<tr>
-						<td>Auto-fine defaulted loan<br/>instalments after X days</td>
-						<td>
-							<input type="number" name="autofine" id="autofine" min="0" value="<?PHP echo $_SESSION['set_auf'] ?>" placeholder="Auto-fining off"/>
 						</td>
 					</tr>
 					

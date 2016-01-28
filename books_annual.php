@@ -83,23 +83,41 @@
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="start.php">Back</a>
-			<a href="books_expense.php">New Expense</a>
-			<a href="books_income.php">New Income</a>
-			<a href="books_dividend.php" id="item_selected">Share Dividend</a>
+			<a href="books_expense.php">Expenses</a>
+			<a href="books_income.php">Incomes</a>
+			<a href="books_annual.php" id="item_selected">Annual Accounts</a>
 		</div>
 		
-		<div class="content_center">
-			<p class="heading">Distribute Share Dividend</p>
-			<form action="books_dividend.php" method="post">
-				<input type="number" name="div_year" min="2000" max="<?PHP echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP echo $lastyear; ?>"/>
-				<br/><br/>
-				<select name="div_type">
-					<option value="1">Dividend per share</option>
-					<option value="2">Grand Total Dividend</option>
-				</select>
-				<br/><br/>
-				<input type="number" name="div_value" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
-				<br/><br/>
-				<input type="submit" name="div_distribute" value="Distribute Dividend" />
-			</form>
+		<div class="content_left" style="width:50%;">
+			
+				<p class="heading">Annual Dividend</p>
+				<form action="books_annual.php" method="post">
+					<input type="number" name="div_year" min="2000" max="<?PHP echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP echo $lastyear; ?>"/>
+					<br/><br/>
+					<select name="div_type">
+						<option value="1">Dividend per share</option>
+						<option value="2">Grand Total Dividend</option>
+					</select>
+					<br/><br/>
+					<input type="number" name="div_value" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
+					<br/><br/>
+					<input type="submit" name="div_distribute" value="Distribute Dividend" />
+				</form>
+		
 		</div>
+		
+		<div class="content_right" style="width:50%;">
+			<!--
+				<p class="heading">Savings Interest</p>
+				<form action="books_annual.php" method="post">
+					<input type="number" name="int_year" min="2000" max="<?PHP echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP echo $lastyear; ?>"/>
+					<br/><br/>
+					<input type="number" name="int_rate" placeholder="Annual Interest Rate" />
+					<br/><br/>
+					<input type="submit" name="int_distribute" value="Distribute Interest" />
+				</form>
+			-->
+		</div>
+
+	</body>
+</html>

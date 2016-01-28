@@ -22,14 +22,9 @@
 		check_sql($query_incnew);
 	}
 
-	//Calculate UNIX TIMESTAMP for first and last day of current month
-	$cur_month = date("m",time());
-	$cur_year = date("Y",time());
-	$firstDay = mktime(0, 0, 0, $cur_month, 1, $cur_year);
-	$lastDay = mktime(0, 0, 0, ($cur_month+1), 0, $cur_year);
-		
 	//Select current incomes from INCOMES
-	$sql_inccur = "SELECT * FROM incomes, inctype, customer WHERE incomes.inctype_id = inctype.inctype_id AND incomes.cust_id = customer.cust_id AND inc_date BETWEEN $firstDay AND $lastDay ORDER BY inc_date, inc_receipt, incomes.cust_id";
+	$sixtydays = time() - 5184000;
+	$sql_inccur = "SELECT * FROM incomes, inctype, customer WHERE incomes.inctype_id = inctype.inctype_id AND incomes.cust_id = customer.cust_id AND inc_date > $sixtydays ORDER BY inc_date DESC, inc_receipt DESC, incomes.cust_id";
 	$query_inccur = mysql_query($sql_inccur);
 	check_sql($query_inccur);
 	
@@ -73,9 +68,9 @@
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="start.php">Back</a>
-			<a href="books_expense.php">New Expense</a>
-			<a href="books_income.php" id="item_selected">New Income</a>
-			<a href="books_dividend.php">Share Dividend</a>
+			<a href="books_expense.php">Expenses</a>
+			<a href="books_income.php" id="item_selected">Incomes</a>
+			<a href="books_annual.php">Annual Accounts</a>
 		</div>
 		
 			

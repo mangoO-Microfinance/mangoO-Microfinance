@@ -22,15 +22,10 @@
 		$query_expnew = mysql_query($sql_expnew);
 		check_sql($query_expnew);
 	}
-
-	//Calculate UNIX TIMESTAMP for first and last day of current month
-	$cur_month = date("m",time());
-	$cur_year = date("Y",time());
-	$firstDay = mktime(0, 0, 0, $cur_month, 1, $cur_year);
-	$lastDay = mktime(0, 0, 0, ($cur_month+1), 0, $cur_year);
 			
 	//Select current expenditures from EXPENDITURES
-	$sql_expcur = "SELECT * FROM expenditures, exptype WHERE expenditures.exptype_id = exptype.exptype_id AND exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date, exp_voucher";
+	$sixtydays = time() - 5184000;
+	$sql_expcur = "SELECT * FROM expenditures, exptype WHERE expenditures.exptype_id = exptype.exptype_id AND exp_date > $sixtydays ORDER BY exp_date DESC, exp_voucher DESC";
 	$query_expcur = mysql_query($sql_expcur);
 	check_sql($query_expcur);
 	
@@ -66,9 +61,9 @@
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="start.php">Back</a>
-			<a href="books_expense.php" id="item_selected">New Expense</a>
-			<a href="books_income.php">New Income</a>
-			<a href="books_dividend.php">Share Dividend</a>
+			<a href="books_expense.php" id="item_selected">Expenses</a>
+			<a href="books_income.php">Incomes</a>
+			<a href="books_annual.php">Annual Accounts</a>
 		</div>
 		
 			

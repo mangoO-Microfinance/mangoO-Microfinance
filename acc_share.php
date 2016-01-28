@@ -69,7 +69,7 @@
 	check_sql($query_sha);
 	
 	//Select ALL CUSTOMERS from database
-	$sql_custall = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id != '$_SESSION[cust_id]'";
+	$sql_custall = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id NOT IN (0, $_SESSION[cust_id])";
 	$query_custall = mysql_query($sql_custall);
 	check_sql($query_custall);
 	
@@ -187,11 +187,12 @@
 			
 			<table id="tb_table">
 				<colgroup>
-					<col width="20%">
-					<col width="20	%">
-					<col width="20%">
+					<col width="15%">
 					<col width="20%">
 					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="5%">
 				</colgroup>
 				<tr>								
 					<form class="export" action="acc_share_export.php" method="post">
