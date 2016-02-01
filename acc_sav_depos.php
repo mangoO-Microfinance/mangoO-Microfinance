@@ -4,8 +4,10 @@
 	check_logon();
 	connect();
 	check_custid();
-	$timestamp = time();
 
+	//Generate timestamp
+	$timestamp = time();
+	
 	//DEPOSIT-Button
 	if (isset($_POST['deposit'])){
 		
@@ -24,15 +26,12 @@
 		header('Location: acc_sav_depos.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	//Select Customer from CUSTOMER
-	$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
-	$query_cust = mysql_query($sql_cust);
-	check_sql($query_cust);
-	$result_cust = mysql_fetch_assoc($query_cust);
+	//Get current customer's details
+	$result_cust = get_customer();
 ?>
 
 <html>
-	<?PHP htmlHead('Savings Deposit',0) ?>	
+	<?PHP include_Head('Savings Deposit',0) ?>	
 		<script>
 			function validate(form){
 				fail = validateDate(form.sav_date.value)

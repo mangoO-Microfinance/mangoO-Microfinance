@@ -55,11 +55,11 @@
 			//Forward to start.php
 			header('Location: start.php');
 		}
-		else echo '<script>alert(\'Authentification failed!\nWrong Username and/or Password!\')</script>';
+		else error ('Authentification failed!\nWrong Username and/or Password!');
 	}
 ?>
 <html>
-	<?PHP htmlHead('Microfinance Management',1) ?>	
+	<?PHP include_Head('Microfinance Management',1) ?>	
 	
 	<body>
 		<div class="content_center" style="width:100%; margin-top:15em">

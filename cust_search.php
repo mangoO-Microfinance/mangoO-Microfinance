@@ -7,7 +7,7 @@
 
 <html>
 	<!-- HTML HEAD -->
-	<?PHP htmlHead('Customer Search',1); ?>
+	<?PHP include_Head('Customer Search',1); ?>
 	
 	<body>
 		<!-- MENU -->

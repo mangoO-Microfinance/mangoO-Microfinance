@@ -7,7 +7,7 @@
 
 <html>
 	<!-- HTML HEAD -->
-	<?PHP htmlHead('Loan Search',1); ?>
+	<?PHP include_Head('Loan Search',1); ?>
 	
 	<body>
 		<!-- MENU -->

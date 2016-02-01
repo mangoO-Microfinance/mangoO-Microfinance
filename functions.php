@@ -18,16 +18,23 @@
 		return $var;
 	}
 	
+	//Logout User and destroy his session
+	function logout(){
+		$_SESSION = array();												//Delete all Session Variables
+		if (ini_get("session.use_cookies")) {				//If a Session-Cookie is used, delete it
+			$params = session_get_cookie_params();
+			setcookie(session_name(), '', time() - 86400, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+		}
+		session_destroy();													//Finally, delete the Session
+		header('Location: logout_success.php');			//Forward to logout_success.php
+		die;
+	}	
+	
 	//Check for Logon
 	function check_logon() {
 		$fingerprint = md5($_SERVER['REMOTE_ADDR'].'dh(6Km4$X*'.$_SERVER['HTTP_USER_AGENT']);
 		session_start();
-		if 	(
-					!isset($_SESSION['log_user']) 
-					|| 
-					$_SESSION['log_fingerprint'] != $fingerprint
-				)
-				logout();
+		if (!isset($_SESSION['log_user']) || $_SESSION['log_fingerprint'] != $fingerprint) logout();
 		session_regenerate_id();
 	}
 	
@@ -55,18 +62,6 @@
 		}
 	}
 	
-	//Logout User and destroy his session
-	function logout(){
-		$_SESSION = array();												//Delete all Session Variables
-		if (ini_get("session.use_cookies")) {				//If a Session-Cookie is used, delete it
-			$params = session_get_cookie_params();
-			setcookie(session_name(), '', time() - 86400, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
-		}
-		session_destroy();													//Finally, delete the Session
-		header('Location: logout_success.php');			//Forward to logout_success.php
-		die;
-	}	
-	
 	//Check for CUST_ID
 	function check_custid(){
 		if (isset($_GET['cust'])) $_SESSION['cust_id'] = sanitize($_GET['cust']);
@@ -85,7 +80,7 @@
 	}
 	
 	//Include HTML <head>
-	function htmlHead($title,$endFlag) {
+	function include_Head($title,$endFlag) {
 		echo '<head>
 			<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 			<meta http-equiv="Content-Script-Type" content="text/javascript">
@@ -99,7 +94,6 @@
 	
 	//Include Menu Tabs
 	function include_Menu($tab_no){
-		
 		echo '		
 		<!-- MENU HEADER -->
 		<div id="menu_header">
@@ -159,22 +153,11 @@
 		}
 	}
 	
-	//Calculate Savings Balance
-	function sav_balance(){
-		$sql_sav = "SELECT * FROM savings, savtype WHERE savings.savtype_id = savtype.savtype_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
-		$query_sav = mysql_query($sql_sav);
-		check_sql($query_sav);
-		$sav_balance = 0;
-		while($row_query_sav = mysql_fetch_assoc($query_sav)){
-			$row_sav[] = $row_query_sav;
-			$sav_balance = $sav_balance + $row_query_sav['sav_amount'];
-		}
-		return $sav_balance;
-	}
-	
 	//Error-Message
-	function error_alert($text) {
-		echo '<script language=javascript>alert(\''.$text.'\')</script>';
+	function error($text) {
+		echo '<script language=javascript>
+						alert(\''.$text.'\')
+					</script>';
 	}
 	
 	//Resizing uploaded images	
@@ -248,6 +231,9 @@
 				case 9:
 					$_SESSION['set_intcalc'] = $row_settings['set_value'];
 					break;
+				case 10:
+					$_SESSION['set_maxguar'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}
@@ -295,7 +281,7 @@
 			}
 		}
 	}
-		
+	
 	//Calculate current customer's savings account balance
 	function get_savbalance(){
 		$sql_savbal = "SELECT sav_amount FROM savings WHERE cust_id = '$_SESSION[cust_id]'";
@@ -309,4 +295,32 @@
 		
 		return $sav_balance;
 	}	
+	
+	//Select current customer's details
+	function get_customer(){
+		$sql_cust = "SELECT * FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
+		$query_cust = mysql_query($sql_cust);
+		check_sql($query_cust);
+		$result_cust = mysql_fetch_assoc($query_cust);
+		
+		return $result_cust;
+	}
+	
+	//Select active customers
+	function get_custact(){
+		$sql_custact = "SELECT * FROM customer WHERE cust_active = 1";
+		$query_custact = mysql_query($sql_custact);
+		check_sql($query_custact);
+		
+		return $query_custact;
+	}
+	
+	//Select all customers except current one
+	function get_custother(){
+		$sql_custother = "SELECT * FROM customer WHERE cust_id NOT IN (0, $_SESSION[cust_id])";
+		$query_custother = mysql_query($sql_custother);
+		check_sql($query_custother);
+		
+		return $query_custother;
+	}
 ?>

@@ -17,7 +17,7 @@
 	check_sql($query_loans);
 ?>
 <html>
-	<?PHP htmlHead('Active Loans',1) ?>
+	<?PHP include_Head('Active Loans',1) ?>
 	
 	<body>
 		<!-- MENU -->

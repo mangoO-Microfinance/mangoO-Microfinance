@@ -44,7 +44,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('Incomes',0) ?>	
+	<?PHP include_Head('Incomes',0) ?>	
 		<script>
 			function validate(form){
 				fail = validateDate(form.inc_date.value)

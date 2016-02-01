@@ -193,7 +193,7 @@
 	}
 	
 	//Get Savings Balance
-	$sav_balance = sav_balance();
+	$sav_balance = get_savbalance();
 	
 	//Prepare array data export
 	$ltrans_exp_date = date("Y-m-d",time());
@@ -202,7 +202,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('Loan Details',0) ?>	
+	<?PHP include_Head('Loan Details',0) ?>	
 		<script type="text/javascript">				
 			function firstIssue(form){
 				status = form.loan_status.value;
@@ -232,10 +232,10 @@
 			function validate(form){
 				fail = validateDate(form.loan_repay_date.value)
 				fail += validateAmount(form.loan_repay_amount.value)
-				if (form.loan_repay_sav.checked){
-					fail += validateOverdraft(form.loan_repay_amount.value, <?PHP echo $sav_balance; ?>, 0)
-				}
 				fail += validateReceipt(form.loan_repay_receipt.value)
+				if (form.loan_repay_sav.checked){
+					fail += validateOverdraft(form.loan_repay_amount.value, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
+				}
 				if (fail == "") return true
 				else {alert(fail); return false}
 			}
@@ -244,7 +244,7 @@
 				fail = validateDate(form.fine_date.value)
 				fail += validateAmount(form.fine_amount.value)
 				if (form.fine_sav.checked){
-					fail += validateOverdraft(form.fine_amount.value, <?PHP echo $sav_balance; ?>, 0)
+					fail += validateOverdraft(form.fine_amount.value, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
 				}
 				fail += validateReceipt(form.fine_receipt.value)
 				if (fail == "") return true

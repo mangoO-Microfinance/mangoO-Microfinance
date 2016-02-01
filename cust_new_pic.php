@@ -48,7 +48,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('New Picture Upload',1) ?>
+	<?PHP include_Head('New Picture Upload',1) ?>
 	
 	<body>
 		<!-- MENU -->

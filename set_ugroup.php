@@ -70,7 +70,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('Settings | Usergroups',0) ?>
+	<?PHP include_Head('Settings | Usergroups',0) ?>
 	<script>
 			function validate(form){
 				fail = validateUsergroup(form.ugroup_name.value, <?PHP echo json_encode($ugroup_names).', '.$ugroup_id; ?>)

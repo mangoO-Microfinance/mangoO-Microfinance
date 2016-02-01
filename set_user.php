@@ -46,7 +46,8 @@
 		include 'salt.php';
 		$user_pw = sha1($salt1.(sanitize($_POST['user_pw'])).$salt2);
 		$user_pw_conf = sha1($salt1.(sanitize($_POST['user_pw_conf'])).$salt2);
-		$ugroup = sanitize($_POST['ugroup']);
+		if($user_id == 1) $ugroup = 1;
+		else $ugroup = sanitize($_POST['ugroup']);
 		$timestamp = time();	
 		
 		if($user_id == 0){
@@ -65,7 +66,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('Settings | Users', 0) ?>
+	<?PHP include_Head('Settings | Users', 0) ?>
 		<script>
 			function validate(form){
 				fail = validateUser(form.user_name.value, <?PHP echo json_encode($user_names).', '.$user_id; ?>)

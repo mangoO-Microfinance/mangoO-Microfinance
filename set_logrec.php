@@ -6,7 +6,7 @@
 	connect();
 ?>
 <html>
-	<?PHP htmlHead('Settings | Log Records',1) ?>
+	<?PHP include_Head('Settings | Log Records',1) ?>
 	<body>
 		<!-- MENU -->
 		<?PHP 

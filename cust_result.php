@@ -40,7 +40,7 @@
 ?>
 	
 <html>
-	<?PHP htmlHead('Customer Search Result',1) ?>	
+	<?PHP include_Head('Customer Search Result',1) ?>	
 	<body>
 		
 		<!-- MENU -->

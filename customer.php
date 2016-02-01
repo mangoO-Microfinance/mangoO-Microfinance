@@ -4,8 +4,11 @@
 	check_logon();
 	connect();
 	check_custid();
-	$timestamp = time();
+	
 	unset($_SESSION['interest_sum'], $_SESSION['balance']);
+	
+	//Generate timestamp
+	$timestamp = time();
 	
 	//UPDATE-Button
 	if (isset($_POST['update'])){
@@ -33,11 +36,8 @@
 		header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	//Select Customer from CUSTOMER
-	$sql_cust = "SELECT * FROM customer, cust_married, user WHERE customer.cust_married_id = cust_married.cust_married_id AND customer.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]'";
-	$query_cust = mysql_query($sql_cust);
-	check_sql($query_cust);
-	$result_cust = mysql_fetch_assoc($query_cust);
+	//Get current customer's details
+	$result_cust = get_customer();
 	
 	//Error-Message, if customer is not found
 	if ($result_cust['cust_id']==''){
@@ -50,6 +50,7 @@
 	//Select Marital Status from CUST_MARRIED for dropdown-menu
 	$sql_mstat = "SELECT * FROM cust_married";
 	$query_mstat = mysql_query($sql_mstat);
+	check_sql($query_mstat);
 
 	//Select Shares from SHARES
 	$sql_sha = "SELECT * FROM shares WHERE cust_id = '$_SESSION[cust_id]'";
@@ -64,23 +65,16 @@
 	}
 	
 	//Select Savings from SAVINGS
-	$sql_sav = "SELECT * FROM savings, savtype WHERE savings.savtype_id = savtype.savtype_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
+	$sql_sav = "SELECT * FROM savings, savtype WHERE savings.savtype_id = savtype.savtype_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date DESC, sav_id DESC LIMIT 5" ;
 	$query_sav = mysql_query($sql_sav);
 	check_sql($query_sav);
 	
 	//Calculate Balance on Savings account
-	$balance = 0;		
-	while($row_query_sav = mysql_fetch_assoc($query_sav)){
-		$row_sav[] = $row_query_sav;
-		$balance = $balance + ($row_query_sav['sav_amount']);
-	}
-	
-	//Take last five items from array only
-	if (isset($row_sav)) $row_sav = array_slice($row_sav, -5, 5);
+	$savbalance = get_savbalance();
 ?>
 
 <html>
-	<?PHP htmlHead('Customer',0) ?>		
+	<?PHP include_Head('Customer',0) ?>		
 		<script>
 			function validate(form){
 				fail = validateName(form.cust_name.value)
@@ -95,7 +89,7 @@
 			function validateSubscr(form){
 				fail = validateDate(form.subscr_date.value)
 				fail += validateReceipt(form.subscr_receipt.value)
-				//fail += validateOverdraft(0,0,0)
+				fail += validateOverdraft(<?PHP echo $_SESSION['fee_subscr']; ?>, <?PHP echo $savbalance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
 				if (fail == "") return true
 				else { alert(fail); return false }
 			}
@@ -281,19 +275,18 @@
 					<th>Receipt/Slip</th>
 				</tr>
 			 <?PHP
-			 	if (isset($row_sav)) {
-					foreach ($row_sav as $row_sav){
-						tr_colored($color);
-						echo '	<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>
-										<td>'.$row_sav['savtype_type'].'</td>
-										<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>';
-						if ($row_sav['savtype_id'] == 2) echo '<td>S '.$row_sav['sav_slip'].'</td>';
-							else echo '<td>R '.$row_sav['sav_receipt'].'</td>';
-						echo '</tr>';
-					}
+			 	while($row_sav = mysql_fetch_assoc($query_sav)) {
+					tr_colored($color);
+					echo '	<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>
+									<td>'.$row_sav['savtype_type'].'</td>
+									<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>';
+					if ($row_sav['savtype_id'] == 2) echo '<td>S '.$row_sav['sav_slip'].'</td>';
+						else echo '<td>R '.$row_sav['sav_receipt'].'</td>';
+					echo '</tr>';
 				}
+			
 				echo '<tr class="balance">
-								<td colspan="4" >Balance: '.number_format($balance).' '.$_SESSION['set_cur'].'</td>
+								<td colspan="4" >Balance: '.number_format($savbalance).' '.$_SESSION['set_cur'].'</td>
 							</tr>';
 			 ?>
 			</table>
@@ -362,16 +355,15 @@
 				?>
 			</table>
 			
-			
 		<!-- TABLE 3: Share Account -->	
 		<table id="tb_table">
 			<tr>
 				<th class="title" colspan="2">
 					<?PHP
-						if ($result_cust['cust_active'] == 1) echo
-						'<a href="acc_share.php?cust='.$_SESSION['cust_id'].'">Share Account</a>';
-						else echo 'Share Account';
-						?>
+					if ($result_cust['cust_active'] == 1) echo
+					'<a href="acc_share.php?cust='.$_SESSION['cust_id'].'">Share Account</a>';
+					else echo 'Share Account';
+					?>
 				</th>
 			</tr>
 			<tr>
@@ -388,8 +380,6 @@
 	
 	</body>
 	<?PHP 
-	if ($share_amount == 0 && $result_cust['cust_active'] == 1) {
-		echo '<script language=javascript>alert(\'This Customer owns no Shares!\')</script>';
-	}
+	if ($share_amount == 0 && $result_cust['cust_active'] == 1)	error('This Customer owns no Shares!');
 	?>
 </html>

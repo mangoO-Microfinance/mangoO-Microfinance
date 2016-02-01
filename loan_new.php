@@ -64,26 +64,51 @@
 		header('Location: loan_sec.php');
 	}
 	
-	//Selections from Database
-
-	//Select Customer from CUSTOMER
-	$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
-	$query_cust = mysql_query($sql_cust);
-	if (!$query_cust) die ('SELECT failed: '.mysql_error());
-	$result_cust = mysql_fetch_assoc($query_cust);
+	/* SELECT LEGITIMATE GUARANTORS FROM CUSTOMER */
 	
-	//Select Guarantors from CUSTOMER
-	$sql_guarant = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_active = 1 AND cust_id != '$_SESSION[cust_id]' AND cust_id != 0";
-	$query_guarant = mysql_query($sql_guarant);
-	if (!$query_guarant) die ('SELECT failed: '.mysql_error());
+	//Select all customers except current one
+	$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_active = 1 AND cust_id != '$_SESSION[cust_id]' AND cust_id != 0";
+	$query_cust = mysql_query($sql_cust);
+	check_sql($query_cust);
+	
 	$guarantors = array();
-	while ($row_guarant = mysql_fetch_assoc($query_guarant)){
-		$guarantors[] = $row_guarant;
-	};	
+	
+	if ($_SESSION['set_maxguar'] == ""){
+		while ($row_cust = mysql_fetch_assoc($query_cust)){
+			$guarantors[] = $row_cust;
+		}
+	}
+	else {
+		//Select all guarantors of active loans
+		$sql_guarantact = "SELECT loan_guarant1, loan_guarant2, loan_guarant3 FROM loans WHERE loanstatus_id = 2";
+		$query_guarantact = mysql_query($sql_guarantact);
+		check_sql($query_guarantact);
+		$guarantact = array();
+		while($row_guarantact = mysql_fetch_assoc($query_guarantact)){
+			$guarantact[] = $row_guarantact;
+		}
+		
+		//Choose only those customers as legitimate guarantors who are not guarantors for more than a specified number of active loans
+		
+		while ($row_cust = mysql_fetch_assoc($query_cust)){
+			$guarant_count = 0;
+			
+			foreach($guarantact as $ga){
+				if ($ga['loan_guarant1'] == $row_cust['cust_id']) $guarant_count = $guarant_count + 1;
+				if ($ga['loan_guarant2'] == $row_cust['cust_id']) $guarant_count = $guarant_count + 1;
+				if ($ga['loan_guarant3'] == $row_cust['cust_id']) $guarant_count = $guarant_count + 1;
+			}
+			
+			if ($guarant_count < $_SESSION['set_maxguar']) $guarantors[] = $row_cust;
+		}
+	}
+	
+	//Get current customer's details
+	$result_cust = get_customer();
 ?>
 
 <html>
-	<?PHP htmlHead('New Loan',0) ?>	
+	<?PHP include_Head('New Loan',0) ?>	
 		<script type="text/javascript">
 			function calc_rate(feerate){
 				var amount, interest, instal, rate;

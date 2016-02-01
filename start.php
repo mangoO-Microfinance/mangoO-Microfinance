@@ -9,7 +9,7 @@
 
 <html>
 	<!-- HTML HEAD -->
-	<?PHP htmlHead('Microfinance Management',1); ?>
+	<?PHP include_Head('Microfinance Management',1); ?>
 	
 	<!-- HTML BODY -->
 	<body>

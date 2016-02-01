@@ -71,7 +71,7 @@
 
 
 <html>
-	<?PHP htmlHead('Dividend',1) ?>	
+	<?PHP include_Head('Dividend',1) ?>	
 	
 	<body>
 	

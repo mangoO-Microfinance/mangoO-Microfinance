@@ -9,7 +9,7 @@
 	$year = (date("Y",time()))-1; 
 ?>
 <html>
-	<?PHP htmlHead('Annual Report',1) ?>	
+	<?PHP include_Head('Annual Report',1) ?>	
 	<body>
 		
 		<!-- MENU -->

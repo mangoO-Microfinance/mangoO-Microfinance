@@ -18,7 +18,7 @@
 ?>
 	
 <html>
-	<?PHP htmlHead('Inactive Customers',1) ?>	
+	<?PHP include_Head('Inactive Customers',1) ?>	
 	
 	<body>
 		<!-- MENU -->

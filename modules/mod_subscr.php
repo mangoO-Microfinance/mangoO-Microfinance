@@ -1,7 +1,7 @@
 <?PHP
 if (($result_cust['cust_lastsub']+31536000) < $timestamp ){ 
 	$visibility = 'block';
-	if($result_cust['cust_active'] == 1) echo '<script language=javascript>alert(\'This Customer needs to renew his / her Subscription!\')</script>';
+	if($result_cust['cust_active'] == 1) error('This Customer needs to renew his / her Subscription!');
 }
 else $visibility = 'none';
 
@@ -43,13 +43,13 @@ if(isset($_POST['subscr_renew'])){
 ?>
 
 <div id="content_hidden" style="display:<?PHP echo $visibility; ?>;">
-	<form action=customer.php method=post onSubmit="validateSubscr(this)">
-		<input type=text name="subscr_date" value="<?PHP echo date('d.m.Y', $timestamp); ?>" placeholder="DD.MM.YYYY" />
+	<form action="customer.php" method="post" onSubmit="return validateSubscr(this)">
+		<input type="text" name="subscr_date" value="<?PHP echo date('d.m.Y', $timestamp); ?>" placeholder="DD.MM.YYYY" />
 		<br/><br/>
-		<input type=number name="subscr_receipt" placeholder="Receipt No." min="1"/>
+		<input type="number" name="subscr_receipt" placeholder="Receipt No." min="1"/>
 		<br/><br/>
-		<input type=checkbox name="subscr_from_sav" value="1" /> deduct from Savings
+		<input type="checkbox" name="subscr_from_sav" value="1" /> deduct from Savings
 		<br/><br/>
-		<input type=submit name="subscr_renew" value="Renew Subscription" />
+		<input type="submit" name="subscr_renew" value="Renew Subscription" />
 	</form>
 </div>

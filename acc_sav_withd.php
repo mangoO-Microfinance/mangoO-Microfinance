@@ -4,7 +4,8 @@
 	check_logon();
 	connect();
 	check_custid();
-	$sav_balance = get_savbalance();
+	
+	//Generate Timestamp
 	$timestamp = time();
 	
 	// WITHDRAW-Button
@@ -40,21 +41,21 @@
 		header('Location: acc_sav_withd.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	//Select Customer from CUSTOMER
-	$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
-	$query_cust = mysql_query($sql_cust);
-	check_sql($query_cust);
-	$result_cust = mysql_fetch_assoc($query_cust);
+	//Get current customer's details
+	$result_cust = get_customer();
+	
+	//Get Savings Balance
+	$sav_balance = get_savbalance();
 ?>
 
 <html>
-	<?PHP htmlHead('Savings Withdrawal',0) ?>	
+	<?PHP include_Head('Savings Withdrawal',0) ?>	
 		<script>
 			function validate(form){
-				if (document.getElementById('sav_deduct').checked) var wd_fee = <?PHP echo $_SESSION['fee_withdraw']; ?>;
-					else var wd_fee = 0;
 				var sav_balance = <?PHP echo $sav_balance; ?>;
 				var minsavbal = <?PHP echo $_SESSION['set_msb']; ?>;
+				if (document.getElementById('sav_deduct').checked) var wd_fee = <?PHP echo $_SESSION['fee_withdraw']; ?>;
+					else var wd_fee = 0;
 				fail = validateDate(form.sav_date.value)
 				fail += validateSlip(form.sav_slip.value)
 				fail += validateAmount(form.sav_amount.value)

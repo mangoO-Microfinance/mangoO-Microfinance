@@ -10,7 +10,7 @@
 	$month = date("m",time());
 ?>
 <html>
-	<?PHP htmlHead('Incomes Report',1); ?>
+	<?PHP include_Head('Incomes Report',1); ?>
 	
 	<body>
 		

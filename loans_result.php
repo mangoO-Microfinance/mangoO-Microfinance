@@ -21,7 +21,7 @@
 ?>
 	
 <html>
-	<?PHP htmlHead('Loans Search Result',1) ?>	
+	<?PHP include_Head('Loans Search Result',1) ?>	
 	<body>
 		
 		<!-- MENU -->

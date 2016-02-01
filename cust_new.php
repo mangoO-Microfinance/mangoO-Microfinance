@@ -63,7 +63,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('New Customer',0) ?>	
+	<?PHP include_Head('New Customer',0) ?>	
 		<script>
 			function validate(form){
 				fail = validateName(form.cust_name.value)

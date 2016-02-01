@@ -4,8 +4,12 @@
 	check_logon();	
 	connect();
 	check_custid();
-	get_sharevalue();
+	
+	//Generate timestamp
 	$timestamp = time();
+	
+	//Get current share value
+	get_sharevalue();
 	
 	//ADD SHARE-Button
 	if (isset($_POST['shareadd'])){
@@ -57,30 +61,25 @@
 		header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	//Select CUSTOMER from database
-	$sql_cust = "SELECT * FROM customer, cust_married WHERE customer.cust_married_id = cust_married.cust_married_id AND cust_id = '$_SESSION[cust_id]'";
-	$query_cust = mysql_query($sql_cust);
-	if (!$query_cust) die ('SELECT failed: '.mysql_error());
-	$result_cust = mysql_fetch_assoc($query_cust);
-	
 	//Select SHARES from database
 	$sql_sha = "SELECT * FROM shares, user WHERE shares.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]'";
 	$query_sha = mysql_query($sql_sha);
 	check_sql($query_sha);
 	
-	//Select ALL CUSTOMERS from database
-	$sql_custall = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_id NOT IN (0, $_SESSION[cust_id])";
-	$query_custall = mysql_query($sql_custall);
-	check_sql($query_custall);
-	
 	//Make array for exporting data
 	$share_exp_date = date("Y-m-d",time());
 	$_SESSION['share_export'] = array();
 	$_SESSION['share_exp_title'] = $_SESSION['cust_id'].'_shares_'.$share_exp_date;
+	
+	//Get current customer's details
+	$result_cust = get_customer();
+	
+	//Get all customers
+	$query_custother = get_custother();
 ?>
 
 <html>
-<?PHP htmlHead('Share Addition',0) ?>	
+<?PHP include_Head('Share Addition',0) ?>	
 	<script>
 		function validate(form){
 			fail = validateDate(form.share_date.value)
@@ -169,7 +168,7 @@
 					<br/>
 					<select name="shtrans_cust">
 						<?PHP
-						while ($row_custall = mysql_fetch_assoc($query_custall)){
+						while ($row_custall = mysql_fetch_assoc($query_custother)){
 							echo '<option value="'.$row_custall['cust_id'].'">'.$row_custall['cust_id'].' '.$row_custall['cust_name'].'</option>';
 						}
 						?>

@@ -37,7 +37,7 @@
 
 
 <html>
-	<?PHP htmlHead('Settings | Fees',1) ?>
+	<?PHP include_Head('Settings | Fees',1) ?>
 	
 	<body>
 		<!-- MENU -->

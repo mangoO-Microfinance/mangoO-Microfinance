@@ -63,7 +63,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('New Loan',1) ?>
+	<?PHP include_Head('New Loan',1) ?>
 	
 	<body>
 		<!-- MENU -->

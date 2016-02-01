@@ -49,6 +49,12 @@
 		$query_upd_maxLP = mysql_query($sql_upd_maxLP);
 		check_sql($query_upd_maxLP);
 		
+		//Update Maximum Loan Principal
+		$new_maxGuar = sanitize($_POST['maxGuar']);
+		$sql_upd_maxGuar = "UPDATE settings SET set_value = '$new_maxGuar' WHERE set_short = 'MaxGuar'";
+		$query_upd_maxGuar = mysql_query($sql_upd_maxGuar);
+		check_sql($query_upd_maxGuar);
+		
 		//Update Auto-fine option
 		$new_auf = sanitize($_POST['autofine']);
 		$sql_upd_auf = "UPDATE settings SET set_value = '$new_auf' WHERE set_short = 'AUF'";
@@ -69,7 +75,7 @@
 	get_fees();
 ?>
 <html>
-	<?PHP htmlHead('Settings | Loan Settings',1) ?>
+	<?PHP include_Head('Settings | Loan Settings',1) ?>
 	
 	<body>
 		<!-- MENU -->
@@ -152,6 +158,13 @@
 						<td>Maximum Loan Principal</td>
 						<td>
 							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Limit of Guarantees:</td>
+						<td>
+							<input type="number" min="0" name="maxGuar" value="<?PHP echo $_SESSION['set_maxguar'] ?>" placeholder="No Limit" />
 						</td>
 					</tr>
 					

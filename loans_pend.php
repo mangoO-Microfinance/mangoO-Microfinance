@@ -17,7 +17,7 @@
 	check_sql ($query_loanpend);
 ?>
 <html>
-	<?PHP htmlHead('Pending Loans',1) ?>	
+	<?PHP include_Head('Pending Loans',1) ?>	
 	
 	<body>
 		

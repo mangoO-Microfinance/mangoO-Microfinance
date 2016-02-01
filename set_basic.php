@@ -6,6 +6,8 @@
 	connect();
 	
 	if (isset($_POST['upd_genset'])){
+		
+		//Generate timestamp
 		$timestamp = time();
 		
 		//Update Currency Abbreviation
@@ -47,7 +49,7 @@
 		check_sql($query_upd_dashr);
 	}
 	
-	// Get Settings and fill variables
+	//Get Settings and fill session variables
 	get_settings();
 	
 	//Select Value of Shares from SHAREVAL
@@ -58,7 +60,7 @@
 ?>
 
 <html>
-	<?PHP htmlHead('Settings | Basic Settings',1) ?>
+	<?PHP include_Head('Settings | Basic Settings',1) ?>
 	
 	<body>
 		<!-- MENU -->
