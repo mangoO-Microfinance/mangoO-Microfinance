@@ -120,6 +120,13 @@
 					</tr>
 					
 					<tr>
+						<td>Limit of Guarantees:</td>
+						<td>
+							<input type="number" min="0" name="maxGuar" value="<?PHP echo $_SESSION['set_maxguar'] ?>" placeholder="No Guarantee Limit" />
+						</td>
+					</tr>
+					
+					<tr>
 						<td>Loan Interest Rate (%)</td>
 						<td>
 							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" />
@@ -158,13 +165,6 @@
 						<td>Maximum Loan Principal</td>
 						<td>
 							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" />
-						</td>
-					</tr>
-					
-					<tr>
-						<td>Limit of Guarantees:</td>
-						<td>
-							<input type="number" min="0" name="maxGuar" value="<?PHP echo $_SESSION['set_maxguar'] ?>" placeholder="No Limit" />
 						</td>
 					</tr>
 					
