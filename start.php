@@ -35,14 +35,7 @@
 		</div>
 		
 		<!-- Logout Reminder Message -->
-		<?PHP
-		if ($_SESSION['logrec_logout'] == 0){
-			echo '<script>
-							alert ("You forgot to logout last time. Please remember to log out properly.")
-						</script>';
-			$_SESSION['logrec_logout'] = 1;
-		}
-		?>
+		<?PHP	check_logout();	?>
 		
 	</body>
 </html>

@@ -15,12 +15,6 @@
 		$sql_upd_cur_short = "UPDATE settings SET set_value = '$new_cur_short' WHERE set_short = 'CUR'";
 		$query_upd_cur_short = mysql_query($sql_upd_cur_short);
 		check_sql($query_upd_cur_short);
-	
-		//Update Share Value
-		$new_shareval = sanitize($_POST['shareval']);
-		$sql_upd_shareval = "INSERT INTO shareval (shareval_date, shareval_value) VALUES ('$timestamp', '$new_shareval')";
-		$query_upd_shareval = mysql_query($sql_upd_shareval);
-		check_sql($query_upd_shareval);
 		
 		//Update Minimum Savings Balance
 		$new_minsavbal = sanitize($_POST['minsavbal']);
@@ -51,12 +45,6 @@
 	
 	//Get Settings and fill session variables
 	get_settings();
-	
-	//Select Value of Shares from SHAREVAL
-	$sql_shareval = "SELECT shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
-	$query_shareval = mysql_query($sql_shareval);
-	check_sql($query_shareval);
-	$shareval = mysql_fetch_row($query_shareval);
 ?>
 
 <html>
@@ -71,7 +59,7 @@
 		<div id="menu_main">
 			<a href="set_basic.php" id="item_selected">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>
-			<a href="set_fees.php">Fees</a>
+			<a href="set_fees.php">Fees & Charges</a>
 			<a href="set_user.php">Users</a>
 			<a href="set_ugroup.php">Usergroups</a>
 			<a href="set_logrec.php">Log Records</a>
@@ -117,21 +105,14 @@
 					</tr>
 					
 					<tr>
-						<td><span>Value of Shares</span>
+						<td><span>Minimum Savings Balance</span></td>
 						<td>
-							<input type="number" min="0" name="shareval" value="<?PHP echo $shareval[0]; ?>" />
+							<input type="number" min="0" name="minsavbal" value="<?PHP echo $_SESSION['set_msb']; ?>" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
 						</td>
 					</tr>
 					
 					<tr>
-						<td><span>Minimum Savings Balance</span>
-						<td>
-							<input type="number" min="0" name="minsavbal" value="<?PHP echo $_SESSION['set_msb']; ?>" />
-						</td>
-					</tr>
-					
-					<tr>
-						<td><span>Auto-deactivate unrenewed<br/>accounts after X months</span></td>
+						<td><span>Auto-deactivate unrenewed<br/>accounts after (Months)</span></td>
 						<td>
 							<input type="number" name="deactivate" min="0" value="<?PHP echo $_SESSION['set_deact']; ?>" placeholder="Auto-deactivation off" />
 						</td>

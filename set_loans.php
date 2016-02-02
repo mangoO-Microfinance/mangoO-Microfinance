@@ -18,24 +18,6 @@
 		$sql_upd_loaninterest = "UPDATE fees SET fee_value = '$new_loaninterest' WHERE fee_id = 8";
 		$query_upd_loaninterest = mysql_query($sql_upd_loaninterest);
 		check_sql($query_upd_loaninterest);
-
-		//Update Loan Fee Rate
-		$new_loanfeerate = sanitize($_POST['loanfeerate']);
-		$sql_upd_loanfeerate = "UPDATE fees SET fee_value = '$new_loanfeerate' WHERE fee_id = 5";
-		$query_upd_loanfeerate = mysql_query($sql_upd_loanfeerate);
-		check_sql($query_upd_loanfeerate);
-		
-		//Update Loan Application Fee
-		$new_lappfee = sanitize($_POST['lappfee']);
-		$sql_upd_lappfee = "UPDATE fees SET fee_value = '$new_lappfee' WHERE fee_id = 6";
-		$query_upd_lappfee = mysql_query($sql_upd_lappfee);
-		check_sql($query_upd_lappfee);
-			
-		//Update Loan Default Fine
-		$new_ldefaultfine = sanitize($_POST['ldefaultfine']);
-		$sql_upd_ldefaultfine = "UPDATE fees SET fee_value = '$new_ldefaultfine' WHERE fee_id = 7";
-		$query_upd_ldefaultfine = mysql_query($sql_upd_ldefaultfine);
-		check_sql($query_upd_ldefaultfine);
 	
 		//Update Minimum Loan Principal
 		$new_minLP = sanitize($_POST['minLP']);
@@ -49,11 +31,17 @@
 		$query_upd_maxLP = mysql_query($sql_upd_maxLP);
 		check_sql($query_upd_maxLP);
 		
-		//Update Maximum Loan Principal
+		//Update Maximum Number of Guarantees any member can give
 		$new_maxGuar = sanitize($_POST['maxGuar']);
 		$sql_upd_maxGuar = "UPDATE settings SET set_value = '$new_maxGuar' WHERE set_short = 'MaxGuar'";
 		$query_upd_maxGuar = mysql_query($sql_upd_maxGuar);
 		check_sql($query_upd_maxGuar);
+		
+		//Update Minimum Length of Membership before Loan Application
+		$new_minMemb = sanitize($_POST['minMemb']);
+		$sql_upd_minMemb = "UPDATE settings SET set_value = '$new_minMemb' WHERE set_short = 'MinMemb'";
+		$query_upd_minMemb = mysql_query($sql_upd_minMemb);
+		check_sql($query_upd_minMemb);
 		
 		//Update Auto-fine option
 		$new_auf = sanitize($_POST['autofine']);
@@ -86,7 +74,7 @@
 		<div id="menu_main">
 			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php" id="item_selected">Loan Settings</a>
-			<a href="set_fees.php">Fees</a>
+			<a href="set_fees.php">Fees & Charges</a>
 			<a href="set_user.php">Users</a>
 			<a href="set_ugroup.php">Usergroups</a>
 			<a href="set_logrec.php">Log Records</a>
@@ -113,61 +101,46 @@
 					</tr>
 					
 					<tr>
-						<td>Auto-fine defaulted loan<br/>instalments after X days</td>
-						<td>
-							<input type="number" name="autofine" id="autofine" min="0" value="<?PHP echo $_SESSION['set_auf'] ?>" placeholder="Auto-fining off"/>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>Limit of Guarantees:</td>
-						<td>
-							<input type="number" min="0" name="maxGuar" value="<?PHP echo $_SESSION['set_maxguar'] ?>" placeholder="No Guarantee Limit" />
-						</td>
-					</tr>
-					
-					<tr>
 						<td>Loan Interest Rate (%)</td>
 						<td>
-							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" />
+							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" placeholder="Pecentage" />
 						</td>
 					</tr>
 					
 					<tr>
-						<td>Loan Application Fee</td>
+						<td>Minimum Length of<br/>Membership (Months)</td>
 						<td>
-							<input type="number" min="0" name="lappfee" value="<?PHP echo $_SESSION['fee_loanappl'] ?>" />
-						</td>
-					</tr>
-				
-					<tr>
-						<td>Loan Fee Rate (%)</td>
-						<td>
-							<input type="text" min="0" name="loanfeerate" value="<?PHP echo $_SESSION['fee_loan'] ?>" />
-						</td>
-					</tr>
-				
-					<tr>
-						<td>Loan Default Fine</td>
-						<td>
-							<input type="number" min="0" name="ldefaultfine" value="<?PHP echo $_SESSION['fee_loanfine'] ?>" />
+							<input type="number" min="0" name="minMemb" value="<?PHP echo $_SESSION['set_minmemb'] ?>" placeholder="No Minimum Length" />
 						</td>
 					</tr>
 			
 					<tr>
 						<td>Minimum Loan Principal</td>
 						<td>
-							<input type="number" min="0" name="minLP" value="<?PHP echo $_SESSION['set_minlp'] ?>" />
+							<input type="number" min="0" name="minLP" value="<?PHP echo $_SESSION['set_minlp'] ?>" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
 						</td>
 					</tr>
 			
 					<tr>
 						<td>Maximum Loan Principal</td>
 						<td>
-							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" />
+							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
 						</td>
 					</tr>
 					
+					<tr>
+						<td>Auto-fine defaulted loan<br/>instalments after (Days)</td>
+						<td>
+							<input type="number" name="autofine" id="autofine" min="0" value="<?PHP echo $_SESSION['set_auf'] ?>" placeholder="Auto-fining off"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Limit of Guarantees</td>
+						<td>
+							<input type="number" min="0" name="maxGuar" value="<?PHP echo $_SESSION['set_maxguar'] ?>" placeholder="No Guarantee Limit" />
+						</td>
+					</tr>
 				</table>
 				
 				<input type="submit" name="upd_loans" value="Save Changes">

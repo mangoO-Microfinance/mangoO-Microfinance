@@ -16,7 +16,7 @@
 		<div id="menu_main">
 			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>
-			<a href="set_fees.php">Fees</a>
+			<a href="set_fees.php">Fees & Charges</a>
 			<a href="set_user.php">Users</a>
 			<a href="set_ugroup.php">Usergroups</a>
 			<a href="set_logrec.php" id="item_selected">Log Records</a>

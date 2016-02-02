@@ -139,16 +139,11 @@
 						<td>Number of Shares:</td>
 						<td>
 							<select name="share_amount" class="defaultfield">
-								<option value="1">1 @ <?PHP echo number_format($_SESSION['share_value']).' '.$_SESSION['set_cur']; ?></option>
-								<option value="2">2 @ <?PHP echo number_format($_SESSION['share_value']*2).' '.$_SESSION['set_cur']; ?></option>
-								<option value="3">3 @ <?PHP echo number_format($_SESSION['share_value']*3).' '.$_SESSION['set_cur']; ?></option>
-								<option value="4">4 @ <?PHP echo number_format($_SESSION['share_value']*4).' '.$_SESSION['set_cur']; ?></option>
-								<option value="5">5 @ <?PHP echo number_format($_SESSION['share_value']*5).' '.$_SESSION['set_cur']; ?></option>
-								<option value="6">6 @ <?PHP echo number_format($_SESSION['share_value']*6).' '.$_SESSION['set_cur']; ?></option>
-								<option value="7">7 @ <?PHP echo number_format($_SESSION['share_value']*7).' '.$_SESSION['set_cur']; ?></option>
-								<option value="8">8 @ <?PHP echo number_format($_SESSION['share_value']*8).' '.$_SESSION['set_cur']; ?></option>
-								<option value="9">9 @ <?PHP echo number_format($_SESSION['share_value']*9).' '.$_SESSION['set_cur']; ?></option>
-								<option value="10">10 @ <?PHP echo number_format($_SESSION['share_value']*10).' '.$_SESSION['set_cur']; ?></option>
+								<?PHP
+								for ($i = 1; $i <= 10; $i++) {
+									echo '<option value="'.$i.'">'.$i.' @ '.number_format($_SESSION['share_value'] * $i).' '.$_SESSION['set_cur'].'</option>';
+								}
+								?>
 							</select>
 						</td>
 					</tr>

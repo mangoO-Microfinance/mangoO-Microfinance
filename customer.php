@@ -111,10 +111,12 @@
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<?PHP
+			$min_membership = $_SESSION['set_minmemb'] * 2592000;
 			if ($result_cust['cust_active'] == 1) echo '
 				<a href="acc_sav_depos.php?cust='.$_SESSION['cust_id'].'">Deposit</a>
 				<a href="acc_sav_withd.php?cust='.$_SESSION['cust_id'].'">Withdrawal</a>
-				<a href="acc_share.php?cust='.$_SESSION['cust_id'].'">Add Shares</a>
+				<a href="acc_share.php?cust='.$_SESSION['cust_id'].'">Add Shares</a>';
+			if ($result_cust['cust_active'] == 1 AND ($timestamp-$result_cust['cust_since']) > $min_membership) echo '
 				<a href="loan_new.php?cust='.$_SESSION['cust_id'].'">New Loan</a>';
 			?>
 			<a href="cust_new.php">New Customer</a>

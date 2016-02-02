@@ -30,12 +30,20 @@
 		die;
 	}	
 	
-	//Check for Logon
+	//Check, if current user is logged in
 	function check_logon() {
 		$fingerprint = md5($_SERVER['REMOTE_ADDR'].'dh(6Km4$X*'.$_SERVER['HTTP_USER_AGENT']);
 		session_start();
 		if (!isset($_SESSION['log_user']) || $_SESSION['log_fingerprint'] != $fingerprint) logout();
 		session_regenerate_id();
+	}
+	
+	//Check for proper logout after last session
+	function check_logout(){
+		if ($_SESSION['logrec_logout'] == 0){
+			error("You forgot to logout last time. Please remember to log out properly.");
+			$_SESSION['logrec_logout'] = 1;
+		}
 	}
 	
 	//Check for Administrator Permissions
@@ -234,13 +242,16 @@
 				case 10:
 					$_SESSION['set_maxguar'] = $row_settings['set_value'];
 					break;
+				case 11:
+					$_SESSION['set_minmemb'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}
 	
 	//Get current Share Value from SHAREVAL
 	function get_sharevalue(){
-		$sql_shareval = "SELECT shareval_id, shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
+		$sql_shareval = "SELECT shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
 		$query_shareval = mysql_query($sql_shareval);
 		check_sql($query_shareval);
 		$result_shareval = mysql_fetch_assoc($query_shareval);
