@@ -26,7 +26,7 @@ check_sql($query_subscrdef);
 	$color = 0;
 	while($row_subscrdef = mysql_fetch_assoc($query_subscrdef)){
 		tr_colored($color);
-		echo '	<td><a href="customer.php?cust='.$row_subscrdef['cust_id'].'" class="sacco">'.$row_subscrdef['cust_id'].'/'.date("Y",$row_subscrdef['cust_since']).'</a></td>
+		echo '	<td><a href="customer.php?cust='.$row_subscrdef['cust_id'].'">'.$row_subscrdef['cust_no'].'</a></td>
 						<td>'.$row_subscrdef['cust_name'].'</td>
 						<td>'.date("d.m.Y", $row_subscrdef['cust_lastsub']).'</td>
 					</tr>';

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	check_report();
 	connect();
@@ -14,20 +14,15 @@
 	<body>
 			
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(5);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(5); ?>
 		<div id="menu_main">
 			<a href="rep_incomes.php">Income Report</a>
-			<a href="rep_expenditures.php">Expense Report</a>
+			<a href="rep_expenses.php">Expense Report</a>
 			<a href="rep_loans.php">Loans Report</a>
 			<a href="rep_capital.php" id="item_selected">Capital Report</a>
 			<a href="rep_monthly.php">Monthly Report</a>
 			<a href="rep_annual.php">Annual Report</a>
 		</div>
-			
 		<!-- MENU: Selection Bar -->
 		<div id="menu_selection">
 			<form action="rep_capital.php" method="post">

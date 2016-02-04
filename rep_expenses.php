@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	check_report();
 	connect();
@@ -11,15 +11,14 @@
 ?>
 <html>
 	<?PHP include_Head('Expense Report',1) ?>	
-	<!-- MENU -->
-		<?PHP 
-				include_Menu(5);
-		?>
+	
+	<body>
+		<?PHP include_Menu(5); ?>
 		
 		<!-- MENU MAIN -->
 		<div id="menu_main">
 			<a href="rep_incomes.php">Income Report</a>
-			<a href="rep_expenditures.php" id="item_selected">Expense Report</a>
+			<a href="rep_expenses.php" id="item_selected">Expense Report</a>
 			<a href="rep_loans.php">Loans Report</a>
 			<a href="rep_capital.php">Capital Report</a>
 			<a href="rep_monthly.php">Monthly Report</a>
@@ -28,7 +27,7 @@
 		
 		<!-- MENU: Selection Bar -->
 		<div id="menu_selection">
-			<form action="rep_expenditures.php" method="post">
+			<form action="rep_expenses.php" method="post">
 				<input type="number" min="2014" max="2214" name="rep_year" style="width:100px;" value="<?PHP if ($month == 01) echo $year-1; else echo $year; ?>" placeholder="Give Year"></input>
 				<select name="rep_month">
 					<option value="01" <?PHP if ($month == 02) echo 'selected="selected"' ?> >January</option>
@@ -46,7 +45,7 @@
 				</select>
 				<select name="rep_form" style="height:24px;">
 					<option value="d" selected="selected">Detailed Rep.</option>
-					<option value="a">Aggregated Rep.</option>
+					<option value="a">Summarised Rep.</option>
 				</select>
 				<input type="submit" name="select" value="Select Report" />
 			</form>
@@ -64,11 +63,11 @@
 			
 			//Make array for exporting data
 			$_SESSION['rep_export'] = array();
-			$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_expenditures_'.$_POST['rep_form'];
+			$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_expenses_'.$_POST['rep_form'];
 			
-			/*** CASE 1: Aggregated Report ***/
+			/*** CASE 1: Summarised Report ***/
 			if ($_POST['rep_form'] == 'a'){
-				$sql_expendit = "SELECT * FROM expenditures WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
+				$sql_expendit = "SELECT * FROM expenses WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 				$query_expendit = mysql_query($sql_expendit);
 				if (!$query_expendit) die ('SELECT failed: '.mysql_error());
 				
@@ -85,7 +84,7 @@
 					</colspan>
 					<tr>
 						<form class="export" action="rep_export.php" method="post">
-							<th class="title" colspan="2">Aggregated Expenses for <?PHP echo $rep_month.'/'.$rep_year ?>
+							<th class="title" colspan="2">Summarised Expenses for <?PHP echo $rep_month.'/'.$rep_year ?>
 							<!-- Export Button -->
 							<input type="submit" name="export_rep" value="Export" />		
 							</th>
@@ -121,14 +120,14 @@
 						array_push($_SESSION['rep_export'], array("Type" => $et['exptype_type'], "Amount" => $total_row));
 					}
 					echo '<tr class="balance">
-									<td>Total Expenditures:</td>
+									<td>Total expenses:</td>
 									<td>'.number_format($total_exp).' '.$_SESSION['set_cur'].'</td>
 								</tr>';
 			}
 			
 			/*** CASE 2: Detailed Report ***/
 			else{
-				$sql_expendit = "SELECT * FROM expenditures, exptype WHERE expenditures.exptype_id = exptype.exptype_id AND exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
+				$sql_expendit = "SELECT * FROM expenses, exptype WHERE expenses.exptype_id = exptype.exptype_id AND exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 				$query_expendit = mysql_query($sql_expendit);
 				check_sql($query_expendit);
 				?>
@@ -179,7 +178,7 @@
 						array_push($_SESSION['rep_export'], array("Date" => date("d.m.Y",$row_expendit['exp_date']), "Type" => $row_expendit['exptype_type'], "Recipient" => $row_expendit['exp_recipient'], "Details" => $row_expendit['exp_text'], "Receipt No" => $row_expendit['exp_receipt'], "Voucher No" => $row_expendit['exp_voucher'],"Amount" => $row_expendit['exp_amount']));
 					}
 					echo '<tr class="balance">
-									<td colspan="7">Total Expenditures: '.number_format($total_exp).' '.$_SESSION['set_cur'].'</td>
+									<td colspan="7">Total expenses: '.number_format($total_exp).' '.$_SESSION['set_cur'].'</td>
 								</tr>';
 			}
 		}

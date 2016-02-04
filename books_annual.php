@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	$lastyear = date("Y", time())-1;
@@ -62,8 +62,8 @@
 			$div_fact=0;
 		}
 		
-		//Insert grand total distributed dividend into EXPENDITURES
-		$sql_div_exp = "INSERT INTO expenditures (exptype_id, exp_amount, exp_date, exp_text, exp_created, user_id) VALUES (18, $div_total, $div_year_end, 'Distributed Dividend for $div_year', $timestamp, $_SESSION[log_id])";
+		//Insert grand total distributed dividend into expenses
+		$sql_div_exp = "INSERT INTO expenses (exptype_id, exp_amount, exp_date, exp_text, exp_created, user_id) VALUES (18, $div_total, $div_year_end, 'Distributed Dividend for $div_year', $timestamp, $_SESSION[log_id])";
 		$query_div_exp = mysql_query($sql_div_exp);
 		check_sql($query_div_exp );
 	}

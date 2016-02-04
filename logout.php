@@ -1,6 +1,6 @@
 <?PHP
 	session_start();
-	include 'functions.php';
+	require 'functions.php';
 	connect();
 	
 	//Record logout time for this session

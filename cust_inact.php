@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	
@@ -12,9 +12,7 @@
 	$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_cust-inact';
 	
 	//Select inactive customers from CUSTOMER
-	$sql_custinact = "SELECT * FROM customer WHERE cust_active != 1";
-	$query_custinact = mysql_query($sql_custinact);
-	check_sql ($query_custinact);
+	$query_custinact = get_custinact();
 ?>
 	
 <html>
@@ -22,11 +20,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<a href="cust_new.php">New Customer</a>
@@ -68,17 +62,12 @@
 			$color = 0;
 			while ($row_custinact = mysql_fetch_assoc($query_custinact)){					
 				
-				//Set value for $gender
-				if ($row_custinact['cust_sex'] == 1) $gender = "Male";
-				elseif ($row_custinact['cust_sex'] == 2) $gender = "Female";
-				else $gender = "Institution";
-				
 				tr_colored($color);	//Alternating row colors
 				echo '<td>
-								<a href="customer.php?cust='.$row_custinact['cust_id'].'">'.$row_custinact['cust_id'].'/'.date("Y",$row_custinact['cust_since']).'</a>
+								<a href="customer.php?cust='.$row_custinact['cust_id'].'">'.$row_custinact['cust_no'].'</a>
 							</td>
 							<td>'.$row_custinact['cust_name'].'</td>
-							<td>'.$gender.'</td>
+							<td>'.$row_custinact['custsex_name'].'</td>
 							<td>'.date("d.m.Y",$row_custinact['cust_dob']).'</td>
 							<td>'.$row_custinact['cust_occup'].'</td>
 							<td>'.$row_custinact['cust_address'].'</td>
@@ -86,7 +75,7 @@
 							<td>'.date("d.m.Y",$row_custinact['cust_since']).'</td>
 						</tr>';
 				
-				array_push($_SESSION['rep_export'], array("Cust. No." => $row_custinact['cust_id'], "Customer Name" => $row_custinact['cust_name'], "DoB" => date("d.m.Y",$row_custinact['cust_dob']), "Gender" => $gender, "Occupation" => $row_custinact['cust_occup'], "Place of Residence" => $row_custinact['cust_address'], "Phone No." => $row_custinact['cust_phone'], "Member since" => date("d.m.Y",$row_custinact['cust_since'])));
+				array_push($_SESSION['rep_export'], array("Cust. No." => $row_custinact['cust_no'], "Customer Name" => $row_custinact['cust_name'], "DoB" => date("d.m.Y",$row_custinact['cust_dob']), "Gender" => $row_custinact['custsex_name'], "Occupation" => $row_custinact['cust_occup'], "Place of Residence" => $row_custinact['cust_address'], "Phone No." => $row_custinact['cust_phone'], "Member since" => date("d.m.Y",$row_custinact['cust_since'])));
 			}
 			?>
 		</table>

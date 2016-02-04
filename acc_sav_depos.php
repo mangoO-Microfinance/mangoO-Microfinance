@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	check_custid();
@@ -20,7 +20,7 @@
 		//Insert into SAVINGS
 		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
-		if (!$query_insert) die ('INSERT failed: '.mysql_error());
+		check_sql($query_insert);
 		
 		//Refer to acc_sav_depos.php
 		header('Location: acc_sav_depos.php?cust='.$_SESSION['cust_id']);
@@ -47,11 +47,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
 			<a href="cust_search.php">Search</a>
@@ -67,7 +63,7 @@
 		<!-- LEFT SIDE: Input for new Deposit -->
 		<div class="content_left">
 			
-			<p class="heading_narrow">Deposit for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_id'].'/'.date("Y",$result_cust['cust_since']).')' ?></p>
+			<p class="heading_narrow">Deposit for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
 			
 			<form action="acc_sav_depos.php" method="post" onsubmit="return validate(this);">
 				<table id="tb_fields">

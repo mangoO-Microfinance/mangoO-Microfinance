@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	check_report();
 	connect();
@@ -11,17 +11,13 @@
 ?>
 <html>
 	<?PHP include_Head('Monthly Report',1) ?>	
-	<body>
-		
+	
+	<body>	
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(5);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(5); ?>
 		<div id="menu_main">
 			<a href="rep_incomes.php">Income Report</a>
-			<a href="rep_expenditures.php">Expense Report</a>
+			<a href="rep_expenses.php">Expense Report</a>
 			<a href="rep_loans.php">Loans Report</a>
 			<a href="rep_capital.php">Capital Report</a>
 			<a href="rep_monthly.php" id="item_selected">Monthly Report</a>
@@ -80,8 +76,8 @@
 			
 			/**** EXPENDITURE RELATED DATA ****/
 			
-			//Select EXPENDITURES and EXPTYPE
-			$sql_expendit = "SELECT * FROM expenditures WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
+			//Select expenses and EXPTYPE
+			$sql_expendit = "SELECT * FROM expenses WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 			$query_expendit = mysql_query($sql_expendit);
 			if (!$query_expendit) die ('SELECT failed: '.mysql_error());
 			
@@ -214,15 +210,15 @@
 				?>
 			</table>
 			
-			<!-- EXPENDITURES: Table 1 -->
-			<?PHP array_push($_SESSION['rep_export'], array("Type" => "EXPENDITURES", "Amount" => "")); ?>
+			<!-- expenses: Table 1 -->
+			<?PHP array_push($_SESSION['rep_export'], array("Type" => "expenses", "Amount" => "")); ?>
 			<table id="tb_table" style="width:50%">
 				<colspan>
 					<col width="50%">
 					<col width="50%">
 				</colspan>
 				<tr>
-					<th class="title" colspan="2">Expenditures for <?PHP echo $rep_month.'/'.$rep_year ?></th>
+					<th class="title" colspan="2">Expenses for <?PHP echo $rep_month.'/'.$rep_year ?></th>
 				</tr>
 				<tr>
 					<th>Type</th>
@@ -254,12 +250,12 @@
 					array_push($_SESSION['rep_export'], array("Type" => $et['exptype_type'], "Amount" => $total_row));
 				}
 				
-				//Total Expenditures Amount Line
+				//Total expenses Amount Line
 				echo '<tr class="balance">
-								<td>Total Expenditures:</td>
+								<td>Total expenses:</td>
 								<td>'.number_format($total_exp).' '.$_SESSION['set_cur'].'</td>
 							</tr>';
-				array_push($_SESSION['rep_export'], array("Type" => "Total Expenditures", "Amount" => $total_exp));
+				array_push($_SESSION['rep_export'], array("Type" => "Total expenses", "Amount" => $total_exp));
 				array_push($_SESSION['rep_export'], array("Type" => "", "Amount" => ""));
 				?>
 			</table>
@@ -376,7 +372,7 @@
 				while($row_loanout = mysql_fetch_assoc($query_loanout)){
 					tr_colored($color);
 					echo '	<td><a href="loan.php?lid='.$row_loanout['loan_id'].'">'.$row_loanout['loan_no'].'</a></td>
-									<td>'.$row_loanout['cust_name'].' ('.$row_loanout['cust_id'].'/'.date("Y",$row_loanout['cust_since']).')</td>
+									<td>'.$row_loanout['cust_name'].' ('.$row_loanout['cust_no'].')</td>
 									<td>'.number_format($row_loanout['loan_principal']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.$row_loanout['loan_interest'].'%</td>
 									<td>'.$row_loanout['loan_period'].'</td>

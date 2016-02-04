@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	check_report();
 	connect();
@@ -13,22 +13,16 @@
 	<?PHP include_Head('Incomes Report',1); ?>
 	
 	<body>
-		
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(5);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(5); ?>
 		<div id="menu_main">
 			<a href="rep_incomes.php" id="item_selected">Income Report</a>
-			<a href="rep_expenditures.php">Expense Report</a>
+			<a href="rep_expenses.php">Expense Report</a>
 			<a href="rep_loans.php">Loans Report</a>
 			<a href="rep_capital.php">Capital Report</a>
 			<a href="rep_monthly.php">Monthly Report</a>
 			<a href="rep_annual.php">Annual Report</a>
 		</div>
-			
 		<!-- MENU: Selection Bar -->
 		<div id="menu_selection">
 			<form action="rep_incomes.php" method="post">
@@ -49,7 +43,7 @@
 				</select>
 				<select name="rep_form" style="height:24px;">
 					<option value="d" selected="selected">Detailed Rep.</option>
-					<option value="a">Aggregated Rep.</option>
+					<option value="a">Summarised Rep.</option>
 				</select>
 				<input type="submit" name="select" value="Select Report" />
 			</form>
@@ -70,7 +64,7 @@
 			$_SESSION['rep_export'] = array();
 			$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_incomes_'.$_POST['rep_form'];
 			
-			/*** CASE 1: Aggregated Report ***/
+			/*** CASE 1: Summarised Report ***/
 			if ($_POST['rep_form'] == 'a'){
 				
 				//Selection from INCOMES and INCTYPE
@@ -91,7 +85,7 @@
 					</colspan>
 					<tr>
 						<form class="export" action="rep_export.php" method="post">
-							<th class="title" colspan="2">Aggregated Incomes Report for <?PHP echo $rep_month.'/'.$rep_year; ?>
+							<th class="title" colspan="2">Summarised Incomes Report for <?PHP echo $rep_month.'/'.$rep_year; ?>
 								<!-- Export Button -->					
 								<input type="submit" name="export_rep" value="Export" />
 							</th>

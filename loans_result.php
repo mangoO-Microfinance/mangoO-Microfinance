@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	
@@ -69,7 +69,7 @@
 					//Alternating row colors
 					tr_colored($color);
 					echo '<td><a href="loan.php?lid='.$row_loansearch['loan_id'].'">'.$row_loansearch['loan_no'].'</a></td>
-								<td>'.$row_loansearch['cust_name'].' (<a href="customer.php?cust='.$row_loansearch['cust_id'].'">'.$row_loansearch['cust_id'].'/'.date("Y",$row_loansearch['cust_since']).'</a>)</td>
+								<td>'.$row_loansearch['cust_name'].' (<a href="customer.php?cust='.$row_loansearch['cust_id'].'">'.$row_loansearch['cust_no'].'</a>)</td>
 								<td>'.$row_loansearch['loanstatus_status'].'</td>
 								<td>'.$row_loansearch['loan_period'].'</td>
 								<td>'.number_format($row_loansearch['loan_principal']).' '.$_SESSION['set_cur'].'</td>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 		
@@ -69,14 +69,14 @@
 				while($row_loanpend = mysql_fetch_assoc($query_loanpend)){
 					tr_colored($color);
 					echo '	<td><a href="loan.php?lid='.$row_loanpend['loan_id'].'">'.$row_loanpend['loan_no'].'</a></td>
-									<td>'.$row_loanpend['cust_name'].' ('.$row_loanpend['cust_id'].'/'.date("Y",$row_loanpend['cust_since']).')</td>
+									<td>'.$row_loanpend['cust_name'].' ('.$row_loanpend['cust_no'].')</td>
 									<td>'.$row_loanpend['loanstatus_status'].'</td>
 									<td>'.$row_loanpend['loan_period'].'</td>
 									<td>'.number_format($row_loanpend['loan_principal']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.number_format(($row_loanpend['loan_repaytotal'] - $row_loanpend['loan_principal'])).' '.$_SESSION['set_cur'].'</td>
 									<td>'.date("d.m.Y",$row_loanpend['loan_date']).'</td>
 								</tr>';
-					array_push($_SESSION['rep_export'], array("Loan No." => $row_loanpend['loan_no'], "Customer" => $row_loanpend['cust_name'].' ('.$row_loanpend['cust_id'].'/'.date("Y",$row_loanpend['cust_since']).')', "Status" => $row_loanpend['loanstatus_status'], "Loan Period" => $row_loanpend['loan_period'], "Principal" => $row_loanpend['loan_principal'], "Interest" => ($row_loanpend['loan_repaytotal'] - $row_loanpend['loan_principal']), "Repay Total" => $row_loanpend['loan_repaytotal'], "Applied for on" => date("d.m.Y",$row_loanpend['loan_date'])));
+					array_push($_SESSION['rep_export'], array("Loan No." => $row_loanpend['loan_no'], "Customer" => $row_loanpend['cust_name'].' ('.$row_loanpend['cust_no'].')', "Status" => $row_loanpend['loanstatus_status'], "Loan Period" => $row_loanpend['loan_period'], "Principal" => $row_loanpend['loan_principal'], "Interest" => ($row_loanpend['loan_repaytotal'] - $row_loanpend['loan_principal']), "Repay Total" => $row_loanpend['loan_repaytotal'], "Applied for on" => date("d.m.Y",$row_loanpend['loan_date'])));
 				}
 				?>
 			</table>

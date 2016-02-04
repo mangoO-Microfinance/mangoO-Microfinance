@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	$timestamp = time();
@@ -34,7 +34,7 @@
 	check_sql ($query_inctype);
 	
 	//Select Customers from CUSTOMER
-	$sql_custfrom = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_active = 1";
+	$sql_custfrom = "SELECT * FROM customer WHERE cust_active = 1";
 	$query_custfrom = mysql_query($sql_custfrom);
 	check_sql($query_custfrom);
 	$custfrom = array();
@@ -110,7 +110,7 @@
 								<option value="0" selected="selected">None</option>
 								<?PHP
 								foreach ($custfrom as $cf){
-									echo '<option value="'.$cf['cust_id'].'">'.$cf['cust_id'].' '.$cf['cust_name'].'</option>';
+									echo '<option value="'.$cf['cust_id'].'">'.$cf['cust_no'].' '.$cf['cust_name'].'</option>';
 								}
 								?>
 							</select>
@@ -154,7 +154,7 @@
 				echo '	<td>'.date("d.m.Y",$row_inccur['inc_date']).'</a></td>
 								<td>'.$row_inccur['inctype_type'].'</td>
 								<td>'.number_format($row_inccur['inc_amount']).' '.$_SESSION['set_cur'].'</td>
-								<td>'.$row_inccur['cust_name'].' ('.$row_inccur['cust_id'].')</td>
+								<td>'.$row_inccur['cust_name'].' ('.$row_inccur['cust_no'].')</td>
 								<td>'.$row_inccur['inc_receipt'].'</td>
 								<td>'.$row_inccur['inc_text'].'</td>
 								<td>';

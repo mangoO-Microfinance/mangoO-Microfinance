@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	$timestamp = time();
@@ -17,15 +17,15 @@
 		$exp_receipt = sanitize($_POST['exp_receipt']);
 		$exp_voucher = sanitize($_POST['exp_voucher']);
 		
-		//Insert into EXPENDITURES
-		$sql_expnew = "INSERT INTO expenditures (exptype_id, exp_amount, exp_date, exp_text, exp_recipient, exp_receipt, exp_voucher, exp_created, user_id) VALUES ('$exptype_id', '$exp_amount', '$exp_date','$exp_text', '$exp_recipient', '$exp_receipt', '$exp_voucher', '$timestamp', '$_SESSION[log_id]')";
+		//Insert into expenses
+		$sql_expnew = "INSERT INTO expenses (exptype_id, exp_amount, exp_date, exp_text, exp_recipient, exp_receipt, exp_voucher, exp_created, user_id) VALUES ('$exptype_id', '$exp_amount', '$exp_date','$exp_text', '$exp_recipient', '$exp_receipt', '$exp_voucher', '$timestamp', '$_SESSION[log_id]')";
 		$query_expnew = mysql_query($sql_expnew);
 		check_sql($query_expnew);
 	}
 			
-	//Select current expenditures from EXPENDITURES
+	//Select current expenses from expenses
 	$sixtydays = time() - 5184000;
-	$sql_expcur = "SELECT * FROM expenditures, exptype WHERE expenditures.exptype_id = exptype.exptype_id AND exp_date > $sixtydays ORDER BY exp_date DESC, exp_voucher DESC";
+	$sql_expcur = "SELECT * FROM expenses, exptype WHERE expenses.exptype_id = exptype.exptype_id AND exp_date > $sixtydays ORDER BY exp_date DESC, exp_voucher DESC";
 	$query_expcur = mysql_query($sql_expcur);
 	check_sql($query_expcur);
 	

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();	
 	connect();
 	check_custid();
@@ -118,7 +118,7 @@
 		<!-- Left Side: Input for Share Addition -->
 		<div class="content_left">
 			
-			<p class="heading">Add Shares for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_id'].'/'.date("Y",$result_cust['cust_since']).')' ?></p>
+			<p class="heading">Add Shares for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
 		
 			<form action="acc_share.php" method="post" onSubmit="return validate(this)">
 				

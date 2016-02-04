@@ -1,14 +1,17 @@
 <!DOCTYPE HTML>
 <?PHP	
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
+	
+	//Generate timestamp
 	$timestamp = time();
 	
 	//CREATE-Button
 	if (isset($_POST['create'])){
 				
 		//Sanitize user input
+		$cust_no = sanitize($_POST['cust_no']);
 		$cust_name = sanitize($_POST['cust_name']);
 		$cust_dob = strtotime(sanitize($_POST['cust_dob']));
 		$cust_sex = sanitize($_POST['cust_sex']);
@@ -16,15 +19,15 @@
 		$cust_phone = sanitize($_POST['cust_phone']);
 		$cust_email = sanitize($_POST['cust_email']);
 		$cust_occup = sanitize($_POST['cust_occup']);
-		$cust_married_id = sanitize($_POST['cust_married_id']);
+		$custmarried_id = sanitize($_POST['custmarried_id']);
 		$cust_heir = sanitize($_POST['cust_heir']);
 		$cust_heirrel = sanitize($_POST['cust_heirrel']);
-		$cust_sick = sanitize($_POST['cust_sick']);
+		$custsick_id = sanitize($_POST['custsick_id']);
 		$cust_since = strtotime(sanitize($_POST['cust_since']));
 		$_SESSION['receipt_no'] = sanitize($_POST['receipt_no']);
 		
 		//Insert new Customer into CUSTOMER
-		$sql_insert = "INSERT INTO customer (cust_name, cust_dob, cust_sex, cust_address, cust_phone, cust_email, cust_occup, cust_married_id, cust_heir, cust_heirrel, cust_since, cust_sick, cust_lastsub, cust_active, cust_lastupd, user_id) VALUES ('$cust_name', '$cust_dob', '$cust_sex', '$cust_address', '$cust_phone', '$cust_email', '$cust_occup', '$cust_married_id', '$cust_heir', '$cust_heirrel', '$cust_since', '$cust_sick', '$cust_since', '1', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO customer (cust_no, cust_name, cust_dob, cust_sex, cust_address, cust_phone, cust_email, cust_occup, custmarried_id, cust_heir, cust_heirrel, cust_since, custsick_id, cust_lastsub, cust_active, cust_lastupd, user_id) VALUES ('$cust_no', '$cust_name', '$cust_dob', '$cust_sex', '$cust_address', '$cust_phone', '$cust_email', '$cust_occup', '$custmarried_id', '$cust_heir', '$cust_heirrel', '$cust_since', '$custsick_id', '$cust_since', '1', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		check_sql($query_insert);
 		
@@ -50,16 +53,21 @@
 	}
 	
 	//Select Marital Status for Drop-down-Menu
-	$sql_mstat = "SELECT * FROM cust_married";
+	$sql_mstat = "SELECT * FROM custmarried";
 	$query_mstat = mysql_query($sql_mstat);
-
+	check_sql($query_mstat);
+	
+	//Select Sicknesses for Drop-down-Menu
+	$sql_sick = "SELECT * FROM custsick";
+	$query_sick = mysql_query($sql_sick);
+	check_sql($query_sick);
+	
 	//Determine new CUST_ID
 	$sql_maxid = "SELECT MAX(cust_id) AS maxid FROM customer";
 	$query_maxid = mysql_query($sql_maxid);
 	check_sql($query_maxid);
 	$result_maxid = mysql_fetch_array($query_maxid);
-	$new_id = $result_maxid['maxid'];
-	$new_id++;
+	$new_id = $result_maxid['maxid'] + 1;
 ?>
 
 <html>
@@ -92,7 +100,7 @@
 		</div>
 		
 		<!-- PAGE HEADING -->
-		<p class="heading">New Customer (<?PHP echo $new_id.'/'.date("Y",time())?>)</p> 
+		<p class="heading">New Customer (<?PHP echo $new_id; ?>)</p> 
 		
 		<!-- CONTENT -->
 		<div class="content_center">
@@ -101,17 +109,20 @@
 				<table id ="tb_fields">
 					<tr>
 						<td>Name:</td>
-						<td><input type="text" name="cust_name" placeholder="Full Name" tabindex="1" /></td>
+						<td>
+							<input type="hidden" name="cust_no" value="<?PHP echo $new_id; ?>" />
+							<input type="text" name="cust_name" placeholder="Full Name" tabindex="1" />
+						</td>
 						<td>Residence:</td>
 						<td><input type="text" name="cust_address" placeholder="Place of Residence" tabindex="6" /></td>
 						<td>Sickness:</td>
 						<td>
-							<select name="cust_sick" class="defaultfield" size="1" tabindex="11">
-								<option value="0" selected="selected">None</option>
-								<option value="1">Heart Attack</option>
-								<option value="2">Stroke</option>
-								<option value="3">Cancer</option>
-								<option value="4">HIV/AIDS</option>
+							<select name="custsick_id" size="1" tabindex="11">
+								<?PHP
+								while ($row_sick = mysql_fetch_assoc($query_sick)){
+									echo '<option value="'.$row_sick['custsick_id'].'">'.$row_sick['custsick_name'].'</option>';
+								}
+								?>
 							</select>
 						</td>
 					</tr>
@@ -138,10 +149,10 @@
 					<tr>
 						<td>Marital Status:</td>			
 						<td>
-							<select name="cust_married_id" class="defaultfield" size="1" tabindex="4">';
+							<select name="custmarried_id" size="1" tabindex="4">';
 								<?PHP
 								while ($row_mstat = mysql_fetch_assoc($query_mstat)){
-									echo '<option value="'.$row_mstat['cust_married_id'].'">'.$row_mstat['cust_married_status'].'</option>';
+									echo '<option value="'.$row_mstat['custmarried_id'].'">'.$row_mstat['custmarried_status'].'</option>';
 								}
 								?>
 							</select>

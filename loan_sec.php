@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	if(!isset($_SESSION['loan_no'])) header ('Location: customer.php?cust='.$_SESSION['cust_id']);

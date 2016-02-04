@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	check_report();
 	connect();
@@ -12,22 +12,16 @@
 <html>
 	<?PHP include_Head('Loans Report',1) ?>	
 	<body>
-		
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(5);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(5); ?>
 		<div id="menu_main">
 			<a href="rep_incomes.php">Income Report</a>
-			<a href="rep_expenditures.php">Expense Report</a>
+			<a href="rep_expenses.php">Expense Report</a>
 			<a href="rep_loans.php" id="item_selected">Loans Report</a>
 			<a href="rep_capital.php">Capital Report</a>
 			<a href="rep_monthly.php">Monthly Report</a>
 			<a href="rep_annual.php">Annual Report</a>
 		</div>
-		
 		<!-- MENU: Selection Bar -->
 		<div id="menu_selection">			
 			<form action="rep_loans.php" method="post">
@@ -195,7 +189,7 @@
 				while($row_loanout = mysql_fetch_assoc($query_loanout)){
 					tr_colored($color);
 					echo '	<td><a href="loan.php?lid='.$row_loanout['loan_id'].'">'.$row_loanout['loan_no'].'</a></td>
-									<td>'.$row_loanout['cust_name'].' ('.$row_loanout['cust_id'].'/'.date("Y",$row_loanout['cust_since']).')</td>
+									<td>'.$row_loanout['cust_name'].' ('.$row_loanout['cust_no'].')</td>
 									<td>'.number_format($row_loanout['loan_principal']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.$row_loanout['loan_interest'].'%</td>
 									<td>'.$row_loanout['loan_period'].'</td>

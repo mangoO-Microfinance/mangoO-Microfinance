@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	check_custid();
@@ -158,7 +158,7 @@
 		</div>
 			
 		<div class="content_center">
-			<p class="heading">New Loan Application for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_id'].')'?></p>
+			<p class="heading">New Loan Application for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
 			<form action="loan_new.php" method="post" onSubmit="return validate(this)">
 				<table id ="tb_fields" style="width:85%;">
 					<colgroup>

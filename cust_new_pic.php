@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	
@@ -22,7 +22,7 @@
 		$valid_exts = array('jpeg', 'jpg', 'png', 'tif', 'tiff');
 		
 		// Thumbnail Sizes
-		$sizes = array(100 => 130, 200 => 260, 300 => 390);
+		$sizes = array(100 => 130, 146 => 190, 230 => 300);
 
 		//Check for maximum file size
 		if( $_FILES['image']['size'] < $max_file_size ){			
@@ -67,7 +67,7 @@
 			<p class="heading">Upload Photo for Customer <?PHP echo $_SESSION['cust_id']?></p>
 			
 			<?php if(isset($error_msg)): ?>
-			<p class="alert"><?php echo $error_msg ?></p>
+			<p class="alert"><?php echo $error_msg; ?></p>
 			<?php endif ?>
 			
 			<!-- File uploading form -->
@@ -78,7 +78,7 @@
 				</label>
 				<br/><br/>
 				<input type="submit" name="upload" value="Upload" />
-				<input type="submit" name="skip" value="Cancel" />
+				<input type="submit" name="skip" value="Skip" />
 			</form>
 		</div>
 	</body>

@@ -2,7 +2,7 @@
 <?PHP
 	$fingerprint = md5($_SERVER['REMOTE_ADDR'].'dh(6Km4$X*'.$_SERVER['HTTP_USER_AGENT']);
 	session_start();
-	include 'functions.php';
+	require 'functions.php';
 	
 	connect();
 	

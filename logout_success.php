@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-include 'functions.php';
+require 'functions.php';
 header ('refresh:7; url=index.php');
 ?>
 

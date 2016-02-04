@@ -309,7 +309,7 @@
 	
 	//Select current customer's details
 	function get_customer(){
-		$sql_cust = "SELECT * FROM customer WHERE cust_id = '$_SESSION[cust_id]'";
+		$sql_cust = "SELECT * FROM customer, custsick, custmarried, custsex, user WHERE customer.custsick_id = custsick.custsick_id AND customer.custmarried_id = custmarried.custmarried_id AND custsex.custsex_id = customer.custsex_id AND cust_id = $_SESSION[cust_id] AND customer.user_id = user.user_id";
 		$query_cust = mysql_query($sql_cust);
 		check_sql($query_cust);
 		$result_cust = mysql_fetch_assoc($query_cust);
@@ -319,7 +319,7 @@
 	
 	//Select active customers
 	function get_custact(){
-		$sql_custact = "SELECT * FROM customer WHERE cust_active = 1";
+		$sql_custact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active = 1";
 		$query_custact = mysql_query($sql_custact);
 		check_sql($query_custact);
 		
@@ -328,10 +328,19 @@
 	
 	//Select all customers except current one
 	function get_custother(){
-		$sql_custother = "SELECT * FROM customer WHERE cust_id NOT IN (0, $_SESSION[cust_id])";
+		$sql_custother = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_id NOT IN (0, $_SESSION[cust_id])";
 		$query_custother = mysql_query($sql_custother);
 		check_sql($query_custother);
 		
 		return $query_custother;
+	}
+	
+	//Select inactive customers
+	function get_custinact(){
+		$sql_custinact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active != 1";
+		$query_custinact = mysql_query($sql_custinact);
+		check_sql($query_custinact);
+		
+		return $query_custinact;
 	}
 ?>

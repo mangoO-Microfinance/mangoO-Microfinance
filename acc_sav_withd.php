@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	check_custid();
@@ -90,7 +90,7 @@
 		
 		<!-- LEFT SIDE: Input for new Withdrawal -->
 		<div class="content_left">
-			<p class="heading_narrow">Withdrawal for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_id'].'/'.date("Y",$result_cust['cust_since']).')' ?> </p>
+			<p class="heading_narrow">Withdrawal for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?> </p>
 				
 			<form action="acc_sav_withd.php" method="post" onsubmit="return validate(this);">
 				<table id="tb_fields">

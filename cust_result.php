@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?PHP
-	include 'functions.php';
+	require 'functions.php';
 	check_logon();
 	connect();
 	
@@ -27,7 +27,7 @@
 			$where = $where."cust_occup LIKE '%$cust_search_occup%'";
 			$title = $title.' working as "'.ucwords($cust_search_occup).'"';
 		}
-		$sql_custsearch = "SELECT * FROM customer WHERE $where";
+		$sql_custsearch = "SELECT * FROM customer, custsex WHERE $where AND customer.custsex_id = custsex.custsex_id ORDER BY customer.cust_id";
 		$query_custsearch = mysql_query($sql_custsearch);
 		check_sql ($query_custsearch);
 		
@@ -91,29 +91,17 @@
 				while ($row_custsearch = mysql_fetch_assoc($query_custsearch)){					
 					//Alternating row colors
 					tr_colored($color);
-					echo '<td><a href="customer.php?cust='.$row_custsearch['cust_id'].'">'.$row_custsearch['cust_id'].'/'.date("Y",$row_custsearch['cust_since']).'</a></td>
+					echo '<td><a href="customer.php?cust='.$row_custsearch['cust_id'].'">'.$row_custsearch['cust_no'].'</a></td>
 								<td>'.$row_custsearch['cust_name'].'</td>
-								<td>'.date("d.m.Y",$row_custsearch['cust_dob']).'</td>';
-					if ($row_custsearch['cust_sex'] == 1){
-						echo '<td>Male</td>';
-						$cust_sex = 'Male';
-					}
-					elseif ($row_custsearch['cust_sex'] == 2){
-						echo '<td>Female</td>';
-						$cust_sex = 'Female';
-					}
-					elseif ($row_custsearch['cust_sex'] == 3){
-						echo '<td>Institution</td>';
-						$cust_sex = 'Institution';
-					}
-					else echo '<td></td>';
-					echo '<td>'.$row_custsearch['cust_occup'].'</td>
+								<td>'.date("d.m.Y",$row_custsearch['cust_dob']).'</td>
+								<td>'.$row_custsearch['custsex_name'].'</td>
+								<td>'.$row_custsearch['cust_occup'].'</td>
 								<td>'.$row_custsearch['cust_address'].'</td>
 								<td>'.$row_custsearch['cust_phone'].'</td>
 							</tr>';
 					
 					//Prepare data for export to Excel file
-					array_push($_SESSION['cust_export'], array("Cust No." => $row_custsearch['cust_id'], "Name" => $row_custsearch['cust_name'], "DoB" => date("d.m.Y", $row_custsearch['cust_dob']), "Gender" => $cust_sex, "Occupation" => $row_custsearch['cust_occup'], "Address" => $row_custsearch['cust_address'], "Phone No." => $row_custsearch['cust_phone']));
+					array_push($_SESSION['cust_export'], array("Cust No." => $row_custsearch['cust_no'], "Name" => $row_custsearch['cust_name'], "DoB" => date("d.m.Y", $row_custsearch['cust_dob']), "Gender" => $row_custsearch['custsex_name'], "Occupation" => $row_custsearch['cust_occup'], "Address" => $row_custsearch['cust_address'], "Phone No." => $row_custsearch['cust_phone']));
 				}
 				?>
 			</table>
