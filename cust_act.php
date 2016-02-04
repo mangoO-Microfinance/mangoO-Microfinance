@@ -3,11 +3,10 @@
 	require 'functions.php';
 	check_logon();
 	connect();
-	
+			
+	//Make array for exporting data
 	$rep_year = date("Y",time());
 	$rep_month = date("m",time());
-		
-	//Make array for exporting data
 	$_SESSION['rep_export'] = array();
 	$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_cust-active';
 	
@@ -20,11 +19,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<a href="cust_new.php">New Customer</a>
