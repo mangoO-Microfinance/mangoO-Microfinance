@@ -217,7 +217,7 @@
 					}
 					
 					loan_fee_receipt = prompt('Please enter Receipt No. for Loan Fee:')
-					if (loan_fee_receipt == "") { 
+					if (loan_fee_receipt == "" || loan_fee_receipt == null) { 
 						alert("You have not specified the Receipt No. The Loan's Status remains unchanged."); 
 						return false;
 					}

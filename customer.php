@@ -113,11 +113,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<?PHP

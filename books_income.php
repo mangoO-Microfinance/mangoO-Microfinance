@@ -107,7 +107,7 @@
 						<td>Received from:</td>
 						<td>
 							<select name="cust_id">
-								<option value="0" selected="selected">None</option>
+								<option value="0" selected="selected">N/A</option>
 								<?PHP
 								foreach ($custfrom as $cf){
 									echo '<option value="'.$cf['cust_id'].'">'.$cf['cust_no'].' '.$cf['cust_name'].'</option>';
