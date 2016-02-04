@@ -2,7 +2,7 @@
 
 //Calculating grace period before deactivation in months (seconds for 30.5 days)
 $timestamp = time();
-$graceperiod = 31536000 + ($_SESSION['set_deact'] * 2635200);
+$graceperiod = 31536000 + months($_SESSION['set_deact']);
 
 //Set customer to "inactive" after grace period for subscription payment expired
 if ($row_subscrdef['cust_lastsub'] < ($timestamp - $graceperiod) && $row_subscrdef['cust_active'] == 1){

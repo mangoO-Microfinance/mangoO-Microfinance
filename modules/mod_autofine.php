@@ -8,10 +8,10 @@ $loandefault_sav = ($result_fees['fee_value']) * (-1);
 $loandefault_inc = $result_fees['fee_value'];
 
 //Calculate grace period in days
-$graceperiod = $_SESSION['set_auf'] * 86400;
+$graceperiod = days($_SESSION['set_auf']);
 $timestamp = time();
 
-//Automatically charge Loan Default Fine if Customer has defaulted for more than 30 days										
+//Automatically charge Loan Default Fine if Customer has defaulted payment beyond graceperiod										
 if($row_overd['ltrans_due'] < ($timestamp - $graceperiod) AND $row_overd['ltrans_fined'] != 1){
 	
 	//Withdraw Fine from SAVINGS

@@ -317,30 +317,38 @@
 		return $result_cust;
 	}
 	
-	//Select active customers
-	function get_custact(){
-		$sql_custact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active = 1";
-		$query_custact = mysql_query($sql_custact);
-		check_sql($query_custact);
-		
-		return $query_custact;
-	}
-	
 	//Select all customers except current one
 	function get_custother(){
-		$sql_custother = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_id NOT IN (0, $_SESSION[cust_id])";
+		$sql_custother = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_id NOT IN (0, $_SESSION[cust_id]) ORDER BY cust_id";
 		$query_custother = mysql_query($sql_custother);
 		check_sql($query_custother);
 		
 		return $query_custother;
 	}
 	
+	//Select active customers
+	function get_custact(){
+		$sql_custact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active = 1 ORDER BY cust_id";
+		$query_custact = mysql_query($sql_custact);
+		check_sql($query_custact);
+		
+		return $query_custact;
+	}
+
 	//Select inactive customers
 	function get_custinact(){
-		$sql_custinact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active != 1";
+		$sql_custinact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active != 1 ORDER BY cust_id";
 		$query_custinact = mysql_query($sql_custinact);
 		check_sql($query_custinact);
 		
 		return $query_custinact;
+	}
+	
+	function days($time){
+		return $seconds = $time * 2635200;
+	}
+	
+	function months($time){
+		return $seconds = $time * 2635200;
 	}
 ?>

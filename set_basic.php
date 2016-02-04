@@ -52,10 +52,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(6);
-		?>
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(6); ?>
 		<div id="menu_main">
 			<a href="set_basic.php" id="item_selected">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>
