@@ -249,15 +249,6 @@
 		}
 	}
 	
-	//Get current Share Value from SHAREVAL
-	function get_sharevalue(){
-		$sql_shareval = "SELECT shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
-		$query_shareval = mysql_query($sql_shareval);
-		check_sql($query_shareval);
-		$result_shareval = mysql_fetch_assoc($query_shareval);
-		$_SESSION['share_value'] = $result_shareval['shareval_value'];
-	}
-	
 	//Get Fees from FEES and apply to SESSION variables
 	function get_fees(){
 		$sql_fees = "SELECT * FROM fees";
@@ -293,19 +284,41 @@
 		}
 	}
 	
+	//Get current Share Value from SHAREVAL
+	function get_sharevalue(){
+		$sql_shareval = "SELECT shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
+		$query_shareval = mysql_query($sql_shareval);
+		check_sql($query_shareval);
+		$result_shareval = mysql_fetch_assoc($query_shareval);
+		$_SESSION['share_value'] = $result_shareval['shareval_value'];
+	}
+	
 	//Calculate current customer's savings account balance
 	function get_savbalance(){
 		$sql_savbal = "SELECT sav_amount FROM savings WHERE cust_id = '$_SESSION[cust_id]'";
 		$query_savbal = mysql_query($sql_savbal);
 		check_sql($query_savbal);
-		
 		$sav_balance = 0;
 		while($row_savbal = mysql_fetch_assoc($query_savbal)){
 			$sav_balance = $sav_balance + $row_savbal['sav_amount'];
 		}
-		
 		return $sav_balance;
-	}	
+	}
+	
+	//Calculate current customer's share account balance
+	function get_sharebalance(){
+		$sql_sharebal = "SELECT share_amount, share_value FROM shares WHERE cust_id = '$_SESSION[cust_id]'";
+		$query_sharebal = mysql_query($sql_sharebal);
+		check_sql($query_sharebal);
+		//$share_amount = 0;
+		//$share_value = 0;
+		$share_balance = array("amount" => "0", "value" => "0");
+		while($row_sharebal = mysql_fetch_assoc($query_sharebal)){
+			$share_balance['amount'] = $share_balance['amount'] + $row_sharebal['share_amount'];
+			$share_balance['value'] = $share_balance['value'] + $row_sharebal['share_value'];
+		}
+		return $share_balance;
+	}
 	
 	//Select current customer's details
 	function get_customer(){

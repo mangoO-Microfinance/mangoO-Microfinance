@@ -42,13 +42,8 @@
 <html>
 	<?PHP include_Head('Customer Search Result',1) ?>	
 	<body>
-		
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php" id="item_selected">Search</a>
 			<a href="cust_new.php">New Customer</a>

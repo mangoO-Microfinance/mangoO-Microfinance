@@ -11,8 +11,8 @@
 	//Get current share value
 	get_sharevalue();
 	
-	//ADD SHARE-Button
-	if (isset($_POST['shareadd'])){
+	//BUY SHARE-Button
+	if (isset($_POST['sharebuy'])){
 		
 		//Sanitize user input
 		$share_date = strtotime(sanitize($_POST['share_date']));
@@ -61,25 +61,15 @@
 		header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	//Select SHARES from database
-	$sql_sha = "SELECT * FROM shares, user WHERE shares.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]'";
-	$query_sha = mysql_query($sql_sha);
-	check_sql($query_sha);
-	
-	//Make array for exporting data
-	$share_exp_date = date("Y-m-d",time());
-	$_SESSION['share_export'] = array();
-	$_SESSION['share_exp_title'] = $_SESSION['cust_id'].'_shares_'.$share_exp_date;
-	
 	//Get current customer's details
 	$result_cust = get_customer();
 	
-	//Get all customers
+	//Get all other customers
 	$query_custother = get_custother();
 ?>
 
 <html>
-<?PHP include_Head('Share Addition',0) ?>	
+<?PHP include_Head('Buying Shares',0) ?>	
 	<script>
 		function validate(form){
 			fail = validateDate(form.share_date.value)
@@ -98,17 +88,14 @@
 	
 <body>
 	<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
 			<a href="cust_search.php">Search</a>
 			<a href="acc_sav_depos.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Deposit</a>
 			<a href="acc_sav_withd.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Withdrawal</a>
-			<a href="acc_share.php?cust=<?PHP echo $_SESSION['cust_id'] ?>" id="item_selected">Add Shares</a>
+			<a href="acc_share_buy.php?cust=<?PHP echo $_SESSION['cust_id'] ?>" id="item_selected">Share Buy</a>
+			<a href="acc_share_sale.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Share Sale</a>
 			<a href="loan_new.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">New Loan</a>
 			<a href="cust_new.php">New Customer</a>
 			<a href="cust_act.php">Active Cust.</a>
@@ -118,9 +105,9 @@
 		<!-- Left Side: Input for Share Addition -->
 		<div class="content_left">
 			
-			<p class="heading">Add Shares for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
+			<p class="heading_narrow">Share Buy for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
 		
-			<form action="acc_share.php" method="post" onSubmit="return validate(this)">
+			<form action="acc_share_buy.php" method="post" onSubmit="return validate(this)">
 				
 				<table id="tb_fields">
 					<tr>
@@ -132,13 +119,13 @@
 					<tr>
 						<td>Receipt No:</td>
 						<td>
-							<input type="number" name="share_receipt" class="defaultnumber" <?PHP if(isset($_GET['rec'])) echo 'value="'.$_GET['rec'].'"' ?> />
+							<input type="number" name="share_receipt" <?PHP if(isset($_GET['rec'])) echo 'value="'.$_GET['rec'].'"' ?> />
 						</td>
 					</tr>
 					<tr>
 						<td>Number of Shares:</td>
 						<td>
-							<select name="share_amount" class="defaultfield">
+							<select name="share_amount">
 								<?PHP
 								for ($i = 1; $i <= 10; $i++) {
 									echo '<option value="'.$i.'">'.$i.' @ '.number_format($_SESSION['share_value'] * $i).' '.$_SESSION['set_cur'].'</option>';
@@ -149,7 +136,7 @@
 					</tr>
 					<tr>
 						<td class="center" colspan="2">
-							<input type="submit" name="shareadd" value="Add Shares" />
+							<input type="submit" name="sharebuy" value="Buy Shares" />
 							<input type="button" name="sh_transfer" value="Transfer" onclick="setVisibility('content_hidden', 'block');" />
 						</td>
 					</tr>
@@ -158,13 +145,15 @@
 			
 			<!-- HIDDEN SECTION: Transfer Shares from other Customer -->
 			<div id="content_hidden">
-				<form name="share_transfer" action="acc_share.php" method="post">
+				<form name="share_transfer" action="acc_share_buy.php" method="post">
 					<p>Transfer all Shares from</p>
 					<br/>
 					<select name="shtrans_cust">
 						<?PHP
-						while ($row_custall = mysql_fetch_assoc($query_custother)){
-							echo '<option value="'.$row_custall['cust_id'].'">'.$row_custall['cust_id'].' '.$row_custall['cust_name'].'</option>';
+						while ($row_custother = mysql_fetch_assoc($query_custother)){
+							echo '<option value="'.$row_custother['cust_id'].'">'.
+											$row_custother['cust_id'].' '.$row_custother['cust_name'].
+										'</option>';
 						}
 						?>
 					</select>
@@ -178,61 +167,7 @@
 		
 		<!-- RIGHT SIDE: Share Account Details -->			
 		<div class="content_right">
-			
-			<table id="tb_table">
-				<colgroup>
-					<col width="15%">
-					<col width="20%">
-					<col width="20%">
-					<col width="20%">
-					<col width="20%">
-					<col width="5%">
-				</colgroup>
-				<tr>								
-					<form class="export" action="acc_share_export.php" method="post">
-						<th class="title" colspan="6">Share Account
-						<!-- Export Button -->
-						<input type="submit" name="export_rep" value="Export" />
-						</th>
-					</form>
-				</tr>
-				<tr>
-					<th>Date</th>
-					<th>Amount of Shares</th>
-					<th>Value of Shares</th>
-					<th>Receipt No.</th>
-					<th>Authorized by</th>
-					<th>Delete</th>
-				</tr>
-				<?PHP
-				$amount_balance = 0;
-				$value_balance = 0;
-				$color = 0;
-				while($row_sha = mysql_fetch_assoc($query_sha)){
-					tr_colored($color);
-					echo '<td>'.date("d.m.Y",$row_sha['share_date']).'</td>
-								<td>'.$row_sha['share_amount'].'</td>
-								<td>'.number_format($row_sha['share_value']).' '.$_SESSION['set_cur'].'</td>
-								<td>'.$row_sha['share_receipt'].'</td>
-								<td>'.$row_sha['user_name'].'</td>
-								<td>';
-								if($_SESSION['log_delete'] == 1) echo '<a href="acc_share_del.php?sha_id='.$row_sha['share_id'].'" onClick="return randCheck()"><img src="ico/delete.png" /></a>';
-					echo '</td>
-							</tr>';
-					$amount_balance = $amount_balance + $row_sha['share_amount'];
-					$value_balance = $value_balance + $row_sha['share_value'];
-					
-					//Prepare data for export to Excel file
-					array_push($_SESSION['share_export'], array("Date" => date("d.m.Y",$row_sha['share_date']), "Amount of Shares" => $row_sha['share_amount'], "Share Value" => $row_sha['share_value'], "Receipt" => $row_sha['share_receipt']));
-				}
-				echo '<tr class="balance">
-								<td>Balance:</td>
-								<td>'.$amount_balance.'</td>
-								<td>'.number_format($value_balance).' '.$_SESSION['set_cur'].'</td>
-								<td colspan="3"></td>
-							</tr>';
-				?>
-			</table>
+			<?PHP include 'acc_share_list.php'; ?>
 		</div>
 	</body>
 </html>

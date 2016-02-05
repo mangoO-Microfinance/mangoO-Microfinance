@@ -76,13 +76,19 @@
 			
 			/**** CAPITAL RELATED DATA ****/
 			
-			//Select newly bought Shares from SHARES
+			//Select bought and sold Shares from SHARES
 			$sql_shares = "SELECT * FROM shares WHERE share_date BETWEEN $firstDay AND $lastDay";
 			$query_shares = mysql_query($sql_shares);
 			check_sql ($query_shares);
-			$total_shares = 0;
+			$total_share_buys = 0;
+			$total_share_sales = 0;
 			while($row_shares = mysql_fetch_assoc($query_shares)){
-				$total_shares = $total_shares + ($row_shares['share_amount']*$row_shares['share_value']);
+				if($row_shares['share_amount'] >= 0){
+					$total_share_buys = $total_share_buys + $row_shares['share_value'];
+				}
+				elseif($row_shares['share_amount'] < 0){
+					$total_share_sales = $total_share_sales + $row_shares['share_value'] * (-1);
+				}
 			}
 			
 			//Select Saving Deposits from SAVINGS
@@ -198,8 +204,8 @@
 				?>
 			</table>
 			
-			<!-- expenses: Table 1 -->
-			<?PHP array_push($_SESSION['rep_export'], array("Type" => "expenses", "Amount" => "")); ?>
+			<!-- Expenses: Table 1 -->
+			<?PHP array_push($_SESSION['rep_export'], array("Type" => "EXPENSES", "Amount" => "")); ?>
 			<table id="tb_table" style="width:50%">
 				<colspan>
 					<col width="50%">
@@ -390,8 +396,8 @@
 					<th>Amount</th>
 				</tr>
 				<tr>
-					<td>Shares</td>
-					<td><?PHP echo number_format($total_shares).' '.$_SESSION['set_cur'] ?></td>
+					<td>Shares Out</td>
+					<td><?PHP echo number_format($total_share_buys).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 				<tr class="alt">
 					<td>Saving Deposits</td>
@@ -403,7 +409,7 @@
 				</tr>
 				<tr class="balance">
 					<td>Total Capital Additions:</td>
-					<td><?PHP echo number_format($total_shares + $total_savdep + $total_loanrec).' '.$_SESSION['set_cur'] ?></td>
+					<td><?PHP echo number_format($total_share_buys + $total_savdep + $total_loanrec).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
 			</table>
 			
@@ -421,10 +427,14 @@
 					<th>Amount</th>
 				</tr>
 				<tr>
+					<td>Shares In</td>
+					<td><?PHP echo number_format($total_share_sales).' '.$_SESSION['set_cur'] ?></td>
+				</tr>
+				<tr class="alt">
 					<td>Loans Out</td>
 					<td><?PHP echo number_format($total_loanout).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
-				<tr class="alt">
+				<tr>
 					<td>Saving Withdrawals</td>
 					<td><?PHP echo number_format($total_savwithd).' '.$_SESSION['set_cur'] ?></td>
 				</tr>
@@ -436,17 +446,18 @@
 				<?PHP
 				//Prepare CAPITAL data for export to Excel file
 				array_push($_SESSION['rep_export'], array("Type" => "CAPITAL ADDITIONS", "Amount" => ""));
-				array_push($_SESSION['rep_export'], array("Type" => "Shares", "Amount" => $total_shares));
+				array_push($_SESSION['rep_export'], array("Type" => "Shares Out", "Amount" => $total_share_buys));
 				array_push($_SESSION['rep_export'], array("Type" => "Saving Deposits", "Amount" => $total_savdep));
 				array_push($_SESSION['rep_export'], array("Type" => "Loan Recoveries", "Amount" => $total_loanrec));
-				array_push($_SESSION['rep_export'], array("Type" => "Total Additions", "Amount" => $total_loanrec+$total_savdep+$total_shares));
+				array_push($_SESSION['rep_export'], array("Type" => "Total Additions", "Amount" => $total_loanrec+$total_savdep+$total_share_buys));
 				
 				array_push($_SESSION['rep_export'], array("Type" => "", "Amount" => ""));
 				
 				array_push($_SESSION['rep_export'], array("Type" => "CAPITAL DEDUCTIONS", "Amount" => ""));
+				array_push($_SESSION['rep_export'], array("Type" => "Shares In", "Amount" => $total_share_sales));
 				array_push($_SESSION['rep_export'], array("Type" => "Saving Withdrawals", "Amount" => $total_savwithd));
 				array_push($_SESSION['rep_export'], array("Type" => "Loans Out", "Amount" => $total_loanout));				
-				array_push($_SESSION['rep_export'], array("Type" => "Total Deductions", "Amount" => $total_loanout+$total_savwithd));
+				array_push($_SESSION['rep_export'], array("Type" => "Total Deductions", "Amount" => $total_loanout+$total_savwithd+$total_share_sales));
 				?>
 			</table>
 			

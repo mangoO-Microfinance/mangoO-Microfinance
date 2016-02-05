@@ -11,7 +11,7 @@
 	
 	//SKIP-Button
 	if (isset($_POST['skip'])){
-		if ($from == "new") header('Location: acc_share.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
+		if ($from == "new") header('Location: acc_share_buy.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
 		else header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 	
@@ -38,7 +38,7 @@
 				$query_picpath = mysql_query($sql_picpath);
 				check_sql($query_picpath);
 				
-				if ($from == "new")	header('Location: acc_share.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
+				if ($from == "new")	header('Location: acc_share_buy.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
 				else header('Location:customer.php?cust='.$_SESSION['cust_id']);
 			}
 			else $error_msg = 'Unsupported file';

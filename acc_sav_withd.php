@@ -81,7 +81,8 @@
 			<a href="cust_search.php">Search</a>
 			<a href="acc_sav_depos.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Deposit</a>
 			<a href="acc_sav_withd.php?cust=<?PHP echo $_SESSION['cust_id'] ?>" id="item_selected">Withdrawal</a>
-			<a href="acc_share.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Add Shares</a>
+			<a href="acc_share_buy.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Share Buy</a>
+			<a href="acc_share_sale.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Share Sale</a>
 			<a href="loan_new.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">New Loan</a>
 			<a href="cust_new.php">New Customer</a>
 			<a href="cust_act.php">Active Cust.</a>

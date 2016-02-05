@@ -31,7 +31,7 @@
 		$timestamp = time();
 		
 		//Update CUSTOMER
-		$sql_update = "UPDATE customer SET cust_no = '$cust_no', cust_name = '$cust_name', cust_dob = $cust_dob, custsex_id = $custsex_id, cust_address = '$cust_address', cust_phone = '$cust_phone', cust_email = '$cust_email', cust_occup = '$cust_occup', custmarried_id = $custmarried_id, cust_heir = '$cust_heir', cust_heirrel = '$cust_heirrel', custsick_id = $custsick_id, cust_active = $cust_active, cust_lastupd = $timestamp, user_id = $_SESSION[log_id] WHERE cust_id = $_SESSION[cust_id]";
+		$sql_update = "UPDATE customer SET cust_no = '$cust_no', cust_name = '$cust_name', cust_dob = $cust_dob, custsex_id = $custsex_id, cust_address = '$cust_address', cust_phone = '$cust_phone', cust_email = '$cust_email', cust_occup = '$cust_occup', custmarried_id = $custmarried_id, cust_heir = '$cust_heir', cust_heirrel = '$cust_heirrel', custsick_id = $custsick_id, cust_active = '$cust_active', cust_lastupd = $timestamp, user_id = $_SESSION[log_id] WHERE cust_id = $_SESSION[cust_id]";
 		$query_update = mysql_query($sql_update);
 		check_sql($query_update);
 		header('Location: customer.php?cust='.$_SESSION['cust_id']);
@@ -120,7 +120,8 @@
 			if ($result_cust['cust_active'] == 1) echo '
 				<a href="acc_sav_depos.php?cust='.$_SESSION['cust_id'].'">Deposit</a>
 				<a href="acc_sav_withd.php?cust='.$_SESSION['cust_id'].'">Withdrawal</a>
-				<a href="acc_share.php?cust='.$_SESSION['cust_id'].'">Add Shares</a>';
+				<a href="acc_share_buy.php?cust='.$_SESSION['cust_id'].'">Share Buy</a>
+				<a href="acc_share_sale.php?cust='.$_SESSION['cust_id'].'">Share Sale</a>';
 			if ($result_cust['cust_active'] == 1 AND ($timestamp-$result_cust['cust_since']) > months($_SESSION['set_minmemb'])) echo '
 				<a href="loan_new.php?cust='.$_SESSION['cust_id'].'">New Loan</a>';
 			?>
@@ -152,11 +153,11 @@
 						echo '<tr>
 										<td rowspan="4" colspan="2" style="text-align:center; vertical-align:top;">';
 						if (isset($result_cust['cust_pic'])) 
-							echo '<img src="'.$result_cust['cust_pic'].'" title="View customer\'s picture">';
+							echo '<img src="'.$result_cust['cust_pic'].'" title="Customer\'s picture">';
 						else {
 							echo '<a href="cust_new_pic.php?from=customer">';
-								if ($result_cust['custsex_id'] == 2) echo '<img src="ico/custpic_f.png" title="Choose new picture" />';
-								else echo '<img src="ico/custpic_m.png" title="Choose new picture" />';
+								if ($result_cust['custsex_id'] == 2) echo '<img src="ico/custpic_f.png" title="Upload new picture" />';
+								else echo '<img src="ico/custpic_m.png" title="Upload new picture" />';
 							echo '</a>';
 						}
 						echo '	</td>
@@ -201,10 +202,12 @@
 										<td>Relation:</td>
 										<td><input type="text" name="cust_heirrel" value="'.$result_cust['cust_heirrel'].'" tabindex="11" /></td>
 									</tr>
-									<tr>
-										<td>Member since:</td>
-										<td><input type="text" name="cust_since" value="'.date("d.m.Y", $result_cust['cust_since']).'" disabled="disabled" /></td>
-										<td>Residence:</td>
+									<tr>';
+									if ($_SESSION['fee_subscr'] > 0) echo '
+										<td>Subscrip. expires:</td>
+										<td><input type="text" name="cust_lastsub" value="'.date("d.m.Y",$result_cust['cust_lastsub']+31536000).'" disabled="disabled"/></td>';
+									else echo '<td></td><td></td>';
+							echo '<td>Residence:</td>
 										<td><input type="text" name="cust_address" value="'.$result_cust['cust_address'].'" placeholder="Place of Residence" tabindex="5" /></td>
 										<td>Sickness:</td>
 										<td>
@@ -219,8 +222,8 @@
 										</td>
 									</tr>';
 						echo '<tr>
-										<td>Updated<br/>on / by:</td>
-										<td><input type="text" disabled="diabled" value="'.date("d.m.Y", $result_cust['cust_lastupd']).' / '.$result_cust['user_name'].'" /></td>
+										<td>Member since:</td>
+										<td><input type="text" name="cust_since" value="'.date("d.m.Y", $result_cust['cust_since']).'" disabled="disabled" /></td>
 										<td>Phone No:</td>
 										<td><input type="text" name="cust_phone" value="'.$result_cust['cust_phone'].'" tabindex="6" /></td>
 										<td>Active:</td>
@@ -229,12 +232,10 @@
 										echo ' />
 										</td>
 									</tr>
-									<tr>';
-									if ($_SESSION['fee_subscr'] > 0) echo'
-										<td>Subscrip. expires:</td>
-										<td><input type="text" name="cust_lastsub" value="'.date("d.m.Y",$result_cust['cust_lastsub']+31536000).'" disabled="disabled"/></td>';
-									else echo '<td></td><td></td>';
-					echo '		<td>E-Mail:</td>
+									<tr>
+										<td>Updated<br/>on / by:</td>
+										<td><input type="text" disabled="diabled" value="'.date("d.m.Y", $result_cust['cust_lastupd']).' / '.$result_cust['user_name'].'" /></td>
+										<td>E-Mail:</td>
 										<td><input type="text" name="cust_email" value="'.$result_cust['cust_email'].'" placeholder="abc@xyz.com" tabindex="7" /></td>
 										<td></td>
 										<td><input type="submit" name="update" value="Save Changes" tabindex="14" /></td>
@@ -365,7 +366,7 @@
 				<th class="title" colspan="2">
 					<?PHP
 					if ($result_cust['cust_active'] == 1) echo
-					'<a href="acc_share.php?cust='.$_SESSION['cust_id'].'">Share Account</a>';
+					'<a href="acc_share_buy.php?cust='.$_SESSION['cust_id'].'">Share Account</a>';
 					else echo 'Share Account';
 					?>
 				</th>

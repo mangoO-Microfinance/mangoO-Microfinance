@@ -150,9 +150,8 @@ input#delete{
 #menu_main #item_selected {
 	color: #69d2e7;
 }
-#menu_main #item_selected  a{
-	color: #69d2e7;
-	background-color: #2e2e2e;
+#menu_main #item_selected:hover {
+	color: #fff;
 }
 
 /* MENU: Selection Bar */

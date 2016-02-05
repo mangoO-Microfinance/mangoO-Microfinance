@@ -37,7 +37,7 @@
 			$share_count = $share_count + $row_sh['share_amount'];
 		}
 		
-		//If entered dividend value is grand total, divide that amount by the number of eligble shares
+		//If entered dividend value is grand total, divide it amount by the number of eligble shares
 		if($div_type == 2) $div_value = ceil($div_value / $share_count);
 		
 		$div_fact = 0;
@@ -76,11 +76,7 @@
 	<body>
 	
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(4);
-		?>
-	
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(4);	?>
 		<div id="menu_main">
 			<a href="start.php">Back</a>
 			<a href="books_expense.php">Expenses</a>
@@ -110,7 +106,7 @@
 			<!--
 				<p class="heading">Savings Interest</p>
 				<form action="books_annual.php" method="post">
-					<input type="number" name="int_year" min="2000" max="<?PHP echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP echo $lastyear; ?>"/>
+					<input type="number" name="int_year" min="2000" max="<?PHP //echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP //echo $lastyear; ?>"/>
 					<br/><br/>
 					<input type="number" name="int_rate" placeholder="Annual Interest Rate" />
 					<br/><br/>
