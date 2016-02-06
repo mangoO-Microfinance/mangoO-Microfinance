@@ -17,11 +17,11 @@
 	
 	//UPLOAD-Button
 	if (isset($_POST['upload']) AND isset($_FILES['image'])){
-		// Settings
+		//Settings
 		$max_file_size = 1024*400; // 400kb
 		$valid_exts = array('jpeg', 'jpg', 'png', 'tif', 'tiff');
 		
-		// Thumbnail Sizes
+		//Thumbnail Sizes
 		$sizes = array(100 => 130, 146 => 190, 230 => 300);
 
 		//Check for maximum file size
@@ -30,7 +30,7 @@
 			$ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
 			
 			if (in_array($ext, $valid_exts)) {
-				/* Resize image */
+				//Resize image
 				foreach ($sizes as $width => $height) {
 					$files[] = resize_img($width, $height);
 				}
@@ -52,10 +52,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<a href="cust_new.php" id="item_selected">New Customer</a>
