@@ -160,7 +160,7 @@
 					<col width="50%">
 				</colspan>
 				<tr>
-					<th class="title" colspan="2">Incomes Report for <?PHP echo $rep_year; ?></th>
+					<th class="title" colspan="2">Incomes for <?PHP echo $rep_year; ?></th>
 				</tr>
 				<tr>
 					<th>Type</th>
@@ -212,7 +212,7 @@
 					<col width="50%">
 				</colspan>
 				<tr>
-					<th class="title" colspan="2">expenses for <?PHP echo $rep_year; ?></th>
+					<th class="title" colspan="2">Expenses for <?PHP echo $rep_year; ?></th>
 				</tr>
 				<tr>
 					<th>Type</th>

@@ -33,7 +33,7 @@
 					<col width="30%">
 				</colgroup>
 				<tr>
-					<th class="title" colspan="4">Login/Logoff Records</th>
+					<th class="title" colspan="4">Login/Logoff Records (Past 500 Entries)</th>
 				</tr>
 				<tr>
 					<th>No.</th>		
@@ -42,7 +42,7 @@
 					<th>Logoff Time</th> 
 				</tr>
 				<?PHP
-				$sql_logrec = "SELECT * FROM logrec, user WHERE logrec.user_id = user.user_id ORDER BY logrec_id DESC";
+				$sql_logrec = "SELECT * FROM logrec, user WHERE logrec.user_id = user.user_id ORDER BY logrec_id DESC LIMIT 500";
 				$query_logrec = mysql_query($sql_logrec);
 				check_sql($query_logrec);
 				

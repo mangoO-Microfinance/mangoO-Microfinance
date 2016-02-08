@@ -1,7 +1,6 @@
 <?PHP
-
 //Select Savings Transactions from SAVINGS
-$sql_sav = "SELECT * FROM savings, savtype, user WHERE savings.savtype_id = savtype.savtype_id AND savings.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date, sav_id";
+$sql_sav = "SELECT * FROM savings, savtype, user WHERE savings.savtype_id = savtype.savtype_id AND savings.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date DESC, sav_id DESC";
 $query_sav = mysql_query($sql_sav);
 check_sql($query_sav);
 
@@ -9,7 +8,6 @@ check_sql($query_sav);
 $sav_exp_date = date("Y-m-d",time());
 $_SESSION['sav_export'] = array();
 $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
-
 ?>
 
 <table id="tb_table">
