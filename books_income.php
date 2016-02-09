@@ -158,7 +158,7 @@
 								<td>'.$row_inccur['inc_receipt'].'</td>
 								<td>'.$row_inccur['inc_text'].'</td>
 								<td>';
-								if ($_SESSION['log_delete'] == 1 and ($row_inccur['inctype_id'] == 6 or $row_inccur['inctype_id'] == 7 or$row_inccur['inctype_id'] == 8 or $row_inccur['inctype_id'] == 9 or $row_inccur['inctype_id'] == 10 or $row_inccur['cust_id'] == 0)) echo '<a href="books_income_del.php?inc_id='.$row_inccur['inc_id'].'&inctype='.$row_inccur['inctype_id'].'&cust='.$row_inccur['cust_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a>';
+								if ($_SESSION['log_delete'] == 1 and ($row_inccur['inctype_id'] == 6 or $row_inccur['inctype_id'] == 7 or$row_inccur['inctype_id'] == 8 or $row_inccur['inctype_id'] == 9 or $row_inccur['inctype_id'] == 10 or $row_inccur['cust_id'] == 0)) echo '<a href="books_income_del.php?inc_id='.$row_inccur['inc_id'].'&inctype='.$row_inccur['inctype_id'].'&cust='.$row_inccur['cust_id'].'" onClick="return randCheck();"><i class="fa fa-remove fa-lg"></i></a>';
 				echo '	</td>	
 							</tr>';
 			}

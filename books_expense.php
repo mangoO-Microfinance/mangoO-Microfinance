@@ -111,7 +111,6 @@
 		
 		<!-- RIGHT SIDE: Expenses of the current month -->
 		<div class="content_right">
-			
 			<table id="tb_table">
 				<tr>
 					<th class="title" colspan="7">Current Expenses</th>
@@ -136,7 +135,7 @@
 								<td>'.$row_expcur['exp_text'].'</td>
 								<td>'.$row_expcur['exp_voucher'].'</td>
 								<td>';
-								if ($_SESSION['log_delete']) echo '<a href="books_expense_del.php?exp_id='.$row_expcur['exp_id'].'" onClick="return randCheck();" ><img src="ico/delete.png" /></a>';
+								if ($_SESSION['log_delete'] == 1) echo '<a href="books_expense_del.php?exp_id='.$row_expcur['exp_id'].'" onClick="return randCheck();" ><i class="fa fa-remove fa-lg"></i></a>';
 				echo '	</td>
 							</tr>';
 			}

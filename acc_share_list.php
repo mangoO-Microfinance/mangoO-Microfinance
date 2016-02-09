@@ -1,6 +1,6 @@
 <?PHP
 //Select SHARES from database
-$sql_sha = "SELECT * FROM shares, user WHERE shares.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]'";
+$sql_sha = "SELECT * FROM shares, user WHERE shares.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY share_date DESC";
 $query_sha = mysql_query($sql_sha);
 check_sql($query_sha);
 
@@ -47,7 +47,7 @@ $_SESSION['share_exp_title'] = $_SESSION['cust_id'].'_shares_'.$share_exp_date;
 					<td>'.$row_sha['share_receipt'].'</td>
 					<td>'.$row_sha['user_name'].'</td>
 					<td>';
-					if($_SESSION['log_delete'] == 1) echo '<a href="acc_share_del.php?sha_id='.$row_sha['share_id'].'" onClick="return randCheck()"><img src="ico/delete.png" /></a>';
+					if($_SESSION['log_delete'] == 1) echo '<a href="acc_share_del.php?sha_id='.$row_sha['share_id'].'" onClick="return randCheck()"><i class="fa fa-remove fa-lg"></i></a>';
 		echo '</td>
 				</tr>';
 		$amount_balance = $amount_balance + $row_sha['share_amount'];

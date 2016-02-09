@@ -174,10 +174,7 @@
 								?>
 							</select>
 						</td>
-						<td colspan="2"></td>
-					</tr>
-					<tr>
-						<td colspan="5"></td>
+						<td></td>
 						<td>
 							<input type="hidden" name="receipt_no" id="receipt_no" value="" />
 							<input type="submit" name="create" value="Continue" tabindex="14" />

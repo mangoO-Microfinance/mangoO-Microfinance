@@ -96,6 +96,7 @@
 			<meta name="robots" content="noindex, nofollow">
 			<title>mangoO | '.$title.'</title>
 			<link rel="stylesheet" type="text/css" href="mangoo.css" />
+			<link rel="stylesheet" href="ico/font-awesome/css/font-awesome.min.css">
 			<link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">';
 		if ($endFlag == 1) echo '</head>';
 	}
@@ -110,7 +111,7 @@
 				<ul>
 					<li>'.$_SESSION['log_user'].'
 						<ul>
-							<li><a href="logout.php">Logout</a></li>
+							<li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -123,27 +124,27 @@
 			<ul>
 				<li'; 
 				if ($tab_no == 1) echo ' id="tab_selected"';
-				echo '><a href="start.php">Start</a></li>
+				echo '><a href="start.php"><i class="fa fa-home fa-fw"></i> Start</a></li>
 				<li';
 				if ($tab_no == 2) echo ' id="tab_selected"';
-				echo '><a href="cust_search.php">Customers</a></li>
+				echo '><a href="cust_search.php"><i class="fa fa-user fa-fw"></i> Customers</a></li>
 				<li';
 				if ($tab_no == 3) echo ' id="tab_selected"';
-				echo '><a href="loan_search.php">Loans</a></li>
+				echo '><a href="loan_search.php"><i class="fa fa-percent fa-fw"></i> Loans</a></li>
 				<li';
 				if ($tab_no == 4) echo ' id="tab_selected"';
-				echo '><a href="books_expense.php">Accounting</a></li>';
+				echo '><a href="books_expense.php"><i class="fa fa-calculator fa-fw"></i> Accounting</a></li>';
 				
 				if ($_SESSION['log_report'] == 1){
 					echo '<li';
 					if ($tab_no == 5) echo ' id="tab_selected"';
-					echo '><a href="rep_incomes.php">Reports</a></li>';
+					echo '><a href="rep_incomes.php"><i class="fa fa-line-chart fa-fw"></i> Reports</a></li>';
 				}
 				
 				if ($_SESSION['log_admin'] == 1){
 					echo '<li';
 					if ($tab_no == 6) echo ' id="tab_selected"';
-					echo '><a href="set_basic.php">Settings</a></li>';
+					echo '><a href="set_basic.php"><i class="fa fa-cog fa-fw"></i> Settings</a></li>';
 				}
 			echo '</ul>
 		</div>';
@@ -245,6 +246,9 @@
 				case 11:
 					$_SESSION['set_minmemb'] = $row_settings['set_value'];
 					break;
+				case 12:
+					$_SESSION['set_maxpsr'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}
@@ -322,7 +326,7 @@
 	
 	//Select current customer's details
 	function get_customer(){
-		$sql_cust = "SELECT * FROM customer, custsick, custmarried, custsex, user WHERE customer.custsick_id = custsick.custsick_id AND customer.custmarried_id = custmarried.custmarried_id AND custsex.custsex_id = customer.custsex_id AND cust_id = $_SESSION[cust_id] AND customer.user_id = user.user_id";
+		$sql_cust = "SELECT * FROM customer, custsick, custmarried, custsex, user WHERE customer.custsick_id = custsick.custsick_id AND customer.custmarried_id = custmarried.custmarried_id AND custsex.custsex_id = customer.custsex_id AND cust_id = '$_SESSION[cust_id]' AND customer.user_id = user.user_id";
 		$query_cust = mysql_query($sql_cust);
 		check_sql($query_cust);
 		$result_cust = mysql_fetch_assoc($query_cust);
@@ -357,10 +361,12 @@
 		return $query_custinact;
 	}
 	
+	// Compute days from UNIX timestamp
 	function days($time){
-		return $seconds = $time * 2635200;
+		return $seconds = $time * 86400;
 	}
 	
+	// Compute months (30.5 days) from UNIX timestamp
 	function months($time){
 		return $seconds = $time * 2635200;
 	}

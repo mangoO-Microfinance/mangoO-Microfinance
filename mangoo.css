@@ -31,11 +31,12 @@ a:hover {
 * input[type=text], * input[type=number], * input[type=password], * select {
 	width:160px;
 	height:24px;
+  border: 1px solid #6e6e6e;
+  transition: box-shadow 0.3s, border 0.3s;
 }
-input#delete{
-    background-color: #ccc url('ico/delete.png') no-repeat top left;
-    padding-left: 16px;
-    height: 16px;
+* input[type="text"]:focus, * input[type=number]:focus, * input[type=password]:focus, * select:focus {
+	border: 1px solid #2e2e2e;
+  box-shadow: 0 0 5px 1px #6e6e6e;
 }
 * input[type=submit], input[type=button]{
 	padding:3px 9px; 
@@ -44,6 +45,7 @@ input#delete{
 	border:0 none;
   cursor:pointer;
   border-radius: 3px;
+	min-width:6em;
 }
 * input[type=submit]:hover, input[type=button]:hover{
 	background-color:#f38630;
@@ -51,6 +53,26 @@ input#delete{
 
 * input[type=submit]:active, input[type=button]:active{
 	background-color:#2e2e2e;
+}
+
+* input[type="file"] {
+    display: none;
+}
+.file-upload {
+	display: inline-block;
+  margin-bottom:2em;
+	padding:3px 9px; 
+  background:#6e6e6e; 
+  color:#fff;
+	border:0 none;
+  cursor:pointer;
+  border: 1px solid #6e6e6e;
+  border-radius: 3px;
+	min-width:12.3em;
+}
+.file-upload:hover{
+	background-color:#f38630;
+	border: 1px solid #f38630;
 }
 
 /* MENU: Header */
@@ -72,11 +94,12 @@ input#delete{
 }
 #menu_tabs a {
 	text-decoration: none;
+	/*font-weight: bold;*/
 	display: block;
 	background-color: #6e6e6e;
 	padding: .5em .5em;
 	color:#fff;
-	width: 8em;
+	width: 8.4em;
 	text-align: center;
 }
 #menu_tabs a:hover {

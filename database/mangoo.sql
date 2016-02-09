@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 06. Feb 2016 um 09:19
+-- Erstellungszeit: 09. Feb 2016 um 15:13
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -105,13 +105,13 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 (27, '027/2007', 'Deena Hawes  ', -932349600, 1, 'Zirobwe', NULL, '', 'Clergy Man', 2, '', '', NULL, 1190160000, 0, 1445998400, 1, 1420070400, NULL, 1),
 (28, '028/2006', 'Kellye Whitley  ', -363924000, 1, 'Lukomera', '0779-253864', '', 'Clergy Man / Teacher', 2, '', '', NULL, 1166572800, 0, 1446862400, 1, 1420070400, NULL, 1),
 (29, '029/2007', 'Judi Spillman  ', -573703200, 1, 'Balitta- Lwogi', '0782-559766', '', 'Clergy Man', 2, '', '', NULL, 1189468800, 0, 1447726400, 1, 1420070400, NULL, 1),
-(30, '030/2006', 'Emily Ratley  ', -90000, 1, 'Kalere', '0', '', 'Clergy Man', 2, '', '', NULL, 1159394400, 0, 1448590400, 1, 1454332297, NULL, 1),
+(30, '030/2006', 'Lion of Juda Secondary School', -3600, 6, 'Luweero', '0251-1213159', '', '', 0, 'Dr. Raul Philips', 'Headmaster', NULL, 1159394400, 0, 1448590400, 1, 1454954625, NULL, 1),
 (31, '031/2006', 'Robena Burget  ', -90000, 5, 'Kasana', '02589 452103', '', 'Clergy Man', 2, '', '', NULL, 1159394400, 0, 1449454400, 0, 1454655778, NULL, 1),
 (32, '032/2006', 'Milda Mcamis  ', -427860000, 1, 'Bweyeeyo-Luweero', NULL, '', 'Clergy Man', 2, '', '', NULL, 1159401600, 0, 1450318400, 1, 1420070400, NULL, 1),
 (33, '033/2006', 'Alec Kearl  ', -336794400, 1, 'Nakaseke', '0773-974456', '', 'Pastor / Teacher', 2, '', '', NULL, 1158019200, 0, 1451182400, 1, 1427241600, NULL, 3),
 (34, '034/2006', 'Ngoc Alcantar  ', -185335200, 1, 'Kasana Kvule-Luweero', NULL, '', 'Clergy Man', 2, '', '', NULL, 1157932800, 0, 1452046400, 1, 1420070400, NULL, 1),
 (35, '035/2006', 'Sharen Harr  ', -33271200, 2, 'Luweero Town Council', '0772-442574', '', 'Accounts Clerk', 2, '', '', NULL, 1156896000, 0, 1452910400, 1, 1420070400, NULL, 1),
-(36, '036/2006', 'Crysta Riebe  ', -320032800, 2, 'Kungu- Busula', NULL, '', '', 2, '', '', NULL, 1158796800, 0, 1453774400, 1, 1420070400, NULL, 1),
+(36, '036/2006', 'Kryshtam Rebem  ', -320115600, 2, 'Kungu-Busula', '09125 - 54138', '', '', 2, '', '', NULL, 1158796800, 0, 1453774400, 1, 1454959237, NULL, 1),
 (37, '037/2006', 'Ronni Knoles  ', -213069600, 1, 'Kungu-Busula', '0772-365951', '', 'Social Worker', 2, '', '', NULL, 1156723200, 0, 1454638400, 1, 1420070400, NULL, 1),
 (38, '038/2006', 'Ela Denmark  ', 401230800, 2, 'Kungu-Busula', NULL, '', 'Counsellor / Volunteer', 1, '', '', NULL, 1157241600, 0, 1455502400, 1, 1420070400, NULL, 1),
 (39, '039/2006', 'Grace Hamer  ', 55717200, 1, 'Busula', '0701-855942', '', 'Road Supervisor', 1, '', '', NULL, 1157328000, 0, 1456366400, 1, 1420070400, NULL, 1),
@@ -147,7 +147,7 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 (69, '069/2007', 'Frederic Marchese  ', 510012000, 1, 'Ndejje- Sambwe', NULL, '', '', 1, '', '', NULL, 1168732800, 0, 1482286400, 1, 1420070400, NULL, 1),
 (70, '070/2007', 'Gaynelle Busbee  ', -90000, 0, 'Kikoma Wobulenzi', '0566121212', '', 'Service Provider', 2, '', '', NULL, 1169938800, 0, 1483150400, 0, 1453146345, NULL, 1),
 (71, '071/2007', 'Remona Sheffler  ', -75693600, 2, 'Kisaawe Muyenga Wobulenzi', NULL, '', 'Teacher', 1, '', '', NULL, 1170111600, 0, 1484014400, 0, 1427241600, NULL, 3),
-(72, '072/2006', 'Federica Iliff  ', -115261200, 2, 'Luweero Child Devt Centre', '02589 452103', '', 'Peasant', 1, '', '', NULL, 1156896000, 0, 1517879600, 0, 1454661994, NULL, 1),
+(72, '072/2006', 'Federica Iliff  ', -115261200, 2, 'Luweero Child Devt Centre', '02589 452103', '', 'Peasant', 1, '', '', NULL, 1156896000, 0, 1517879600, 1, 1455023003, NULL, 1),
 (73, '073/2008', 'Chan Milby  ', 864252000, 2, 'St.Peters-Kisugu', NULL, '', '', 1, '', '', NULL, 1200960000, 0, 1485742400, 1, 1420070400, NULL, 1),
 (74, '074/2007', 'Piedad Mcgonigal  ', -208231200, 2, 'Ndejje Arch', NULL, '', 'Health Coordinator', 2, '', '', NULL, 1170115200, 0, 1486606400, 1, 1420070400, NULL, 1),
 (75, '075/1970', 'Rhonda Pierpont  ', 0, 0, '', NULL, '', '', 0, '', '', NULL, 0, 0, 1487470400, 0, 1420070400, NULL, 1),
@@ -176,7 +176,7 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 (98, '098/2007', 'Wilfred Dinger  ', 24094800, 1, 'Nalulya Butuntumula Luweero Diocese', '0782-424243', '', 'Lay-Reader', 1, '', '', NULL, 1185840000, 0, 1507342400, 1, 1420070400, NULL, 1),
 (99, '099/2007', 'Minh Myrie  ', -161920800, 1, 'Mulilo Zone', NULL, '', 'Tailor', 2, '', '', NULL, 1187049600, 0, 1508206400, 1, 1420070400, NULL, 1),
 (100, '100/2007', 'Sherly Boudreau  ', 313974000, 2, 'Kasana T/C', '0782-415747', '', 'Child Development Officer', 1, 'Hans Wurst', '', NULL, 1187654400, 0, 1509070400, 1, 1445427949, NULL, 1),
-(101, '101/2007', 'Clay Facer  ', -474516000, 2, 'C/U Kyetume', NULL, '', 'Lay-Reader', 1, '', '', NULL, 1190073600, 0, 1509934400, 1, 1427241600, NULL, 3),
+(101, '101/2007', 'Clay Facer  ', -474598800, 6, 'C/U Kyetume', '0251-1213159', '', 'Lay-Reader', 1, '', '', NULL, 1190073600, 0, 1509934400, 1, 1454956530, NULL, 1),
 (102, '102/2007', 'Roma Costales  ', 215388000, 1, 'Kidukulu - Makulubita', NULL, '', 'Lay-Reader / Coffe Trader', 2, '', '', NULL, 1194912000, 0, 1510798400, 1, 1427241600, NULL, 3),
 (103, '103/2007', 'Shad Kiger  ', -445395600, 1, 'Luweero Tc', '0782-116626', '', 'Teacher', 2, '', '', NULL, 1192492800, 0, 1511662400, 1, 1454587328, NULL, 1),
 (104, '104/2007', 'Dwayne Yeoman  ', -7200, 3, 'Kirema Village', NULL, '', '', 0, '', '', NULL, 1192492800, 0, 1512526400, 1, 1427241600, NULL, 3),
@@ -286,7 +286,7 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 CREATE TABLE IF NOT EXISTS `custsex` (
 `custsex_id` int(11) NOT NULL,
   `custsex_name` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `custsex`
@@ -298,7 +298,8 @@ INSERT INTO `custsex` (`custsex_id`, `custsex_name`) VALUES
 (3, 'Couple'),
 (4, 'Family'),
 (5, 'Group'),
-(6, 'Institution');
+(6, 'Institution'),
+(7, 'Business');
 
 -- --------------------------------------------------------
 
@@ -386,7 +387,7 @@ INSERT INTO `exptype` (`exptype_id`, `exptype_type`) VALUES
 (15, 'Tax'),
 (16, 'Transport'),
 (17, 'Insurance'),
-(18, 'Annual Dividend'),
+(18, 'Annual Share Dividend'),
 (19, 'Annual Savings Interest');
 
 -- --------------------------------------------------------
@@ -432,7 +433,7 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   `inc_text` varchar(200) NOT NULL,
   `inc_created` int(11) NOT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `incomes`
@@ -445,7 +446,10 @@ INSERT INTO `incomes` (`inc_id`, `cust_id`, `inctype_id`, `inc_amount`, `inc_dat
 (5, 90, 9, 18000, 1453244400, 180, '', 1453208404, 1),
 (6, 100, 2, 1000, 1454281200, 5678, '', 1454329440, 1),
 (11, 160, 7, 10000, 1454281200, 56, '', 1454335368, 1),
-(12, 160, 3, 9000, 1454367600, 5656, '', 1454335387, 1);
+(12, 160, 3, 9000, 1454367600, 5656, '', 1454335387, 1),
+(21, 4, 2, 1000, 1423436400, 548, '', 1455024777, 1),
+(22, 5, 2, 1000, 1448924400, 659, '', 1455025157, 1),
+(23, 12, 2, 1000, 1435615200, 884, '', 1455025453, 1);
 
 -- --------------------------------------------------------
 
@@ -553,17 +557,14 @@ CREATE TABLE IF NOT EXISTS `logrec` (
   `logrec_start` int(11) DEFAULT NULL,
   `logrec_end` int(11) DEFAULT NULL,
   `logrec_logout` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `logrec`
 --
 
 INSERT INTO `logrec` (`logrec_id`, `user_id`, `logrec_start`, `logrec_end`, `logrec_logout`) VALUES
-(1, 3, 1454612013, 1454612026, 1),
-(2, 1, 1454612115, 1454612240, 1),
-(3, 1, 1454654475, 1454673856, 1),
-(4, 1, 1454674347, NULL, 0);
+(1, 1, 1455027108, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -631,7 +632,7 @@ CREATE TABLE IF NOT EXISTS `savings` (
   `sav_slip` int(10) NOT NULL,
   `sav_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `savings`
@@ -844,7 +845,14 @@ INSERT INTO `savings` (`sav_id`, `cust_id`, `sav_date`, `sav_amount`, `cur_id`, 
 (205, 1, 1453762800, -1000, 0, 4, 5678, 1234, 1453793443, 1),
 (206, 3, 1469484000, 14000, 0, 1, 7, 0, 1453795583, 1),
 (207, 100, 1454281200, -500000, 0, 2, 5678, 1234, 1454329440, 1),
-(208, 100, 1454281200, -1000, 0, 4, 5678, 1234, 1454329440, 1);
+(208, 100, 1454281200, -1000, 0, 4, 5678, 1234, 1454329440, 1),
+(209, 111, 1454972400, 160000, 0, 1, 150, 0, 1455006663, 1),
+(210, 45, 1454972400, 465, 0, 1, 9200, 0, 1455010623, 1),
+(211, 45, 1454972400, 8000, 0, 1, 845, 0, 1455010641, 1),
+(212, 45, 1454972400, 735, 0, 1, 4564, 0, 1455010657, 1),
+(214, 4, 1423436400, -82183, 0, 2, 548, 54561, 1455024777, 1),
+(215, 5, 1448924400, -15000, 0, 2, 659, 13, 1455025157, 1),
+(216, 12, 1435615200, -10000, 0, 2, 884, 466, 1455025453, 1);
 
 -- --------------------------------------------------------
 
@@ -865,7 +873,7 @@ CREATE TABLE IF NOT EXISTS `savtype` (
 INSERT INTO `savtype` (`savtype_id`, `savtype_type`, `savtype_short`) VALUES
 (1, 'Deposit', 'D'),
 (2, 'Withdrawal', 'W'),
-(3, 'Interest', 'I'),
+(3, 'Savings Interest', 'I'),
 (4, 'W/drawal Fee', 'F_W'),
 (5, 'Subscription Fee', 'F_S'),
 (6, 'Loan Default Fine', 'LDF'),
@@ -888,14 +896,14 @@ CREATE TABLE IF NOT EXISTS `securities` (
   `sec_value` int(11) NOT NULL,
   `sec_path` varchar(200) NOT NULL,
   `sec_returned` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `securities`
 --
 
 INSERT INTO `securities` (`sec_id`, `cust_id`, `loan_id`, `sec_no`, `sec_name`, `sec_value`, `sec_path`, `sec_returned`) VALUES
-(1, 100, 1, '1', 'Cow', 0, 'uploads/securities/L-100-2_Security-01.jpg', 0);
+(1, 100, 1, '1', '', 0, 'uploads/securities/L-100-2_Security-01.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -908,7 +916,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `set_name` varchar(100) NOT NULL,
   `set_short` varchar(8) NOT NULL,
   `set_value` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `settings`
@@ -922,10 +930,11 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 (5, 'Auto-fine Defaulters', 'AUF', ''),
 (6, 'Account Deactivation', 'DEACT', ''),
 (7, 'Dashboard Left', 'DashL', 'dashboard/dash_subscr.php'),
-(8, 'Dashboard Right', 'DashR', 'dashboard/dash_none.php'),
+(8, 'Dashboard Right', 'DashR', 'dashboard/dash_loandefaults.php'),
 (9, 'Interest Calculation', 'IntCALC', 'modules/mod_inter_float.php'),
 (10, 'Guarantor Limit', 'MaxGuar', '3'),
-(11, 'Minimum Membership', 'MinMemb', '4');
+(11, 'Minimum Membership', 'MinMemb', '4'),
+(12, 'Maximum Principal-Savings Ratio', 'MaxPSR', '500');
 
 -- --------------------------------------------------------
 
@@ -1348,7 +1357,7 @@ MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
 -- AUTO_INCREMENT für Tabelle `custsex`
 --
 ALTER TABLE `custsex`
-MODIFY `custsex_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `custsex_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT für Tabelle `custsick`
 --
@@ -1373,7 +1382,7 @@ MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 -- AUTO_INCREMENT für Tabelle `incomes`
 --
 ALTER TABLE `incomes`
-MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT für Tabelle `inctype`
 --
@@ -1393,7 +1402,7 @@ MODIFY `loanstatus_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT für Tabelle `logrec`
 --
 ALTER TABLE `logrec`
-MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `ltrans`
 --
@@ -1403,7 +1412,7 @@ MODIFY `ltrans_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 -- AUTO_INCREMENT für Tabelle `savings`
 --
 ALTER TABLE `savings`
-MODIFY `sav_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=209;
+MODIFY `sav_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=217;
 --
 -- AUTO_INCREMENT für Tabelle `savtype`
 --
@@ -1413,12 +1422,12 @@ MODIFY `savtype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 -- AUTO_INCREMENT für Tabelle `securities`
 --
 ALTER TABLE `securities`
-MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT für Tabelle `settings`
 --
 ALTER TABLE `settings`
-MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT für Tabelle `shares`
 --

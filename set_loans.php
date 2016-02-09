@@ -31,6 +31,12 @@
 		$query_upd_maxLP = mysql_query($sql_upd_maxLP);
 		check_sql($query_upd_maxLP);
 		
+		//Update Maximum Principal-Savings Ratio
+		$new_maxPSR = sanitize($_POST['maxPSR']);
+		$sql_upd_maxPSR = "UPDATE settings SET set_value = '$new_maxPSR' WHERE set_short = 'MaxPSR'";
+		$query_upd_maxPSR = mysql_query($sql_upd_maxPSR);
+		check_sql($query_upd_maxPSR);
+		
 		//Update Maximum Number of Guarantees any member can give
 		$new_maxGuar = sanitize($_POST['maxGuar']);
 		$sql_upd_maxGuar = "UPDATE settings SET set_value = '$new_maxGuar' WHERE set_short = 'MaxGuar'";
@@ -117,14 +123,21 @@
 					<tr>
 						<td>Minimum Loan Principal</td>
 						<td>
-							<input type="number" min="0" name="minLP" value="<?PHP echo $_SESSION['set_minlp'] ?>" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
+							<input type="number" min="0" name="minLP" value="<?PHP echo $_SESSION['set_minlp'] ?>" placeholder="Minimum Limit off" />
 						</td>
 					</tr>
 			
 					<tr>
 						<td>Maximum Loan Principal</td>
 						<td>
-							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
+							<input type="number" min="0" name="maxLP" value="<?PHP echo $_SESSION['set_maxlp'] ?>" placeholder="Maximum Limit off" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Maximum Principal /<br/>Savings Ratio (%)</td>
+						<td>
+							<input type="number" min="0" name="maxPSR" value="<?PHP echo $_SESSION['set_maxpsr'] ?>" placeholder="Princ./Sav. Ratio off" />
 						</td>
 					</tr>
 					
@@ -138,7 +151,7 @@
 					<tr>
 						<td>Limit of Guarantees</td>
 						<td>
-							<input type="number" min="0" name="maxGuar" value="<?PHP echo $_SESSION['set_maxguar'] ?>" placeholder="No Guarantee Limit" />
+							<input type="number" min="0" name="maxGuar" value="<?PHP echo $_SESSION['set_maxguar'] ?>" placeholder="Guarantee Limit off" />
 						</td>
 					</tr>
 				</table>

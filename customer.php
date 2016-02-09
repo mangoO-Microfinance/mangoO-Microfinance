@@ -151,16 +151,16 @@
 					</colgroup>					
 					<?PHP					
 						echo '<tr>
-										<td rowspan="4" colspan="2" style="text-align:center; vertical-align:top;">';
+										<td rowspan="4" colspan="2" style="text-align:center; vertical-align:top;">
+										<a href="cust_new_pic.php?from=customer">';
 						if (isset($result_cust['cust_pic'])) 
 							echo '<img src="'.$result_cust['cust_pic'].'" title="Customer\'s picture">';
 						else {
-							echo '<a href="cust_new_pic.php?from=customer">';
 								if ($result_cust['custsex_id'] == 2) echo '<img src="ico/custpic_f.png" title="Upload new picture" />';
 								else echo '<img src="ico/custpic_m.png" title="Upload new picture" />';
-							echo '</a>';
 						}
-						echo '	</td>
+						echo '	</a>
+										</td>
 										<td>Cust No:</td>
 										<td><input type="text" name="cust_no" value="'.$result_cust['cust_no'].'" tabindex="1" /></td>
 										<td>Occupation:</td>

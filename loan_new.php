@@ -45,15 +45,12 @@
 		$query_insert_loan = mysql_query($sql_insert_loan);
 		check_sql($query_insert_loan);
 		
-		//Retrieve loan_id and loan_no of newly created loan from LOANS. Pass securities to SESSION variable.
-		$sql_newloanid = "SELECT loan_id, loan_no FROM loans WHERE cust_id = '$_SESSION[cust_id]' ORDER BY loan_id DESC LIMIT 1";
+		//Retrieve LOAN_ID of newly created loan from LOANS and pass to SESSION variable.
+		$sql_newloanid = "SELECT MAX(loan_id) FROM loans WHERE cust_id = '$_SESSION[cust_id]'";
 		$query_newloanid = mysql_query($sql_newloanid);
 		check_sql($query_newloanid);
 		$result_newloanid = mysql_fetch_assoc($query_newloanid);
-		$_SESSION['loan_id'] = $result_newloanid['loan_id'];
-		$_SESSION['loan_no'] = $result_newloanid['loan_no'];
-		$_SESSION['loan_sec1'] = $loan_sec1;
-		$_SESSION['loan_sec2'] = $loan_sec2;
+		$_SESSION['loan_id'] = $result_newloanid['MAX(loan_id)'];
 		
 		//Insert Loan Application Fee into INCOMES
 		$sql_inc_laf = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '7', '$_SESSION[fee_loanappl]', '$loan_date', '$loan_appfee_receipt', $timestamp, '$_SESSION[log_id]')";
@@ -61,20 +58,18 @@
 		check_sql($query_inc_laf);
 		
 		//Refer to LOAN_SEC.PHP
-		header('Location: loan_sec.php');
+		header('Location: loan_sec.php?lid='.$_SESSION['loan_id']);
 	}
 	
 	/* SELECT LEGITIMATE GUARANTORS FROM CUSTOMER */
 	
 	//Select all customers except current one
-	$sql_cust = "SELECT cust_id, cust_name, cust_since FROM customer WHERE cust_active = 1 AND cust_id != '$_SESSION[cust_id]' AND cust_id != 0";
-	$query_cust = mysql_query($sql_cust);
-	check_sql($query_cust);
+	$query_cust = get_custother();
 	
 	$guarantors = array();
 	if ($_SESSION['set_maxguar'] == ""){
 		while ($row_cust = mysql_fetch_assoc($query_cust)){
-			$guarantors[] = $row_cust;
+			if ($row_cust['cust_active'] == 1) $guarantors[] = $row_cust;
 		}
 	}
 	else {
@@ -104,6 +99,23 @@
 	
 	//Get current customer's details
 	$result_cust = get_customer();
+	$savbalance = get_savbalance();
+	
+	// Compute Maximum and Minimum principal amount
+	if ($_SESSION['set_maxlp'] != "" AND $_SESSION['set_maxpsr'] != ""){
+		if(($savbalance * ($_SESSION['set_maxpsr']/100)) < $_SESSION['set_maxlp']) 
+			$maxlp = ($savbalance * ($_SESSION['set_maxpsr']/100));
+		else
+			$maxlp = $_SESSION['set_maxlp'];
+	}
+	elseif ($_SESSION['set_maxlp'] == "" AND $_SESSION['set_maxpsr'] != "") 
+		$maxlp = ($savbalance * ($_SESSION['set_maxpsr']/100));
+	elseif ($_SESSION['set_maxlp'] != "" AND $_SESSION['set_maxpsr'] == "") 
+		$maxlp = $_SESSION['set_maxlp'];
+	else $maxlp = "";
+	
+	if ($_SESSION['set_minlp'] != "") $minlp = $_SESSION['set_minlp'];
+	else $minlp = 1;
 ?>
 
 <html>
@@ -140,10 +152,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
 			<a href="cust_search.php">Search</a>
@@ -169,7 +178,7 @@
 
 					<tr>
 						<td style="font-weight:bold;">Principal:</td>
-						<td><input type="number" class="defaultnumber" name="loan_principal" id="loan_principal" placeholder="Loan Sum in <?PHP echo $_SESSION['set_cur']; ?>" min="<?PHP echo $_SESSION['set_minlp']; ?>" max="<?PHP echo $_SESSION['set_maxlp']; ?>" onChange="calc_rate(<?PHP echo $_SESSION['fee_loan']; ?>)" /></td>
+						<td><input type="number" class="defaultnumber" name="loan_principal" id="loan_principal" placeholder="Loan Sum in <?PHP echo $_SESSION['set_cur']; ?>" min="<?PHP echo $minlp; ?>" max="<?PHP echo $maxlp; ?>" onChange="calc_rate(<?PHP echo $_SESSION['fee_loan']; ?>)" /></td>
 						<td style="font-weight:bold;">Period:</td>
 						<td><input type="number" class="defaultnumber" name="loan_period" id="loan_period" placeholder="Number of Months" onChange="calc_rate(<?PHP echo $_SESSION['fee_loan']; ?>)" /></td>
 					</tr>

@@ -167,12 +167,11 @@
 	check_sql($query_loan);
 	$result_loan = mysql_fetch_assoc($query_loan);
 	$_SESSION['cust_id'] = $result_loan['cust_id'];
-	//$_SESSION['interest_sum'] = ($result_loan['loan_repaytotal'] - $result_loan['loan_principal'])/$result_loan['loan_period'];
 	
 	//Select Instalments from LTRANS
 	$sql_duedates = "SELECT * FROM ltrans, user WHERE ltrans.user_id = user.user_id AND loan_id = $_SESSION[loan_id] ORDER BY ltrans_id";
 	$query_duedates = mysql_query($sql_duedates);
-	if(!$query_duedates) die ('SELECT failed: '.mysql_error());
+	check_sql($query_duedates);
 	
 	//Select Guarantors from CUSTOMER
 	$sql_guarant = "SELECT cust_id, cust_name FROM customer";
@@ -309,17 +308,15 @@
 						<td>Secur. 1:</td>
 						<td>
 							<?PHP 
-							if (isset($sec_path1)) echo '<a href="'.$sec_path1.'" target=_blank>';
-							echo $result_loan['loan_sec1'];
-							if (isset($sec_path1)) echo '</a>';				
+							if (isset($sec_path1)) echo '<a href="'.$sec_path1.'" target=_blank>'.$result_loan['loan_sec1'].' <i class="fa fa-eye"></i></a>';
+							elseif ($result_loan['loan_sec1'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$result_loan['loan_sec1'].' <i class="fa fa-upload"></i></a>';
 							?>
 						</td>
 						<td>Secur. 2:</td>
 						<td>
 							<?PHP
-							if (isset($sec_path2)) echo '<a href="'.$sec_path2.'" target=_blank>';
-							echo $result_loan['loan_sec2'];
-							if (isset($sec_path2)) echo '</a>';
+							if (isset($sec_path2)) echo '<a href="'.$sec_path2.'" target=_blank>'.$result_loan['loan_sec2'].' <i class="fa fa-eye"></i></a>';
+							elseif ($result_loan['loan_sec2'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$result_loan['loan_sec2'].' <i class="fa fa-upload"></i></a>';
 							?>
 						</td>
 					</tr>
@@ -461,7 +458,7 @@
 					echo '<td>'.$row_duedates['user_name'].'</td>
 								<td>';
 					if ($_SESSION['log_delete'] == 1) 
-						echo '<a href="ltrans_del.php?lt_id='.$row_duedates['ltrans_id'].'" onClick="return randCheck();"><img src="ico/delete.png" /></a>';
+						echo '<a href="ltrans_del.php?lt_id='.$row_duedates['ltrans_id'].'" onClick="return randCheck();"><i class="fa fa-remove fa-lg"></i></a>';
 					echo '</td>
 							</tr>';
 

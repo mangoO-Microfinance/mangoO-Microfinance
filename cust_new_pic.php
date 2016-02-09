@@ -69,11 +69,12 @@
 			
 			<!-- File uploading form -->
 			<form action="" method="post" enctype="multipart/form-data">
-				<label>
-					<span>Choose image</span>
-					<input type="file" name="image" accept="image/*" />
+				
+				<label for="image" class="file-upload">
+					<i class="fa fa-image"></i> Choose image
 				</label>
-				<br/><br/>
+				<input type="file" name="image" id="image" accept="image/*" />
+				<br/>
 				<input type="submit" name="upload" value="Upload" />
 				<input type="submit" name="skip" value="Skip" />
 			</form>

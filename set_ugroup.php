@@ -180,13 +180,13 @@
 						echo '<td>';
 						if ($row_ugroups['ugroup_id'] != 1) echo '
 										<a href="set_ugroup.php?ugroup='.$row_ugroups['ugroup_id'].'">
-											<img src="ico/edit.png" />
+											<i class="fa fa-edit fa-lg"></i>
 										</a>';
 						echo '</td>
 									<td>';
 						if ($row_ugroups['ugroup_id'] != 1) echo '
 										<a href="set_ugroup_del.php?ugroup='.$row_ugroups['ugroup_id'].'">
-											<img src="ico/delete.png" />
+											<i class="fa fa-remove fa-lg"></i>
 										</a>';
 						echo '</td>
 							</tr>';

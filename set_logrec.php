@@ -33,7 +33,7 @@
 					<col width="30%">
 				</colgroup>
 				<tr>
-					<th class="title" colspan="4">Login/Logoff Records (Past 500 Entries)</th>
+					<th class="title" colspan="4">Login/Logoff Records (Last 500 Entries)</th>
 				</tr>
 				<tr>
 					<th>No.</th>		
