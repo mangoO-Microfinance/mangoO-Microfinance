@@ -235,15 +235,15 @@
 					</tr>
 					<tr>
 						<td>Monthly Rate:</td>
-						<td><input name="loan_rate" id="loan_rate" disabled="disabled" /></td>
+						<td><input type="text" name="loan_rate" id="loan_rate" disabled="disabled" /></td>
 						<td></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Repay Total:</td>
-						<td><input name="loan_repaytotal" id="loan_repaytotal" disabled="disabled" /></td>
+						<td><input type="text" name="loan_repaytotal" id="loan_repaytotal" disabled="disabled" /></td>
 						<td>Loan Fee:</td>
-						<td><input name="loan_fee" id="loan_fee" disabled="disabled" /></td>
+						<td><input type="text" name="loan_fee" id="loan_fee" disabled="disabled" /></td>
 					</tr>
 					
 					<tr>

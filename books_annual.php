@@ -163,7 +163,7 @@
 		<div class="content_center" style="width:60%;">
 		
 			<div class="content_left" style="width:50%;">
-					<p class="heading">Annual Dividend</p>
+					<p class="heading">Annual Share Dividend</p>
 					<form action="books_annual.php" method="post">
 						<input type="number" name="div_year" min="2000" max="<?PHP echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP echo $lastyear; ?>" required="required" />
 						<br/><br/>
@@ -179,7 +179,7 @@
 			</div>
 			
 			<div class="content_right" style="width:50%;">
-				<p class="heading">Savings Interest</p>
+				<p class="heading">Annaul Savings Interest</p>
 				<form action="books_annual.php" method="post">
 					<input type="number" name="int_year" min="2000" max="<?PHP echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP echo $lastyear; ?>" required="required" />
 					<br/><br/>
