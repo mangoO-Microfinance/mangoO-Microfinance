@@ -1,24 +1,24 @@
 <?PHP	
-	
-	//Establish Server & Database Connection
+/**
+	* Establish Server & Database Connection
+	*/
 	function connect() {
-		include 'mng_settings.php';
-		$connect_srv = mysql_connect($db_host, $db_user, $db_passwd);
-		if (!$connect_srv) die ('DB connection failed: '.mysql_error());
-		$connect_db = mysql_select_db($db_name, $connect_srv);
-		if (!$connect_db) die ('Database "'.$db_name.'" cannot be selected: '.mysql_error());
+		require_once 'mng-config.php';
+		
+		// Server connection
+		$connect_srv = mysql_connect(DB_HOST, DB_USER, DB_PASS);
+		//if (!$connect_srv) die ('Connection failed: '.mysql_error());
+		if (!$connect_srv) header('Location:mng-setup.php');
+		
+		// Database connection
+		$connect_db = mysql_select_db(DB_NAME, $connect_srv);
+		//if (!$connect_db) die ('Database "'.DB_NAME.'" cannot be selected: '.mysql_error());
+		if (!$connect_db) header('Location:mng-setup.php');
 	}
 
-	//Sanitize and secure user input	
-	function sanitize($var) {
-		if(get_magic_quotes_gpc()) $var = stripslashes($var);
-		$var = htmlentities($var);
-		$var = strip_tags($var);
-		$var = mysql_real_escape_string($var);
-		return $var;
-	}
-	
-	//Logout User and destroy his session
+/**
+	* Logout User and destroy his session
+	*/
 	function logout(){
 		$_SESSION = array();												//Delete all Session Variables
 		if (ini_get("session.use_cookies")) {				//If a Session-Cookie is used, delete it
@@ -30,7 +30,9 @@
 		die;
 	}	
 	
-	//Check, if current user is logged in
+/**
+	* Check if current user is logged in
+	*/
 	function check_logon() {
 		$fingerprint = md5($_SERVER['REMOTE_ADDR'].'dh(6Km4$X*'.$_SERVER['HTTP_USER_AGENT']);
 		session_start();
@@ -38,15 +40,19 @@
 		session_regenerate_id();
 	}
 	
-	//Check for proper logout after last session
+/**
+	* Check if current user logged out properly last time
+	*/
 	function check_logout(){
 		if ($_SESSION['logrec_logout'] == 0){
 			error("You forgot to logout last time. Please remember to log out properly.");
 			$_SESSION['logrec_logout'] = 1;
 		}
 	}
-	
-	//Check for Administrator Permissions
+
+/**
+	* Check if current user has Admin permission
+	*/
 	function check_admin() {
 		if ($_SESSION['log_admin']!=='1'){
 			header('Location: start.php');
@@ -54,7 +60,9 @@
 		}
 	}
 	
-	//Check for Permission to delete entries
+/**
+	* Check if current user has Delete permission
+	*/
 	function check_delete() {
 		if ($_SESSION['log_delete']!=='1'){
 			header('Location: start.php');
@@ -62,33 +70,61 @@
 		}
 	}
 	
-	//Check for Permission to access Reports
+/**
+	* Check if current user has permission to access Reports
+	*/
 	function check_report() {
 		if ($_SESSION['log_report']!=='1'){
 			header('Location: start.php');
 			die();
 		}
 	}
+
+/**
+	* Sanitize and secure user input
+	* @param string var : User Input
+	* @return string var : Secured and sanitized User Input
+	*/
+	function sanitize($var) {
+		if(get_magic_quotes_gpc()) $var = stripslashes($var);
+		$var = htmlentities($var);
+		$var = strip_tags($var);
+		$var = mysql_real_escape_string($var);
+		return $var;
+	}
 	
-	//Check for CUST_ID
+	
+/**
+	* Check if a GET parameter with a Customer ID has been set
+	* If not, return to start page.
+	*/
 	function check_custid(){
 		if (isset($_GET['cust'])) $_SESSION['cust_id'] = sanitize($_GET['cust']);
 		else header('Location: start.php');
 	}
 	
-	//Check for LOAN_ID
+/**
+	* Check if a GET parameter with a Loan ID has been set
+	* If not, return to customer page.
+	*/
 	function check_loanid(){
 		if (isset($_GET['lid'])) $_SESSION['loan_id'] = sanitize($_GET['lid']);
 		else header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	//Check Success for SQL Queries
+/**
+	* Check if an SQL statement has succeded
+	*/
 	function check_sql($sqlquery){
 		if (!$sqlquery) die ('SQL-Statement failed: '.mysql_error());
 	}
 	
-	//Include HTML <head>
-	function include_Head($title,$endFlag) {
+/**
+	* Generate HTML Header Section
+	* @param string title : Page title
+	* @param int endFlag : Flag to indicate whether or not to end header section.
+	*/
+	function include_Head($title, $endFlag = 1) {
 		echo '<head>
 			<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 			<meta http-equiv="Content-Script-Type" content="text/javascript">
@@ -100,8 +136,11 @@
 			<link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">';
 		if ($endFlag == 1) echo '</head>';
 	}
-	
-	//Include Menu Tabs
+
+/**
+	* Generate Menu bar
+	* @param int tab_no : Number of currently selected menu tab.
+	*/
 	function include_Menu($tab_no){
 		echo '		
 		<!-- MENU HEADER -->
@@ -150,7 +189,10 @@
 		</div>';
 	}
 	
-	//Alternating Colors for Table Rows
+/**
+	* Alternate table rows background color for improved readability
+	* @param int row_color : Indicator for row color
+	*/
 	function tr_colored(&$row_color) {
 		if ($row_color == 0){ 
 			echo '<tr>';
@@ -162,32 +204,41 @@
 		}
 	}
 	
-	//Error-Message
+/**
+	* Generate a Javascript alert message
+	* @param string text : Message text
+	*/
 	function error($text) {
 		echo '<script language=javascript>
 						alert(\''.$text.'\')
 					</script>';
 	}
 	
-	//Resizing uploaded images	
+/**
+	* Resizing uploaded image files
+	* @param int width : Target width dimension
+	* @param int height : Target height dimension
+	* @return string path : Storage path for newly created image file
+	*/
 	function resize_img($width, $height){
-		/* Get original image x y*/		
+		
+		// Get original image dimensions
 		list($w, $h) = getimagesize($_FILES['image']['tmp_name']);
 		
-		/* Calculate new image size with ratio */
+		// Calculate new image size with ratio
 		$ratio = max($width/$w, $height/$h);
 		$h = ceil($height / $ratio);
 		$x = ($w - $width / $ratio) / 2;
 		$w = ceil($width / $ratio);
 		
-		/* New file name */
+		// New file name
 		$basename = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_FILENAME));
 		$path = 'uploads/photos/cust'.$_SESSION['cust_id'].'_'.$width.'x'.$height.'.jpg';
 		
-		/* Read binary data from image file */
+		// Read binary data from image file
 		$imgString = file_get_contents($_FILES['image']['tmp_name']);
 		
-		/* Create Image from String */
+		// Create image from string
 		$image = imagecreatefromstring($imgString);
 		$tmp_img = imagecreatetruecolor($width, $height);
 		imagecopyresampled(
@@ -200,12 +251,14 @@
 		
 		return $path;
 		
-		/* Cleanup Memory */
+		// Cleanup memory
 		imagedestroy($image);
 		imagedestroy($tmp_img);
 	}
-	
-	//Get settings from SETTINGS and apply to SESSION variables
+
+/**
+	* Pushing system settings into session variables
+	*/	
 	function get_settings(){
 		$sql_settings = "SELECT * FROM settings";
 		$query_settings = mysql_query($sql_settings);
@@ -253,7 +306,9 @@
 		}
 	}
 	
-	//Get Fees from FEES and apply to SESSION variables
+/**
+	* Pushing fee settings into session variables
+	*/
 	function get_fees(){
 		$sql_fees = "SELECT * FROM fees";
 		$query_fees = mysql_query($sql_fees);
@@ -288,7 +343,9 @@
 		}
 	}
 	
-	//Get current Share Value from SHAREVAL
+/**
+	* Pushing current share value into a session variable
+	*/
 	function get_sharevalue(){
 		$sql_shareval = "SELECT shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
 		$query_shareval = mysql_query($sql_shareval);
@@ -297,7 +354,10 @@
 		$_SESSION['share_value'] = $result_shareval['shareval_value'];
 	}
 	
-	//Calculate current customer's savings account balance
+/**	
+	* Calculate current customer's savings account balance
+	* @return int sav_balance : Current savings account balance
+	*/
 	function get_savbalance(){
 		$sql_savbal = "SELECT sav_amount FROM savings WHERE cust_id = '$_SESSION[cust_id]'";
 		$query_savbal = mysql_query($sql_savbal);
@@ -309,13 +369,14 @@
 		return $sav_balance;
 	}
 	
-	//Calculate current customer's share account balance
+/**
+	* Calculate current customer's share account balance
+	* @return int share_balace : Current share account balance
+	*/
 	function get_sharebalance(){
 		$sql_sharebal = "SELECT share_amount, share_value FROM shares WHERE cust_id = '$_SESSION[cust_id]'";
 		$query_sharebal = mysql_query($sql_sharebal);
 		check_sql($query_sharebal);
-		//$share_amount = 0;
-		//$share_value = 0;
 		$share_balance = array("amount" => "0", "value" => "0");
 		while($row_sharebal = mysql_fetch_assoc($query_sharebal)){
 			$share_balance['amount'] = $share_balance['amount'] + $row_sharebal['share_amount'];
@@ -324,17 +385,21 @@
 		return $share_balance;
 	}
 	
-	//Select current customer's details
+/**
+	* Get current customer's details
+	* @return array result_cust : Associative array with all current customer' details
+	*/
 	function get_customer(){
 		$sql_cust = "SELECT * FROM customer, custsick, custmarried, custsex, user WHERE customer.custsick_id = custsick.custsick_id AND customer.custmarried_id = custmarried.custmarried_id AND custsex.custsex_id = customer.custsex_id AND cust_id = '$_SESSION[cust_id]' AND customer.user_id = user.user_id";
 		$query_cust = mysql_query($sql_cust);
 		check_sql($query_cust);
-		$result_cust = mysql_fetch_assoc($query_cust);
-		
-		return $result_cust;
+		return $result_cust = mysql_fetch_assoc($query_cust);
 	}
 	
-	//Select all customers except current one
+/**
+	* Get all customers except current one
+	* @return array query_custother : Array with the result of the SQL query
+	*/
 	function get_custother(){
 		$sql_custother = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_id NOT IN (0, $_SESSION[cust_id]) ORDER BY cust_id";
 		$query_custother = mysql_query($sql_custother);
@@ -342,8 +407,11 @@
 		
 		return $query_custother;
 	}
-	
-	//Select active customers
+
+/**
+	* Get all active customers
+	* @return array query_custact : Array with the result of the SQL query
+	*/
 	function get_custact(){
 		$sql_custact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active = 1 ORDER BY cust_id";
 		$query_custact = mysql_query($sql_custact);
@@ -352,7 +420,10 @@
 		return $query_custact;
 	}
 
-	//Select inactive customers
+/**
+	* Get all inactive customers
+	* @return array query_custinact : Array with the result of the SQL query
+	*/
 	function get_custinact(){
 		$sql_custinact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active != 1 ORDER BY cust_id";
 		$query_custinact = mysql_query($sql_custinact);
@@ -361,13 +432,21 @@
 		return $query_custinact;
 	}
 	
-	// Compute days from UNIX timestamp
-	function days($time){
-		return $seconds = $time * 86400;
+/**
+	* Convert a number of days into UNIX timestamp seconds
+	* @param int days : Number of days
+	* @return int seconds : Lenght of number of days in seconds
+	*/
+	function days($days){
+		return $seconds = $days * 86400;
 	}
-	
-	// Compute months (30.5 days) from UNIX timestamp
-	function months($time){
-		return $seconds = $time * 2635200;
+
+/**
+	* Convert a number of months into UNIX timestamp seconds
+	* @param int months : Number of months
+	* @return int seconds : Lenght of number of days in seconds
+	*/	
+	function months($months){
+		return $seconds = $months * 2635200; // Seconds for 30.5 days
 	}
 ?>
