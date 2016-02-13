@@ -1,0 +1,40 @@
+div.setup{
+	width:30%;
+	margin-top:4em;
+	margin-left:auto;
+	margin-right:auto;
+	padding:2em; 4em;
+	background-color: #a7dbd8;
+	border-radius: 6px;
+	box-shadow: 5px 5px 5px #bbb;
+}
+div.setup:hover{
+	background-color:#69d2e7;
+}
+div.setup input{
+	margin-bottom:2em;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
+div.setup input:last-child{
+	margin-bottom:.5em;
+}
+div.setup p{
+	color:#fff;
+	font-size:18px;
+	font-weight:bold;
+	text-align:center;
+	margin-bottom:1.5em;
+}
+div.setup p:last-child{
+	margin-bottom:.5em;
+}
+div.setup p #message{
+	font-size:14px;
+	font-weight:normal;
+}
+div.setup p #message span{
+	font-weight:bold;
+	font-size:18px;
+}

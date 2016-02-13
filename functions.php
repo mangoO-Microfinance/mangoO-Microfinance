@@ -3,17 +3,17 @@
 	* Establish Server & Database Connection
 	*/
 	function connect() {
-		require_once 'mng-config.php';
+		require_once 'config/config.php';
 		
 		// Server connection
 		$connect_srv = mysql_connect(DB_HOST, DB_USER, DB_PASS);
-		//if (!$connect_srv) die ('Connection failed: '.mysql_error());
-		if (!$connect_srv) header('Location:mng-setup.php');
+		//if (!$connect_srv) die ('Could not connect to host '.DB_HOST.': '.mysql_error());
+		if (!$connect_srv) header('Location:setup.php');
 		
 		// Database connection
 		$connect_db = mysql_select_db(DB_NAME, $connect_srv);
-		//if (!$connect_db) die ('Database "'.DB_NAME.'" cannot be selected: '.mysql_error());
-		if (!$connect_db) header('Location:mng-setup.php');
+		//if (!$connect_db) die ('Could not select database '.DB_NAME.': '.mysql_error());
+		if (!$connect_db) header('Location:setup.php');
 	}
 
 /**
@@ -131,7 +131,7 @@
 			<meta http-equiv="Content-Style-Type" content="text/css">
 			<meta name="robots" content="noindex, nofollow">
 			<title>mangoO | '.$title.'</title>
-			<link rel="stylesheet" type="text/css" href="mangoo.css" />
+			<link rel="stylesheet" type="text/css" href="css/mangoo.css" />
 			<link rel="stylesheet" href="ico/font-awesome/css/font-awesome.min.css">
 			<link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">';
 		if ($endFlag == 1) echo '</head>';

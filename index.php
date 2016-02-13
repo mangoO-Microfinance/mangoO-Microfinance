@@ -6,8 +6,8 @@
 	* If it doesn't, call the setup page.
 	*/
 	
-	if(file_exists('mng-config.php')) header('Location: mng-login.php');
+	if(file_exists('config/config.php')) header('Location: login.php');
 	
-	else header('Location: mng-setup.php');
+	else header('Location: setup.php');
 
 ?>

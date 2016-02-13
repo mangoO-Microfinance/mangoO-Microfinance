@@ -74,7 +74,7 @@
 			
 			<p class="heading" style="margin:0; text-align:left;">Please login...</p>
 			
-			<form action="mng-login.php" method="post">
+			<form action="login.php" method="post">
 				<table id="tb_fields" style="margin:0; border-spacing:0em 1.25em;">
 					<tr>
 						<td>
