@@ -22,12 +22,8 @@
 		$query_makeadmin = mysql_query($sql_makeadmin);
 		check_sql($query_makeadmin);
 		
-		// Create configuration file
-		require "setup_makeconf.php";	
-		
-		// Forward to login page
-		session_destroy();
-		header ('Location:login.php');
+		// Forward to setup_makeconf.php
+		header ('Location:setup_makeconf.php');
 	}
 ?>
 

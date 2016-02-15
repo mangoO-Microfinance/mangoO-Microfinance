@@ -18,7 +18,7 @@
 	//UPLOAD-Button
 	if (isset($_POST['upload']) AND isset($_FILES['image'])){
 		//Settings
-		$max_file_size = 1024*400; // 400kb
+		$max_file_size = 1024*2048; // 2048kb
 		$valid_exts = array('jpeg', 'jpg', 'png', 'tif', 'tiff');
 		
 		//Thumbnail Sizes
@@ -43,7 +43,7 @@
 			}
 			else $error_msg = 'Unsupported file';
 		}
-		else $error_msg = 'Please choose an image smaller than 400kB.';
+		else $error_msg = 'Please choose an image smaller than 2048kB.';
 	}
 ?>
 

@@ -10,6 +10,7 @@
 		$_SESSION['db_user'] = sanitize($_POST['db_user']);
 		$_SESSION['db_pass'] = sanitize($_POST['db_pass']);
 		$_SESSION['db_name'] = sanitize($_POST['db_name']);
+		$_SESSION['db_type'] = sanitize($_POST['db_type']);
 				
 		// Create Database
 		require "setup_dbcreate.php";
@@ -35,6 +36,10 @@
 					<input type="text" name="db_user" placeholder="Database User" required="required" />					
 					<input type="text" name="db_pass" placeholder="Database Password" />
 					<input type="text" name="db_name" placeholder="Database Name" required="required" />
+					<select name="db_type">
+						<option value="1">Fresh Database</option>
+						<option value="2">Test Database</option>
+					</select>
 					<input type="submit" name="dbSetup" value="Setup" />
 				</form>
 			</div>

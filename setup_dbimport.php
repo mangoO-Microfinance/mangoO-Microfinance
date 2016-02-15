@@ -4,7 +4,8 @@ session_start();
 require 'functions.php';
 
 // Script Configuration
-$fileSQL = 'database/mng-empty.sql';
+if($_SESSION['db_type'] == 2) $fileSQL = 'database/mangoo_test.sql';
+else $fileSQL = 'database/mangoo_fresh.sql';
 $progressFilename = $fileSQL.'_filepointer'; 	// Temporary file for progress
 $errorFilename = $fileSQL.'_error'; 					// Temporary file for errors
 $maxRuntime = 2;															// Should be less than script execution time limit
@@ -21,8 +22,8 @@ if(!$db_select) die('Could not select database '.$_SESSION['db_name'].': '.mysql
 
 // Check for previous errors
 if(file_exists($errorFilename) ){
-   echo ('Previous error encountered: '.file_get_contents($errorFilename));
-   //die('Previous error encountered: '.file_get_contents($errorFilename));
+  echo 'Previous error encountered: '.file_get_contents($errorFilename);
+  //die'Previous error encountered: '.file_get_contents($errorFilename);
 }
 
 // Go to previous file position
@@ -57,8 +58,10 @@ while(time() < $deadline AND ($line = fgets($fp, 1024000))){
 
 // Check if EoF was reached
 if(feof($fp)){
-	unlink($fileSQL.'_filepointer');
-	header('Location:setup_admin.php');
+	unlink($progressFilename);
+	unlink($errorFilename);
+	if ($_SESSION['db_type'] == 2) header ('Location:setup_makeconf.php');
+	else header('Location:setup_admin.php');
 }
 else{
 	$amount = ftell($fp).'/'.filesize($fileSQL);
@@ -82,7 +85,7 @@ else{
 					<div class="progress over" style="width:<?PHP echo $percentage;?>%;"></div>
 				</div>
 				<p id="message" style="position:relative; top:-33px;"><?PHP echo $percentage;?>%</p>
-				<p id="message">Please wait for browser refresh!<br/>Do not leave this page!</p>
+				<p id="message">Please wait for import to complete!<br/>Do not leave this page!</p>
 			</div>
 		</div>
 	</body>
