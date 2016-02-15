@@ -61,7 +61,8 @@ if(feof($fp)){
 	header('Location:setup_admin.php');
 }
 else{
-  $message = ftell($fp).'/'.filesize($fileSQL).'<br/><br/><span>'.(round(ftell($fp)/filesize($fileSQL), 2)*100).'%</span><br/><br/>'.'Please wait for automatic browser refresh!';
+	$amount = ftell($fp).'/'.filesize($fileSQL);
+	$percentage = (round(ftell($fp)/filesize($fileSQL), 2)*100);
 }
 ?>
 
@@ -76,7 +77,12 @@ else{
 			<p class="heading">mangoO Setup Assistant</p>
 			<div class="setup">
 				<p>Database Import</p>
-				<p id="message"><?PHP echo $message; ?></p>
+				<div class="progress">
+					<div class="progress back"></div>
+					<div class="progress over" style="width:<?PHP echo $percentage;?>%;"></div>
+				</div>
+				<p id="message" style="position:relative; top:-33px;"><?PHP echo $percentage;?>%</p>
+				<p id="message">Please wait for browser refresh!<br/>Do not leave this page!</p>
 			</div>
 		</div>
 	</body>
