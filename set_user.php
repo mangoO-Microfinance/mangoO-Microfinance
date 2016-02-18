@@ -4,8 +4,7 @@
 	check_logon();
 	check_admin();
 	connect();
-	$user_id = 0;
-	$error = "no";
+	$user_id = NULL;
 	
 	//Select all users from USER
 	$users = array();
@@ -40,23 +39,25 @@
 	//SAVE Button
 	if(isset($_POST["save_changes"])){
 		
+		// Include password pepper
+		require 'config/pepper.php';
+		
 		//Sanitize user input
 		$user_id = sanitize($_POST['user_id']);
 		$user_name = sanitize($_POST['user_name']);
-		include 'salt.php';
-		$user_pw = sha1($salt1.(sanitize($_POST['user_pw'])).$salt2);
-		$user_pw_conf = sha1($salt1.(sanitize($_POST['user_pw_conf'])).$salt2);
+		$user_pw = password_hash((sanitize($_POST['user_pw'])).$pepper, PASSWORD_DEFAULT);
+		$ugroup = sanitize($_POST['ugroup']);
 		if($user_id == 1) $ugroup = 1;
-		else $ugroup = sanitize($_POST['ugroup']);
-		$timestamp = time();	
+		$timestamp = time();
 		
-		if($user_id == 0){
-			//Insert new user into USER
-			$sql_insert = "INSERT INTO user (user_name, user_pw, ugroup_id, user_created) VALUES ('$user_name', '$user_pw', '$ugroup', '$timestamp')";
-			$query_insert = mysql_query($sql_insert);
+		if($user_id == NULL){
+			// Insert new user into USER
+			$sql_user_ins = "INSERT INTO user (user_name, user_pw, ugroup_id, user_created) VALUES ('$user_name', '$user_pw', '$ugroup', '$timestamp')";
+			$query_user_ins = mysql_query($sql_user_ins);
+			check_sql($query_user_ins);
 		}
 		else {
-			//Update existing user
+			// Update existing user
 			$sql_user_upd = "UPDATE user SET user_name = '$user_name', user_pw = '$user_pw', ugroup_id = $ugroup, user_created = $timestamp WHERE user_id = $user_id";
 			$query_user_upd = mysql_query($sql_user_upd);
 			check_sql($query_user_upd);
@@ -72,7 +73,10 @@
 				fail = validateUser(form.user_name.value, <?PHP echo json_encode($user_names).', '.$user_id; ?>)
 				fail += validatePw(form.user_pw.value, form.user_pw_conf.value)
 				if (fail == "") return true
-				else { alert(fail); return false }
+				else { 
+					alert(fail); 
+					return false
+				}
 			}
 		</script>
 		<script src="functions_validate.js"></script>
@@ -80,10 +84,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(6);
-		?>
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(6); ?>
 		<div id="menu_main">
 			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>
@@ -96,7 +97,8 @@
 		<!-- LEFT SIDE: Create New User Form -->
 		<div class="content_left">
 			<div class="content_settings" style="text-align:left; width:80%;">
-				<?PHP echo '<p class="heading">'.$heading.'</p>'; ?>
+				
+				<p class="heading"><?PHP echo $heading; ?></p>
 			
 				<form action="set_user.php" method="post" onSubmit="return validate(this)">
 				

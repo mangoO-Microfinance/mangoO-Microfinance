@@ -5,10 +5,15 @@
 	
 	if(isset($_POST['adminSetup'])){
 		
+		// Make new passwort pepper
+		require 'setup_makepepper.php';
+		
+		// Include passwort pepper
+		require 'config/pepper.php';
+		
 		// Sanitize user input	
-		require 'salt.php';
 		$admin_name = sanitize($_POST['admin_name']);
-		$admin_pass = sha1($salt1.(sanitize($_POST['admin_pass'])).$salt2);
+		$admin_pass = password_hash ((sanitize($_POST['admin_pass'])).$pepper, PASSWORD_DEFAULT);
 		$timestamp = time();
 
 		// Connect to Database Server

@@ -34,10 +34,18 @@
 	* Check if current user is logged in
 	*/
 	function check_logon() {
-		$fingerprint = md5($_SERVER['REMOTE_ADDR'].'dh(6Km4$X*'.$_SERVER['HTTP_USER_AGENT']);
+		$fingerprint = fingerprint();
 		session_start();
 		if (!isset($_SESSION['log_user']) || $_SESSION['log_fingerprint'] != $fingerprint) logout();
 		session_regenerate_id();
+	}
+	
+/**
+	* Generate unique fingerprint for every user session
+	* @return string fingerprint : Unique fingerprint generated from remote server address, random string, and user agent
+	*/
+	function fingerprint(){
+		return $fingerprint = md5($_SERVER['REMOTE_ADDR'].'jikI/20Y,!'.$_SERVER['HTTP_USER_AGENT']);
 	}
 	
 /**

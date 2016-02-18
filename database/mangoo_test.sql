@@ -1,11 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 4.2.11
 -- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Erstellungszeit: 10. Feb 2016 um 10:52
--- Server Version: 5.6.21
--- PHP-Version: 5.6.3
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -80,7 +76,7 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 (2, '002/2006', 'Jan Hus', 78793200, 1, 'Prague', '+420 1071372', '', 'Reformer', 2, 'Joh. Joseph Hu&szlig;', 'Father', NULL, 1159401600, 0, 1424398400, 1, 1454670766, 'uploads/photos/cust2_146x190.jpg', 1),
 (3, '003/2006', 'Jean Calvin', -256006800, 1, 'Geneva', '0760-548193', 'j.calvin@reformed.org', 'Reformer', 2, 'Marie Calvin', 'Wife', NULL, 1157587200, 0, 1458090800, 1, 1454670786, 'uploads/photos/cust3_146x190.jpg', 1),
 (4, '004/2006', 'Huldrych Zwingli', -505702800, 1, 'Zurich', '+44 121 548621', '', 'Reformer', 2, '', '', NULL, 1159747200, 0, 1458954800, 1, 1454670791, 'uploads/photos/cust4_146x190.jpg', 1),
-(5, '005/2006', 'Heinrich Bullinger', -5706000, 1, 'Zurich', '0854 12135', '', 'Reformer', 2, '', '', NULL, 1158710400, 0, 1426990400, 1, 1454670800, NULL, 1),
+(5, '005/2006', 'Heinrich Bullinger', -5706000, 1, 'Zurich', '0854 12135', '', 'Reformer', 2, '', '', NULL, 1158710400, 0, 1426990400, 1, 1454670800, 'uploads/photos/cust5_146x190.jpg', 1),
 (6, '006/2006', 'Ila Kimble  ', -362106000, 4, 'Luwero Diocese', '0772-349669', '', 'Clergy Man', 2, 'Kimble Morgan', 'Brother', NULL, 1161820800, 1, 1460682800, 1, 1454655588, NULL, 1),
 (7, '007/2006', 'Lesha Detweiler  ', -7200, 1, 'Ndejje', '0782-453096', '', 'Clergy', 2, '', '', NULL, 1156377600, 0, 1428718400, 1, 1420070400, NULL, 1),
 (8, '008/2006', 'Elisabeth Nalongo', 252543600, 2, 'Nakasongola', '0897 456163', '', '', 3, '', '', NULL, 1157587200, 0, 1421621995, 1, 1453822502, NULL, 1),
@@ -125,7 +121,7 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 (47, '047/2006', 'Joannie Gust  ', 75589200, 2, 'Kikoma Wobulenzi', NULL, '', 'Peasant - Farmer', 2, '', '', NULL, 1157846400, 0, 1463278400, 1, 1420070400, NULL, 1),
 (48, '048/2006', 'Fermina Collazo  ', -240890400, 2, 'Kikona Wobulenzi Central', NULL, '', 'Peasant / Farmer', 2, '', '', NULL, 1157932800, 0, 1464142400, 1, 1420070400, NULL, 1),
 (49, '049/2006', 'Lavenia Byler  ', -252468000, 1, 'Kayindu C/U', '0785-772868', '', 'Lay-Reader', 2, '', '', NULL, 1157500800, 0, 1465006400, 1, 1420070400, NULL, 1),
-(50, '050/2006', 'Willetta Moreau  ', 167522400, 1, 'Katuugo Parish', '0782-447156', '', 'Lay-Reader / Tailor', 2, '', '', NULL, 1157414400, 0, 1465870400, 1, 1420070400, NULL, 1),
+(50, '050/2006', 'Patrick Mukisa', 167439600, 1, 'Katuugo Parish', '0782-447156', '', 'Lay-Reader / Tailor', 2, '', '', NULL, 1157414400, 0, 1465870400, 1, 1455603209, NULL, 1),
 (51, '051/2008', 'Alicia Wehner  ', -207453600, 2, 'Waluleeta Makulubita', '0782-461460', '', 'Trainer / Social Worker', 2, '', '', NULL, 1199664000, 0, 1466734400, 1, 1420070400, NULL, 1),
 (52, '052/2006', 'Ocie Edds  ', -605412000, 1, 'Administrator Luweero Diocese', NULL, '', 'Diocesan Bishop', 2, '', '', NULL, 1158796800, 0, 1467598400, 1, 1420070400, NULL, 1),
 (53, '053/2006', 'Darcy Read  ', 309736800, 2, 'Luwero TC', NULL, '', 'Secretary', 1, '', '', NULL, 1158796800, 0, 1468462400, 1, 1420070400, NULL, 1),
@@ -343,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `exp_voucher` int(11) DEFAULT NULL,
   `exp_created` int(11) DEFAULT NULL,
   `user_id` int(6) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `expenses`
@@ -352,8 +348,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
 INSERT INTO `expenses` (`exp_id`, `cust_id`, `exptype_id`, `exp_amount`, `exp_date`, `exp_text`, `exp_recipient`, `exp_receipt`, `exp_voucher`, `exp_created`, `user_id`) VALUES
 (1, NULL, 1, 15000, 1453158000, 'Airtime for Manager', 'Airtel', 0, 201, 1453207875, 2),
 (2, NULL, 6, 60000, 1453676400, '2GB data bundle', 'MTN', 70812, 562, 1453213126, 1),
-(3, NULL, 4, 50000, 1454281200, 'Power Bill for January', 'UMEME', 21511494, 156, 1454318269, 1),
-(4, NULL, 19, 453567, 1451516400, 'Distributed Interest for 2015', NULL, NULL, NULL, 1455093137, 1);
+(3, NULL, 4, 50000, 1454281200, 'Power Bill for January', 'UMEME', 21511494, 156, 1454318269, 1);
 
 -- --------------------------------------------------------
 
@@ -558,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `logrec` (
   `logrec_start` int(11) DEFAULT NULL,
   `logrec_end` int(11) DEFAULT NULL,
   `logrec_logout` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `logrec`
@@ -567,7 +562,33 @@ CREATE TABLE IF NOT EXISTS `logrec` (
 INSERT INTO `logrec` (`logrec_id`, `user_id`, `logrec_start`, `logrec_end`, `logrec_logout`) VALUES
 (1, 1, 1455027108, 1455092999, 0),
 (2, 1, 1455092999, 1455097924, 1),
-(3, 3, 1455094234, 1455097932, 1);
+(3, 3, 1455094234, 1455097932, 1),
+(4, 1, 1455270154, 1455274272, 0),
+(5, 3, 1455270902, 1455270906, 1),
+(6, 1, 1455274272, 1455274652, 1),
+(7, 3, 1455274330, 1455274333, 1),
+(8, 1, 1455278991, 1455278994, 1),
+(9, 1, 1455364759, 1455364765, 1),
+(10, 3, 1455368029, 1455368046, 1),
+(11, 1, 1455368206, 1455368245, 1),
+(12, 1, 1455520845, 1455520946, 1),
+(13, 3, 1455545157, 1455545160, 1),
+(14, 1, 1455559601, 1455560310, 1),
+(15, 1, 1455560580, 1455560587, 1),
+(16, 1, 1455562080, 1455563189, 1),
+(17, 1, 1455563230, 1455563239, 1),
+(18, 1, 1455603180, 1455603211, 1),
+(19, 1, 1455603453, 1455603612, 1),
+(20, 1, 1455722171, 1455722419, 1),
+(21, 1, 1455722527, 1455782480, 0),
+(22, 1, 1455782480, 1455782582, 1),
+(23, 3, 1455782601, 1455782603, 1),
+(24, 1, 1455782761, 1455782765, 1),
+(25, 1, 1455782777, 1455783188, 1),
+(26, 1, 1455783194, 1455783265, 0),
+(27, 1, 1455783265, 1455784747, 1),
+(28, 1, 1455784752, 1455788914, 1),
+(29, 1, 1455788274, 1455788281, 1);
 
 -- --------------------------------------------------------
 
@@ -1378,7 +1399,7 @@ INSERT INTO `ugroup` (`ugroup_id`, `ugroup_name`, `ugroup_admin`, `ugroup_delete
 CREATE TABLE IF NOT EXISTS `user` (
 `user_id` int(11) NOT NULL,
   `user_name` varchar(200) NOT NULL,
-  `user_pw` varchar(200) NOT NULL,
+  `user_pw` varchar(255) NOT NULL,
   `ugroup_id` int(11) NOT NULL,
   `user_created` int(15) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -1388,9 +1409,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_name`, `user_pw`, `ugroup_id`, `user_created`) VALUES
-(1, 'admin', '3c29a3c4aff054d9557eea510df85960712812d2', 1, 1452869051),
-(2, 'ext-admin', '3c29a3c4aff054d9557eea510df85960712812d2', 4, 1453231226),
-(3, 'John Doe', '3c29a3c4aff054d9557eea510df85960712812d2', 2, 1436350633);
+(1, 'admin', '$2y$10$nFgCoIxOQgYDVcDHBVdUnOOD4jjaeNMCAkhlF9kpSl1iJuEuGOr2C', 1, 1455784732),
+(2, 'ext-admin', '$2y$10$Tjd0kjm/PK70X.htxfAMyuH6A7e983u8ZUdAe/zgOjtFh1gyWcfxy', 4, 1455782789),
+(3, 'John Doe', '$2y$10$81nC8wfkvZfa/5p.6UdvF.lqXjPaUt8jcHjr6/l10fyfDd5WopHTe', 2, 1455782798);
 
 --
 -- Indizes der exportierten Tabellen
@@ -1550,7 +1571,7 @@ MODIFY `custsick_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT für Tabelle `expenses`
 --
 ALTER TABLE `expenses`
-MODIFY `exp_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `exp_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT für Tabelle `exptype`
 --
@@ -1585,7 +1606,7 @@ MODIFY `loanstatus_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT für Tabelle `logrec`
 --
 ALTER TABLE `logrec`
-MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT für Tabelle `ltrans`
 --
