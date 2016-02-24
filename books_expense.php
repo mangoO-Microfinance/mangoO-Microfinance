@@ -30,7 +30,7 @@
 	check_sql($query_expcur);
 	
 	//Select Types of Expenses from EXPTYPE
-	$sql_exptype = "SELECT * FROM exptype";
+	$sql_exptype = "SELECT * FROM exptype ORDER BY exptype_type";
 	$query_exptype = mysql_query($sql_exptype);
 	check_sql($query_exptype);
 ?>

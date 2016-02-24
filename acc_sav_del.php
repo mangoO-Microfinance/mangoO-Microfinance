@@ -11,19 +11,13 @@
 		//Sanitize input
 		$sav_id = sanitize($_GET['sav_id']);
 		
-		//Select information on transaction from SAVINGS
-		$sql_savtransaction = "SELECT sav_date, sav_receipt, savtype_id, cust_id FROM savings WHERE sav_id = $sav_id";
-		$query_savtransaction = mysql_query($sql_savtransaction);
-		check_sql($query_savtransaction);
-		$savtransaction = mysql_fetch_row($query_savtransaction);
-		
 		//Delete related incomes from INCOMES where applicable
-		$sql_delinc = "DELETE FROM incomes WHERE inc_date = $savtransaction[0] AND inc_receipt = $savtransaction[1] AND cust_id = $savtransaction[3]";
+		$sql_delinc = "DELETE FROM incomes WHERE sav_id = '$sav_id'";
 		$query_delinc = mysql_query($sql_delinc);
 		check_sql($query_delinc);
 		
 		//Delete entri(es) from SAVINGS
-		$sql_delsav = "DELETE FROM savings WHERE sav_date = $savtransaction[0] AND sav_receipt = $savtransaction[1] AND cust_id = $savtransaction[3]";
+		$sql_delsav = "DELETE FROM savings WHERE sav_id = '$sav_id' OR sav_mother = '$sav_id'";
 		$query_delsav = mysql_query($sql_delsav);
 		check_sql($query_delsav);
 		

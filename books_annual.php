@@ -4,11 +4,10 @@
 	check_logon();
 	connect();
 	$lastyear = date("Y", time())-1;
-
 	
-	/* DISTRIBUTE ANNUAL SAVINGS INTEREST
-		* 
-		*/
+/** 
+	* DISTRIBUTE ANNUAL SAVINGS INTEREST
+	*/
 	if(isset($_POST['int_distribute'])){
 		
 		//Sanitize user input
@@ -74,9 +73,9 @@
 		check_sql($query_int_exp );
 	}
 	
-	/* DISTRIBUTE ANNUAL DIVIDEND
-		* 
-		*/	
+/**
+	* DISTRIBUTE ANNUAL DIVIDEND 
+	*/	
 	if(isset($_POST['div_distribute'])){
 		
 		//Sanitize user input

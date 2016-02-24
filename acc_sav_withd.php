@@ -19,29 +19,35 @@
 		$sav_deduct = sanitize($_POST['sav_deduct']);
 		$timestamp = time();
 		
-		//Insert into SAVINGS
+		// Insert into SAVINGS
 		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', $sav_amount, '2', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		check_sql($query_insert);
 		
-		//Insert Fee into INCOMES
-		$sql_insert_income = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '2', '$_SESSION[fee_withdraw]', '$sav_date', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
+		// Get SAV_ID for the latest entry
+		$sql_savid = "SELECT MAX(sav_id) FROM savings WHERE cust_id = '$_SESSION[cust_id]' AND sav_receipt = '$sav_receipt' AND sav_created = '$timestamp'";
+		$query_savid = mysql_query($sql_savid);
+		check_sql($query_savid);
+		$sav_id = mysql_fetch_row($query_savid);
+		
+		// Insert Fee into INCOMES
+		$sql_insert_income = "INSERT INTO incomes (cust_id, inctype_id, sav_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '2', '$sav_id[0]', '$_SESSION[fee_withdraw]', '$sav_date', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert_income = mysql_query($sql_insert_income);
 		check_sql($query_insert_income);
 		
-		//Insert Fee into SAVINGS
+		// Insert Fee into SAVINGS, if applicable
 		if($sav_deduct == 1){
 			$fee_withdraw_neg = ($_SESSION['fee_withdraw'] * -1);
-			$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$fee_withdraw_neg', '4', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
+			$sql_insert_fee = "INSERT INTO savings (sav_mother, cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$sav_id[0]', '$_SESSION[cust_id]', '$sav_date', '$fee_withdraw_neg', '4', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
 			$query_insert_fee = mysql_query($sql_insert_fee);
 			check_sql($query_insert_fee);
 		}
 		
-		//Refer to acc_sav_withd.php
+		// Forward to acc_sav_withd.php
 		header('Location: acc_sav_withd.php?cust='.$_SESSION['cust_id']);
 	}
 	
-	//Get current customer's details
+	// Get current customer's details
 	$result_cust = get_customer();
 	
 	//Get Savings Balance
