@@ -53,7 +53,7 @@
 		$_SESSION['loan_id'] = $result_newloanid['MAX(loan_id)'];
 		
 		//Insert Loan Application Fee into INCOMES
-		$sql_inc_laf = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '7', '$_SESSION[fee_loanappl]', '$loan_date', '$loan_appfee_receipt', $timestamp, '$_SESSION[log_id]')";
+		$sql_inc_laf = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', '7', '$_SESSION[fee_loanappl]', '$loan_date', '$loan_appfee_receipt', $timestamp, '$_SESSION[log_id]')";
 		$query_inc_laf = mysql_query($sql_inc_laf);
 		check_sql($query_inc_laf);
 		

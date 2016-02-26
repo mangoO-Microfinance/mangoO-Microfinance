@@ -39,7 +39,7 @@
 		$_SESSION['cust_id'] = $maxid['MAX(cust_id)'];
 		
 		//Insert Entrance Fee and Stationary Sales into INCOMES
-		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ($_SESSION[cust_id], '1', $_SESSION[fee_entry], $cust_since, '$_SESSION[receipt_no]', $timestamp, $_SESSION[log_id]), ($_SESSION[cust_id], '6', $_SESSION[fee_stationary], $cust_since, '$_SESSION[receipt_no]', $timestamp, $_SESSION[log_id])";
+		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, 	inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ($_SESSION[cust_id], '1', $_SESSION[fee_entry], $cust_since, '$_SESSION[receipt_no]', $timestamp, $_SESSION[log_id]), ($_SESSION[cust_id], '6', $_SESSION[fee_stationary], $cust_since, '$_SESSION[receipt_no]', $timestamp, $_SESSION[log_id])";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
 		check_sql($query_insert_fee);
 		

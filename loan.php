@@ -25,7 +25,7 @@
 			include ($_SESSION['set_intcalc']);
 			
 			//Insert Loan Fee into INCOMES
-			$sql_inc_lf = "INSERT INTO incomes (cust_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '3', '$loan_fee', '$loan_dateout', '$loan_fee_receipt', '$timestamp', '$_SESSION[log_id]')";
+			$sql_inc_lf = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', '3', '$loan_fee', '$loan_dateout', '$loan_fee_receipt', '$timestamp', '$_SESSION[log_id]')";
 			$query_inc_lf = mysql_query($sql_inc_lf);
 			check_sql($query_inc_lf);
 			
@@ -88,11 +88,11 @@
 					$loan_repay_principal = 0;
 				}
 				
-				/** 
-					* If, however, the paid amount exceeds 
-					* the due interest PLUS the total outstanding balance, 
-					* the excess money is used on interest.
-					*/
+			/** 
+				* If, however, the paid amount exceeds 
+				* the due interest PLUS the total outstanding balance, 
+				* the excess money is used on interest.
+				*/
 				elseif ($loan_repay_amount > ($_SESSION['interest_sum'] + $_SESSION['p_balance'])){
 					$loan_repay_principal = $_SESSION['p_balance'];
 					$loan_repay_interest = $loan_repay_amount - $loan_repay_principal;

@@ -23,6 +23,13 @@
 			check_sql($query_delsav);
 		}
 		
+		// Delete from LTRANS where applicaple
+		if($income[4] != NULL){
+			$sql_delltrans = "DELETE FROM ltrans WHERE ltrans_id = '$income[4]'";
+			$query_delltrans = mysql_query($sql_delltrans);
+			check_sql($query_delltrans);
+		}
+		
 		// If Loan Default Fine is deleted, flag loan transaction as not fined
 		if ($income[1] == 5){
 			$sql_revert_fined = "UPDATE ltrans SET ltrans_fined = 0 WHERE ltrans_id = '$income[4]'";

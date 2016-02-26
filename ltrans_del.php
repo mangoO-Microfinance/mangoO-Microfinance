@@ -34,7 +34,7 @@
 			$sql_delltrans = "DELETE FROM ltrans WHERE ltrans_id = $ltrans_id";
 		}
 		else{
-			$sql_delltrans = "UPDATE ltrans SET ltrans_date = NULL, ltrans_principal = NULL, ltrans_interest = NULL, ltrans_receipt = NULL, user_id = '$_SESSION[log_id]' WHERE ltrans_id = $ltrans_id";
+			$sql_delltrans = "UPDATE ltrans SET ltrans_date = NULL, ltrans_principal = NULL, ltrans_interest = NULL, ltrans_fined = 0, ltrans_receipt = NULL, user_id = '$_SESSION[log_id]' WHERE ltrans_id = $ltrans_id";
 		}
 		$query_delltrans = mysql_query($sql_delltrans);
 		check_sql($query_delltrans);

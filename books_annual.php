@@ -41,6 +41,7 @@
 		$int_total = 0;
 		
 		foreach ($cust as $c){
+			
 			foreach ($savings as $s){
 				if ($s['cust_id'] == $c['cust_id']){
 					
@@ -56,14 +57,15 @@
 				}
 			}
 			
-			// Calculate dividend for current customer
+			// Calculate annual interest for current customer
 			$int_cust = round($int_base /100 * $int_rate,0);
 		
 			// Insert interest in SAVINGS
-			$sql_cust_int = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $int_year_end, $int_cust, 3, $timestamp, $_SESSION[log_id])";
-			$query_cust_int = mysql_query($sql_cust_int);
-			check_sql($query_cust_int);
-						
+			if($int_cust > 0){
+				$sql_cust_int = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $int_year_end, $int_cust, 3, $timestamp, $_SESSION[log_id])";
+				$query_cust_int = mysql_query($sql_cust_int);
+				check_sql($query_cust_int);
+			}
 			$int_total = $int_total + $int_cust;
 			$int_base = 0;
 		}
@@ -130,9 +132,11 @@
 			$div_cust = round($div_fact * $div_value,0);
 			
 			// Insert dividend in SAVINGS
-			$sql_cust_div = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $div_year_end, $div_cust, 9, $timestamp, $_SESSION[log_id])";
-			$query_cust_div = mysql_query($sql_cust_div);
-			check_sql($query_cust_div);
+			if($div_cust > 0){
+				$sql_cust_div = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $div_year_end, $div_cust, 9, $timestamp, $_SESSION[log_id])";
+				$query_cust_div = mysql_query($sql_cust_div);
+				check_sql($query_cust_div);
+			}
 						
 			$div_total = $div_total + $div_cust;
 			$div_fact=0;
