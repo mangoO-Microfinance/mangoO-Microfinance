@@ -249,11 +249,11 @@
 					<tr>
 						<td style="font-weight:bold;">Date of Applic.:</td>
 						<td>
-							<input type="text" name="loan_date" id="loan_date" placeholder="DD.MM.YYYY" value="<?PHP echo date("d.m.Y",$timestamp) ?>" />
+							<input type="text" id="datepicker" name="loan_date" placeholder="DD.MM.YYYY" value="<?PHP echo date("d.m.Y",$timestamp) ?>" />
 						</td>
 						<td style="font-weight:bold;">Receipt No:</td>
 						<td>
-							<input type="number" class="defaultnumber" name="loan_appfee_receipt" id="loan_appfee_receipt" placeholder="for Loan Appl. Fee" />
+							<input type="number" class="defaultnumber" name="loan_appfee_receipt" placeholder="for Loan Appl. Fee" />
 						</td>
 					</tr>
 				

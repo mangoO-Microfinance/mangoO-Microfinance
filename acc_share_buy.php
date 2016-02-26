@@ -113,7 +113,7 @@
 					<tr>
 						<td>Date:</td>
 						<td>
-							<input type="text" name="share_date" <?PHP echo 'value="'.date("d.m.Y", $timestamp).'"' ?> />
+							<input type="text" id="datepicker" name="share_date" <?PHP echo 'value="'.date("d.m.Y", $timestamp).'"' ?> />
 						</td>
 					</tr>
 					<tr>

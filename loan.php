@@ -395,7 +395,7 @@
 					<tr>
 						<td>Issued on:</td>
 						<td>
-							<input type="text" name="loan_dateout"
+							<input type="text" id="datepicker" name="loan_dateout"
 								<?PHP 
 								if($result_loan['loan_issued'] == 1) {
 									echo ' disabled="disabled"';
@@ -558,7 +558,7 @@
 				<table id="tb_fields" style="width:75%">
 					<tr>
 						<td>Date Paid:</td>
-						<td><input type="text" name="loan_repay_date" value="'.date("d.m.Y", $timestamp).'" placeholder="DD.MM.YYYY" /></td>
+						<td><input type="text" id="datepicker2" name="loan_repay_date" value="'.date("d.m.Y", $timestamp).'" placeholder="DD.MM.YYYY" /></td>
 						<td>Amount Paid:</td>
 						<td><input type="number" name="loan_repay_amount" class="defaultnumber" placeholder="'.$_SESSION['set_cur'].'" /></td>
 					</tr>
@@ -583,9 +583,9 @@
 				if ($result_loan['loanstatus_id'] == 2 && $loan_default != 0) 
 					echo '<table id="tb_fields" style="width:75%; background:#a7dbd8">
 									<tr>
-										<td>Date Paid:</td>
+										<td>Date:</td>
 										<td>
-											<input type="text" name="fine_date" value="'.date("d.m.Y", $timestamp).'" placeholder="DD.MM.YYYY" />
+											<input type="text" id="datepicker3" name="fine_date" value="'.date("d.m.Y", $timestamp).'" placeholder="DD.MM.YYYY" />
 										</td>
 										<td>Amount fined:</td>
 										<td>

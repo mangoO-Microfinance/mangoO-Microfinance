@@ -139,9 +139,24 @@
 			<meta http-equiv="Content-Style-Type" content="text/css">
 			<meta name="robots" content="noindex, nofollow">
 			<title>mangoO | '.$title.'</title>
-			<link rel="stylesheet" type="text/css" href="css/mangoo.css" />
+			<link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">
+			<link rel="stylesheet" href="css/mangoo.css" />
 			<link rel="stylesheet" href="ico/font-awesome/css/font-awesome.min.css">
-			<link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">';
+			<link rel="stylesheet" href="jquery/jquery-ui-1.11.4/jquery-ui.min.css">
+			<script src="jquery/jquery-2.2.1.min.js"></script>
+			<script src="jquery/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+			<script>
+				$(function() {
+					$("#datepicker, #datepicker2, #datepicker3").datepicker({
+						showOtherMonths: true,
+						selectOtherMonths: true,
+						dateFormat: \'dd.mm.yy\',
+						changeMonth: true,
+						changeYear: true
+					});
+				});
+			</script>
+			';
 		if ($endFlag == 1) echo '</head>';
 	}
 

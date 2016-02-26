@@ -103,7 +103,7 @@
 				<table id="tb_fields">
 					<tr>
 						<td>Date:</td>
-						<td><input type="text" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" required="required" /></td>
+						<td><input type="text" id="datepicker" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" required="required" /></td>
 					</tr>
 					<tr>
 						<td>W/drawal Slip:</td>

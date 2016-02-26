@@ -73,7 +73,6 @@
 			<a href="books_annual.php">Annual Accounts</a>
 		</div>
 		
-			
 		<!-- LEFT SIDE: Form for entering new expenditure -->
 		<div class="content_left">
 			
@@ -84,7 +83,7 @@
 					<tr>
 						<td>Date:</td>
 						<td>
-							<input type="text" name="inc_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>"/>
+							<input type="text" id="datepicker" name="inc_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>"/>
 						</td>
 						<td>Type:</td>
 						<td>
@@ -161,7 +160,7 @@
 								<td>'.$row_inccur['inc_receipt'].'</td>
 								<td>'.$row_inccur['inc_text'].'</td>
 								<td>';
-								if ($_SESSION['log_delete'] == 1 and (!in_array($row_inccur['inctype_id'], $no_delete) or $row_inccur['cust_id'] == 0)) echo '<a href="books_income_del.php?inc_id='.$row_inccur['inc_id'].'&inctype='.$row_inccur['inctype_id'].'&cust='.$row_inccur['cust_id'].'" onClick="return randCheck();"><i class="fa fa-remove fa-lg"></i></a>';
+								if ($_SESSION['log_delete'] == 1 and (!in_array($row_inccur['inctype_id'], $no_delete) or $row_inccur['cust_id'] == 0)) echo '<a href="books_income_del.php?inc_id='.$row_inccur['inc_id'].'" onClick="return randCheck();"><i class="fa fa-remove fa-lg"></i></a>';
 				echo '	</td>	
 							</tr>';
 			}

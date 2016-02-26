@@ -198,7 +198,7 @@
 									</tr>
 									<tr>
 										<td>DoB:</td>
-										<td><input type="text" name="cust_dob" value="'.date("d.m.Y",$result_cust['cust_dob']).'" placeholder="DD.MM.YYYY" tabindex="4" /></td>
+										<td><input type="text" id="datepicker" name="cust_dob" value="'.date("d.m.Y",$result_cust['cust_dob']).'" placeholder="DD.MM.YYYY" tabindex="4" /></td>
 										<td>Relation:</td>
 										<td><input type="text" name="cust_heirrel" value="'.$result_cust['cust_heirrel'].'" tabindex="11" /></td>
 									</tr>

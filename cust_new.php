@@ -147,11 +147,11 @@
 					</tr>
 					<tr>
 						<td>DoB:</td>
-						<td><input type="text" name="cust_dob" placeholder="DD.MM.YYYY" tabindex="4" /></td>
+						<td><input type="text" id="datepicker" name="cust_dob" placeholder="DD.MM.YYYY" tabindex="4" /></td>
 						<td>Occupation:</td>
 						<td><input type="text" name="cust_occup" tabindex="9" /></td>
 						<td>Member since:</td>
-						<td><input type="text" name="cust_since" value="<?PHP echo date("d.m.Y", $timestamp) ?>" tabindex="13" /></td>
+						<td><input type="text" id="datepicker2" name="cust_since" value="<?PHP echo date("d.m.Y", $timestamp) ?>" tabindex="13" /></td>
 					</tr>
 					<tr>
 						<td>Marital Status:</td>

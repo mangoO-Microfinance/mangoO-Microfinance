@@ -76,7 +76,7 @@
 				<table id="tb_fields">
 					<tr>
 						<td>Date:</td>
-						<td><input type="text" name="exp_date" value="<?PHP echo date("d.m.Y", $timestamp); ?>"/></td>
+						<td><input type="text" id="datepicker" name="exp_date" value="<?PHP echo date("d.m.Y", $timestamp); ?>"/></td>
 						<td>Type:</td>
 						<td>
 							<select name="exptype_id">
