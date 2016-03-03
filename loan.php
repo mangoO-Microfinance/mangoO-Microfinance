@@ -229,7 +229,7 @@
 	}
 	
 	//Get Savings Balance
-	$sav_balance = get_savbalance();
+	$savbalance = get_savbalance($_SESSION['cust_id']);
 	
 	//Prepare array data export
 	$ltrans_exp_date = date("Y-m-d",time());
@@ -270,7 +270,7 @@
 				fail += validateAmount(form.loan_repay_amount.value)
 				fail += validateReceipt(form.loan_repay_receipt.value)
 				if (form.loan_repay_sav.checked){
-					fail += validateOverdraft(form.loan_repay_amount.value, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
+					fail += validateOverdraft(form.loan_repay_amount.value, <?PHP echo $savbalance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
 				}
 				if (fail == "") return true
 				else {alert(fail); return false}
@@ -280,7 +280,7 @@
 				fail = validateDate(form.fine_date.value)
 				fail += validateAmount(form.fine_amount.value)
 				if (form.fine_sav.checked){
-					fail += validateOverdraft(form.fine_amount.value, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
+					fail += validateOverdraft(form.fine_amount.value, <?PHP echo $savbalance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
 				}
 				fail += validateReceipt(form.fine_receipt.value)
 				if (fail == "") return true

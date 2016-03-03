@@ -1,7 +1,7 @@
 <?PHP
 
 //Select Subscription Defaulters from CUSTOMER
-$last_subscr = time() - 31622400; //Seconds for 366 days
+$last_subscr = time() - 31536000; //Seconds for 365 days
 $sql_subscrdef = "SELECT * FROM customer WHERE cust_active = 1 AND cust_lastsub < $last_subscr ORDER BY cust_lastsub, cust_id";
 $query_subscrdef = mysql_query($sql_subscrdef);
 check_sql($query_subscrdef);

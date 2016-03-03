@@ -6,6 +6,11 @@
 	check_custid();
 	$timestamp = time();
 		
+	
+	// Get current customer's details
+	$result_cust = get_customer();
+	$savbalance = get_savbalance($_SESSION['cust_id']);	
+	
 	//NEW LOAN-Button
 	if (isset($_POST['newloan'])){
 		
@@ -96,10 +101,6 @@
 			if ($guarant_count < $_SESSION['set_maxguar']) $guarantors[] = $row_cust;
 		}
 	}
-	
-	//Get current customer's details
-	$result_cust = get_customer();
-	$savbalance = get_savbalance();
 	
 	// Compute Maximum and Minimum principal amount
 	if ($_SESSION['set_maxlp'] != "" AND $_SESSION['set_maxpsr'] != ""){

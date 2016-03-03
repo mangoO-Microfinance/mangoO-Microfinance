@@ -8,6 +8,9 @@
 	//Generate Timestamp
 	$timestamp = time();
 	
+	// Get savings balance for current customer
+	$savbalance = get_savbalance($_SESSION['cust_id']);
+	
 	// WITHDRAW-Button
 	if (isset($_POST['withdraw'])){
 		
@@ -17,10 +20,10 @@
 		$sav_receipt = sanitize($_POST['sav_receipt']);
 		$sav_date = strtotime(sanitize($_POST['sav_date']));
 		$sav_deduct = sanitize($_POST['sav_deduct']);
-		$timestamp = time();
+		$sav_balance = $savbalance + $sav_amount;
 		
 		// Insert into SAVINGS
-		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', $sav_amount, '2', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', $sav_amount, $sav_balance, '2', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		check_sql($query_insert);
 		
@@ -38,7 +41,9 @@
 		// Insert Fee into SAVINGS, if applicable
 		if($sav_deduct == 1){
 			$fee_withdraw_neg = ($_SESSION['fee_withdraw'] * -1);
-			$sql_insert_fee = "INSERT INTO savings (sav_mother, cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$sav_id[0]', '$_SESSION[cust_id]', '$sav_date', '$fee_withdraw_neg', '4', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
+			$sav_balance = $sav_balance + $fee_withdraw_neg;
+			
+			$sql_insert_fee = "INSERT INTO savings (sav_mother, cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$sav_id[0]', '$_SESSION[cust_id]', '$sav_date', '$fee_withdraw_neg', $sav_balance, '4', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
 			$query_insert_fee = mysql_query($sql_insert_fee);
 			check_sql($query_insert_fee);
 		}
@@ -49,23 +54,20 @@
 	
 	// Get current customer's details
 	$result_cust = get_customer();
-	
-	//Get Savings Balance
-	$sav_balance = get_savbalance();
 ?>
 
 <html>
 	<?PHP include_Head('Savings Withdrawal',0) ?>	
 		<script>
 			function validate(form){
-				var sav_balance = <?PHP echo $sav_balance; ?>;
+				var savbalance = <?PHP echo $savbalance; ?>;
 				var minsavbal = <?PHP echo $_SESSION['set_msb']; ?>;
 				if (document.getElementById('sav_deduct').checked) var wd_fee = <?PHP echo $_SESSION['fee_withdraw']; ?>;
 					else var wd_fee = 0;
 				fail = validateDate(form.sav_date.value)
 				fail += validateSlip(form.sav_slip.value)
 				fail += validateAmount(form.sav_amount.value)
-				fail += validateOverdraft(form.sav_amount.value, sav_balance, wd_fee, minsavbal)
+				fail += validateOverdraft(form.sav_amount.value, savbalance, wd_fee, minsavbal)
 				fail += validateReceipt(form.sav_receipt.value)
 				if (fail == "") return true
 				else { alert(fail); return false }
@@ -77,11 +79,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				include_Menu(2);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP include_Menu(2); ?>
 		<div id="menu_main">
 			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
 			<a href="cust_search.php">Search</a>

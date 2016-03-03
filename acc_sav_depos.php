@@ -7,6 +7,9 @@
 
 	//Generate timestamp
 	$timestamp = time();
+		
+	// Get savings balance for current customer
+	$savbalance = get_savbalance($_SESSION['cust_id']);
 	
 	//DEPOSIT-Button
 	if (isset($_POST['deposit'])){
@@ -15,10 +18,10 @@
 		$sav_amount = sanitize($_POST['sav_amount']);
 		$sav_receipt = sanitize($_POST['sav_receipt']);
 		$sav_date = strtotime(sanitize($_POST['sav_date']));
-		$timestamp = time();
+		$sav_balance = $savbalance + $sav_amount;
 		
 		//Insert into SAVINGS
-		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '$sav_balance', '1', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		check_sql($query_insert);
 		

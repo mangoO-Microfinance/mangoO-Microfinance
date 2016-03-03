@@ -116,7 +116,7 @@
 					<tr>
 						<td>Number:</td>
 						<td><input type="text" name="cust_no" value="<?PHP echo $new_id; ?>" tabindex="1" /></td>
-						<td>Residence:</td>
+						<td>Address:</td>
 						<td><input type="text" name="cust_address" placeholder="Place of Residence" tabindex="6" /></td>
 						<td>Representative:</td>
 						<td><input type="text" name="cust_heir" tabindex="11" /></td>

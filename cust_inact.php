@@ -54,7 +54,7 @@
 				<th>Gender</th> 
 				<th>DoB</th> 
 				<th>Occupation</th>
-				<th>Place of Residence</th> 
+				<th>Address</th> 
 				<th>Phone No.</th>
 				<th>Memb. since</th>
 			</tr>
@@ -75,7 +75,7 @@
 							<td>'.date("d.m.Y",$row_custinact['cust_since']).'</td>
 						</tr>';
 				
-				array_push($_SESSION['rep_export'], array("Cust. No." => $row_custinact['cust_no'], "Customer Name" => $row_custinact['cust_name'], "DoB" => date("d.m.Y",$row_custinact['cust_dob']), "Gender" => $row_custinact['custsex_name'], "Occupation" => $row_custinact['cust_occup'], "Place of Residence" => $row_custinact['cust_address'], "Phone No." => $row_custinact['cust_phone'], "Member since" => date("d.m.Y",$row_custinact['cust_since'])));
+				array_push($_SESSION['rep_export'], array("Cust. No." => $row_custinact['cust_no'], "Customer Name" => $row_custinact['cust_name'], "DoB" => date("d.m.Y",$row_custinact['cust_dob']), "Gender" => $row_custinact['custsex_name'], "Occupation" => $row_custinact['cust_occup'], "Address" => $row_custinact['cust_address'], "Phone No." => $row_custinact['cust_phone'], "Member since" => date("d.m.Y",$row_custinact['cust_since'])));
 			}
 			?>
 		</table>

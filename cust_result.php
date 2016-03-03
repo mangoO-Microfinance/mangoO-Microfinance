@@ -78,7 +78,7 @@
 					<th>DoB</th> 
 					<th>Gender</th> 
 					<th>Occupation</th>
-					<th>Place of Residence</th>
+					<th>Address</th>
 					<th>Phone No.</th>
 				</tr>
 				<?PHP		

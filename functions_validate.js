@@ -12,7 +12,7 @@ function validateDob(field) {
 }
 
 function validateAddress(field) {
-	if (field == "") return "Please enter a Place of Residence.\n\n"
+	if (field == "") return "Please enter an Address.\n\n"
 	return ""
 }
 

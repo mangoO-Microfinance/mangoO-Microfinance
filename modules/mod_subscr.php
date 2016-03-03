@@ -11,16 +11,20 @@ if(isset($_POST['subscr_renew'])){
 	//Sanitize user input
 	$subscr_date = strtotime(sanitize($_POST['subscr_date']));
 	$subscr_receipt = sanitize($_POST['subscr_receipt']);
+	$subscr_from_sav = sanitize($_POST['subscr_from_sav']);
 	$timestamp = time();
 	$sav_id = array();
 	
+	
 	// Get Subscription Fee
 	get_fees();
-	$fee_subscr_sav = $_SESSION['fee_subscr'] * (-1);
 	
 	// Insert Subscription Fee into SAVINGS if applicable
-	if ($_POST['subscr_from_sav'] == 1){
-		$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', '5', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
+	if ($subscr_from_sav == 1){
+		$fee_subscr_sav = $_SESSION['fee_subscr'] * (-1);
+		$sav_balance = $savbalance + $fee_subscr_sav;
+		
+		$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', $sav_balance, '5', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
 		check_sql($query_insert_fee);
 		

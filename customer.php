@@ -10,6 +10,9 @@
 	//Generate timestamp
 	$timestamp = time();
 	
+	//Calculate Balance on Savings account
+	$savbalance = get_savbalance($_SESSION['cust_id']);
+	
 	//UPDATE-Button
 	if (isset($_POST['update'])){
 				
@@ -73,9 +76,6 @@
 		$share_amount = $share_amount + $row_shares['share_amount'];
 		$share_value = $share_value + $row_shares['share_value'];
 	}
-	
-	//Calculate Balance on Savings account
-	$savbalance = get_savbalance();
 	
 	//Select the five most recent savings transactions for display
 	$sql_sav = "SELECT * FROM savings, savtype WHERE savings.savtype_id = savtype.savtype_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date DESC, sav_id DESC LIMIT 5" ;
@@ -207,7 +207,7 @@
 										<td>Subscrip. expires:</td>
 										<td><input type="text" name="cust_lastsub" value="'.date("d.m.Y",$result_cust['cust_lastsub']+31536000).'" disabled="disabled"/></td>';
 									else echo '<td></td><td></td>';
-							echo '<td>Residence:</td>
+							echo '<td>Address:</td>
 										<td><input type="text" name="cust_address" value="'.$result_cust['cust_address'].'" placeholder="Place of Residence" tabindex="5" /></td>
 										<td>Sickness:</td>
 										<td>
@@ -243,7 +243,7 @@
 					?>
 				</table>
 				
-				<!-- 
+				<!--
 				<input type="button" name="membership" value="Subscription" onclick="setVisibility('content_hidden', 'block');" /> 
 				-->
 			</form>

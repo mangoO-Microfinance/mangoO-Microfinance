@@ -186,17 +186,19 @@
 			<ul>
 				<li'; 
 				if ($tab_no == 1) echo ' id="tab_selected"';
-				echo '><a href="start.php"><i class="fa fa-home fa-fw"></i> Start</a></li>
+				echo '><a href="start.php"><i class="fa fa-tachometer fa-fw"></i> Dashboard</a></li>
 				<li';
 				if ($tab_no == 2) echo ' id="tab_selected"';
-				echo '><a href="cust_search.php"><i class="fa fa-user fa-fw"></i> Customers</a></li>
+				echo '><a href="cust_search.php"><i class="fa fa-group fa-fw"></i> Customers</a></li>
 				<li';
 				if ($tab_no == 3) echo ' id="tab_selected"';
 				echo '><a href="loan_search.php"><i class="fa fa-percent fa-fw"></i> Loans</a></li>
 				<li';
 				if ($tab_no == 4) echo ' id="tab_selected"';
-				echo '><a href="books_expense.php"><i class="fa fa-calculator fa-fw"></i> Accounting</a></li>';
-				
+				echo '><a href="books_expense.php"><i class="fa fa-calculator fa-fw"></i> Accounting</a></li>
+				<li';
+				if ($tab_no == 7) echo ' id="tab_selected"';
+				echo '><a href="empl_curr.php"><i class="fa fa-male fa-fw"></i> Employees</a></li>';
 				if ($_SESSION['log_report'] == 1){
 					echo '<li';
 					if ($tab_no == 5) echo ' id="tab_selected"';
@@ -206,7 +208,7 @@
 				if ($_SESSION['log_admin'] == 1){
 					echo '<li';
 					if ($tab_no == 6) echo ' id="tab_selected"';
-					echo '><a href="set_basic.php"><i class="fa fa-cog fa-fw"></i> Settings</a></li>';
+					echo '><a href="set_basic.php"><i class="fa fa-wrench fa-fw"></i> Settings</a></li>';
 				}
 			echo '</ul>
 		</div>';
@@ -378,9 +380,20 @@
 	}
 	
 /**	
-	* Calculate current customer's savings account balance
-	* @return int sav_balance : Current savings account balance
+	* Calculate a given customer's savings account balance
+	* @return int sav_balance : Current savings account balance for given customer
 	*/
+	function get_savbalance($cust_id){
+		$sql_savbal = "SELECT savbal_balance FROM savbalance WHERE cust_id = $cust_id";
+		$query_savbal = mysql_query($sql_savbal);
+		check_sql($query_savbal);
+		
+		$savbal = mysql_fetch_assoc($query_savbal);
+		
+		return $savbal['savbal_balance'];
+	}
+	
+	/*
 	function get_savbalance(){
 		$sql_savbal = "SELECT sav_amount FROM savings WHERE cust_id = '$_SESSION[cust_id]'";
 		$query_savbal = mysql_query($sql_savbal);
@@ -391,6 +404,7 @@
 		}
 		return $sav_balance;
 	}
+	*/
 	
 /**
 	* Calculate current customer's share account balance
@@ -453,6 +467,30 @@
 		check_sql($query_custinact);
 		
 		return $query_custinact;
+	}
+
+/**
+	* Get all current employees
+	* @return array query_emplcurr : Array with the result of the SQL query
+	*/
+	function get_emplcurr(){
+		$sql_emplcurr = "SELECT * FROM employee, emplsex WHERE emplsex.emplsex_id = employee.emplsex_id AND empl_active = 1 ORDER BY empl_id";
+		$query_emplcurr = mysql_query($sql_emplcurr);
+		check_sql($query_emplcurr);
+		
+		return $query_emplcurr;
+	}
+
+/**
+	* Get all past employees
+	* @return array query_emplpast : Array with the result of the SQL query
+	*/
+	function get_emplpast(){
+		$sql_emplpast = "SELECT * FROM employee, emplsex WHERE emplsex.emplsex_id = employee.emplsex_id AND empl_active = 0 ORDER BY empl_id";
+		$query_emplpast = mysql_query($sql_emplpast);
+		check_sql($query_emplpast);
+		
+		return $query_emplpast;
 	}
 	
 /**
