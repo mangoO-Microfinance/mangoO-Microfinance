@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	//Select from CUSTOMER
@@ -29,7 +29,7 @@
 		}
 		$sql_custsearch = "SELECT * FROM customer, custsex WHERE $where AND customer.custsex_id = custsex.custsex_id ORDER BY customer.cust_id";
 		$query_custsearch = mysql_query($sql_custsearch);
-		check_sql ($query_custsearch);
+		checkSQL ($query_custsearch);
 		
 		//Make array for exporting data
 		$cust_exp_date = date("Y-m-d",time());
@@ -40,10 +40,10 @@
 ?>
 	
 <html>
-	<?PHP include_Head('Customer Search Result',1) ?>	
+	<?PHP includeHead('Customer Search Result',1) ?>	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php" id="item_selected">Search</a>
 			<a href="cust_new.php">New Customer</a>

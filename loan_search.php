@@ -1,18 +1,18 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 ?>
 
 <html>
 	<!-- HTML HEAD -->
-	<?PHP include_Head('Loan Search',1); ?>
+	<?PHP includeHead('Loan Search',1); ?>
 	
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(3);
+				includeMenu(3);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

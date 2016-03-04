@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	//Check where Re-direct comes from
@@ -32,11 +32,11 @@
 			if (in_array($ext, $valid_exts)) {
 				//Resize image
 				foreach ($sizes as $width => $height) {
-					$files[] = resize_img($width, $height);
+					$files[] = resizeImage($width, $height);
 				}
 				$sql_picpath = "UPDATE customer SET cust_pic = '$files[1]' WHERE cust_id = '$_SESSION[cust_id]'";
 				$query_picpath = mysql_query($sql_picpath);
-				check_sql($query_picpath);
+				checkSQL($query_picpath);
 				
 				if ($from == "new")	header('Location: acc_share_buy.php?cust='.$_SESSION['cust_id'].'&rec='.$_SESSION['receipt_no']);
 				else header('Location:customer.php?cust='.$_SESSION['cust_id']);
@@ -48,11 +48,11 @@
 ?>
 
 <html>
-	<?PHP include_Head('New Picture Upload',1) ?>
+	<?PHP includeHead('New Picture Upload',1) ?>
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<a href="cust_new.php" id="item_selected">New Customer</a>

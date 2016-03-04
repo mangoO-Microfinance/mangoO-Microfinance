@@ -1,16 +1,16 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_admin();
+	checkLogin();
+	checkPermissionAdmin();
 	connect();
 ?>
 <html>
-	<?PHP include_Head('Settings | Log Records',1) ?>
+	<?PHP includeHead('Settings | Log Records',1) ?>
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(6);
+				includeMenu(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -44,7 +44,7 @@
 				<?PHP
 				$sql_logrec = "SELECT * FROM logrec, user WHERE logrec.user_id = user.user_id ORDER BY logrec_id DESC LIMIT 500";
 				$query_logrec = mysql_query($sql_logrec);
-				check_sql($query_logrec);
+				checkSQL($query_logrec);
 				
 				$color=1;
 				while ($row_logrec = mysql_fetch_assoc($query_logrec)){					

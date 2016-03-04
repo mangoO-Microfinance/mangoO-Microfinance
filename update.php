@@ -37,7 +37,7 @@ $timestamp = time();
 		
 		$sql_savbal = "INSERT INTO savbalance (cust_id, savbal_balance, savbal_date, savbal_created, user_id) VALUES ('$c[cust_id]', '$sav_balance', '$sav_date', '$timestamp', '1')";
 		$query_savbal = mysql_query($sql_savbal);
-		check_sql($query_savbal);
+		checkSQL($query_savbal);
 		
 		echo ' Savings Balance: '.$sav_balance.'<br>';
 	}

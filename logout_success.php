@@ -5,7 +5,7 @@ header ('refresh:7; url=index.php');
 ?>
 
 <html>
-	<?PHP include_Head('Microfinance Management',1) ?>
+	<?PHP includeHead('Microfinance Management',1) ?>
 		
 	<body>
 		<div class="content_center" style="margin-top:2em;">

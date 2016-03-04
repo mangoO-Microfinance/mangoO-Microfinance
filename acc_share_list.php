@@ -2,7 +2,7 @@
 //Select SHARES from database
 $sql_sha = "SELECT * FROM shares, user WHERE shares.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY share_date DESC";
 $query_sha = mysql_query($sql_sha);
-check_sql($query_sha);
+checkSQL($query_sha);
 
 //Make array for exporting data
 $share_exp_date = date("Y-m-d",time());

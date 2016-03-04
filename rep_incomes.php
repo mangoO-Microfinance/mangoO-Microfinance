@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_report();
+	checkLogin();
+	checkPermissionReport();
 	connect();
 	
 	//Variables $year and $month provide the pre-set values for input fields
@@ -10,11 +10,11 @@
 	$month = date("m",time());
 ?>
 <html>
-	<?PHP include_Head('Incomes Report',1); ?>
+	<?PHP includeHead('Incomes Report',1); ?>
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(5); ?>
+		<?PHP includeMenu(5); ?>
 		<div id="menu_main">
 			<a href="rep_incomes.php" id="item_selected">Income Report</a>
 			<a href="rep_expenses.php">Expense Report</a>
@@ -70,11 +70,11 @@
 				//Selection from INCOMES and INCTYPE
 				$sql_incomes = "SELECT * FROM incomes WHERE inc_date BETWEEN $firstDay AND $lastDay";
 				$query_incomes = mysql_query($sql_incomes);
-				if (!$query_incomes) die('SELECT failed: ' . mysql_error());
+				if (!$query_incomes) die('SELECT failed: ' . mysql_showMessage());
 				
 				$sql_inctype = "SELECT * FROM inctype";
 				$query_inctype = mysql_query($sql_inctype);
-				if (!$query_inctype) die('SELECT failed: ' . mysql_error());
+				if (!$query_inctype) die('SELECT failed: ' . mysql_showMessage());
 				?>
 				
 				<!-- TABLE: Results -->
@@ -132,7 +132,7 @@
 			else{
 				$sql_incomes = "SELECT * FROM incomes, inctype, customer WHERE incomes.cust_id = customer.cust_id AND incomes.inctype_id = inctype.inctype_id AND inc_date BETWEEN $firstDay AND $lastDay ORDER BY inc_date, inc_receipt";
 				$query_incomes = mysql_query($sql_incomes);
-				if (!$query_incomes) die ('SELECT failed: '.mysql_error());
+				if (!$query_incomes) die ('SELECT failed: '.mysql_showMessage());
 				?>
 
 				<!-- TABLE: Results -->

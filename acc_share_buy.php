@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();	
+	checkLogin();	
 	connect();
-	check_custid();
+	getCustID();
 	
 	//Generate timestamp
 	$timestamp = time();
 	
 	//Get current share value
-	get_sharevalue();
+	getShareValue();
 	
 	//BUY SHARE-Button
 	if (isset($_POST['sharebuy'])){
@@ -23,7 +23,7 @@
 		//Insert into SHARES
 		$sql_insert_sh = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_receipt, share_created, user_id) VALUES ('$_SESSION[cust_id]', '$share_date', '$share_amount', '$share_value', '$share_receipt', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_sh = mysql_query($sql_insert_sh);
-		check_sql($query_insert_sh);
+		checkSQL($query_insert_sh);
 		header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 
@@ -33,7 +33,7 @@
 		
 		$sql_shfrom = "SELECT * FROM shares WHERE cust_id = '$shtrans_cust'";
 		$query_shfrom = mysql_query($sql_shfrom);
-		check_sql($query_shfrom);
+		checkSQL($query_shfrom);
 		
 		$shfrom_amount = 0;
 		$shfrom_value = 0;
@@ -45,14 +45,14 @@
 		//Insert into SHARES for Target Customer
 		$sql_shto = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_trans, share_transfrom, share_created, user_id) VALUES ('$_SESSION[cust_id]', '$timestamp', '$shfrom_amount', '$shfrom_value', '1', '$shtrans_cust', $timestamp, '$_SESSION[log_id]')";
 		$query_shto = mysql_query($sql_shto);
-		check_sql($query_shto);
+		checkSQL($query_shto);
 		
 		//Empty Share Account for Source Customer
 		$shfrom_amount_del = $shfrom_amount * (-1);
 		$shfrom_value_del = $shfrom_value * (-1);
 		$sql_shdel = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_trans, share_created, user_id) VALUES ('$shtrans_cust', '$timestamp', '$shfrom_amount_del', '$shfrom_value_del', '1', $timestamp, '$_SESSION[log_id]')";
 		$query_shdel = mysql_query($sql_shdel);
-		check_sql($query_shdel);
+		checkSQL($query_shdel);
 		
 		//Set Source Customer inactive
 		$sql_inactive = "UPDATE customer SET cust_active = '0', cust_lastupd = '$timestamp', user_id = '$_SESSION[log_id]' WHERE cust_id = '$shtrans_cust'";
@@ -62,14 +62,14 @@
 	}
 	
 	//Get current customer's details
-	$result_cust = get_customer();
+	$result_cust = getCustomer();
 	
 	//Get all other customers
-	$query_custother = get_custother();
+	$query_custother = getCustOther();
 ?>
 
 <html>
-<?PHP include_Head('Buying Shares',0) ?>	
+<?PHP includeHead('Buying Shares',0) ?>	
 	<script>
 		function validate(form){
 			fail = validateDate(form.share_date.value)
@@ -88,7 +88,7 @@
 	
 <body>
 	<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
 			<a href="cust_search.php">Search</a>

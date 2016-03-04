@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
-	check_custid();
+	getCustID();
 	
 	unset($_SESSION['interest_sum'], $_SESSION['balance']);
 	
@@ -11,7 +11,7 @@
 	$timestamp = time();
 	
 	//Calculate Balance on Savings account
-	$savbalance = get_savbalance($_SESSION['cust_id']);
+	$savbalance = getSavingsBalance($_SESSION['cust_id']);
 	
 	//UPDATE-Button
 	if (isset($_POST['update'])){
@@ -36,12 +36,12 @@
 		//Update CUSTOMER
 		$sql_update = "UPDATE customer SET cust_no = '$cust_no', cust_name = '$cust_name', cust_dob = $cust_dob, custsex_id = $custsex_id, cust_address = '$cust_address', cust_phone = '$cust_phone', cust_email = '$cust_email', cust_occup = '$cust_occup', custmarried_id = $custmarried_id, cust_heir = '$cust_heir', cust_heirrel = '$cust_heirrel', custsick_id = $custsick_id, cust_active = '$cust_active', cust_lastupd = $timestamp, user_id = $_SESSION[log_id] WHERE cust_id = $_SESSION[cust_id]";
 		$query_update = mysql_query($sql_update);
-		check_sql($query_update);
+		checkSQL($query_update);
 		header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 	
 	//Get current customer's details
-	$result_cust = get_customer();
+	$result_cust = getCustomer();
 	
 	//Error-Message, if customer is not found
 	if ($result_cust['cust_id']==''){
@@ -54,22 +54,22 @@
 	//Select Marital Status from custmarried for dropdown-menu
 	$sql_mstat = "SELECT * FROM custmarried";
 	$query_mstat = mysql_query($sql_mstat);
-	check_sql($query_mstat);
+	checkSQL($query_mstat);
 
 	//Select Sicknesses from custsick for dropdown-menu
 	$sql_sick = "SELECT * FROM custsick";
 	$query_sick = mysql_query($sql_sick);
-	check_sql($query_sick);
+	checkSQL($query_sick);
 	
 	//Select Sexes from custsex for dropdown-menu
 	$sql_sex = "SELECT * FROM custsex";
 	$query_sex = mysql_query($sql_sex);
-	check_sql($query_sex);
+	checkSQL($query_sex);
 	
 	//Select Shares from SHARES
 	$sql_sha = "SELECT * FROM shares WHERE cust_id = '$_SESSION[cust_id]'";
 	$query_sha = mysql_query($sql_sha);
-	check_sql($query_sha);
+	checkSQL($query_sha);
 	$share_amount = 0;
 	$share_value = 0;
 	while($row_shares = mysql_fetch_assoc($query_sha)){
@@ -80,11 +80,11 @@
 	//Select the five most recent savings transactions for display
 	$sql_sav = "SELECT * FROM savings, savtype WHERE savings.savtype_id = savtype.savtype_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date DESC, sav_id DESC LIMIT 5" ;
 	$query_sav = mysql_query($sql_sav);
-	check_sql($query_sav);
+	checkSQL($query_sav);
 ?>
 
 <html>
-	<?PHP include_Head('Customer',0) ?>		
+	<?PHP includeHead('Customer',0) ?>		
 		<script>
 			function validate(form){
 				fail = validateName(form.cust_name.value)
@@ -113,7 +113,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<?PHP
@@ -319,7 +319,7 @@
 				//Select all loans for current customer
 				$sql_loans = "SELECT * FROM loans, loanstatus WHERE loans.loanstatus_id = loanstatus.loanstatus_id AND cust_id = '$_SESSION[cust_id]'";
 				$query_loans = mysql_query($sql_loans);
-				check_sql($query_loans);
+				checkSQL($query_loans);
 				
 				$color = 0;
 				while ($row_loan = mysql_fetch_assoc($query_loans)){
@@ -327,13 +327,13 @@
 					//Select last unpaid Due Date from LTRANS 
 					$sql_ltrans = "SELECT MIN(ltrans_due) FROM ltrans, loans WHERE ltrans.loan_id = loans.loan_id AND loans.loanstatus_id = '2' AND loans.loan_id = '$row_loan[loan_id]' AND ltrans_due IS NOT NULL AND ltrans_date IS NULL";
 					$query_ltrans = mysql_query($sql_ltrans);
-					check_sql($query_ltrans);
+					checkSQL($query_ltrans);
 					$next_due = mysql_fetch_assoc($query_ltrans);
 					
 					//Select Loan Balance from LTRANS
 					$sql_balance = "SELECT ltrans_principaldue, ltrans_interestdue, ltrans_principal, ltrans_interest FROM ltrans, loans WHERE ltrans.loan_id = loans.loan_id AND loans.loanstatus_id = '2' AND loans.loan_id = '$row_loan[loan_id]'";
 					$query_balance = mysql_query($sql_balance);
-					check_sql($query_balance);
+					checkSQL($query_balance);
 					
 					$loan_balance = 0;
 					$loan_paid = 0;
@@ -385,6 +385,6 @@
 	
 	</body>
 	<?PHP 
-	if ($share_amount == 0 && $result_cust['cust_active'] == 1)	error('This Customer owns no Shares!');
+	if ($share_amount == 0 && $result_cust['cust_active'] == 1)	showMessage('This Customer owns no Shares!');
 	?>
 </html>

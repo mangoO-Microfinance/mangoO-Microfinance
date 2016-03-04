@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	//Select from LOANS depending on Search or not Search
@@ -9,24 +9,24 @@
 		$loan_search = sanitize($_POST['loan_no']);
 		$sql_loansearch = "SELECT * FROM loans, loanstatus, customer WHERE customer.cust_id = loans.cust_id AND loanstatus.loanstatus_id = loans.loanstatus_id AND loan_no LIKE '%$loan_search%'";
 		$query_loansearch = mysql_query($sql_loansearch);
-		check_sql ($query_loansearch);
+		checkSQL ($query_loansearch);
 	}
 	elseif (isset($_POST['loan_status'])){
 		$loan_search = sanitize($_POST['loan_status']);
 		$sql_loansearch = "SELECT * FROM loans, loanstatus, customer WHERE customer.cust_id = loans.cust_id AND loanstatus.loanstatus_id = loans.loanstatus_id AND loans.loanstatus_id = '$loan_search'";
 		$query_loansearch = mysql_query($sql_loansearch);
-		check_sql ($query_loansearch);
+		checkSQL ($query_loansearch);
 	}
 	else header('Location: start.php');
 ?>
 	
 <html>
-	<?PHP include_Head('Loans Search Result',1) ?>	
+	<?PHP includeHead('Loans Search Result',1) ?>	
 	<body>
 		
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(3);
+				includeMenu(3);
 		?>
 		
 		<!-- MENU MAIN -->

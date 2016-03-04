@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
-	check_loanid();
+	getLoanID();
 	
 	//Retrieve loan_id and loan_no of newly created loan from LOANS. Pass securities to SESSION variable.
 	$sql_loan = "SELECT loan_no, loan_sec1, loan_sec2 FROM loans WHERE loan_id = '$_SESSION[loan_id]'";
 	$query_loan = mysql_query($sql_loan);
-	check_sql($query_loan);
+	checkSQL($query_loan);
 	$result_loan = mysql_fetch_assoc($query_loan);
 	
 	// Generate timestamp
@@ -41,7 +41,7 @@
 			//INSERT information on Security 1 into SECURITIES
 			$sql_insert_sec1 = "INSERT INTO securities (cust_id, loan_id, sec_no, sec_path, sec_returned) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', 1, '$target_path1', 0)";
 			$query_insert_sec1 = mysql_query($sql_insert_sec1);
-			check_sql($query_insert_sec1);
+			checkSQL($query_insert_sec1);
 		}
 		
 		//Check if a file was uploaded for security 2
@@ -61,7 +61,7 @@
 			//INSERT information on Security 2 into SECURITIES
 			$sql_insert_sec2 = "INSERT INTO securities (cust_id, loan_id, sec_no, sec_path, sec_returned) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', 2, '$target_path2', 0)";
 			$query_insert_sec2 = mysql_query($sql_insert_sec2);
-			check_sql($query_insert_sec2);
+			checkSQL($query_insert_sec2);
 		}
 		
 		//Unset session variables and refer to LOAN.PHP
@@ -70,10 +70,10 @@
 ?>
 
 <html>
-	<?PHP include_Head('New Loan',1) ?>
+	<?PHP includeHead('New Loan',1) ?>
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
 			<a href="cust_search.php">Search</a>

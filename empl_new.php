@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP	
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	//Generate timestamp
@@ -26,7 +26,7 @@
 		//Insert new employee into EMPLOYEE
 		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, empl_active, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, $empl_active, '$user_id')";
 		$query_insert = mysql_query($sql_insert);
-		check_sql($query_insert);
+		checkSQL($query_insert);
 		
 		// Refer to empl_new_pic.php
 		//header('Location: empl_new_pic.php?from=new');
@@ -36,16 +36,16 @@
 	// Select sexes from EMPLSEX for dropdown-menu
 	$sql_sex = "SELECT * FROM emplsex";
 	$query_sex = mysql_query($sql_sex);
-	check_sql($query_sex);
+	checkSQL($query_sex);
 	
 	// Select non-associated users
 	$sql_users = "SELECT user_id, user_name FROM user WHERE user_id NOT IN (SELECT user_id FROM employee)";
 	$query_users = mysql_query($sql_users);
-	check_sql($query_users);
+	checkSQL($query_users);
 ?>
 
 <html>
-	<?PHP include_Head('New Employee',0) ?>	
+	<?PHP includeHead('New Employee',0) ?>	
 		<script>
 			function validate(form){
 				fail = validateName(form.empl_name.value)
@@ -61,7 +61,7 @@
 	</head>
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(7); ?>
+		<?PHP includeMenu(7); ?>
 		<div id="menu_main">
 			<!-- <a href="empl_search.php">Search</a> -->
 			<a href="empl_new.php" id="item_selected">New Employee</a>

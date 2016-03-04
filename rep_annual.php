@@ -1,20 +1,20 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_report();
+	checkLogin();
+	checkPermissionReport();
 	connect();
 	
 	//Variable $year provides the pre-set values for input fields
 	$year = (date("Y",time()))-1; 
 ?>
 <html>
-	<?PHP include_Head('Annual Report',1) ?>	
+	<?PHP includeHead('Annual Report',1) ?>	
 	<body>
 		
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(5);
+				includeMenu(5);
 		?>
 		
 		<!-- MENU MAIN -->
@@ -55,11 +55,11 @@
 			//Select INCOMES and INCTYPE
 			$sql_incomes = "SELECT * FROM incomes WHERE inc_date BETWEEN $firstDay AND $lastDay";
 			$query_incomes = mysql_query($sql_incomes);
-			check_sql($query_incomes);
+			checkSQL($query_incomes);
 			
 			$sql_inctype = "SELECT * FROM inctype";
 			$query_inctype = mysql_query($sql_inctype);
-			check_sql($query_inctype);
+			checkSQL($query_inctype);
 			
 			
 			/**** EXPENDITURE RELATED DATA ****/
@@ -67,11 +67,11 @@
 			//Select expenses and EXPTYPE
 			$sql_expendit = "SELECT * FROM expenses WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 			$query_expendit = mysql_query($sql_expendit);
-			check_sql($query_expendit);
+			checkSQL($query_expendit);
 			
 			$sql_exptype = "SELECT * FROM exptype";
 			$query_exptype = mysql_query($sql_exptype);
-			check_sql($query_exptype);
+			checkSQL($query_exptype);
 			
 			
 			/**** CAPITAL RELATED DATA ****/
@@ -79,7 +79,7 @@
 			//Select bought and sold Shares from SHARES
 			$sql_shares = "SELECT * FROM shares WHERE share_date BETWEEN $firstDay AND $lastDay";
 			$query_shares = mysql_query($sql_shares);
-			check_sql ($query_shares);
+			checkSQL ($query_shares);
 			$total_share_buys = 0;
 			$total_share_sales = 0;
 			while($row_shares = mysql_fetch_assoc($query_shares)){
@@ -94,7 +94,7 @@
 			//Select Saving Deposits from SAVINGS
 			$sql_savdep = "SELECT * FROM savings WHERE sav_date BETWEEN $firstDay AND $lastDay AND savtype_id = 1";
 			$query_savdep = mysql_query($sql_savdep);
-			check_sql ($query_savdep);
+			checkSQL ($query_savdep);
 			$total_savdep = 0;
 			while($row_savdep = mysql_fetch_assoc($query_savdep)){
 				$total_savdep = $total_savdep + $row_savdep['sav_amount'];
@@ -103,7 +103,7 @@
 			//Select Loan Recoveries from LOANS
 			$sql_loanrec = "SELECT * FROM ltrans WHERE ltrans_date BETWEEN $firstDay AND $lastDay";
 			$query_loanrec = mysql_query($sql_loanrec);
-			check_sql ($query_loanrec);
+			checkSQL ($query_loanrec);
 			$total_loanrec = 0;
 			while($row_loanrec = mysql_fetch_assoc($query_loanrec)){
 				$total_loanrec = $total_loanrec + $row_loanrec['ltrans_principal'];
@@ -112,7 +112,7 @@
 			//Select Saving Withdrawals from SAVINGS
 			$sql_savwithd = "SELECT * FROM savings WHERE sav_date BETWEEN $firstDay AND $lastDay AND savtype_id = 2";
 			$query_savwithd = mysql_query($sql_savwithd);
-			check_sql ($query_savwithd);
+			checkSQL ($query_savwithd);
 			$total_savwithd = 0;
 			while($row_savwithd = mysql_fetch_assoc($query_savwithd)){
 				$total_savwithd = $total_savwithd + $row_savwithd['sav_amount'];
@@ -122,7 +122,7 @@
 			//Select Loans Out from LOANS
 			$sql_loanout = "SELECT * FROM loans WHERE loan_dateout BETWEEN $firstDay AND $lastDay";
 			$query_loanout = mysql_query($sql_loanout);
-			check_sql ($query_loanout);
+			checkSQL ($query_loanout);
 			$total_loanout = 0;
 			while($row_loanout = mysql_fetch_assoc($query_loanout)){
 				$total_loanout = $total_loanout + $row_loanout['loan_principal'];
@@ -134,17 +134,17 @@
 			//Select Due Loan Payments from LTRANS
 			$sql_loandue = "SELECT * FROM ltrans, loans, loanstatus WHERE ltrans.loan_id = loans.loan_id AND loans.loanstatus_id = loanstatus.loanstatus_id AND ltrans_due BETWEEN $firstDay AND $lastDay AND loans.loanstatus_id IN (2, 4, 5) ORDER BY ltrans_due, loans.cust_id";
 			$query_loandue = mysql_query($sql_loandue);
-			check_sql ($query_loandue);
+			checkSQL ($query_loandue);
 			
 			//Select Loan Recoveries from LTRANS
 			$sql_loanrec = "SELECT * FROM ltrans, loans WHERE ltrans.loan_id = loans.loan_id AND ltrans_date BETWEEN $firstDay AND $lastDay ORDER BY ltrans_date, loans.cust_id";
 			$query_loanrec = mysql_query($sql_loanrec);
-			check_sql ($query_loanrec);
+			checkSQL ($query_loanrec);
 			
 			//Select Loans Out from LOANS
 			$sql_loanout = "SELECT * FROM loans, customer WHERE loans.cust_id = customer.cust_id AND loans.loan_dateout BETWEEN $firstDay AND $lastDay ORDER BY loan_dateout, loans.cust_id";
 			$query_loanout = mysql_query($sql_loanout);
-			check_sql ($query_loanout);
+			checkSQL ($query_loanout);
 			?>	
 									
 			<!-- Export Button -->					

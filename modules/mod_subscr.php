@@ -1,7 +1,7 @@
 <?PHP
-if (($result_cust['cust_lastsub']+31536000) < $timestamp ){ 
+if (($result_cust['cust_lastsub']+days(365)) < $timestamp ){ 
 	$visibility = 'block';
-	if($result_cust['cust_active'] == 1) error('This Customer needs to renew his / her Subscription!');
+	if($result_cust['cust_active'] == 1) showMessage('This Customer needs to renew his / her Subscription!');
 }
 else $visibility = 'none';
 
@@ -15,9 +15,8 @@ if(isset($_POST['subscr_renew'])){
 	$timestamp = time();
 	$sav_id = array();
 	
-	
 	// Get Subscription Fee
-	get_fees();
+	getFees();
 	
 	// Insert Subscription Fee into SAVINGS if applicable
 	if ($subscr_from_sav == 1){
@@ -26,12 +25,15 @@ if(isset($_POST['subscr_renew'])){
 		
 		$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', $sav_balance, '5', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
-		check_sql($query_insert_fee);
+		checkSQL($query_insert_fee);
+		
+		// Update savings account balance
+		updateSavingsBalance($_SESSION['cust_id'], $sav_balance);
 		
 		// Get SAV_ID for the latest entry
 		$sql_savid = "SELECT MAX(sav_id) FROM savings WHERE cust_id = '$_SESSION[cust_id]' AND sav_receipt = '$subscr_receipt' AND sav_created = '$timestamp'";
 		$query_savid = mysql_query($sql_savid);
-		check_sql($query_savid);
+		checkSQL($query_savid);
 		$sav_id = mysql_fetch_row($query_savid);
 	}
 	else $sav_id[0] = NULL;
@@ -39,11 +41,11 @@ if(isset($_POST['subscr_renew'])){
 	// Insert Subscription Fee into INCOMES
 	$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, sav_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '8', '$sav_id[0]', '$_SESSION[fee_subscr]', '$subscr_date', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
 	$query_insert_fee = mysql_query ($sql_insert_fee);
-	check_sql($query_insert_fee);
+	checkSQL($query_insert_fee);
 	
 	//Set Customer to ACTIVE and update SUBSCRIPTION DATE
 	$query_active = mysql_query("UPDATE customer SET cust_lastsub = '$subscr_date', cust_active = '1' WHERE cust_id = '$_SESSION[cust_id]'");
-	check_sql($query_active);
+	checkSQL($query_active);
 	
 	//header('Location: customer.php?cust='.$_SESSION['cust_id']);
 }

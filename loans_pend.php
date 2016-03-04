@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 		
 	$rep_year = date("Y",time());
@@ -14,16 +14,16 @@
 	//Select Pending Loans from LOANS
 	$sql_loanpend = "SELECT * FROM loans, loanstatus, customer WHERE loans.cust_id = customer.cust_id AND loans.loanstatus_id = loanstatus.loanstatus_id AND loans.loanstatus_id = 1 ORDER BY loan_date, loan_no";
 	$query_loanpend = mysql_query($sql_loanpend);
-	check_sql ($query_loanpend);
+	checkSQL ($query_loanpend);
 ?>
 <html>
-	<?PHP include_Head('Pending Loans',1) ?>	
+	<?PHP includeHead('Pending Loans',1) ?>	
 	
 	<body>
 		
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(3);
+				includeMenu(3);
 		?>
 		
 		<!-- MENU MAIN -->

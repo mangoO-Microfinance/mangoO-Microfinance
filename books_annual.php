@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	$lastyear = date("Y", time())-1;
 	
@@ -20,7 +20,7 @@
 		$int_year_end = mktime(0, 0, 0, 1, 0, ($int_year+1));
 		
 		//Get all active customers in array
-		$query_cust = get_custact();
+		$query_cust = getCustAct();
 		$cust = array();
 		while($row_cust = mysql_fetch_assoc($query_cust)){
 			$cust[] = $row_cust;
@@ -29,7 +29,7 @@
 		//Get all savings in array
 		$sql_sav = "SELECT * FROM savings WHERE cust_id IN (SELECT cust_id FROM customer WHERE cust_active = 1) AND sav_date < $int_year_end";
 		$query_sav = mysql_query($sql_sav);
-		check_sql($query_sav);
+		checkSQL($query_sav);
 		$savings = array();
 		while ($row_sav = mysql_fetch_assoc($query_sav)){
 			$savings[] = $row_sav;
@@ -61,14 +61,17 @@
 			$int_cust = round($int_base /100 * $int_rate,0);
 		
 			// Calculate new savings balance for current customer
-			$savbalance = get_savbalance($c['cust_id']);
-			$sav_balance = $savbalance + $int_cust;
+			$sav_balance = getSavingsBalance($c['cust_id']);
+			$sav_balance = $sav_balance + $int_cust;
 		
 			// Insert interest in SAVINGS
 			if($int_cust > 0){
-				$sql_cust_int = "INSERT INTO savings (cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $int_year_end, $int_cust, $sav_balance, 3, $timestamp, $_SESSION[log_id])";
+				$sql_cust_int = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $int_year_end, $int_cust, 3, $timestamp, $_SESSION[log_id])";
 				$query_cust_int = mysql_query($sql_cust_int);
-				check_sql($query_cust_int);
+				checkSQL($query_cust_int);
+				
+				// Update savings account balance
+				updateSavingsBalance($c['cust_id'], $sav_balance);
 			}
 			$int_total = $int_total + $int_cust;
 			$int_base = 0;
@@ -76,7 +79,7 @@
 		// Insert grand total distributed interest into expenses
 		$sql_int_exp = "INSERT INTO expenses (exptype_id, exp_amount, exp_date, exp_text, exp_created, user_id) VALUES (19, $int_total, $int_year_end, 'Distributed Interest for $int_year', $timestamp, $_SESSION[log_id])";
 		$query_int_exp = mysql_query($sql_int_exp);
-		check_sql($query_int_exp );
+		checkSQL($query_int_exp );
 	}
 	
 /**
@@ -95,7 +98,7 @@
 		$div_year_end = mktime(0, 0, 0, 1, 0, ($div_year+1));
 		
 		//Get all active customers in array
-		$query_cust = get_custact();
+		$query_cust = getCustAct();
 		$cust = array();
 		while($row_cust = mysql_fetch_assoc($query_cust)){
 			$cust[] = $row_cust;
@@ -104,7 +107,7 @@
 		//Get all shares in array
 		$sql_sh = "SELECT * FROM shares WHERE cust_id IN (SELECT cust_id FROM customer WHERE cust_active = 1) AND share_date < $div_year_end";
 		$query_sh = mysql_query($sql_sh);
-		check_sql($query_sh);
+		checkSQL($query_sh);
 		$shares = array();
 		$share_count = 0;
 		while ($row_sh = mysql_fetch_assoc($query_sh)){
@@ -138,14 +141,17 @@
 			$div_cust = round($div_fact * $div_value,0);
 			
 			// Calculate new savings balance for current customer
-			$savbalance = get_savbalance($c['cust_id']);
-			$sav_balance = $savbalance + $div_cust;
+			$sav_balance = getSavingsBalance($c['cust_id']);
+			$sav_balance = $sav_balance + $div_cust;
 			
 			// Insert dividend in SAVINGS
 			if($div_cust > 0){
-				$sql_cust_div = "INSERT INTO savings (cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $div_year_end, $div_cust, $sav_balance, 9, $timestamp, $_SESSION[log_id])";
+				$sql_cust_div = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $div_year_end, $div_cust, 9, $timestamp, $_SESSION[log_id])";
 				$query_cust_div = mysql_query($sql_cust_div);
-				check_sql($query_cust_div);
+				checkSQL($query_cust_div);
+				
+				// Update savings account balance
+				updateSavingsBalance($c['cust_id'], $sav_balance);
 			}
 						
 			$div_total = $div_total + $div_cust;
@@ -155,17 +161,17 @@
 		// Insert grand total distributed dividend into expenses
 		$sql_div_exp = "INSERT INTO expenses (exptype_id, exp_amount, exp_date, exp_text, exp_created, user_id) VALUES (18, $div_total, $div_year_end, 'Distributed Dividend for $div_year', $timestamp, $_SESSION[log_id])";
 		$query_div_exp = mysql_query($sql_div_exp);
-		check_sql($query_div_exp );
+		checkSQL($query_div_exp );
 	}
 ?>
 
 
 <html>
-	<?PHP include_Head('Dividend',1) ?>
+	<?PHP includeHead('Dividend',1) ?>
 	<body>
 	
 		<!-- MENU -->
-		<?PHP include_Menu(4);	?>
+		<?PHP includeMenu(4);	?>
 		<div id="menu_main">
 			<a href="start.php">Back</a>
 			<a href="books_expense.php">Expenses</a>

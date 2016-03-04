@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_delete();
+	checkLogin();
+	checkPermissionDelete();
 	connect();
 
 	//Delete from SHARES
@@ -11,7 +11,7 @@
 		
 		$sql_delsav = "DELETE FROM shares WHERE share_id = $sha_id";
 		$query_delsav = mysql_query($sql_delsav);
-		check_sql($query_delsav);
+		checkSQL($query_delsav);
 	}
 	
 	//Refer to customer.php

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_report();
+	checkLogin();
+	checkPermissionReport();
 	connect();
 	
 	//Variables $year and $month provide the pre-set values for input fields
@@ -10,10 +10,10 @@
 	$month = date("m",time());
 ?>
 <html>
-	<?PHP include_Head('Expense Report',1) ?>	
+	<?PHP includeHead('Expense Report',1) ?>	
 	
 	<body>
-		<?PHP include_Menu(5); ?>
+		<?PHP includeMenu(5); ?>
 		
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -69,11 +69,11 @@
 			if ($_POST['rep_form'] == 'a'){
 				$sql_expendit = "SELECT * FROM expenses WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 				$query_expendit = mysql_query($sql_expendit);
-				if (!$query_expendit) die ('SELECT failed: '.mysql_error());
+				if (!$query_expendit) die ('SELECT failed: '.mysql_showMessage());
 				
 				$sql_exptype = "SELECT * FROM exptype";
 				$query_exptype = mysql_query($sql_exptype);
-				if (!$query_exptype) die ('SELECT failed: '.mysql_error());
+				if (!$query_exptype) die ('SELECT failed: '.mysql_showMessage());
 				?>
 				
 				<!-- TABLE: Results -->
@@ -129,7 +129,7 @@
 			else{
 				$sql_expendit = "SELECT * FROM expenses, exptype WHERE expenses.exptype_id = exptype.exptype_id AND exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 				$query_expendit = mysql_query($sql_expendit);
-				check_sql($query_expendit);
+				checkSQL($query_expendit);
 				?>
 										
 				<!-- TABLE: Results -->

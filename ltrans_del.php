@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_delete();
+	checkLogin();
+	checkPermissionDelete();
 	connect();
 
 	//DELETE-Button
@@ -13,18 +13,18 @@
 		//Select due date for transaction from LTRANS
 		$sql_ltransaction = "SELECT ltrans_due FROM ltrans WHERE ltrans_id = $ltrans_id";
 		$query_ltransaction = mysql_query($sql_ltransaction);
-		check_sql($query_ltransaction);
+		checkSQL($query_ltransaction);
 		$ltransaction = mysql_fetch_row($query_ltransaction);
 		
 		//Delete related incomes from INCOMES where applicable
 		$sql_del_inc = "DELETE FROM incomes WHERE ltrans_id = $ltrans_id";
 		$query_del_inc = mysql_query($sql_del_inc);
-		check_sql($query_del_inc);
+		checkSQL($query_del_inc);
 		
 		//Delete related savings entries from SAVINGS where applicable
 		$sql_del_sav = "DELETE FROM savings WHERE ltrans_id = $ltrans_id";
 		$query_del_sav = mysql_query($sql_del_sav);
-		check_sql($query_del_sav);
+		checkSQL($query_del_sav);
 	
 	/**
 		* If respective transaction was pre-planned, the entry must remain. 
@@ -37,7 +37,7 @@
 			$sql_delltrans = "UPDATE ltrans SET ltrans_date = NULL, ltrans_principal = NULL, ltrans_interest = NULL, ltrans_fined = 0, ltrans_receipt = NULL, user_id = '$_SESSION[log_id]' WHERE ltrans_id = $ltrans_id";
 		}
 		$query_delltrans = mysql_query($sql_delltrans);
-		check_sql($query_delltrans);
+		checkSQL($query_delltrans);
 	}
 	
 	//Refer back to LOAN.PHP

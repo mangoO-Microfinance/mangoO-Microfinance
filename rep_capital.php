@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_report();
+	checkLogin();
+	checkPermissionReport();
 	connect();
 	
 	//Variables $year and $month provide the pre-set values for input fields
@@ -10,11 +10,11 @@
 	$month = date("m",time());
 ?>
 <html>
-	<?PHP include_Head('Capital Report') ?>	
+	<?PHP includeHead('Capital Report') ?>	
 	<body>
 			
 		<!-- MENU -->
-		<?PHP include_Menu(5); ?>
+		<?PHP includeMenu(5); ?>
 		<div id="menu_main">
 			<a href="rep_incomes.php">Income Report</a>
 			<a href="rep_expenses.php">Expense Report</a>
@@ -63,7 +63,7 @@
 			//Select bought and sold Shares from SHARES
 			$sql_shares = "SELECT * FROM shares WHERE share_date BETWEEN $firstDay AND $lastDay";
 			$query_shares = mysql_query($sql_shares);
-			check_sql ($query_shares);
+			checkSQL ($query_shares);
 			$total_share_buys = 0;
 			$total_share_sales = 0;
 			while($row_shares = mysql_fetch_assoc($query_shares)){
@@ -78,7 +78,7 @@
 			//Select Saving Deposits from SAVINGS
 			$sql_savdep = "SELECT * FROM savings WHERE sav_date BETWEEN $firstDay AND $lastDay AND savtype_id = 1";
 			$query_savdep = mysql_query($sql_savdep);
-			check_sql ($query_savdep);
+			checkSQL ($query_savdep);
 			$total_savdep = 0;
 			while($row_savdep = mysql_fetch_assoc($query_savdep)){
 				$total_savdep = $total_savdep + $row_savdep['sav_amount'];
@@ -87,7 +87,7 @@
 			//Select Loan Recoveries from LOANS
 			$sql_loanrec = "SELECT * FROM ltrans WHERE ltrans_date BETWEEN $firstDay AND $lastDay";
 			$query_loanrec = mysql_query($sql_loanrec);
-			check_sql ($query_loanrec);
+			checkSQL ($query_loanrec);
 			$total_loanrec = 0;
 			while($row_loanrec = mysql_fetch_assoc($query_loanrec)){
 				$total_loanrec = $total_loanrec + $row_loanrec['ltrans_principal'];
@@ -96,7 +96,7 @@
 			//Select Saving Withdrawals from SAVINGS
 			$sql_savwithd = "SELECT * FROM savings WHERE sav_date BETWEEN $firstDay AND $lastDay AND savtype_id = 2";
 			$query_savwithd = mysql_query($sql_savwithd);
-			check_sql ($query_savwithd);
+			checkSQL ($query_savwithd);
 			$total_savwithd = 0;
 			while($row_savwithd = mysql_fetch_assoc($query_savwithd)){
 				$total_savwithd = $total_savwithd + $row_savwithd['sav_amount'];
@@ -106,7 +106,7 @@
 			//Select Loans Out from LOANS
 			$sql_loanout = "SELECT * FROM loans WHERE loan_dateout BETWEEN $firstDay AND $lastDay";
 			$query_loanout = mysql_query($sql_loanout);
-			check_sql ($query_loanout);
+			checkSQL ($query_loanout);
 			$total_loanout = 0;
 			while($row_loanout = mysql_fetch_assoc($query_loanout)){
 				$total_loanout = $total_loanout + $row_loanout['loan_principal'];

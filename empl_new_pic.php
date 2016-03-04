@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	//Check where Re-direct comes from
@@ -30,11 +30,11 @@
 			if (in_array($ext, $valid_exts)) {
 				//Resize image
 				foreach ($sizes as $width => $height) {
-					$files[] = resize_img($width, $height);
+					$files[] = resizeImage($width, $height);
 				}
 				$sql_picpath = "UPDATE employee SET empl_pic = '$files[1]' WHERE empl_id = '$_SESSION[empl_id]'";
 				$query_picpath = mysql_query($sql_picpath);
-				check_sql($query_picpath);
+				checkSQL($query_picpath);
 				
 				// Forward to EMPLOYEE.PHP
 				header('Location:employee.php?empl='.$_SESSION['empl_id']);
@@ -46,11 +46,11 @@
 ?>
 
 <html>
-	<?PHP include_Head('New Picture Upload',1) ?>
+	<?PHP includeHead('New Picture Upload',1) ?>
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(7); ?>
+		<?PHP includeMenu(7); ?>
 		<div id="menu_main">
 			
 		</div>

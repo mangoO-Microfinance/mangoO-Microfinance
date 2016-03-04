@@ -1,21 +1,21 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
-	get_settings();
-	get_fees();
+	getSettings();
+	getFees();
 ?>
 
 <html>
 	<!-- HTML HEAD -->
-	<?PHP include_Head('Microfinance Management',1); ?>
+	<?PHP includeHead('Microfinance Management',1); ?>
 	
 	<!-- HTML BODY -->
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(1);
+				includeMenu(1);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">
@@ -35,7 +35,7 @@
 		</div>
 		
 		<!-- Logout Reminder Message -->
-		<?PHP	check_logout();	?>
+		<?PHP	checkLogout();	?>
 		
 	</body>
 </html>

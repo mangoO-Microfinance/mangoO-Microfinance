@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_delete();
+	checkLogin();
+	checkPermissionDelete();
 	connect();
 
 	//DELETE-Button
@@ -14,18 +14,18 @@
 		//Delete related incomes from INCOMES where applicable
 		$sql_delinc = "DELETE FROM incomes WHERE sav_id = '$sav_id'";
 		$query_delinc = mysql_query($sql_delinc);
-		check_sql($query_delinc);
+		checkSQL($query_delinc);
 		
 		//Delete entri(es) from SAVINGS
 		$sql_delsav = "DELETE FROM savings WHERE sav_id = '$sav_id' OR sav_mother = '$sav_id'";
 		$query_delsav = mysql_query($sql_delsav);
-		check_sql($query_delsav);
+		checkSQL($query_delsav);
 		
 		//If Subscription Fee is deleted, revert date of last subscription by one year (and five seconds)
 		if ($savtransaction[2] == 5){
 			$sql_revert_subscr = "UPDATE customer SET cust_lastsub = (cust_lastsub - 31536005) WHERE cust_id = $savtransaction[3]";
 			$query_revert_subscr = mysql_query($sql_revert_subscr);
-			check_sql($query_revert_subscr);
+			checkSQL($query_revert_subscr);
 		}
 	}
 	

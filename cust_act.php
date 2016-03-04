@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 			
 	//Make array for exporting data
@@ -11,15 +11,15 @@
 	$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_cust-active';
 	
 	//Select active customers from CUSTOMER
-	$query_custact = get_custact();
+	$query_custact = getCustAct();
 ?>
 	
 <html>
-	<?PHP include_Head('Active Customers',1) ?>	
+	<?PHP includeHead('Active Customers',1) ?>	
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<a href="cust_new.php">New Customer</a>

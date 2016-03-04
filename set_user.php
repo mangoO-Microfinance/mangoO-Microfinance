@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_admin();
+	checkLogin();
+	checkPermissionAdmin();
 	connect();
 	$user_id = NULL;
 	
@@ -11,7 +11,7 @@
 	$user_names = array();
 	$sql_users = "SELECT * FROM user, ugroup WHERE ugroup.ugroup_id = user.ugroup_id ORDER BY user_name";
 	$query_users = mysql_query($sql_users);
-	check_sql ($query_users);
+	checkSQL ($query_users);
 	while($row_users = mysql_fetch_assoc($query_users)){
 		$users[] = $row_users;
 		$user_names[] = $row_users['user_name'];
@@ -20,7 +20,7 @@
 	//Select all usergroups from UGROUP
 	$sql_ugroup = "SELECT ugroup_name, ugroup_id FROM ugroup";
 	$query_ugroup = mysql_query($sql_ugroup);
-	check_sql($query_ugroup);
+	checkSQL($query_ugroup);
 	
 	//Set heading and variables according to selection
 	if(isset($_GET['user'])){
@@ -54,20 +54,20 @@
 			// Insert new user into USER
 			$sql_user_ins = "INSERT INTO user (user_name, user_pw, ugroup_id, user_created) VALUES ('$user_name', '$user_pw', '$ugroup', '$timestamp')";
 			$query_user_ins = mysql_query($sql_user_ins);
-			check_sql($query_user_ins);
+			checkSQL($query_user_ins);
 		}
 		else {
 			// Update existing user
 			$sql_user_upd = "UPDATE user SET user_name = '$user_name', user_pw = '$user_pw', ugroup_id = $ugroup, user_created = $timestamp WHERE user_id = $user_id";
 			$query_user_upd = mysql_query($sql_user_upd);
-			check_sql($query_user_upd);
+			checkSQL($query_user_upd);
 		}
 		header('Location:set_user.php');
 	}
 ?>
 
 <html>
-	<?PHP include_Head('Settings | Users', 0) ?>
+	<?PHP includeHead('Settings | Users', 0) ?>
 		<script>
 			function validate(form){
 				fail = validateUser(form.user_name.value, <?PHP echo json_encode($user_names).', '.$user_id; ?>)
@@ -84,7 +84,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(6); ?>
+		<?PHP includeMenu(6); ?>
 		<div id="menu_main">
 			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>

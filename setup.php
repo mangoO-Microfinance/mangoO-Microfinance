@@ -21,7 +21,7 @@
 ?>
 
 <html>
-	<?PHP include_Head('Microfinance Management', 0) ?>	
+	<?PHP includeHead('Microfinance Management', 0) ?>	
 		<link rel="stylesheet" type="text/css" href="css/setup.css" />
 	</head>
 	<body>

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_admin();
+	checkLogin();
+	checkPermissionAdmin();
 	connect();
 	
 	//Save Changes
@@ -11,70 +11,70 @@
 		$new_intcalcmethod = sanitize($_POST['intcalcmethod']);
 		$sql_upd_intcalcmethod = "UPDATE settings SET set_value = '$new_intcalcmethod' WHERE set_id = 9";
 		$query_upd_intcalcmethod = mysql_query($sql_upd_intcalcmethod);
-		check_sql($query_upd_intcalcmethod);
+		checkSQL($query_upd_intcalcmethod);
 		
 		//Update Loan Interest Rate
 		$new_loaninterest = sanitize($_POST['loaninterest']);
 		$sql_upd_loaninterest = "UPDATE fees SET fee_value = '$new_loaninterest' WHERE fee_id = 8";
 		$query_upd_loaninterest = mysql_query($sql_upd_loaninterest);
-		check_sql($query_upd_loaninterest);
+		checkSQL($query_upd_loaninterest);
 	
 		//Update Minimum Loan Principal
 		$new_minLP = sanitize($_POST['minLP']);
 		$sql_upd_minLP = "UPDATE settings SET set_value = '$new_minLP' WHERE set_short = 'MinLP'";
 		$query_upd_minLP = mysql_query($sql_upd_minLP);
-		check_sql($query_upd_minLP);
+		checkSQL($query_upd_minLP);
 
 		//Update Maximum Loan Principal
 		$new_maxLP = sanitize($_POST['maxLP']);
 		$sql_upd_maxLP = "UPDATE settings SET set_value = '$new_maxLP' WHERE set_short = 'MaxLP'";
 		$query_upd_maxLP = mysql_query($sql_upd_maxLP);
-		check_sql($query_upd_maxLP);
+		checkSQL($query_upd_maxLP);
 		
 		//Update Maximum Principal-Savings Ratio
 		$new_maxPSR = sanitize($_POST['maxPSR']);
 		$sql_upd_maxPSR = "UPDATE settings SET set_value = '$new_maxPSR' WHERE set_short = 'MaxPSR'";
 		$query_upd_maxPSR = mysql_query($sql_upd_maxPSR);
-		check_sql($query_upd_maxPSR);
+		checkSQL($query_upd_maxPSR);
 		
 		//Update Maximum Number of Guarantees any member can give
 		$new_maxGuar = sanitize($_POST['maxGuar']);
 		$sql_upd_maxGuar = "UPDATE settings SET set_value = '$new_maxGuar' WHERE set_short = 'MaxGuar'";
 		$query_upd_maxGuar = mysql_query($sql_upd_maxGuar);
-		check_sql($query_upd_maxGuar);
+		checkSQL($query_upd_maxGuar);
 		
 		//Update Minimum Length of Membership before Loan Application
 		$new_minMemb = sanitize($_POST['minMemb']);
 		$sql_upd_minMemb = "UPDATE settings SET set_value = '$new_minMemb' WHERE set_short = 'MinMemb'";
 		$query_upd_minMemb = mysql_query($sql_upd_minMemb);
-		check_sql($query_upd_minMemb);
+		checkSQL($query_upd_minMemb);
 		
 		//Update Auto-fine option
 		$new_auf = sanitize($_POST['autofine']);
 		$sql_upd_auf = "UPDATE settings SET set_value = '$new_auf' WHERE set_short = 'AUF'";
 		$query_upd_auf = mysql_query($sql_upd_auf);
-		check_sql($query_upd_auf);
+		checkSQL($query_upd_auf);
 		
 		//If auto-fine option is enabled, make sure dashboard shows loan default list
 		if ($new_auf != NULL){
 			$new_dash_right = "dashboard/dash_loandefaults.php";
 			$sql_upd_dashr = "UPDATE settings SET set_value = '$new_dash_right' WHERE set_short = 'DashR'";
 			$query_upd_dashr = mysql_query($sql_upd_dashr);
-			check_sql($query_upd_dashr);
+			checkSQL($query_upd_dashr);
 		}
 	}
 	
 	//Get Settings and Fees
-	get_settings();
-	get_fees();
+	getSettings();
+	getFees();
 ?>
 <html>
-	<?PHP include_Head('Settings | Loan Settings',1) ?>
+	<?PHP includeHead('Settings | Loan Settings',1) ?>
 	
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(6);
+				includeMenu(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

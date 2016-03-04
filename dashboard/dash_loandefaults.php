@@ -4,7 +4,7 @@
 $timestamp = time();
 $sql_overd = "SELECT * FROM loans, ltrans, customer WHERE loans.cust_id = customer.cust_id AND loans.loan_id = ltrans.loan_id AND ltrans_due <= $timestamp AND ltrans_date IS NULL AND loanstatus_id = 2 ORDER BY ltrans_due";
 $query_overd = mysql_query($sql_overd);
-check_sql($query_overd);
+checkSQL($query_overd);
 
 ?>
 

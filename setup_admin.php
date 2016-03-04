@@ -18,14 +18,14 @@
 
 		// Connect to Database Server
 		$db_connect = mysql_connect($_SESSION['db_host'], $_SESSION['db_user'], $_SESSION['db_pass']);
-		if(!$db_connect) die('Could not connect to server '.$_SESSION['db_host'].': '.mysql_error());
+		if(!$db_connect) die('Could not connect to server '.$_SESSION['db_host'].': '.mysql_showMessage());
 		$db_select = mysql_select_db($_SESSION['db_name']);
-		if(!$db_select) die('Could not select database '.$_SESSION['db_name'].': '.mysql_error());
+		if(!$db_select) die('Could not select database '.$_SESSION['db_name'].': '.mysql_showMessage());
 
 		// Insert new admin user into database
 		$sql_makeadmin = "INSERT INTO user (user_name, user_pw, ugroup_id, user_created) VALUES ('$admin_name', '$admin_pass', '1', '$timestamp')";
 		$query_makeadmin = mysql_query($sql_makeadmin);
-		check_sql($query_makeadmin);
+		checkSQL($query_makeadmin);
 		
 		// Forward to setup_makeconf.php
 		header ('Location:setup_makeconf.php');
@@ -33,7 +33,7 @@
 ?>
 
 <html>
-	<?PHP include_Head('Microfinance Management', 0) ?>	
+	<?PHP includeHead('Microfinance Management', 0) ?>	
 		<link rel="stylesheet" type="text/css" href="css/setup.css" />
 		<script>
 			function validate(form){

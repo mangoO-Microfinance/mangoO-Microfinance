@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_admin();
+	checkLogin();
+	checkPermissionAdmin();
 	connect();
 	if(isset($_GET['ugroup'])) $ugroup_id = sanitize($_GET['ugroup']);
 	else header('Location:set_ugroup.php');
@@ -18,7 +18,7 @@
 	else{
 		$sql_del = "DELETE FROM ugroup WHERE ugroup_id = $ugroup_id";
 		$query_del = mysql_query($sql_del);
-		check_sql($query_del);
+		checkSQL($query_del);
 		header('Location: set_ugroup.php');
 	}
 ?>

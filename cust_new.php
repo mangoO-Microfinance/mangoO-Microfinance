@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP	
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	//Generate timestamp
@@ -29,19 +29,19 @@
 		//Insert new Customer into CUSTOMER
 		$sql_insert = "INSERT INTO customer (cust_no, cust_name, cust_dob, custsex_id, cust_address, cust_phone, cust_email, cust_occup, custmarried_id, cust_heir, cust_heirrel, cust_since, custsick_id, cust_lastsub, cust_active, cust_lastupd, user_id) VALUES ('$cust_no', '$cust_name', '$cust_dob', '$custsex_id', '$cust_address', '$cust_phone', '$cust_email', '$cust_occup', $custmarried_id, '$cust_heir', '$cust_heirrel', $cust_since, $custsick_id, $cust_since, '1', $timestamp, $_SESSION[log_id])";
 		$query_insert = mysql_query($sql_insert);
-		check_sql($query_insert);
+		checkSQL($query_insert);
 		
 		//Get new Customer's ID from CUSTOMER
 		$sql_maxid = "SELECT MAX(cust_id) FROM customer";
 		$query_maxid = mysql_query ($sql_maxid);
-		check_sql($query_maxid);
+		checkSQL($query_maxid);
 		$maxid = mysql_fetch_assoc($query_maxid);
 		$_SESSION['cust_id'] = $maxid['MAX(cust_id)'];
 		
 		//Insert Entrance Fee and Stationary Sales into INCOMES
 		$sql_insert_fee = "INSERT INTO incomes (cust_id, inctype_id, 	inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ($_SESSION[cust_id], '1', $_SESSION[fee_entry], $cust_since, '$_SESSION[receipt_no]', $timestamp, $_SESSION[log_id]), ($_SESSION[cust_id], '6', $_SESSION[fee_stationary], $cust_since, '$_SESSION[receipt_no]', $timestamp, $_SESSION[log_id])";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
-		check_sql($query_insert_fee);
+		checkSQL($query_insert_fee);
 		
 		//Refer to cust_new_pic.php
 		header('Location: cust_new_pic.php?from=new');
@@ -50,28 +50,28 @@
 	//Select Marital Status for Drop-down-Menu
 	$sql_mstat = "SELECT * FROM custmarried";
 	$query_mstat = mysql_query($sql_mstat);
-	check_sql($query_mstat);
+	checkSQL($query_mstat);
 	
 	//Select Sicknesses for Drop-down-Menu
 	$sql_sick = "SELECT * FROM custsick";
 	$query_sick = mysql_query($sql_sick);
-	check_sql($query_sick);
+	checkSQL($query_sick);
 	
 	//Select Sexes from custsex for dropdown-menu
 	$sql_sex = "SELECT * FROM custsex";
 	$query_sex = mysql_query($sql_sex);
-	check_sql($query_sex);
+	checkSQL($query_sex);
 	
 	//Determine new CUST_ID
 	$sql_maxid = "SELECT MAX(cust_id) AS maxid FROM customer";
 	$query_maxid = mysql_query($sql_maxid);
-	check_sql($query_maxid);
+	checkSQL($query_maxid);
 	$result_maxid = mysql_fetch_array($query_maxid);
 	$new_id = $result_maxid['maxid'] + 1;
 ?>
 
 <html>
-	<?PHP include_Head('New Customer',0) ?>	
+	<?PHP includeHead('New Customer',0) ?>	
 		<script>
 			function validate(form){
 				fail = validateName(form.cust_name.value)
@@ -97,7 +97,7 @@
 	</head>
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<a href="cust_new.php" id="item_selected">New Customer</a>

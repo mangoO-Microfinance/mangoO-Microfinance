@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_admin();
+	checkLogin();
+	checkPermissionAdmin();
 	connect();
 	$ugroup_id = 0;
 	$error = "no";
@@ -11,7 +11,7 @@
 	$ugroups = array();
 	$sql_ugroups = "SELECT * FROM ugroup";
 	$query_ugroups = mysql_query($sql_ugroups);
-	check_sql($query_ugroups);
+	checkSQL($query_ugroups);
 	while($row_ugroups = mysql_fetch_assoc($query_ugroups)){
 		$ugroups[] = $row_ugroups;
 		$ugroup_names[] = $row_ugroups['ugroup_name'];
@@ -55,14 +55,14 @@
 			//Insert new usergroup into UGROUP		
 			$sql_ugroup_insert = "INSERT INTO ugroup (ugroup_name, ugroup_admin, ugroup_delete, ugroup_report, ugroup_created) VALUES ('$ugroup_name', '$ugroup_admin', '$ugroup_delete', '$ugroup_report', '$timestamp')";
 			$query_ugroup_insert = mysql_query($sql_ugroup_insert);
-			check_sql($query_ugroup_insert);
+			checkSQL($query_ugroup_insert);
 		}
 		
 		else{
 			//Update existing usergroup
 			$sql_ugroup_upd = "UPDATE ugroup SET ugroup_name = '$ugroup_name',  ugroup_admin=$ugroup_admin, ugroup_delete=$ugroup_delete, ugroup_report=$ugroup_report, ugroup_created=$timestamp WHERE ugroup_id = $ugroup_id";
 			$query_ugroup_upd = mysql_query($sql_ugroup_upd);
-			check_sql($query_ugroup_upd);
+			checkSQL($query_ugroup_upd);
 		}
 		
 		header('Location:set_ugroup.php');
@@ -70,7 +70,7 @@
 ?>
 
 <html>
-	<?PHP include_Head('Settings | Usergroups',0) ?>
+	<?PHP includeHead('Settings | Usergroups',0) ?>
 	<script>
 			function validate(form){
 				fail = validateUsergroup(form.ugroup_name.value, <?PHP echo json_encode($ugroup_names).', '.$ugroup_id; ?>)
@@ -84,7 +84,7 @@
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(6);
+				includeMenu(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

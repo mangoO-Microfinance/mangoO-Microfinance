@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_admin();
+	checkLogin();
+	checkPermissionAdmin();
 	connect();
 	
 	//UPDATE-Button
 	if (isset($_POST['upd_fees'])){
 		
 		//Get current Share Value
-		get_sharevalue();
+		getShareValue();
 		
 		//Generate timestamp
 		$timestamp = time();
@@ -18,68 +18,68 @@
 		$new_entryfee = sanitize($_POST['entryfee']);
 		$sql_upd_entryfee = "UPDATE fees SET fee_value = '$new_entryfee' WHERE fee_id = 1";
 		$query_upd_entryfee = mysql_query($sql_upd_entryfee);
-		check_sql($query_upd_entryfee);
+		checkSQL($query_upd_entryfee);
 	
 		//Update Share Value
 		$new_shareval = sanitize($_POST['shareval']);
 		if($new_shareval != $_SESSION['share_value']){
 			$sql_upd_shareval = "INSERT INTO shareval (shareval_date, shareval_value) VALUES ('$timestamp', '$new_shareval')";
 			$query_upd_shareval = mysql_query($sql_upd_shareval);
-			check_sql($query_upd_shareval);
+			checkSQL($query_upd_shareval);
 		}
 		
 		//Update Withdrawal Fee
 		$new_withdrawfee = sanitize($_POST['withdrawfee']);
 		$sql_upd_withdrawfee = "UPDATE fees SET fee_value = '$new_withdrawfee' WHERE fee_id = 2";
 		$query_upd_withdrawfee = mysql_query($sql_upd_withdrawfee);
-		check_sql($query_upd_withdrawfee);	
+		checkSQL($query_upd_withdrawfee);	
 		
 		//Update Price for Stationary Sales
 		$new_stationary = sanitize($_POST['stationary']);
 		$sql_upd_stationary = "UPDATE fees SET fee_value = '$new_stationary' WHERE fee_id = 3";
 		$query_upd_stationary = mysql_query($sql_upd_stationary);
-		check_sql($query_upd_stationary);
+		checkSQL($query_upd_stationary);
 				
 		//Update Annual Subscription Fee
 		$new_subscripfee = sanitize($_POST['subscripfee']);
 		$sql_upd_subscripfee = "UPDATE fees SET fee_value = '$new_subscripfee' WHERE fee_id = 4";
 		$query_upd_subscripfee = mysql_query($sql_upd_subscripfee);
-		check_sql($query_upd_subscripfee);
+		checkSQL($query_upd_subscripfee);
 		
 		//Update Loan Fee
 		$new_loanfeerate = sanitize($_POST['loanfeerate']);
 		$sql_upd_loanfeerate = "UPDATE fees SET fee_value = '$new_loanfeerate' WHERE fee_id = 5";
 		$query_upd_loanfeerate = mysql_query($sql_upd_loanfeerate);
-		check_sql($query_upd_loanfeerate);
+		checkSQL($query_upd_loanfeerate);
 		
 		//Update Loan Application Fee
 		$new_lappfee = sanitize($_POST['lappfee']);
 		$sql_upd_lappfee = "UPDATE fees SET fee_value = '$new_lappfee' WHERE fee_id = 6";
 		$query_upd_lappfee = mysql_query($sql_upd_lappfee);
-		check_sql($query_upd_lappfee);
+		checkSQL($query_upd_lappfee);
 			
 		//Update Loan Default Fine
 		$new_ldefaultfine = sanitize($_POST['ldefaultfine']);
 		$sql_upd_ldefaultfine = "UPDATE fees SET fee_value = '$new_ldefaultfine' WHERE fee_id = 7";
 		$query_upd_ldefaultfine = mysql_query($sql_upd_ldefaultfine);
-		check_sql($query_upd_ldefaultfine);
+		checkSQL($query_upd_ldefaultfine);
 	}
 	
 	//Get current Fees and Charges
-	get_fees();
+	getFees();
 	
 	//Get current Share Value
-	get_sharevalue();
+	getShareValue();
 ?>
 
 
 <html>
-	<?PHP include_Head('Settings | Fees',1) ?>
+	<?PHP includeHead('Settings | Fees',1) ?>
 	
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(6);
+				includeMenu(6);
 		?>
 		<!-- MENU MAIN -->
 		<div id="menu_main">

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	//Generate timestamp
@@ -27,7 +27,7 @@
 		//Update EMPLOYEE
 		$sql_update = "UPDATE employee SET empl_no = '$empl_no', empl_name = '$empl_name', empl_dob = $empl_dob, emplsex_id = $emplsex_id, empl_address = '$empl_address', empl_phone = '$empl_phone', empl_email = '$empl_email', empl_active = '$empl_active', empl_lastupd = $timestamp, user_id = $_SESSION[log_id] WHERE empl_id = $_SESSION[empl_id]";
 		$query_update = mysql_query($sql_update);
-		check_sql($query_update);
+		checkSQL($query_update);
 		
 		// Forward to this page
 		header('Location: employee.php?empl='.$_SESSION['empl_id']);
@@ -36,17 +36,17 @@
 	//Select Sexes from EMPLSEX for dropdown-menu
 	$sql_sex = "SELECT * FROM emplsex";
 	$query_sex = mysql_query($sql_sex);
-	check_sql($query_sex);
+	checkSQL($query_sex);
 	
 	//Select employee from EMPLOYEE
 	$sql_empl = "SELECT * FROM employee, user WHERE employee.user_id = user.user_id AND empl_id = '$_SESSION[empl_id]'";
 	$query_empl = mysql_query($sql_empl);
-	check_sql($query_empl);
+	checkSQL($query_empl);
 	$result_empl = mysql_fetch_assoc($query_empl);
 ?>
 
 <html>
-	<?PHP include_Head('Employee',0) ?>		
+	<?PHP includeHead('Employee',0) ?>		
 		<script>
 			function validate(form){
 				fail = validateName(form.empl_name.value)
@@ -63,7 +63,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(7); ?>
+		<?PHP includeMenu(7); ?>
 		<div id="menu_main">
 			<!-- <a href="empl_search.php">Search</a> -->
 			<a href="empl_new.php">New Employee</a>

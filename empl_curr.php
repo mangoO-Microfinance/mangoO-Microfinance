@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 			
 	//Make array for exporting data
@@ -10,15 +10,15 @@
 	$_SESSION['rep_export'] = array();
 	$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_empl-current';
 	
-	$query_emplcurr = get_emplcurr();
+	$query_emplcurr = getEmplCurr();
 ?>
 	
 <html>
-	<?PHP include_Head('Current Employees',1) ?>	
+	<?PHP includeHead('Current Employees',1) ?>	
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(7); ?>
+		<?PHP includeMenu(7); ?>
 		<div id="menu_main">
 			<!-- <a href="empl_search.php">Search</a> -->
 			<a href="empl_new.php">New Employee</a>

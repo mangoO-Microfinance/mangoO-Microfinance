@@ -13,9 +13,9 @@ $deadline = time()+ $maxRuntime;
 
 // Database connection
 $db_connect = mysql_connect($_SESSION['db_host'], $_SESSION['db_user'], $_SESSION['db_pass']);
-if(!$db_connect) die('Could not connect to host '.$_SESSION['db_host'].': '.mysql_error());
+if(!$db_connect) die('Could not connect to host '.$_SESSION['db_host'].': '.mysql_showMessage());
 $db_select = mysql_select_db($_SESSION['db_name']);
-if(!$db_select) die('Could not select database '.$_SESSION['db_name'].': '.mysql_error());
+if(!$db_select) die('Could not select database '.$_SESSION['db_name'].': '.mysql_showMessage());
 
 // Open import file
 ($fp = fopen($fileSQL, 'r')) OR die('Failed to open file:'.$fileSQL);
@@ -46,7 +46,7 @@ while(time() < $deadline AND ($line = fgets($fp, 1024000))){
 	$query .= $line;
 	if(substr(trim($query),-1)==';' ){
 		if(!mysql_query($query) ){
-			$error = 'Error performing query <strong>' . $query . ' : ' . mysql_error();
+			$error = 'Error performing query <strong>' . $query . ' : ' . mysql_showMessage();
 			file_put_contents($errorFilename, $error."\n");
 			exit;
 		}
@@ -70,7 +70,7 @@ else{
 ?>
 
 <html>
-	<?PHP include_Head('Microfinance Management', 0) ?>	
+	<?PHP includeHead('Microfinance Management', 0) ?>	
 		<meta http-equiv="refresh" content="<?PHP echo ($maxRuntime+1); ?>">
 		<link rel="stylesheet" type="text/css" href="css/setup.css" />
 	</head>

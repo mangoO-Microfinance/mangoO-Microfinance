@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	$rep_year = date("Y",time());
@@ -12,15 +12,15 @@
 	$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_cust-inact';
 	
 	//Select inactive customers from CUSTOMER
-	$query_custinact = get_custinact();
+	$query_custinact = getCustInact();
 ?>
 	
 <html>
-	<?PHP include_Head('Inactive Customers',1) ?>	
+	<?PHP includeHead('Inactive Customers',1) ?>	
 	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="cust_search.php">Search</a>
 			<a href="cust_new.php">New Customer</a>

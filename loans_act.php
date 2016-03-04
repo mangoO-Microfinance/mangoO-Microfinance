@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	
 	$rep_year = date("Y",time());
@@ -14,15 +14,15 @@
 	//Select Active Loans from LOANS
 	$sql_loans = "SELECT * FROM loans, customer, loanstatus WHERE loans.cust_id = customer.cust_id AND loans.loanstatus_id = loanstatus.loanstatus_id AND loans.loanstatus_id = 2 ORDER BY loan_dateout, loans.cust_id";
 	$query_loans = mysql_query($sql_loans);
-	check_sql($query_loans);
+	checkSQL($query_loans);
 ?>
 <html>
-	<?PHP include_Head('Active Loans',1) ?>
+	<?PHP includeHead('Active Loans',1) ?>
 	
 	<body>
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(3);
+				includeMenu(3);
 		?>
 		
 		<!-- MENU MAIN -->
@@ -70,7 +70,7 @@
 					//Select Loan Balance from LTRANS
 					$sql_balance = "SELECT ltrans_principaldue, ltrans_interestdue, ltrans_principal, ltrans_interest FROM ltrans, loans WHERE ltrans.loan_id = loans.loan_id AND loans.loan_id = '$row_loans[loan_id]'";
 					$query_balance = mysql_query($sql_balance);
-					check_sql($query_balance);
+					checkSQL($query_balance);
 					
 					//Calculate outstanding balance
 					$loan_balance = 0;

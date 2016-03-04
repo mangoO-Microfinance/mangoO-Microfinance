@@ -1,24 +1,25 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();	
+	checkLogin();	
 	connect();
-	check_custid();
+	
+	getCustID();
 	
 	//Generate timestamp
 	$timestamp = time();
 	
 	//Get current share value
-	get_sharevalue();
+	getShareValue();
 	
 	//Get current customer's details
-	$result_cust = get_customer();
+	$result_cust = getCustomer();
 
 	//Get current customer's share balance
-	$share_balance = get_sharebalance();
+	$share_balance = getShareBalance($_SESSION['cust_id']);
 	
 	//Get all other customers
-	$query_custother = get_custother();
+	$query_custother = getCustOther();
 	
 	//SELL SHARE-Button
 	if (isset($_POST['sharesell'])){
@@ -32,13 +33,13 @@
 		//Insert into SHARES
 		$sql_insert_sh = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_receipt, share_created, user_id) VALUES ('$_SESSION[cust_id]', '$share_date', '$share_amount', '$share_value', '$share_receipt', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_sh = mysql_query($sql_insert_sh);
-		check_sql($query_insert_sh);
+		checkSQL($query_insert_sh);
 		header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
 ?>
 
 <html>
-<?PHP include_Head('Sell Shares',0) ?>	
+<?PHP includeHead('Sell Shares',0) ?>	
 	<script>
 		function validate(form){
 			fail = validateDate(form.share_date.value)
@@ -57,7 +58,7 @@
 	
 <body>
 	<!-- MENU -->
-		<?PHP include_Menu(2); ?>
+		<?PHP includeMenu(2); ?>
 		<div id="menu_main">
 			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
 			<a href="cust_search.php">Search</a>

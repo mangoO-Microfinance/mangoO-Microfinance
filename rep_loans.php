@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
-	check_report();
+	checkLogin();
+	checkPermissionReport();
 	connect();
 	
 	//Variables $year and $month provide the pre-set values for input fields
@@ -10,10 +10,10 @@
 	$month = date("m",time());
 ?>
 <html>
-	<?PHP include_Head('Loans Report',1) ?>	
+	<?PHP includeHead('Loans Report',1) ?>	
 	<body>
 		<!-- MENU -->
-		<?PHP include_Menu(5); ?>
+		<?PHP includeMenu(5); ?>
 		<div id="menu_main">
 			<a href="rep_incomes.php">Income Report</a>
 			<a href="rep_expenses.php">Expense Report</a>
@@ -62,17 +62,17 @@
 			//Select Due Loan Payments from LTRANS
 			$sql_loandue = "SELECT * FROM ltrans, loans, loanstatus WHERE ltrans.loan_id = loans.loan_id AND loans.loanstatus_id = loanstatus.loanstatus_id AND ltrans_due BETWEEN $firstDay AND $lastDay AND loans.loanstatus_id IN (2, 4, 5) ORDER BY ltrans_due, loans.cust_id";
 			$query_loandue = mysql_query($sql_loandue);
-			check_sql ($query_loandue);
+			checkSQL ($query_loandue);
 			
 			//Select Loan Recoveries from LTRANS
 			$sql_loanrec = "SELECT * FROM ltrans, loans WHERE ltrans.loan_id = loans.loan_id AND ltrans_date BETWEEN $firstDay AND $lastDay ORDER BY ltrans_date, loans.cust_id";
 			$query_loanrec = mysql_query($sql_loanrec);
-			check_sql ($query_loanrec);
+			checkSQL ($query_loanrec);
 			
 			//Select Loans Out from LOANS
 			$sql_loanout = "SELECT * FROM loans, customer WHERE loans.cust_id = customer.cust_id AND loans.loan_dateout BETWEEN $firstDay AND $lastDay ORDER BY loan_dateout, loans.cust_id";
 			$query_loanout = mysql_query($sql_loanout);
-			check_sql ($query_loanout);
+			checkSQL ($query_loanout);
 			?>	
 									
 			<!-- Export Button -->					

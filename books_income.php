@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	check_logon();
+	checkLogin();
 	connect();
 	$timestamp = time();
 	
@@ -22,24 +22,24 @@
 		//Insert into INCOMES
 		$sql_incnew = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_text, inc_created, user_id) VALUES ('$inc_recipient', '$inc_loan', '$inctype_id', '$inc_amount', '$inc_date', '$inc_receipt', '$inc_text', '$timestamp', '$_SESSION[log_id]')";
 		$query_incnew = mysql_query($sql_incnew);
-		check_sql($query_incnew);
+		checkSQL($query_incnew);
 	}
 
 	//Select current incomes from INCOMES
 	$sixtydays = time() - 5184000;
 	$sql_inccur = "SELECT * FROM incomes, inctype, customer WHERE incomes.inctype_id = inctype.inctype_id AND incomes.cust_id = customer.cust_id AND inc_date > $sixtydays ORDER BY inc_date DESC, inc_receipt DESC, incomes.cust_id";
 	$query_inccur = mysql_query($sql_inccur);
-	check_sql($query_inccur);
+	checkSQL($query_inccur);
 	
 	//Select Types of Incomes from INCTYPE
 	$sql_inctype = "SELECT * FROM inctype";
 	$query_inctype = mysql_query($sql_inctype);
-	check_sql ($query_inctype);
+	checkSQL ($query_inctype);
 	
 	//Select Customers from CUSTOMER
 	$sql_custfrom = "SELECT * FROM customer WHERE cust_active = 1";
 	$query_custfrom = mysql_query($sql_custfrom);
-	check_sql($query_custfrom);
+	checkSQL($query_custfrom);
 	$custfrom = array();
 	while ($row_custfrom = mysql_fetch_assoc($query_custfrom)){
 		$custfrom[] = $row_custfrom;
@@ -48,7 +48,7 @@
 	//Select Loans from LOANS
 	$sql_loans = "SELECT * FROM loans, customer WHERE loans.cust_id = customer.cust_id AND loanstatus_id IN (1,2) ORDER BY cust_no, loan_no";
 	$query_loans = mysql_query($sql_loans);
-	check_sql($query_loans);
+	checkSQL($query_loans);
 	$loans = array();
 	while ($row_loans = mysql_fetch_assoc($query_loans)){
 		$loans[] = $row_loans;
@@ -56,7 +56,7 @@
 ?>
 
 <html>
-	<?PHP include_Head('Incomes',0) ?>	
+	<?PHP includeHead('Incomes',0) ?>	
 		<script>
 			function validate(form){
 				fail = validateDate(form.inc_date.value)
@@ -74,7 +74,7 @@
 	
 		<!-- MENU -->
 		<?PHP 
-				include_Menu(4);
+				includeMenu(4);
 		?>
 	
 		<!-- MENU MAIN -->

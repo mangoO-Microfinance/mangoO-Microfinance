@@ -35,4 +35,4 @@
 	</p>
 	<h1>Logo designed using:</h1>
 	<p><a href="https://openclipart.org/detail/131485/mango-fruit-by-netalloy" target="new">"Mango Fruit by Netalloy"</a></p>	
-	<h1>To get the latest version or become involved, find the mangoO project on <a href="https://github.com/mangoO-Microfinance/mangoO-stable" target="new">GitHub</a>.</h1>
+	<h1>To get the latest version or become involved, find the mangoO project on <a href="https://github.com/mangoO-Microfinance/mangoO-Microfinance" target="new">GitHub</a>.</h1>
