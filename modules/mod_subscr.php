@@ -21,14 +21,13 @@ if(isset($_POST['subscr_renew'])){
 	// Insert Subscription Fee into SAVINGS if applicable
 	if ($subscr_from_sav == 1){
 		$fee_subscr_sav = $_SESSION['fee_subscr'] * (-1);
-		$sav_balance = $savbalance + $fee_subscr_sav;
 		
 		$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', $sav_balance, '5', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
 		checkSQL($query_insert_fee);
 		
 		// Update savings account balance
-		updateSavingsBalance($_SESSION['cust_id'], $sav_balance);
+		updateSavingsBalance($_SESSION['cust_id']);
 		
 		// Get SAV_ID for the latest entry
 		$sql_savid = "SELECT MAX(sav_id) FROM savings WHERE cust_id = '$_SESSION[cust_id]' AND sav_receipt = '$subscr_receipt' AND sav_created = '$timestamp'";

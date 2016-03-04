@@ -21,6 +21,9 @@
 			$sql_delsav = "DELETE FROM savings WHERE savtype_id = 9 AND sav_date = '$expense[2]' AND sav_created = '$expense[3]'";
 			$query_delsav = mysql_query($sql_delsav);
 			checkSQL($query_delsav);
+			
+			// Update balances of all savings acccounts
+			updateSavingsBalanceAll();
 		}
 		
 		// If expense is Annual Savings Interest, delete from SAVINGS
@@ -28,6 +31,9 @@
 			$sql_delsav = "DELETE FROM savings WHERE savtype_id = 3 AND sav_date = '$expense[2]' AND sav_created = '$expense[3]'";
 			$query_delsav = mysql_query($sql_delsav);
 			checkSQL($query_delsav);
+			
+			// Update balances of all savings acccounts
+			updateSavingsBalanceAll();
 		}
 		
 		// Delete expense from EXPENSES

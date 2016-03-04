@@ -60,10 +60,6 @@
 			// Calculate annual interest for current customer
 			$int_cust = round($int_base /100 * $int_rate,0);
 		
-			// Calculate new savings balance for current customer
-			$sav_balance = getSavingsBalance($c['cust_id']);
-			$sav_balance = $sav_balance + $int_cust;
-		
 			// Insert interest in SAVINGS
 			if($int_cust > 0){
 				$sql_cust_int = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $int_year_end, $int_cust, 3, $timestamp, $_SESSION[log_id])";
@@ -71,7 +67,7 @@
 				checkSQL($query_cust_int);
 				
 				// Update savings account balance
-				updateSavingsBalance($c['cust_id'], $sav_balance);
+				updateSavingsBalance($c['cust_id']);
 			}
 			$int_total = $int_total + $int_cust;
 			$int_base = 0;
@@ -140,10 +136,6 @@
 			// Calculate dividend for current customer
 			$div_cust = round($div_fact * $div_value,0);
 			
-			// Calculate new savings balance for current customer
-			$sav_balance = getSavingsBalance($c['cust_id']);
-			$sav_balance = $sav_balance + $div_cust;
-			
 			// Insert dividend in SAVINGS
 			if($div_cust > 0){
 				$sql_cust_div = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_created, user_id) VALUES ($c[cust_id], $div_year_end, $div_cust, 9, $timestamp, $_SESSION[log_id])";
@@ -151,7 +143,7 @@
 				checkSQL($query_cust_div);
 				
 				// Update savings account balance
-				updateSavingsBalance($c['cust_id'], $sav_balance);
+				updateSavingsBalance($c['cust_id']);
 			}
 						
 			$div_total = $div_total + $div_cust;

@@ -1,3 +1,4 @@
+
 <?PHP
 
 //Calculate monthly rate

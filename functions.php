@@ -7,12 +7,10 @@
 		
 		/* Server connection */
 		$connect_srv = mysql_connect(DB_HOST, DB_USER, DB_PASS);
-		//if (!$connect_srv) die ('Could not connect to host '.DB_HOST.': '.mysql_showMessage());
 		if (!$connect_srv) header('Location:setup.php');
 		
 		/* Database connection */
 		$connect_db = mysql_select_db(DB_NAME, $connect_srv);
-		//if (!$connect_db) die ('Could not select database '.DB_NAME.': '.mysql_showMessage());
 		if (!$connect_db) header('Location:setup.php');
 	}	
 	
@@ -420,13 +418,23 @@
 	}
 	
 /**
-	* Update savings account balance
+	* Update savings account balance for SPECIFIC customer
 	*/
-	function updateSavingsBalance($cust_id, $sav_balance){
-		$sql_savbal_upd = "UPDATE savbalance SET savbal_balance = $sav_balance WHERE cust_id = $cust_id";
+	function updateSavingsBalance($cust_id){
+		$sql_savbal_upd = "UPDATE savbalance SET savbal_balance = (SELECT SUM(sav_amount) FROM savings WHERE cust_id = $cust_id) WHERE cust_id = $cust_id";
 		$query_savbal_upd = mysql_query($sql_savbal_upd);
 		checkSQL($query_savbal_upd);
 	}
+
+
+/**
+	* Update savings account balance for ALL customers
+	*/
+	function updateSavingsBalanceAll(){
+		$sql_savbal_upd_all = "UPDATE savbalance SET savbalance.savbal_balance = (SELECT SUM(savings.sav_amount) FROM savings WHERE savings.cust_id = savbalance.cust_id)";
+		$query_savbal_upd_all = mysql_query($sql_savbal_upd_all);
+		checkSQL($query_savbal_upd_all);
+	}	
 	
 /**
 	* Calculate current customer's share account balance

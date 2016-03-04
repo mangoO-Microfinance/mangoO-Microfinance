@@ -18,7 +18,6 @@
 		$sav_amount = sanitize($_POST['sav_amount']);
 		$sav_receipt = sanitize($_POST['sav_receipt']);
 		$sav_date = strtotime(sanitize($_POST['sav_date']));
-		$sav_balance = $sav_balance + $sav_amount;
 		
 		// Insert savings transaction into SAVINGS
 		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
@@ -26,7 +25,7 @@
 		checkSQL($query_insert);
 		
 		// Update savings account balance
-		updateSavingsBalance($_SESSION['cust_id'], $sav_balance);
+		updateSavingsBalance($_SESSION['cust_id']);
 		
 		//Refer to acc_sav_depos.php
 		header('Location: acc_sav_depos.php?cust='.$_SESSION['cust_id']);

@@ -26,7 +26,7 @@
 	}
 
 	//Select current incomes from INCOMES
-	$sixtydays = time() - 5184000;
+	$sixtydays = time() - days(60);
 	$sql_inccur = "SELECT * FROM incomes, inctype, customer WHERE incomes.inctype_id = inctype.inctype_id AND incomes.cust_id = customer.cust_id AND inc_date > $sixtydays ORDER BY inc_date DESC, inc_receipt DESC, incomes.cust_id";
 	$query_inccur = mysql_query($sql_inccur);
 	checkSQL($query_inccur);

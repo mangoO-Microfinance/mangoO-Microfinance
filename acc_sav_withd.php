@@ -20,7 +20,6 @@
 		$sav_receipt = sanitize($_POST['sav_receipt']);
 		$sav_date = strtotime(sanitize($_POST['sav_date']));
 		$sav_deduct = sanitize($_POST['sav_deduct']);
-		$sav_balance = $sav_balance + $sav_amount;
 		
 		// Insert into SAVINGS
 		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', $sav_amount, '2', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
@@ -28,7 +27,7 @@
 		checkSQL($query_insert);
 		
 		// Update savings account balance
-		updateSavingsBalance($_SESSION['cust_id'], $sav_balance);
+		updateSavingsBalance($_SESSION['cust_id']);
 		
 		// Get SAV_ID for the latest entry
 		$sql_savid = "SELECT MAX(sav_id) FROM savings WHERE cust_id = '$_SESSION[cust_id]' AND sav_receipt = '$sav_receipt' AND sav_created = '$timestamp'";
@@ -44,14 +43,13 @@
 		// Insert Fee into SAVINGS, if applicable
 		if($sav_deduct == 1){
 			$fee_withdraw_neg = ($_SESSION['fee_withdraw'] * -1);
-			$sav_balance = $sav_balance + $fee_withdraw_neg;
 			
 			$sql_insert_fee = "INSERT INTO savings (sav_mother, cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_slip, sav_created, user_id) VALUES ('$sav_id[0]', '$_SESSION[cust_id]', '$sav_date', '$fee_withdraw_neg', '4', '$sav_receipt', '$sav_slip', '$timestamp', '$_SESSION[log_id]')";
 			$query_insert_fee = mysql_query($sql_insert_fee);
 			checkSQL($query_insert_fee);
 			
 			// Update savings account balance
-			updateSavingsBalance($_SESSION['cust_id'], $sav_balance);
+			updateSavingsBalance($_SESSION['cust_id']);
 		}
 		
 		// Forward to acc_sav_withd.php

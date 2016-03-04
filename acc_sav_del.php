@@ -21,6 +21,9 @@
 		$query_delsav = mysql_query($sql_delsav);
 		checkSQL($query_delsav);
 		
+		// Update savings account balance
+		updateSavingsBalance($_SESSION['cust_id']);
+		
 		//If Subscription Fee is deleted, revert date of last subscription by one year (and five seconds)
 		if ($savtransaction[2] == 5){
 			$sql_revert_subscr = "UPDATE customer SET cust_lastsub = (cust_lastsub - 31536005) WHERE cust_id = $savtransaction[3]";

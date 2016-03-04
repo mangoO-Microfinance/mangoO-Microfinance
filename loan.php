@@ -6,13 +6,20 @@
 	getLoanID();
 	$timestamp = time();
 	
-	//Get current customer's savings account balance
-	$savbalance_old = getSavingsBalance($_SESSION['cust_id']);
+	// Select details of current loan from LOANS, LOANSTATUS, CUSTOMER
+	$sql_loan = "SELECT * FROM loans, loanstatus, customer WHERE loans.loanstatus_id = loanstatus.loanstatus_id AND loans.cust_id = customer.cust_id AND loan_id = $_SESSION[loan_id]";
+	$query_loan = mysql_query($sql_loan);
+	checkSQL($query_loan);
+	$result_loan = mysql_fetch_assoc($query_loan);
+	$_SESSION['cust_id'] = $result_loan['cust_id'];
 	
-	//UPDATE STATUS-Button
+	// Get current customer's savings account balance
+	$sav_balance = getSavingsBalance($_SESSION['cust_id']);
+	
+	/** UPDATE STATUS-Button **/
 	if (isset($_POST['updatestatus'])){
 		
-		//Sanitize user input
+		// Sanitize user input
 		$loan_principal = $_SESSION['loan_principal'];
 		$loan_interest = $_SESSION['loan_interest'];
 		$loan_period = $_SESSION['loan_period'];
@@ -46,7 +53,7 @@
 		header('Location: loan.php?lid='.$_SESSION['loan_id']);
 	}
 	
-	//MAKE REPAYMENT Button
+	/** MAKE REPAYMENT Button **/
 	if(isset($_POST['repay'])){
 		
 		//Sanitize User Input
@@ -144,31 +151,28 @@
 		// If Payment is made from savings, withdraw the amount from there
 		if ($loan_repay_sav == 1) {
 			$loan_repay_amount_sav = $loan_repay_amount * (-1);
-			$sav_balance = $savbalance_old + $loan_repay_amount_sav;
 			
 			$sql_insert = "INSERT INTO savings (cust_id, ltrans_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ($_SESSION[cust_id], $ltransid, $loan_repay_date, $loan_repay_amount_sav, 8, $loan_repay_receipt, $timestamp, $_SESSION[log_id])";
 			$query_insert = mysql_query($sql_insert);
 			
 			// Update savings account balance
-			updateSavingsBalance($_SESSION['cust_id'], $sav_balance);
+			updateSavingsBalance($_SESSION['cust_id']);
 		}
 		
 		//If amount paid exceeds the remaining balance for that loan, put the rest in SAVINGS.
 		if(isset($loan_repay_savings)){
-			$sav_balance = $savbalance_old + $loan_repay_savings;
-			
 			$sql_restsav = "INSERT INTO savings (cust_id, ltrans_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ($_SESSION[cust_id], $ltransid, $loan_repay_date, $loan_repay_savings, '1', $loan_repay_receipt, $timestamp, '$_SESSION[log_id]')";
 			$query_restsav = mysql_query($sql_restsav);
 			checkSQL($query_restsav);
 			
 			// Update savings account balance
-			updateSavingsBalance($_SESSION['cust_id'], $sav_balance);
+			updateSavingsBalance($_SESSION['cust_id']);
 		}
 
 		header('Location: loan.php?lid='.$_SESSION['loan_id']);
 	}
 	
-	//CHARGE DEFAULT FINE Button
+	/** CHARGE DEFAULT FINE Button **/
 	if(isset($_POST['fine'])){
 		
 		// Sanitize user input
@@ -191,14 +195,13 @@
 		// Deduct fine from savings account if applicable
 		if($fine_sav == 1){
 			$fine_amount_sav = $fine_amount * (-1);
-			$sav_balance = $savbalance_old + $fine_amount_sav;
 			
 			$sql_fine_sav = "INSERT INTO savings (cust_id, ltrans_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$ltrans[0]', '$fine_date', '$fine_amount_sav', 6, '$fine_receipt', $timestamp, '$_SESSION[log_id]')";
 			$query_fine_sav = mysql_query($sql_fine_sav);
 			checkSQL($query_fine_sav);
 			
 			// Update savings account balance
-			updateSavingsBalance($_SESSION['cust_id'], $sav_balance);
+			updateSavingsBalance($_SESSION['cust_id']);
 			
 			// Get SAV_ID for the latest entry
 			$sql_savid = "SELECT MAX(sav_id) FROM savings WHERE ltrans_id = '$ltrans[0]' AND sav_receipt = '$fine_receipt' AND sav_created = '$timestamp'";
@@ -215,26 +218,19 @@
 		header('Location: loan.php?lid='.$_SESSION['loan_id']);
 	}
 	
-	//Select details for Loan from LOANS, LOANSTATUS, CUSTOMER
-	$sql_loan = "SELECT * FROM loans, loanstatus, customer WHERE loans.loanstatus_id = loanstatus.loanstatus_id AND loans.cust_id = customer.cust_id AND loan_id = $_SESSION[loan_id]";
-	$query_loan = mysql_query($sql_loan);
-	checkSQL($query_loan);
-	$result_loan = mysql_fetch_assoc($query_loan);
-	$_SESSION['cust_id'] = $result_loan['cust_id'];
-	
-	//Select Instalments from LTRANS
+	// Select Instalments from LTRANS
 	$sql_duedates = "SELECT * FROM ltrans, user WHERE ltrans.user_id = user.user_id AND loan_id = $_SESSION[loan_id] ORDER BY ltrans_id";
 	$query_duedates = mysql_query($sql_duedates);
 	checkSQL($query_duedates);
 	
-	//Select Guarantors from CUSTOMER
+	// Select Guarantors from CUSTOMER
 	$sql_guarant = "SELECT cust_id, cust_name FROM customer";
 	$query_guarant = mysql_query($sql_guarant);
 	checkSQL($query_guarant);
 	$guarantors = array();
 	while ($row_guarant = mysql_fetch_assoc($query_guarant)) $guarantors[] = $row_guarant;
 	
-	//Select Securities from SECURITIES and get file paths for securities
+	// Select Securities from SECURITIES and get file paths for securities
 	$sql_secur = "SELECT * FROM securities WHERE loan_id = $_SESSION[loan_id]";
 	$query_secur = mysql_query($sql_secur);
 	checkSQL($query_secur);

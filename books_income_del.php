@@ -16,14 +16,17 @@
 		checkSQL($query_income);
 		$income = mysql_fetch_row($query_income);
 		
-		// Delete from SAVINGS where applicaple
+		// Delete from SAVINGS where SAV_ID exists
 		if($income[5] != NULL){
 			$sql_delsav = "DELETE FROM savings WHERE sav_id = '$income[5]'";
 			$query_delsav = mysql_query($sql_delsav);
 			checkSQL($query_delsav);
+			
+			// Update savings account balance
+			updateSavingsBalance($income[2]);
 		}
 		
-		// Delete from LTRANS where applicaple
+		// Delete from LTRANS where LTRANS_ID exists
 		if($income[4] != NULL){
 			$sql_delltrans = "DELETE FROM ltrans WHERE ltrans_id = '$income[4]'";
 			$query_delltrans = mysql_query($sql_delltrans);
