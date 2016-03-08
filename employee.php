@@ -153,7 +153,7 @@
 											}
 											echo '</select>
 										</td>
-										<td>Active:</td>
+										<td>Currently employed:</td>
 										<td><input type="checkbox" name="empl_active" value="1" tabindex="13"'; 
 										if ($result_empl['empl_active']==1) echo ' checked="checked"';
 										echo ' />

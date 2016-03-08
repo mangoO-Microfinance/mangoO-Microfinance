@@ -59,6 +59,7 @@
 			</tr>
 			<?PHP		
 			$color = 0;
+			$count = 0;
 			while ($row_custact = mysql_fetch_assoc($query_custact)){					
 			
 				tr_colored($color);	//Alternating row colors
@@ -75,8 +76,19 @@
 						</tr>';
 				
 				array_push($_SESSION['rep_export'], array("Cust. No." => $row_custact['cust_no'], "Customer Name" => $row_custact['cust_name'], "DoB" => date("d.m.Y",$row_custact['cust_dob']), "Gender" => $row_custact['custsex_name'], "Occupation" => $row_custact['cust_occup'], "Address" => $row_custact['cust_address'], "Phone No." => $row_custact['cust_phone'], "Member since" => date("d.m.Y",$row_custact['cust_since'])));
+				
+				$count++;
 			}
 			?>
+			<tr class="balance">
+				<td colspan="8">
+				<?PHP 
+				echo $count; 
+				if ($count == 1) echo ' active customer';
+				else echo ' active customers';
+				?>
+				</td>
+			</tr>
 		</table>
 	</body>
 </html>

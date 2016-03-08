@@ -60,6 +60,7 @@
 			</tr>
 			<?PHP		
 			$color = 0;
+			$count = 0;
 			while ($row_emplpast = mysql_fetch_assoc($query_emplpast)){					
 			
 				tr_colored($color);	//Alternating row colors
@@ -77,8 +78,19 @@
 						</tr>';
 				
 				array_push($_SESSION['rep_export'], array("Empl. No." => $row_emplpast['empl_no'], "Employee Name" => $row_emplpast['empl_name'], "DoB" => date("d.m.Y",$row_emplpast['empl_dob']), "Gender" => $row_emplpast['emplsex_name'], "Address" => $row_emplpast['empl_address'], "Phone No." => $row_emplpast['empl_phone'], "Email" => $row_emplpast['empl_email'], "Empl. In" => date("d.m.Y",$row_emplpast['empl_in']), "Empl. Out" => date("d.m.Y",$row_emplpast['empl_out'])));
+				
+				$count++;
 			}
 			?>
+			<tr class="balance">
+				<td colspan="9">
+					<?PHP 
+					echo $count; 
+					if ($count == 1) echo ' former employee';
+					else echo ' former employees';
+					?>
+				</td>
+			</tr>
 		</table>
 	</body>
 </html>

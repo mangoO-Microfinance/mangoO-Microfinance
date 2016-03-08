@@ -26,7 +26,7 @@
 			<a href="empl_past.php">Former Employees</a>
 		</div>
 	
-		<!-- TABLE: Active Customers -->
+		<!-- TABLE: Current Employees -->
 		<table id="tb_table">				
 			<colgroup>
 				<col width="8%" />	
@@ -58,6 +58,7 @@
 			</tr>
 			<?PHP		
 			$color = 0;
+			$count = 0;
 			while ($row_emplcurr = mysql_fetch_assoc($query_emplcurr)){					
 			
 				tr_colored($color);	//Alternating row colors
@@ -74,8 +75,19 @@
 						</tr>';
 				
 				array_push($_SESSION['rep_export'], array("Empl. No." => $row_emplcurr['empl_no'], "Employee Name" => $row_emplcurr['empl_name'], "DoB" => date("d.m.Y",$row_emplcurr['empl_dob']), "Gender" => $row_emplcurr['emplsex_name'], "Address" => $row_emplcurr['empl_address'], "Phone No." => $row_emplcurr['empl_phone'], "Email" => $row_emplcurr['empl_email'], "Empl. In" => date("d.m.Y",$row_emplcurr['empl_in'])));
+				
+				$count++;
 			}
 			?>
+			<tr class="balance">
+				<td colspan="8">
+				<?PHP 
+				echo $count; 
+				if ($count == 1) echo ' current employee';
+				else echo ' current employees';
+				?>
+				</td>
+			</tr>
 		</table>
 	</body>
 </html>

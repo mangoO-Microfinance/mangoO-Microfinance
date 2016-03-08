@@ -60,6 +60,7 @@
 			</tr>
 			<?PHP		
 			$color = 0;
+			$count = 0;
 			while ($row_custinact = mysql_fetch_assoc($query_custinact)){					
 				
 				tr_colored($color);	//Alternating row colors
@@ -76,9 +77,19 @@
 						</tr>';
 				
 				array_push($_SESSION['rep_export'], array("Cust. No." => $row_custinact['cust_no'], "Customer Name" => $row_custinact['cust_name'], "DoB" => date("d.m.Y",$row_custinact['cust_dob']), "Gender" => $row_custinact['custsex_name'], "Occupation" => $row_custinact['cust_occup'], "Address" => $row_custinact['cust_address'], "Phone No." => $row_custinact['cust_phone'], "Member since" => date("d.m.Y",$row_custinact['cust_since'])));
+				
+				$count++;
 			}
 			?>
+			<tr class="balance">
+				<td colspan="8">
+				<?PHP
+				echo $count; 
+				if ($count == 1) echo ' inactive customer';
+				else echo ' inactive customers';
+				?>
+				</td>
+			</tr>
 		</table>
-		
 	</body>
 </html>
