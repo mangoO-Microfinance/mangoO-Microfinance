@@ -19,13 +19,14 @@
 		$empl_name = sanitize($_POST['empl_name']);
 		$empl_dob = strtotime(sanitize($_POST['empl_dob']));
 		$emplsex_id = sanitize($_POST['emplsex_id']);
+		$emplmarried_id = sanitize($_POST['emplmarried_id']);
 		$empl_address = sanitize($_POST['empl_address']);
 		$empl_phone = sanitize($_POST['empl_phone']);
 		$empl_email = sanitize($_POST['empl_email']);
 		$empl_active = sanitize($_POST['empl_active']);
 		
 		//Update EMPLOYEE
-		$sql_update = "UPDATE employee SET empl_no = '$empl_no', empl_name = '$empl_name', empl_dob = $empl_dob, emplsex_id = $emplsex_id, empl_address = '$empl_address', empl_phone = '$empl_phone', empl_email = '$empl_email', empl_active = '$empl_active', empl_lastupd = $timestamp, user_id = $_SESSION[log_id] WHERE empl_id = $_SESSION[empl_id]";
+		$sql_update = "UPDATE employee SET empl_no = '$empl_no', empl_name = '$empl_name', empl_dob = $empl_dob, emplsex_id = $emplsex_id, emplmarried_id = '$emplmarried_id', empl_address = '$empl_address', empl_phone = '$empl_phone', empl_email = '$empl_email', empl_active = '$empl_active', empl_lastupd = $timestamp, user_id = $_SESSION[log_id] WHERE empl_id = $_SESSION[empl_id]";
 		$query_update = mysql_query($sql_update);
 		checkSQL($query_update);
 		
@@ -38,8 +39,13 @@
 	$query_sex = mysql_query($sql_sex);
 	checkSQL($query_sex);
 	
+	//Select Marital Status from EMPLMARRIED for dropdown-menu
+	$sql_mstat = "SELECT * FROM emplmarried";
+	$query_mstat = mysql_query($sql_mstat);
+	checkSQL($query_mstat);
+	
 	//Select employee from EMPLOYEE
-	$sql_empl = "SELECT * FROM employee, user WHERE employee.user_id = user.user_id AND empl_id = '$_SESSION[empl_id]'";
+	$sql_empl = "SELECT * FROM employee, user WHERE employee.empl_id = user.empl_id AND employee.empl_id = '$_SESSION[empl_id]'";
 	$query_empl = mysql_query($sql_empl);
 	checkSQL($query_empl);
 	$result_empl = mysql_fetch_assoc($query_empl);
@@ -100,7 +106,7 @@
 						}
 						echo '	</a>
 										</td>
-										<td>Cust No:</td>
+										<td>Empl. No:</td>
 										<td><input type="text" name="empl_no" value="'.$result_empl['empl_no'].'" tabindex="1" /></td>
 										<td>Phone No:</td>
 										<td><input type="text" name="empl_phone" value="'.$result_empl['empl_phone'].'" tabindex="6" /></td>
@@ -133,15 +139,32 @@
 										<td><input type="text" id="datepicker2" name="empl_out" placeholder="DD.MM.YYYY" tabindex="4" /></td>
 									</tr>
 									<tr>
-										<td>Last updated:</td>
-										<td><input type="text" disabled="diabled" value="'.date("d.m.Y", $result_empl['empl_lastupd']).'" /></td>
-										<td>Address:</td>
-										<td><input type="text" name="empl_address" value="'.$result_empl['empl_address'].'" placeholder="Place of Residence" tabindex="5" /></td>
+										<td></td>
+										<td></td>
+										<td>Maritial Status:</td>
+										<td>
+											<select name="emplmarried_id" size="1">';
+											while ($row_mstat = mysql_fetch_assoc($query_mstat)){
+												if($row_mstat ['emplmarried_id'] == $result_empl['emplmarried_id']){
+													echo '<option selected value="'.$row_mstat['emplmarried_id'].'">'.$row_mstat['emplmarried_status'].'</option>';
+												}
+												else echo '<option value="'.$row_mstat['emplmarried_id'].'">'.$row_mstat['emplmarried_status'].'</option>';
+											}
+											echo '</select>
+										</td>
 										<td>Active:</td>
 										<td><input type="checkbox" name="empl_active" value="1" tabindex="13"'; 
 										if ($result_empl['empl_active']==1) echo ' checked="checked"';
 										echo ' />
 										</td>
+									</tr>
+									<tr>
+										<td>Last updated:</td>
+										<td><input type="text" disabled="diabled" value="'.date("d.m.Y", $result_empl['empl_lastupd']).'" /></td>
+										<td>Address:</td>
+										<td><input type="text" name="empl_address" value="'.$result_empl['empl_address'].'" placeholder="Place of Residence" tabindex="5" /></td>
+										<td>Username:</td>
+										<td><input type="text" disabled="diabled" value="'.$result_empl['user_name'].'" /></td>
 									</tr>
 									<tr>
 										<td colspan="6" class="center">

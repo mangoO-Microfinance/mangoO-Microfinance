@@ -551,13 +551,13 @@
 					<td><?PHP echo number_format($i_paid); ?></td>
 					<td colspan="4"></td>
 				</tr>
-				<tr style="">
-					<td style="font-style:italic;">Remaining:</td>
+				<tr>
+					<td>Remaining:</td>
 					<td></td>
-					<td style="font-style:italic"><?PHP echo number_format($p_due - $p_paid); ?></td>
+					<td><?PHP echo number_format($p_due - $p_paid); ?></td>
 					<td></td>
-					<td style="font-style:italic"><?PHP echo number_format($i_due - $i_paid); ?></td>
-					<td colspan="5	"></td>
+					<td><?PHP echo number_format($i_due - $i_paid); ?></td>
+					<td colspan="5"></td>
 				</tr>
 			</table>
 

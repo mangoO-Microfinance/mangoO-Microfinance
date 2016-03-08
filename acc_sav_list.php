@@ -28,6 +28,11 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 			</th>
 		</form>
 	</tr>
+	<?PHP
+	echo '<tr class="balance">
+					<td colspan="7">Balance: '.number_format($sav_balance).' '.$_SESSION['set_cur'].'</td>
+				</tr>';
+	?>
 	<tr>
 		<th>Date</th>
 		<th>Transaction Type</th>
@@ -53,8 +58,5 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 		//Prepare data for export to Excel file
 		array_push($_SESSION['sav_export'], array("Date" => date("d.m.Y",$row_sav['sav_date']), "Transaction Type" => $row_sav['savtype_type'], "Amount" => $row_sav['sav_amount'], "Receipt" => $row_sav['sav_receipt'], "W/draw Slip" => $row_sav['sav_slip']));
 	}
-	echo '<tr class="balance">
-					<td colspan="7">Balance: '.number_format($sav_balance).' '.$_SESSION['set_cur'].'</td>
-				</tr>';
  ?>
 </table>

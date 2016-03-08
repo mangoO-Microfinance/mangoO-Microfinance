@@ -15,16 +15,16 @@
 		$empl_name = sanitize($_POST['empl_name']);
 		$empl_dob = strtotime(sanitize($_POST['empl_dob']));
 		$emplsex_id = sanitize($_POST['emplsex_id']);
+		$emplmarried_id = sanitize($_POST['emplmarried_id']);
 		$empl_address = sanitize($_POST['empl_address']);
 		$empl_phone = sanitize($_POST['empl_phone']);
 		$empl_email = sanitize($_POST['empl_email']);
 		$empl_in = strtotime(sanitize($_POST['empl_in']));
 		if(isset($_POST['empl_active'])) $empl_active = 1;
 		else $empl_active = 0;
-		$user_id = sanitize($_POST['user_id']);
 		
 		//Insert new employee into EMPLOYEE
-		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, empl_active, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, $empl_active, '$user_id')";
+		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, emplmarried_id, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, empl_active, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$emplmarried_id', '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, $empl_active, '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		checkSQL($query_insert);
 		
@@ -38,10 +38,10 @@
 	$query_sex = mysql_query($sql_sex);
 	checkSQL($query_sex);
 	
-	// Select non-associated users
-	$sql_users = "SELECT user_id, user_name FROM user WHERE user_id NOT IN (SELECT user_id FROM employee)";
-	$query_users = mysql_query($sql_users);
-	checkSQL($query_users);
+	//Select Marital Status for Drop-down-Menu
+	$sql_mstat = "SELECT * FROM emplmarried";
+	$query_mstat = mysql_query($sql_mstat);
+	checkSQL($query_mstat);
 ?>
 
 <html>
@@ -76,7 +76,7 @@
 		<div class="content_center">
 			<form action="empl_new.php" method="post" onSubmit="return validate(this)" enctype="multipart/form-data">
 				
-				<table id ="tb_fields" style="max-width:750px;">
+				<table id ="tb_fields" style="max-width:1000px;">
 					<tr>
 						<td>Number:</td>
 						<td><input type="text" name="empl_no" tabindex="1" /></td>
@@ -110,14 +110,13 @@
 						<td><input type="text" id="datepicker2" name="empl_in" value="<?PHP echo date("d.m.Y", $timestamp) ?>" tabindex="13" /></td>
 					</tr>
 					<tr>
-						<td>User:</td>
+						<td>Marital Status:</td>
 						<td>
-							<select name="user_id" size="1" tabindex="9">';
-								<option value="0">None</option>
+							<select name="emplmarried_id" size="1" tabindex="5">';
 								<?PHP
-									while ($row_users = mysql_fetch_assoc($query_users)){
-										echo '<option value="'.$row_users['user_id'].'">'.$row_users['user_name'].'</option>';
-									}
+								while ($row_mstat = mysql_fetch_assoc($query_mstat)){
+									echo '<option value="'.$row_mstat['emplmarried_id'].'">'.$row_mstat['emplmarried_status'].'</option>';
+								}
 								?>
 							</select>
 						</td>
