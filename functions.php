@@ -361,48 +361,6 @@
 					</script>';
 	}
 	
-/**
-	* Resizing uploaded image files
-	* @param int width : Target width dimension
-	* @param int height : Target height dimension
-	* @return string path : Storage path for newly created image file
-	*/
-	function resizeImage($width, $height){
-		
-		// Get original image dimensions
-		list($w, $h) = getimagesize($_FILES['image']['tmp_name']);
-		
-		// Calculate new image size with ratio
-		$ratio = max($width/$w, $height/$h);
-		$h = ceil($height / $ratio);
-		$x = ($w - $width / $ratio) / 2;
-		$w = ceil($width / $ratio);
-		
-		// New file name
-		$basename = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_FILENAME));
-		$path = 'uploads/photos/cust'.$_SESSION['cust_id'].'_'.$width.'x'.$height.'.jpg';
-		
-		// Read binary data from image file
-		$imgString = file_get_contents($_FILES['image']['tmp_name']);
-		
-		// Create image from string
-		$image = imagecreatefromstring($imgString);
-		$tmp_img = imagecreatetruecolor($width, $height);
-		imagecopyresampled(
-			$tmp_img, $image,
-			0, 0,
-			$x, 0,
-			$width, $height,
-			$w, $h);
-		imagejpeg($tmp_img, $path, 95);
-		
-		return $path;
-		
-		// Cleanup memory
-		imagedestroy($image);
-		imagedestroy($tmp_img);
-	}
-	
 /**	
 	* Calculate a given customer's savings account balance
 	* @return int sav_balance : Current savings account balance for given customer
@@ -454,13 +412,15 @@
 	
 /**
 	* Get current customer's details
-	* @return array result_cust : Associative array with all current customer' details
+	* @return array result_cust : Associative array with the details of the current customer
 	*/
 	function getCustomer(){
 		$sql_cust = "SELECT * FROM customer, custsick, custmarried, custsex, user WHERE customer.custsick_id = custsick.custsick_id AND customer.custmarried_id = custmarried.custmarried_id AND custsex.custsex_id = customer.custsex_id AND cust_id = '$_SESSION[cust_id]' AND customer.user_id = user.user_id";
 		$query_cust = mysql_query($sql_cust);
 		checkSQL($query_cust);
-		return $result_cust = mysql_fetch_assoc($query_cust);
+		$result_cust = mysql_fetch_assoc($query_cust);
+		
+		return $result_cust;
 	}
 	
 /**
@@ -499,6 +459,19 @@
 		return $query_custinact;
 	}
 
+/**
+	* Get current employee
+	* @return array result_empl :  Associative array with the details of the current employee
+	*/
+	function getEmployee($empl_id){
+		$sql_empl = "SELECT * FROM employee LEFT JOIN user ON employee.empl_id = user.empl_id WHERE employee.empl_id = $empl_id";
+		$query_empl = mysql_query($sql_empl);
+		checkSQL($query_empl);
+		$result_empl = mysql_fetch_assoc($query_empl);
+		
+		return $result_empl;
+	}
+		
 /**
 	* Get all current employees
 	* @return array query_emplcurr : Array with the result of the SQL query

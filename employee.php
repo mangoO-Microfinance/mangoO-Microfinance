@@ -45,10 +45,7 @@
 	checkSQL($query_mstat);
 	
 	//Select employee from EMPLOYEE
-	$sql_empl = "SELECT * FROM employee, user WHERE employee.empl_id = user.empl_id AND employee.empl_id = '$_SESSION[empl_id]'";
-	$query_empl = mysql_query($sql_empl);
-	checkSQL($query_empl);
-	$result_empl = mysql_fetch_assoc($query_empl);
+	$result_empl = getEmployee($_SESSION['empl_id']);
 ?>
 
 <html>
@@ -75,6 +72,10 @@
 			<a href="empl_new.php">New Employee</a>
 			<a href="empl_curr.php">Current Employees</a>
 			<a href="empl_past.php">Former Employees</a>
+			<?PHP 
+				if($_SESSION['log_admin'] == 1 AND isset($result_empl['user_id'])) echo '<a href="set_user.php?user='.$result_empl['user_id'].'">Users</a>'; 
+				elseif($_SESSION['log_admin'] == 1) echo '<a href="set_user.php">Users</a>'; 
+			?>
 		</div>
 		
 		<div class="content_center">
@@ -97,7 +98,7 @@
 					<?PHP					
 						echo '<tr>
 										<td rowspan="4" colspan="2" style="text-align:center; vertical-align:top;">
-										<a href="empl_new_pic.php?from=employee">';
+										<a href="empl_new_pic.php">';
 						if (isset($result_empl['empl_pic'])) 
 							echo '<img src="'.$result_empl['empl_pic'].'" title="Employee\'s picture">';
 						else {

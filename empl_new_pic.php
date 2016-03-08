@@ -1,14 +1,10 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
+	require 'function_pic.php';
 	checkLogin();
 	connect();
-	
-	//Check where Re-direct comes from
-	if(isset($_GET['from'])){
-		$from = sanitize($_GET['from']);
-	}
-	
+
 	//SKIP-Button
 	if (isset($_POST['skip'])) header('Location: employee.php?empl='.$_SESSION['empl_id']);
 	
@@ -17,7 +13,7 @@
 		//Settings
 		$max_file_size = 1024*2048; // 2048kb
 		$valid_exts = array('jpeg', 'jpg', 'png', 'tif', 'tiff');
-		//$path ;
+		$path = 'uploads/photos/employees/empl'.$_SESSION['empl_id'].'_';
 		
 		//Thumbnail Sizes
 		$sizes = array(100 => 130, 146 => 190, 230 => 300);
@@ -30,7 +26,7 @@
 			if (in_array($ext, $valid_exts)) {
 				//Resize image
 				foreach ($sizes as $width => $height) {
-					$files[] = resizeImage($width, $height);
+					$files[] = resizeImage($width, $height, $path);
 				}
 				$sql_picpath = "UPDATE employee SET empl_pic = '$files[1]' WHERE empl_id = '$_SESSION[empl_id]'";
 				$query_picpath = mysql_query($sql_picpath);
@@ -43,6 +39,9 @@
 		}
 		else $error_msg = 'Please choose an image smaller than 2048kB.';
 	}
+	
+	// Get employee details
+	$result_empl = getEmployee($_SESSION['empl_id']);
 ?>
 
 <html>
@@ -52,11 +51,14 @@
 		<!-- MENU -->
 		<?PHP includeMenu(7); ?>
 		<div id="menu_main">
-			
+			<!-- <a href="empl_search.php">Search</a> -->
+			<a href="empl_new.php" id="item_selected">New Employee</a>
+			<a href="empl_curr.php">Current Employees</a>
+			<a href="empl_past.php">Former Employees</a>
 		</div>
 			
 		<div class="content_center">
-			<p class="heading">Upload Photo for Employee <?PHP echo $_SESSION['empl_id']?></p>
+			<p class="heading">Upload Photo for <?PHP echo $result_empl['empl_name'].' ('.$result_empl['empl_no'].')'; ?></p>
 			
 			<?php if(isset($error_msg)): ?>
 			<p class="alert"><?php echo $error_msg; ?></p>

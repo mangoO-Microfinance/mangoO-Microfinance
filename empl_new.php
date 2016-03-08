@@ -28,9 +28,15 @@
 		$query_insert = mysql_query($sql_insert);
 		checkSQL($query_insert);
 		
+		//Get new Employees's ID from EMPLOYEE
+		$sql_maxid = "SELECT MAX(empl_id) FROM employee";
+		$query_maxid = mysql_query ($sql_maxid);
+		checkSQL($query_maxid);
+		$maxid = mysql_fetch_assoc($query_maxid);
+		$_SESSION['empl_id'] = $maxid['MAX(cust_id)'];
+		
 		// Refer to empl_new_pic.php
-		//header('Location: empl_new_pic.php?from=new');
-		header('Location: empl_curr.php');
+		header('Location: empl_new_pic.php');
 	}
 	
 	// Select sexes from EMPLSEX for dropdown-menu

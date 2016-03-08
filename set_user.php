@@ -5,6 +5,7 @@
 	checkPermissionAdmin();
 	connect();
 	$user_id = 0;
+	$employee = 0;
 	
 	//Select all users from USER
 	$users = array();
@@ -88,7 +89,7 @@
 			function validate(form){
 				fail = validateUser(form.user_name.value, <?PHP echo json_encode($user_names); ?>, <?PHP echo $user_id; ?>)
 				fail += validatePw(form.user_pw.value, form.user_pw_conf.value)
-				fail += validateEmployee(form.empl_id.value, <?PHP echo json_encode($empl_assoc); ?>)
+				fail += validateEmployee(form.empl_id.value, <?PHP echo json_encode($empl_assoc); ?>, <?PHP echo $employee; ?>)
 				if (fail == "") return true
 				else { 
 					alert(fail); 

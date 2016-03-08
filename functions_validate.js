@@ -140,9 +140,9 @@ function validateUsergroup(field, ugroupnames, ugroup_id) {
 	return ""
 }
 
-function validateEmployee(field, employees) {
+function validateEmployee(field, employees, empl_current) {
 	for (i = 0, len = employees.length; i < len; i++){
-		if (employees[i] == field) return "Employee already associated with another username.\n\n"
+		if (employees[i] == field && field != empl_current) return "Employee already associated with another username.\n\n"
 	}
 	return ""
 }
