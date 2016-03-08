@@ -64,7 +64,7 @@
 				</tr>
 				<?PHP
 				$color = 0;
-				
+				$count = 0;
 				while ($row_loans = mysql_fetch_assoc($query_loans)){
 					
 					//Select Loan Balance from LTRANS
@@ -92,8 +92,19 @@
 									<td>'.date("d.m.Y", $row_loans['loan_dateout']).'</td>				
 								</tr>';
 					array_push($_SESSION['rep_export'], array("Loan No." => $row_loans['loan_no'], "Customer" => $row_loans['cust_name'].' ('.$row_loans['cust_no'].')', "Status" => $row_loans['loanstatus_status'],"Loan Period" => $row_loans['loan_period'], "Principal" => $row_loans['loan_principal'], "Interest" => ($row_loans['loan_repaytotal'] - $row_loans['loan_principal']), "Remaining" => $loan_balance, "Issued on" => date("d.m.Y", $row_loans['loan_dateout'])));
+					
+					$count++;
 				}
 				?>
+				<tr class="balance">
+					<td	colspan="7">
+					<?PHP 
+					echo $count; 
+					if ($count == 1) echo ' active loan';
+					else echo ' active loans';
+					?>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</body>
