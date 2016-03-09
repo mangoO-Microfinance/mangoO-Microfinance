@@ -20,13 +20,16 @@
 		$empl_dob = strtotime(sanitize($_POST['empl_dob']));
 		$emplsex_id = sanitize($_POST['emplsex_id']);
 		$emplmarried_id = sanitize($_POST['emplmarried_id']);
+		$empl_salary = sanitize($_POST['empl_salary']);
 		$empl_address = sanitize($_POST['empl_address']);
 		$empl_phone = sanitize($_POST['empl_phone']);
 		$empl_email = sanitize($_POST['empl_email']);
-		$empl_active = sanitize($_POST['empl_active']);
+		$empl_in = strtotime(sanitize($_POST['empl_in']));
+		$empl_out = strtotime(sanitize($_POST['empl_out']));
+		if($empl_out == NULL) $empl_out = "NULL";
 		
 		//Update EMPLOYEE
-		$sql_update = "UPDATE employee SET empl_no = '$empl_no', empl_name = '$empl_name', empl_dob = $empl_dob, emplsex_id = $emplsex_id, emplmarried_id = '$emplmarried_id', empl_address = '$empl_address', empl_phone = '$empl_phone', empl_email = '$empl_email', empl_active = '$empl_active', empl_lastupd = $timestamp, user_id = $_SESSION[log_id] WHERE empl_id = $_SESSION[empl_id]";
+		$sql_update = "UPDATE employee SET empl_no = '$empl_no', empl_name = '$empl_name', empl_dob = $empl_dob, emplsex_id = $emplsex_id, emplmarried_id = '$emplmarried_id', empl_salary = '$empl_salary', empl_address = '$empl_address', empl_phone = '$empl_phone', empl_email = '$empl_email', empl_in = '$empl_in', empl_out = $empl_out, empl_lastupd = $timestamp, user_id = $_SESSION[log_id] WHERE empl_id = $_SESSION[empl_id]";
 		$query_update = mysql_query($sql_update);
 		checkSQL($query_update);
 		
@@ -109,14 +112,14 @@
 										</td>
 										<td>Empl. No:</td>
 										<td><input type="text" name="empl_no" value="'.$result_empl['empl_no'].'" tabindex="1" /></td>
-										<td>Phone No:</td>
-										<td><input type="text" name="empl_phone" value="'.$result_empl['empl_phone'].'" tabindex="6" /></td>
+										<td>Address:</td>
+										<td><input type="text" name="empl_address" value="'.$result_empl['empl_address'].'" placeholder="Place of Residence" /></td>
 									</tr>';
 						echo '<tr>
 										<td>Name:</td>
 										<td><input type="text" name="empl_name" value="'.$result_empl['empl_name'].'" tabindex="2" /></td>
-										<td>E-Mail:</td>
-										<td><input type="text" name="empl_email" value="'.$result_empl['empl_email'].'" placeholder="abc@xyz.com" tabindex="7" /></td>
+										<td>Phone No:</td>
+										<td><input type="text" name="empl_phone" value="'.$result_empl['empl_phone'].'" tabindex="6" /></td>
 									</tr>
 									<tr>
 										<td>Gender:</td>
@@ -130,14 +133,14 @@
 								}
 								echo '</select>
 										</td>
-										<td>Employed since:</td>
-										<td><input type="text" name="empl_in" value="'.date("d.m.Y", $result_empl['empl_in']).'" disabled="disabled" /></td>
+										<td>E-Mail:</td>
+										<td><input type="text" name="empl_email" value="'.$result_empl['empl_email'].'" placeholder="abc@xyz.com" tabindex="7" /></td>
 									</tr>
 									<tr>
 										<td>DoB:</td>
-										<td><input type="text" id="datepicker" name="empl_dob" value="'.date("d.m.Y",$result_empl['empl_dob']).'" placeholder="DD.MM.YYYY" tabindex="4" /></td>
-										<td>Employed until:</td>
-										<td><input type="text" id="datepicker2" name="empl_out" placeholder="DD.MM.YYYY" tabindex="4" /></td>
+										<td><input type="text" id="datepicker" name="empl_dob" value="'.date("d.m.Y",$result_empl['empl_dob']).'" placeholder="DD.MM.YYYY" /></td>
+										<td>Employm. Start:</td>
+										<td><input type="text" name="empl_in" id="datepicker2" value="'.date("d.m.Y", $result_empl['empl_in']).'" /></td>
 									</tr>
 									<tr>
 										<td></td>
@@ -153,23 +156,24 @@
 											}
 											echo '</select>
 										</td>
-										<td>Currently employed:</td>
-										<td><input type="checkbox" name="empl_active" value="1" tabindex="13"'; 
-										if ($result_empl['empl_active']==1) echo ' checked="checked"';
-										echo ' />
+										<td>Employm. End:</td>
+										<td>
+											<input type="text" name="empl_out" id="datepicker3" placeholder="DD.MM.YYYY"';
+											if($result_empl['empl_out'] != NULL) echo ' value="'.date("d.m.Y", $result_empl['empl_out']).'"';
+											echo ' />
 										</td>
 									</tr>
 									<tr>
 										<td>Last updated:</td>
 										<td><input type="text" disabled="diabled" value="'.date("d.m.Y", $result_empl['empl_lastupd']).'" /></td>
-										<td>Address:</td>
-										<td><input type="text" name="empl_address" value="'.$result_empl['empl_address'].'" placeholder="Place of Residence" tabindex="5" /></td>
+										<td>Salary:</td>
+										<td><input type="number" name="empl_salary" value="'.$result_empl['empl_salary'].'" placeholder="'.$_SESSION['set_cur'].'" /></td>
 										<td>Username:</td>
 										<td><input type="text" disabled="diabled" value="'.$result_empl['user_name'].'" /></td>
 									</tr>
 									<tr>
 										<td colspan="6" class="center">
-											<input type="submit" name="update" value="Save Changes" tabindex="14" />
+											<input type="submit" name="update" value="Save Changes" />
 										</td>
 									</tr>';
 					?>

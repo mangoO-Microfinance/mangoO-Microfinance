@@ -16,6 +16,7 @@
 		$empl_dob = strtotime(sanitize($_POST['empl_dob']));
 		$emplsex_id = sanitize($_POST['emplsex_id']);
 		$emplmarried_id = sanitize($_POST['emplmarried_id']);
+		$empl_salary = sanitize($_POST['empl_salary']);
 		$empl_address = sanitize($_POST['empl_address']);
 		$empl_phone = sanitize($_POST['empl_phone']);
 		$empl_email = sanitize($_POST['empl_email']);
@@ -24,7 +25,7 @@
 		else $empl_active = 0;
 		
 		//Insert new employee into EMPLOYEE
-		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, emplmarried_id, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, empl_active, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$emplmarried_id', '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, $empl_active, '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, emplmarried_id, empl_salary, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, empl_active, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$emplmarried_id', $empl_salary, '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, $empl_active, '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		checkSQL($query_insert);
 		
@@ -33,7 +34,7 @@
 		$query_maxid = mysql_query ($sql_maxid);
 		checkSQL($query_maxid);
 		$maxid = mysql_fetch_assoc($query_maxid);
-		$_SESSION['empl_id'] = $maxid['MAX(cust_id)'];
+		$_SESSION['empl_id'] = $maxid['MAX(empl_id)'];
 		
 		// Refer to empl_new_pic.php
 		header('Location: empl_new_pic.php');
@@ -85,20 +86,20 @@
 				<table id ="tb_fields" style="max-width:1000px;">
 					<tr>
 						<td>Number:</td>
-						<td><input type="text" name="empl_no" tabindex="1" /></td>
-						<td>Address:</td>
-						<td><input type="text" name="empl_address" placeholder="Place of Residence" tabindex="6" /></td>
+						<td><input type="text" name="empl_no" tabindex=1 /></td>
+						<td>Monthly Salary:</td>
+						<td><input type="number" name="empl_salary" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" tabindex=6 /></td>
 					</tr>
 					<tr>
 						<td>Name:</td>
-						<td><input type="text" name="empl_name" placeholder="Full Name" tabindex="2" /></td>
-						<td>Phone No:</td>
-						<td><input type="text" name="empl_phone" tabindex="7"/></td>
+						<td><input type="text" name="empl_name" placeholder="Full Name" tabindex=2 /></td>
+						<td>Address:</td>
+						<td><input type="text" name="empl_address" placeholder="Place of Residence" tabindex=7 /></td>
 					</tr>
 					<tr>
 						<td>Gender:</td>
 						<td>
-							<select name="emplsex_id" size="1" tabindex="3">';
+							<select name="emplsex_id" size="1" tabindex=3>';
 								<?PHP
 									while ($row_sex = mysql_fetch_assoc($query_sex)){
 										echo '<option value="'.$row_sex['emplsex_id'].'">'.$row_sex['emplsex_name'].'</option>';
@@ -106,19 +107,19 @@
 								?>
 							</select>
 						</td>
-						<td>E-Mail:</td>
-						<td><input type="text" name="empl_email" placeholder="abc@xyz.com" tabindex="8"/></td>
+						<td>Phone No:</td>
+						<td><input type="text" name="empl_phone" tabindex=8 /></td>
 					</tr>
 					<tr>
 						<td>DoB:</td>
-						<td><input type="text" id="datepicker" name="empl_dob" placeholder="DD.MM.YYYY" tabindex="4" /></td>
-						<td>Employed since:</td>
-						<td><input type="text" id="datepicker2" name="empl_in" value="<?PHP echo date("d.m.Y", $timestamp) ?>" tabindex="13" /></td>
+						<td><input type="text" id="datepicker" name="empl_dob" placeholder="DD.MM.YYYY" tabindex=4 /></td>
+						<td>E-Mail:</td>
+						<td><input type="text" name="empl_email" placeholder="abc@xyz.com" tabindex=9 /></td>
 					</tr>
 					<tr>
 						<td>Marital Status:</td>
 						<td>
-							<select name="emplmarried_id" size="1" tabindex="5">';
+							<select name="emplmarried_id" size="1" tabindex=5>';
 								<?PHP
 								while ($row_mstat = mysql_fetch_assoc($query_mstat)){
 									echo '<option value="'.$row_mstat['emplmarried_id'].'">'.$row_mstat['emplmarried_status'].'</option>';
@@ -126,12 +127,12 @@
 								?>
 							</select>
 						</td>
-						<td>Active:</td>
-						<td><input type="checkbox" name="empl_active" checked="checked" value="1"/></td>
+						<td>Employm. Start:</td>
+						<td><input type="text" id="datepicker2" name="empl_in" value="<?PHP echo date("d.m.Y", $timestamp) ?>" tabindex=10 /></td>
 					</tr>
 					<tr>
 						<td colspan="4" class="center">
-							<input type="submit" name="create" value="Continue" tabindex="14" />
+							<input type="submit" name="create" value="Continue" tabindex=11 />
 						</td>
 					</tr>
 				</table>

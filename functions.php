@@ -477,7 +477,8 @@
 	* @return array query_emplcurr : Array with the result of the SQL query
 	*/
 	function getEmplCurr(){
-		$sql_emplcurr = "SELECT * FROM employee, emplsex, emplmarried WHERE emplsex.emplsex_id = employee.emplsex_id AND emplmarried.emplmarried_id = employee.emplmarried_id AND empl_id != 0 AND empl_active = 1 ORDER BY empl_id";
+		$timestamp = time();
+		$sql_emplcurr = "SELECT * FROM emplsex, emplmarried, employee WHERE emplsex.emplsex_id = employee.emplsex_id AND emplmarried.emplmarried_id = employee.emplmarried_id AND empl_id != 0 AND (empl_out > $timestamp OR empl_out IS NULL) ORDER BY empl_id";
 		$query_emplcurr = mysql_query($sql_emplcurr);
 		checkSQL($query_emplcurr);
 		
@@ -489,7 +490,8 @@
 	* @return array query_emplpast : Array with the result of the SQL query
 	*/
 	function getEmplPast(){
-		$sql_emplpast = "SELECT * FROM employee, emplsex, emplmarried WHERE emplsex.emplsex_id = employee.emplsex_id AND emplmarried.emplmarried_id = employee.emplmarried_id AND empl_id != 0 AND empl_active = 0 ORDER BY empl_id";
+		$timestamp = time();
+		$sql_emplpast = "SELECT * FROM employee, emplsex, emplmarried WHERE emplsex.emplsex_id = employee.emplsex_id AND emplmarried.emplmarried_id = employee.emplmarried_id AND empl_id != 0 AND empl_out < $timestamp ORDER BY empl_id";
 		$query_emplpast = mysql_query($sql_emplpast);
 		checkSQL($query_emplpast);
 		

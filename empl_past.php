@@ -86,7 +86,7 @@
 				<td colspan="9">
 					<?PHP 
 					echo $count.' former employee'; 
-					if ($count > 1) echo 's';
+					if ($count == 0 OR $count > 1) echo 's';
 					?>
 				</td>
 			</tr>
