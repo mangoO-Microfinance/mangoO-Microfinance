@@ -4,6 +4,8 @@
 	checkLogin();
 	connect();
 	$lastyear = date("Y", time())-1;
+	$suc_int = 0;
+	$suc_div = 0;
 	
 /** 
 	* DISTRIBUTE ANNUAL SAVINGS INTEREST
@@ -76,6 +78,8 @@
 		$sql_int_exp = "INSERT INTO expenses (exptype_id, exp_amount, exp_date, exp_text, exp_created, user_id) VALUES (19, $int_total, $int_year_end, 'Distributed Interest for $int_year', $timestamp, $_SESSION[log_id])";
 		$query_int_exp = mysql_query($sql_int_exp);
 		checkSQL($query_int_exp );
+		
+		$suc_int = 1;
 	}
 	
 /**
@@ -154,12 +158,14 @@
 		$sql_div_exp = "INSERT INTO expenses (exptype_id, exp_amount, exp_date, exp_text, exp_created, user_id) VALUES (18, $div_total, $div_year_end, 'Distributed Dividend for $div_year', $timestamp, $_SESSION[log_id])";
 		$query_div_exp = mysql_query($sql_div_exp);
 		checkSQL($query_div_exp );
+		
+		$suc_div = 1;
 	}
 ?>
 
 
 <html>
-	<?PHP includeHead('Dividend',1) ?>
+	<?PHP includeHead('Annual Accounts',1) ?>
 	<body>
 	
 		<!-- MENU -->
@@ -190,7 +196,7 @@
 			</div>
 			
 			<div class="content_right" style="width:50%;">
-				<p class="heading">Annaul Savings Interest</p>
+				<p class="heading">Annual Savings Interest</p>
 				<form action="books_annual.php" method="post">
 					<input type="number" name="int_year" min="2000" max="<?PHP echo $lastyear; ?>" placeholder="Enter Year" value="<?PHP echo $lastyear; ?>" required="required" />
 					<br/><br/>
@@ -200,6 +206,19 @@
 				</form>
 			</div>
 			
+			<div style="display:block; clear:both; visibility:hidden; line-height:0; height:0; margin-bottom:4em"></div>
+			
+			<div class="ui-widget">
+				<div class="ui-state-highlight ui-corner-all" style="width:50%; border:none; background-color:#fa6900; margin:auto; padding: .7em;">
+					<p style="color:#ffffff;"><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+					Both operations may take some time to complete.<br/><br/>Do not click anything until you see a confirmation message!</p>
+				</div>
+			</div>
+			
 		</div>
 	</body>
 </html>
+<?PHP
+if($suc_int == 1) showMessage('Interest has been distributed.\n\nYou may now leave this page.');
+if($suc_div == 1) showMessage('Dividend has been distributed.\n\nYou may now leave this page.');
+?>
