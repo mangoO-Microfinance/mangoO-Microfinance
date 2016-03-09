@@ -84,9 +84,8 @@
 			<tr class="balance">
 				<td colspan="8">
 				<?PHP
-				echo $count; 
-				if ($count == 1) echo ' inactive customer';
-				else echo ' inactive customers';
+				echo $count.' inactive customer'; 
+				if ($count > 1) echo 's';
 				?>
 				</td>
 			</tr>

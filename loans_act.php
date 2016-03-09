@@ -99,9 +99,8 @@
 				<tr class="balance">
 					<td	colspan="7">
 					<?PHP 
-					echo $count; 
-					if ($count == 1) echo ' active loan';
-					else echo ' active loans';
+					echo $count.' active loan';
+					if ($count > 1) echo 's';
 					?>
 					</td>
 				</tr>

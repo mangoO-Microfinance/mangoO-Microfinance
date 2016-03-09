@@ -85,9 +85,8 @@
 			<tr class="balance">
 				<td colspan="9">
 					<?PHP 
-					echo $count; 
-					if ($count == 1) echo ' former employee';
-					else echo ' former employees';
+					echo $count.' former employee'; 
+					if ($count > 1) echo 's';
 					?>
 				</td>
 			</tr>

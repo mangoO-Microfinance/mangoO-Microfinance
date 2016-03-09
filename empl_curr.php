@@ -82,9 +82,8 @@
 			<tr class="balance">
 				<td colspan="8">
 				<?PHP 
-				echo $count; 
-				if ($count == 1) echo ' current employee';
-				else echo ' current employees';
+				echo $count.' current employee'; 
+				if ($count > 1) echo 's';
 				?>
 				</td>
 			</tr>

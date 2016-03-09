@@ -83,9 +83,8 @@
 			<tr class="balance">
 				<td colspan="8">
 				<?PHP 
-				echo $count; 
-				if ($count == 1) echo ' active customer';
-				else echo ' active customers';
+				echo $count.' active customer'; 
+				if ($count > 1) echo 's';
 				?>
 				</td>
 			</tr>
