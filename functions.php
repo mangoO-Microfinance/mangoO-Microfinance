@@ -217,7 +217,7 @@
 	* @param int days : Number of days
 	* @return int seconds : Lenght of number of days in seconds
 	*/
-	function days($days){
+	function convertDays($days){
 		return $seconds = $days * 86400;
 	}
 
@@ -226,7 +226,7 @@
 	* @param int months : Number of months
 	* @return int seconds : Lenght of number of days in seconds
 	*/	
-	function months($months){
+	function convertMonths($months){
 		return $seconds = $months * 2635200; // Seconds for 30.5 days
 	}
 	
@@ -415,7 +415,7 @@
 	* @return array result_cust : Associative array with the details of the current customer
 	*/
 	function getCustomer(){
-		$sql_cust = "SELECT * FROM customer, custsick, custmarried, custsex, user WHERE customer.custsick_id = custsick.custsick_id AND customer.custmarried_id = custmarried.custmarried_id AND custsex.custsex_id = customer.custsex_id AND cust_id = '$_SESSION[cust_id]' AND customer.user_id = user.user_id";
+		$sql_cust = "SELECT * FROM custsick, custmarried, custsex, customer, user WHERE customer.custsick_id = custsick.custsick_id AND customer.custmarried_id = custmarried.custmarried_id AND custsex.custsex_id = customer.custsex_id AND cust_id = '$_SESSION[cust_id]' AND customer.user_id = user.user_id";
 		$query_cust = mysql_query($sql_cust);
 		checkSQL($query_cust);
 		$result_cust = mysql_fetch_assoc($query_cust);
@@ -428,7 +428,7 @@
 	* @return array query_custother : Array with the result of the SQL query
 	*/
 	function getCustOther(){
-		$sql_custother = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_id NOT IN (0, $_SESSION[cust_id]) ORDER BY cust_id";
+		$sql_custother = "SELECT * FROM custsex, customer WHERE custsex.custsex_id = customer.custsex_id AND cust_id NOT IN (0, $_SESSION[cust_id]) ORDER BY cust_id";
 		$query_custother = mysql_query($sql_custother);
 		checkSQL($query_custother);
 		
@@ -440,7 +440,7 @@
 	* @return array query_custact : Array with the result of the SQL query
 	*/
 	function getCustAct(){
-		$sql_custact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active = 1 ORDER BY cust_id";
+		$sql_custact = "SELECT * FROM custsex, customer WHERE custsex.custsex_id = customer.custsex_id AND cust_active = 1 ORDER BY cust_id";
 		$query_custact = mysql_query($sql_custact);
 		checkSQL($query_custact);
 		
@@ -452,7 +452,7 @@
 	* @return array query_custinact : Array with the result of the SQL query
 	*/
 	function getCustInact(){
-		$sql_custinact = "SELECT * FROM customer, custsex WHERE custsex.custsex_id = customer.custsex_id AND cust_active != 1 ORDER BY cust_id";
+		$sql_custinact = "SELECT * FROM custsex, customer WHERE custsex.custsex_id = customer.custsex_id AND cust_active != 1 ORDER BY cust_id";
 		$query_custinact = mysql_query($sql_custinact);
 		checkSQL($query_custinact);
 		

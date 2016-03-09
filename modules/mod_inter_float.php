@@ -8,7 +8,7 @@ $loan_principaldue = round($loan_principal / $loan_period, -3);
 $difference_principal = $loan_principal - ($loan_principaldue * $loan_period);
 
 //Calculate Due Dates & Due Payments and insert them into LTRANS
-$ltrans_due = $loan_dateout + days(31);
+$ltrans_due = $loan_dateout + convertDays(31);
 $ltrans_principaldue = $loan_principaldue;
 $ltrans_principalremain = $loan_principal;
 
@@ -36,7 +36,7 @@ while ($i <= $loan_period){
 	$ltrans_principalremain = $ltrans_principalremain - $ltrans_principaldue;
 	
 	// Add seconds for 31 days
-	$ltrans_due = $ltrans_due + days(31);	
+	$ltrans_due = $ltrans_due + convertDays(31);	
 	
 	$i++;
 }

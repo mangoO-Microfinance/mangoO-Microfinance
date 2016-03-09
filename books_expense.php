@@ -24,7 +24,7 @@
 	}
 			
 	//Select current expenses from expenses
-	$sixtydays = time() - days(60);
+	$sixtydays = time() - convertDays(60);
 	$sql_expcur = "SELECT * FROM expenses, exptype WHERE expenses.exptype_id = exptype.exptype_id AND exp_date > $sixtydays ORDER BY exp_date DESC, exp_voucher DESC";
 	$query_expcur = mysql_query($sql_expcur);
 	checkSQL($query_expcur);

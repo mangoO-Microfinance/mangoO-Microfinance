@@ -122,7 +122,7 @@
 				<a href="acc_sav_withd.php?cust='.$_SESSION['cust_id'].'">Withdrawal</a>
 				<a href="acc_share_buy.php?cust='.$_SESSION['cust_id'].'">Share Buy</a>
 				<a href="acc_share_sale.php?cust='.$_SESSION['cust_id'].'">Share Sale</a>';
-			if ($result_cust['cust_active'] == 1 AND ($timestamp-$result_cust['cust_since']) > months($_SESSION['set_minmemb'])) echo '
+			if ($result_cust['cust_active'] == 1 AND ($timestamp-$result_cust['cust_since']) > convertMonths($_SESSION['set_minmemb'])) echo '
 				<a href="loan_new.php?cust='.$_SESSION['cust_id'].'">New Loan</a>';
 			?>
 			<a href="cust_new.php">New Customer</a>

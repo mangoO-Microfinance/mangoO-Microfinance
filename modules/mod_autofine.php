@@ -1,6 +1,6 @@
 <?PHP
 // Calculate grace period in days
-$graceperiod = days($_SESSION['set_auf']);
+$graceperiod = convertDays($_SESSION['set_auf']);
 $timestamp = time();
 
 // Automatically charge Loan Default Fine if Customer has defaulted payment beyond graceperiod										
