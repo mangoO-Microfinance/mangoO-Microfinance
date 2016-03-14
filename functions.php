@@ -415,7 +415,7 @@
 	* @return array result_cust : Associative array with the details of the current customer
 	*/
 	function getCustomer(){
-		$sql_cust = "SELECT * FROM custsick, custmarried, custsex, customer, user WHERE customer.custsick_id = custsick.custsick_id AND customer.custmarried_id = custmarried.custmarried_id AND custsex.custsex_id = customer.custsex_id AND cust_id = '$_SESSION[cust_id]' AND customer.user_id = user.user_id";
+		$sql_cust = "SELECT * FROM customer LEFT JOIN custsex ON customer.custsex_id = custsex.custsex_id LEFT JOIN custmarried ON customer.custmarried_id = custmarried.custmarried_id LEFT JOIN custsick ON customer.custsick_id = custsick.custsick_id LEFT JOIN user ON customer.user_id = user.user_id WHERE cust_id = '$_SESSION[cust_id]'";
 		$query_cust = mysql_query($sql_cust);
 		checkSQL($query_cust);
 		$result_cust = mysql_fetch_assoc($query_cust);
@@ -428,7 +428,7 @@
 	* @return array query_custother : Array with the result of the SQL query
 	*/
 	function getCustOther(){
-		$sql_custother = "SELECT * FROM custsex, customer WHERE custsex.custsex_id = customer.custsex_id AND cust_id NOT IN (0, $_SESSION[cust_id]) ORDER BY cust_id";
+		$sql_custother = "SELECT * FROM customer LEFT JOIN custsex ON custsex.custsex_id = customer.custsex_id WHERE cust_id NOT IN (0, $_SESSION[cust_id]) ORDER BY cust_id";
 		$query_custother = mysql_query($sql_custother);
 		checkSQL($query_custother);
 		
@@ -440,7 +440,7 @@
 	* @return array query_custact : Array with the result of the SQL query
 	*/
 	function getCustAct(){
-		$sql_custact = "SELECT * FROM custsex, customer WHERE custsex.custsex_id = customer.custsex_id AND cust_active = 1 ORDER BY cust_id";
+		$sql_custact = "SELECT * FROM customer LEFT JOIN custsex ON custsex.custsex_id = customer.custsex_id WHERE cust_id != 0 AND cust_active = 1 ORDER BY cust_id";
 		$query_custact = mysql_query($sql_custact);
 		checkSQL($query_custact);
 		
@@ -452,7 +452,7 @@
 	* @return array query_custinact : Array with the result of the SQL query
 	*/
 	function getCustInact(){
-		$sql_custinact = "SELECT * FROM custsex, customer WHERE custsex.custsex_id = customer.custsex_id AND cust_active != 1 ORDER BY cust_id";
+		$sql_custinact = "SELECT * FROM customer LEFT JOIN custsex ON custsex.custsex_id = customer.custsex_id WHERE cust_id != 0 AND cust_active != 1 ORDER BY cust_id";
 		$query_custinact = mysql_query($sql_custinact);
 		checkSQL($query_custinact);
 		
@@ -478,7 +478,7 @@
 	*/
 	function getEmplCurr(){
 		$timestamp = time();
-		$sql_emplcurr = "SELECT * FROM emplsex, emplmarried, employee WHERE emplsex.emplsex_id = employee.emplsex_id AND emplmarried.emplmarried_id = employee.emplmarried_id AND empl_id != 0 AND (empl_out > $timestamp OR empl_out IS NULL) ORDER BY empl_id";
+		$sql_emplcurr = "SELECT * FROM employee LEFT JOIN emplsex ON employee.emplsex_id = emplsex.emplsex_id LEFT JOIN emplmarried ON employee.emplmarried_id = emplmarried.emplmarried_id WHERE empl_id != 0 AND (empl_out > $timestamp OR empl_out IS NULL) ORDER BY empl_id";
 		$query_emplcurr = mysql_query($sql_emplcurr);
 		checkSQL($query_emplcurr);
 		
@@ -491,7 +491,7 @@
 	*/
 	function getEmplPast(){
 		$timestamp = time();
-		$sql_emplpast = "SELECT * FROM employee, emplsex, emplmarried WHERE emplsex.emplsex_id = employee.emplsex_id AND emplmarried.emplmarried_id = employee.emplmarried_id AND empl_id != 0 AND empl_out < $timestamp ORDER BY empl_id";
+		$sql_emplpast = "SELECT * FROM employee LEFT JOIN emplsex ON employee.emplsex_id = emplsex.emplsex_id LEFT JOIN emplmarried ON employee.emplmarried_id = emplmarried.emplmarried_id WHERE empl_id != 0 AND empl_out < $timestamp ORDER BY empl_id";
 		$query_emplpast = mysql_query($sql_emplpast);
 		checkSQL($query_emplpast);
 		
