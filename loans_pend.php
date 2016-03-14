@@ -12,7 +12,7 @@
 	$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_loans-pending';
 	
 	//Select Pending Loans from LOANS
-	$sql_loanpend = "SELECT * FROM loans, loanstatus, customer WHERE loans.cust_id = customer.cust_id AND loans.loanstatus_id = loanstatus.loanstatus_id AND loans.loanstatus_id = 1 ORDER BY loan_date, loan_no";
+	$sql_loanpend = "SELECT * FROM loans LEFT JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE loans.loanstatus_id = 1 ORDER BY loan_date, loan_no";
 	$query_loanpend = mysql_query($sql_loanpend);
 	checkSQL ($query_loanpend);
 ?>

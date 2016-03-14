@@ -7,13 +7,13 @@
 	//Select from LOANS depending on Search or not Search
 	if (isset($_POST['loan_no'])){
 		$loan_search = sanitize($_POST['loan_no']);
-		$sql_loansearch = "SELECT * FROM loans, loanstatus, customer WHERE customer.cust_id = loans.cust_id AND loanstatus.loanstatus_id = loans.loanstatus_id AND loan_no LIKE '%$loan_search%'";
+		$sql_loansearch = "SELECT * FROM loans LEFT JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE loan_no LIKE '%$loan_search%'";
 		$query_loansearch = mysql_query($sql_loansearch);
 		checkSQL ($query_loansearch);
 	}
 	elseif (isset($_POST['loan_status'])){
 		$loan_search = sanitize($_POST['loan_status']);
-		$sql_loansearch = "SELECT * FROM loans, loanstatus, customer WHERE customer.cust_id = loans.cust_id AND loanstatus.loanstatus_id = loans.loanstatus_id AND loans.loanstatus_id = '$loan_search'";
+		$sql_loansearch = "SELECT * FROM loans LEFT JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE loans.loanstatus_id = '$loan_search'";
 		$query_loansearch = mysql_query($sql_loansearch);
 		checkSQL ($query_loansearch);
 	}
@@ -25,11 +25,7 @@
 	<body>
 		
 		<!-- MENU -->
-		<?PHP 
-				includeMenu(3);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP includeMenu(3); ?>
 		<div id="menu_main">
 			<a href="loan_search.php" id="item_selected">Search</a>
 			<a href="loans_act.php">Active Loans</a>
@@ -37,8 +33,8 @@
 		</div>
 		
 		<div id="content_center">
+			
 			<!-- SEARCH RESULTS -->
-
 			<table id="tb_table">				
 				<colgroup>
 					<col width="7.5%" />
