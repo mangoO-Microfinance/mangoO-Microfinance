@@ -100,7 +100,7 @@
 					<td	colspan="7">
 					<?PHP 
 					echo $count.' active loan';
-					if ($count > 1) echo 's';
+					if ($count != 1) echo 's';
 					?>
 					</td>
 				</tr>

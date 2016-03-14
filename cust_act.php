@@ -84,7 +84,7 @@
 				<td colspan="8">
 				<?PHP 
 				echo $count.' active customer'; 
-				if ($count > 1) echo 's';
+				if ($count != 1) echo 's';
 				?>
 				</td>
 			</tr>
