@@ -7,7 +7,7 @@
 	$timestamp = time();
 	
 	// Select details of current loan from LOANS, LOANSTATUS, CUSTOMER
-	$sql_loan = "SELECT * FROM loans, loanstatus, customer WHERE loans.loanstatus_id = loanstatus.loanstatus_id AND loans.cust_id = customer.cust_id AND loan_id = $_SESSION[loan_id]";
+	$sql_loan = "SELECT * FROM loans JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id JOIN customer ON loans.cust_id = customer.cust_id WHERE loan_id = $_SESSION[loan_id]";
 	$query_loan = mysql_query($sql_loan);
 	checkSQL($query_loan);
 	$result_loan = mysql_fetch_assoc($query_loan);
