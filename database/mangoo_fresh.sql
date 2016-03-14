@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 18. Feb 2016 um 10:49
+-- Erstellungszeit: 14. Mrz 2016 um 10:52
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `mngemp`
+-- Datenbank: `mangoofresh`
 --
 
 -- --------------------------------------------------------
@@ -124,6 +124,78 @@ INSERT INTO `custsick` (`custsick_id`, `custsick_name`, `custsick_risk`) VALUES
 (3, 'Cancer', 3),
 (4, 'HIV/AIDS', 3),
 (5, 'Ulcer', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `emplmarried`
+--
+
+CREATE TABLE IF NOT EXISTS `emplmarried` (
+`emplmarried_id` int(11) NOT NULL,
+  `emplmarried_status` varchar(15) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `emplmarried`
+--
+
+INSERT INTO `emplmarried` (`emplmarried_id`, `emplmarried_status`) VALUES
+(1, 'Single'),
+(2, 'Married'),
+(3, 'Widowed'),
+(4, 'Divorced');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `employee`
+--
+
+CREATE TABLE IF NOT EXISTS `employee` (
+`empl_id` int(11) NOT NULL,
+  `empl_no` varchar(50) DEFAULT NULL,
+  `empl_name` varchar(100) DEFAULT NULL,
+  `empl_dob` int(11) DEFAULT NULL,
+  `emplsex_id` int(11) NOT NULL DEFAULT '1',
+  `emplmarried_id` int(11) NOT NULL,
+  `empl_salary` int(11) NOT NULL,
+  `empl_address` varchar(100) DEFAULT NULL,
+  `empl_phone` varchar(50) DEFAULT NULL,
+  `empl_email` varchar(100) DEFAULT NULL,
+  `empl_in` int(11) DEFAULT NULL,
+  `empl_out` int(11) DEFAULT NULL,
+  `empl_lastupd` int(11) NOT NULL,
+  `empl_active` int(1) NOT NULL DEFAULT '0',
+  `empl_pic` varchar(100) DEFAULT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `employee`
+--
+
+INSERT INTO `employee` (`empl_id`, `empl_no`, `empl_name`, `empl_dob`, `emplsex_id`, `emplmarried_id`, `empl_salary`, `empl_address`, `empl_phone`, `empl_email`, `empl_in`, `empl_out`, `empl_lastupd`, `empl_active`, `empl_pic`, `user_id`) VALUES
+(0, '0', '0', 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `emplsex`
+--
+
+CREATE TABLE IF NOT EXISTS `emplsex` (
+`emplsex_id` int(11) NOT NULL,
+  `emplsex_name` varchar(20) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `emplsex`
+--
+
+INSERT INTO `emplsex` (`emplsex_id`, `emplsex_name`) VALUES
+(1, 'Male'),
+(2, 'Female');
 
 -- --------------------------------------------------------
 
@@ -349,6 +421,21 @@ CREATE TABLE IF NOT EXISTS `ltrans` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `savbalance`
+--
+
+CREATE TABLE IF NOT EXISTS `savbalance` (
+`savbal_id` int(11) NOT NULL,
+  `cust_id` int(11) NOT NULL,
+  `savbal_balance` int(11) NOT NULL,
+  `savbal_date` int(11) NOT NULL,
+  `savbal_created` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `savings`
 --
 
@@ -536,6 +623,24 @@ ALTER TABLE `custsick`
  ADD PRIMARY KEY (`custsick_id`);
 
 --
+-- Indizes für die Tabelle `emplmarried`
+--
+ALTER TABLE `emplmarried`
+ ADD PRIMARY KEY (`emplmarried_id`);
+
+--
+-- Indizes für die Tabelle `employee`
+--
+ALTER TABLE `employee`
+ ADD PRIMARY KEY (`empl_id`);
+
+--
+-- Indizes für die Tabelle `emplsex`
+--
+ALTER TABLE `emplsex`
+ ADD PRIMARY KEY (`emplsex_id`);
+
+--
 -- Indizes für die Tabelle `expenses`
 --
 ALTER TABLE `expenses`
@@ -588,6 +693,12 @@ ALTER TABLE `logrec`
 --
 ALTER TABLE `ltrans`
  ADD PRIMARY KEY (`ltrans_id`);
+
+--
+-- Indizes für die Tabelle `savbalance`
+--
+ALTER TABLE `savbalance`
+ ADD PRIMARY KEY (`savbal_id`);
 
 --
 -- Indizes für die Tabelle `savings`
@@ -662,6 +773,21 @@ MODIFY `custsex_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 ALTER TABLE `custsick`
 MODIFY `custsick_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT für Tabelle `emplmarried`
+--
+ALTER TABLE `emplmarried`
+MODIFY `emplmarried_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT für Tabelle `employee`
+--
+ALTER TABLE `employee`
+MODIFY `empl_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `emplsex`
+--
+ALTER TABLE `emplsex`
+MODIFY `emplsex_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT für Tabelle `expenses`
 --
 ALTER TABLE `expenses`
@@ -707,6 +833,11 @@ MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `ltrans`
 MODIFY `ltrans_id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT für Tabelle `savbalance`
+--
+ALTER TABLE `savbalance`
+MODIFY `savbal_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT für Tabelle `savings`
 --
 ALTER TABLE `savings`
@@ -746,6 +877,6 @@ MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 ALTER TABLE `user`
 MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
--- /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
--- /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
--- /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -12,33 +12,33 @@
 		
 		//Update Currency Abbreviation
 		$new_cur_short = sanitize($_POST['cur_short']);
-		$sql_upd_cur_short = "UPDATE settings SET set_value = '$new_cur_short' WHERE set_short = 'CUR'";
+		$sql_upd_cur_short = "UPDATE settings SET set_value = '$new_cur_short' WHERE set_short = 'SET_CUR'";
 		$query_upd_cur_short = mysql_query($sql_upd_cur_short);
 		checkSQL($query_upd_cur_short);
 		
 		//Update Minimum Savings Balance
 		$new_minsavbal = sanitize($_POST['minsavbal']);
-		$sql_upd_minsavbal = "UPDATE settings SET set_value = '$new_minsavbal' WHERE set_short = 'MSB'";
+		$sql_upd_minsavbal = "UPDATE settings SET set_value = '$new_minsavbal' WHERE set_short = 'SET_MSB'";
 		$query_upd_minsavbal = mysql_query($sql_upd_minsavbal);
 		checkSQL($query_upd_minsavbal);
 		
 		//Update Account Deactivation option
 		$new_deact = sanitize($_POST['deactivate']);
-		$sql_upd_deact = "UPDATE settings SET set_value = '$new_deact' WHERE set_short = 'DEACT'";
+		$sql_upd_deact = "UPDATE settings SET set_value = '$new_deact' WHERE set_short = 'SET_DEA'";
 		$query_upd_deact = mysql_query($sql_upd_deact);
 		checkSQL($query_upd_deact);
 		
 		//Update Dashboard Settings Left
 		$new_dash_left = sanitize($_POST['dash_left']);
 		if ($new_deact != NULL )$new_dash_left = "dashboard/dash_subscr.php";
-		$sql_upd_dashl = "UPDATE settings SET set_value = '$new_dash_left' WHERE set_short = 'DashL'";
+		$sql_upd_dashl = "UPDATE settings SET set_value = '$new_dash_left' WHERE set_short = 'SET_DBL'";
 		$query_upd_dashl = mysql_query($sql_upd_dashl);
 		checkSQL($query_upd_dashl);
 	
 		//Update Dashboard Settings Right
 		$new_dash_right = sanitize($_POST['dash_right']);
 		if ($_SESSION['set_auf'] != NULL) $new_dash_right = "dashboard/dash_loandefaults.php";
-		$sql_upd_dashr = "UPDATE settings SET set_value = '$new_dash_right' WHERE set_short = 'DashR'";
+		$sql_upd_dashr = "UPDATE settings SET set_value = '$new_dash_right' WHERE set_short = 'SET_DBR'";
 		$query_upd_dashr = mysql_query($sql_upd_dashr);
 		checkSQL($query_upd_dashr);
 	}
