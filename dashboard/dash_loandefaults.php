@@ -1,11 +1,9 @@
 <?PHP
-
 //Select Overdue Loan Instalments from LTRANS
 $timestamp = time();
-$sql_overd = "SELECT * FROM loans, ltrans, customer WHERE loans.cust_id = customer.cust_id AND loans.loan_id = ltrans.loan_id AND ltrans_due <= $timestamp AND ltrans_date IS NULL AND loanstatus_id = 2 ORDER BY ltrans_due";
+$sql_overd = "SELECT * FROM ltrans LEFT JOIN loans ON ltrans.loan_id = loans.loan_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE ltrans_due <= $timestamp AND ltrans_date IS NULL AND loanstatus_id = 2 ORDER BY ltrans_due";
 $query_overd = mysql_query($sql_overd);
 checkSQL($query_overd);
-
 ?>
 
 <table id="tb_table">
@@ -36,7 +34,6 @@ checkSQL($query_overd);
 		
 		// Module for automatic fine charging
 		if ($_SESSION['set_auf'] != NULL) include './modules/mod_autofine.php';
-		
 	}
 	?>
 </table>

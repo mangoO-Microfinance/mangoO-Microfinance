@@ -25,9 +25,9 @@
 		checkSQL($query_incnew);
 	}
 
-	//Select current incomes from INCOMES
+	//Select recent incomes from INCOMES
 	$sixtydays = time() - convertDays(60);
-	$sql_inccur = "SELECT * FROM incomes, inctype, customer WHERE incomes.inctype_id = inctype.inctype_id AND incomes.cust_id = customer.cust_id AND inc_date > $sixtydays ORDER BY inc_date DESC, inc_receipt DESC, incomes.cust_id";
+	$sql_inccur = "SELECT * FROM incomes LEFT JOIN inctype ON incomes.inctype_id = inctype.inctype_id LEFT JOIN customer ON incomes.cust_id = customer.cust_id WHERE inc_date > $sixtydays ORDER BY inc_date DESC, inc_receipt DESC, incomes.cust_id";
 	$query_inccur = mysql_query($sql_inccur);
 	checkSQL($query_inccur);
 	
@@ -46,7 +46,7 @@
 	};
 	
 	//Select Loans from LOANS
-	$sql_loans = "SELECT * FROM loans, customer WHERE loans.cust_id = customer.cust_id AND loanstatus_id IN (1,2) ORDER BY cust_no, loan_no";
+	$sql_loans = "SELECT * FROM loans INNER JOIN customer ON loans.cust_id = customer.cust_id WHERE loanstatus_id IN (1,2) ORDER BY cust_no, loan_no";
 	$query_loans = mysql_query($sql_loans);
 	checkSQL($query_loans);
 	$loans = array();
@@ -73,11 +73,7 @@
 	<body>
 	
 		<!-- MENU -->
-		<?PHP 
-				includeMenu(4);
-		?>
-	
-		<!-- MENU MAIN -->
+		<?PHP includeMenu(4); ?>
 		<div id="menu_main">
 			<a href="start.php">Back</a>
 			<a href="books_expense.php">Expenses</a>
@@ -150,7 +146,7 @@
 			</form>
 		</div>
 		
-		<!-- RIGHT SIDE: Incomes of the current month -->
+		<!-- RIGHT SIDE: Recent Incomes -->
 		<div class="content_right">
 			
 			<table id="tb_table">
@@ -163,7 +159,7 @@
 					<col width="15%">
 				</colgroup>
 				<tr>
-					<th class="title" colspan="7">Current Incomes</th>
+					<th class="title" colspan="7">Recent Incomes</th>
 				</tr>
 				<tr>
 					<th>Date</th>

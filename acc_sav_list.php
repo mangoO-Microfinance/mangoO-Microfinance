@@ -1,6 +1,6 @@
 <?PHP
 // Select Savings Transactions from SAVINGS
-$sql_sav = "SELECT * FROM savings, savtype, user WHERE savings.savtype_id = savtype.savtype_id AND savings.user_id = user.user_id AND cust_id = '$_SESSION[cust_id]' ORDER BY sav_date DESC, sav_id DESC";
+$sql_sav = "SELECT * FROM savings LEFT JOIN savtype ON savings.savtype_id = savtype.savtype_id LEFT JOIN user ON savings.user_id = user.user_id WHERE cust_id = '$_SESSION[cust_id]' ORDER BY sav_date DESC, sav_id DESC";
 $query_sav = mysql_query($sql_sav);
 checkSQL($query_sav);
 

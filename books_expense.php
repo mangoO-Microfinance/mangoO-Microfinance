@@ -23,13 +23,13 @@
 		checkSQL($query_expnew);
 	}
 			
-	//Select current expenses from expenses
+	//Select recent expenses from EXPENSES
 	$sixtydays = time() - convertDays(60);
-	$sql_expcur = "SELECT * FROM expenses, exptype WHERE expenses.exptype_id = exptype.exptype_id AND exp_date > $sixtydays ORDER BY exp_date DESC, exp_voucher DESC";
+	$sql_expcur = "SELECT * FROM expenses LEFT JOIN exptype ON expenses.exptype_id = exptype.exptype_id WHERE exp_date > $sixtydays ORDER BY exp_date DESC, exp_voucher DESC";
 	$query_expcur = mysql_query($sql_expcur);
 	checkSQL($query_expcur);
 	
-	//Select Types of Expenses from EXPTYPE
+	//Select types of expenses from EXPTYPE
 	$sql_exptype = "SELECT * FROM exptype ORDER BY exptype_type";
 	$query_exptype = mysql_query($sql_exptype);
 	checkSQL($query_exptype);
@@ -105,11 +105,11 @@
 			</form>
 		</div>
 		
-		<!-- RIGHT SIDE: Expenses of the current month -->
+		<!-- RIGHT SIDE: Recent Expenses -->
 		<div class="content_right">
 			<table id="tb_table">
 				<tr>
-					<th class="title" colspan="7">Current Expenses</th>
+					<th class="title" colspan="7">Recent Expenses</th>
 				</tr>
 				<tr>
 					<th>Date</th>

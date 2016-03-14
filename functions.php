@@ -384,7 +384,6 @@
 		checkSQL($query_savbal_upd);
 	}
 
-
 /**
 	* Update savings account balance for ALL customers
 	*/
