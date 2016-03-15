@@ -104,6 +104,7 @@ a:hover {
 }
 #menu_tabs a:hover {
 	background-color: #f38630;
+	font-weight:normal;
 }
 #menu_tabs #tab_selected {
 	background-color: #2e2e2e;
