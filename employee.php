@@ -76,8 +76,8 @@
 			<a href="empl_curr.php">Current Employees</a>
 			<a href="empl_past.php">Former Employees</a>
 			<?PHP 
-				if($_SESSION['log_admin'] == 1 AND isset($result_empl['user_id'])) echo '<a href="set_user.php?user='.$result_empl['user_id'].'">Users</a>'; 
-				elseif($_SESSION['log_admin'] == 1) echo '<a href="set_user.php">Users</a>'; 
+				if($_SESSION['log_admin'] == 1 AND isset($result_empl['user_id'])) echo '<a href="set_user.php?user='.$result_empl['user_id'].'">User</a>'; 
+				elseif($_SESSION['log_admin'] == 1) echo '<a href="set_user.php">User</a>'; 
 			?>
 		</div>
 		
@@ -111,20 +111,20 @@
 						echo '	</a>
 										</td>
 										<td>Empl. No:</td>
-										<td><input type="text" name="empl_no" value="'.$result_empl['empl_no'].'" tabindex="1" /></td>
+										<td><input type="text" name="empl_no" value="'.$result_empl['empl_no'].'" tabindex=1 /></td>
 										<td>Address:</td>
-										<td><input type="text" name="empl_address" value="'.$result_empl['empl_address'].'" placeholder="Place of Residence" /></td>
+										<td><input type="text" name="empl_address" value="'.$result_empl['empl_address'].'" placeholder="Place of Residence" tabindex=7 /></td>
 									</tr>';
 						echo '<tr>
 										<td>Name:</td>
-										<td><input type="text" name="empl_name" value="'.$result_empl['empl_name'].'" tabindex="2" /></td>
+										<td><input type="text" name="empl_name" value="'.$result_empl['empl_name'].'" tabindex=2 /></td>
 										<td>Phone No:</td>
-										<td><input type="text" name="empl_phone" value="'.$result_empl['empl_phone'].'" tabindex="6" /></td>
+										<td><input type="text" name="empl_phone" value="'.$result_empl['empl_phone'].'" tabindex=8 /></td>
 									</tr>
 									<tr>
 										<td>Gender:</td>
 										<td>
-											<select name="emplsex_id" size="1" tabindex="3">';
+											<select name="emplsex_id" size="1" tabindex=3>';
 								while ($row_sex = mysql_fetch_assoc($query_sex)){
 									if($row_sex ['emplsex_id'] == $result_empl['emplsex_id']){
 										echo '<option selected value="'.$row_sex['emplsex_id'].'">'.$row_sex['emplsex_name'].'</option>';
@@ -134,20 +134,20 @@
 								echo '</select>
 										</td>
 										<td>E-Mail:</td>
-										<td><input type="text" name="empl_email" value="'.$result_empl['empl_email'].'" placeholder="abc@xyz.com" tabindex="7" /></td>
+										<td><input type="text" name="empl_email" value="'.$result_empl['empl_email'].'" placeholder="abc@xyz.com" tabindex=9 /></td>
 									</tr>
 									<tr>
 										<td>DoB:</td>
-										<td><input type="text" id="datepicker" name="empl_dob" value="'.date("d.m.Y",$result_empl['empl_dob']).'" placeholder="DD.MM.YYYY" /></td>
+										<td><input type="text" id="datepicker" name="empl_dob" value="'.date("d.m.Y",$result_empl['empl_dob']).'" placeholder="DD.MM.YYYY" tabindex=4 /></td>
 										<td>Employm. Start:</td>
-										<td><input type="text" name="empl_in" id="datepicker2" value="'.date("d.m.Y", $result_empl['empl_in']).'" /></td>
+										<td><input type="text" name="empl_in" id="datepicker2" value="'.date("d.m.Y", $result_empl['empl_in']).'" tabindex=10 /></td>
 									</tr>
 									<tr>
 										<td></td>
 										<td></td>
 										<td>Maritial Status:</td>
 										<td>
-											<select name="emplmarried_id" size="1">';
+											<select name="emplmarried_id" size="1" tabindex=5>';
 											while ($row_mstat = mysql_fetch_assoc($query_mstat)){
 												if($row_mstat ['emplmarried_id'] == $result_empl['emplmarried_id']){
 													echo '<option selected value="'.$row_mstat['emplmarried_id'].'">'.$row_mstat['emplmarried_status'].'</option>';
@@ -160,20 +160,20 @@
 										<td>
 											<input type="text" name="empl_out" id="datepicker3" placeholder="DD.MM.YYYY"';
 											if($result_empl['empl_out'] != NULL) echo ' value="'.date("d.m.Y", $result_empl['empl_out']).'"';
-											echo ' />
+											echo ' tabindex=11 />
 										</td>
 									</tr>
 									<tr>
 										<td>Last updated:</td>
 										<td><input type="text" disabled="diabled" value="'.date("d.m.Y", $result_empl['empl_lastupd']).'" /></td>
 										<td>Salary:</td>
-										<td><input type="number" name="empl_salary" value="'.$result_empl['empl_salary'].'" placeholder="'.$_SESSION['set_cur'].'" /></td>
+										<td><input type="number" name="empl_salary" value="'.$result_empl['empl_salary'].'" placeholder="'.$_SESSION['set_cur'].'" tabindex=6 /></td>
 										<td>Username:</td>
 										<td><input type="text" disabled="diabled" value="'.$result_empl['user_name'].'" /></td>
 									</tr>
 									<tr>
 										<td colspan="6" class="center">
-											<input type="submit" name="update" value="Save Changes" />
+											<input type="submit" name="update" value="Save Changes" tabindex=12 />
 										</td>
 									</tr>';
 					?>
