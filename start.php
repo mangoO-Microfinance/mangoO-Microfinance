@@ -9,8 +9,9 @@
 
 <html>
 	<!-- HTML HEAD -->
-	<?PHP includeHead('Microfinance Management',1); ?>
-	
+	<?PHP includeHead('Microfinance Management',0); ?>
+		<link rel="stylesheet" href="css/stats.css" />
+	</head>
 	<!-- HTML BODY -->
 	<body>
 		<!-- MENU -->
