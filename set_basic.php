@@ -74,7 +74,7 @@
 						<td><span>Dashboard Left</span></td>
 						<td>
 							<select name="dash_left">
-								<option value="dashboard/dash_none.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_none.php") echo "selected='selected'" ?>>Empty</option>
+								<option value="dashboard/dash_none.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_none.php") echo "selected='selected'" ?>>None</option>
 								<option value="dashboard/dash_subscr.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_subscr.php") echo "selected='selected'" ?>>Overdue Subscriptions</option>
 								<option value="dashboard/dash_loandefaults.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_loandefaults.php") echo "selected='selected'" ?>>Defaulted Loan Instalments</option>
 								<option value="dashboard/dash_stat_cust.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_stat_cust.php") echo "selected='selected'" ?>>Statistics: Customers</option>
@@ -86,7 +86,7 @@
 						<td><span>Dashboard Right</span></td>
 						<td>
 							<select name="dash_right">
-								<option value="dashboard/dash_none.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_none.php") echo "selected='selected'" ?> >Empty</option>
+								<option value="dashboard/dash_none.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_none.php") echo "selected='selected'" ?> >None</option>
 								<option value="dashboard/dash_subscr.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_subscr.php") echo "selected='selected'" ?> >Overdue Subscriptions</option>
 								<option value="dashboard/dash_loandefaults.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_loandefaults.php") echo "selected='selected'" ?>>Defaulted Loan Instalments</option>
 								<option value="dashboard/dash_stat_cust.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_stat_cust.php") echo "selected='selected'" ?>>Statistics: Customers</option>

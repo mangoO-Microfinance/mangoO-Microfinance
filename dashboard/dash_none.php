@@ -1,4 +1,3 @@
-<div class="content_center" style="margin-top:2em;">
-	<p class=heading>Welcome to mangoO Microfinance Management</p>
-	<?PHP include 'version.php'; ?>
+<div class="content_center" style="margin-top:7em;">
+	<img src="ico/mangoo_l.png" style="width:90%; max-width:530px;" />
 </div>
