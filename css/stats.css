@@ -6,7 +6,6 @@
 	color:white; 
 	background-color:white; 
 }
-
 .bar p{
 	float:left;
 	height:100%;
@@ -26,7 +25,6 @@
   background-color:#6e6e6e;
 }
 
-
 .key{
 	width:45%; 
 	height:20px; 
@@ -36,7 +34,6 @@
 	color:white; 
 	background-color:white; 
 }
-
 .key p{
 	height:20px;
 	float:left;
