@@ -71,20 +71,18 @@ $cust_inact = round(($cust_inact/$cust_total)*100,1);
 	<p style="width:<?PHP echo $cust_act; ?>%;"><?PHP echo $cust_act; ?>%</p>
 	<p style="width:<?PHP echo $cust_inact; ?>%;"><?PHP echo $cust_inact;?>%</p>
 </div>
-
 <!-- Key -->
 <div class="key">
 	<p style="width:50%;">Active</p>
 	<p style="width:50%;">Inactive</p>
 </div>
 
-<p class="heading_narrow" style="margin-top:2em;">Customers' Gender</p>
+<p class="heading_narrow">Customers' Gender</p>
 <div class="bar">
 		<p style="width:<?PHP echo $cust_male; ?>%;"><?PHP echo $cust_male; ?>%</p>
 		<p style="width:<?PHP echo $cust_female; ?>%;"><?PHP echo $cust_female;?>%</p>
 		<p style="width:<?PHP echo $cust_other; ?>%;"><?PHP echo $cust_other;?>%</p>
 </div>
-
 <!-- Key -->
 <div class="key">
 	<p style="width:33.5%;">Male</p>
@@ -92,14 +90,13 @@ $cust_inact = round(($cust_inact/$cust_total)*100,1);
 	<p style="width:33%;">Other</p>
 </div>
 
-<p class="heading_narrow" style="margin-top:2em;">Customers' Length of Membership</p>
+<p class="heading_narrow">Customers' Length of Membership</p>
 <div class="bar">
 	<p style="width:<?PHP echo $cust_length1; ?>%;"><?PHP echo $cust_length1; ?>%</p>
 	<p style="width:<?PHP echo $cust_length2; ?>%;"><?PHP echo $cust_length2;?>%</p>
 	<p style="width:<?PHP echo $cust_length3; ?>%;"><?PHP echo $cust_length3;?>%</p>
 	<p style="width:<?PHP echo $cust_length4; ?>%;"><?PHP echo $cust_length4;?>%</p>
 </div>
-
 <!-- Key -->
 <div class="key">
 	<p style="width:25%;">< 1 year</p>
