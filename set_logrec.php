@@ -45,16 +45,14 @@
 				$sql_logrec = "SELECT * FROM logrec, user WHERE logrec.user_id = user.user_id ORDER BY logrec_id DESC LIMIT 500";
 				$query_logrec = mysql_query($sql_logrec);
 				checkSQL($query_logrec);
-				
-				$color=1;
 				while ($row_logrec = mysql_fetch_assoc($query_logrec)){					
-					tr_colored($color);	//Alternating row colors
-					echo '<td>'.$row_logrec['logrec_id'].'</td>';
-					echo '<td>'.date("d.m.Y,  H:i:s", $row_logrec['logrec_start']).'</td>';
-					echo '<td>'.$row_logrec['user_name'].'</td>';
-					if ($row_logrec['logrec_end'] == 0) echo '<td style="color:#a7dbd8; font-weight:bold;"><i>User currently logged on</i></td>';
-						else if($row_logrec['logrec_logout'] == 0) echo '<td class="warn">'.date("d.m.Y,  H:i:s", $row_logrec['logrec_end']).'</td>';
-						else echo '<td>'.date("d.m.Y,  H:i:s", $row_logrec['logrec_end']).'</td>';
+					echo '<tr>
+									<td>'.$row_logrec['logrec_id'].'</td>
+									<td>'.date("d.m.Y,  H:i:s", $row_logrec['logrec_start']).'</td>
+									<td>'.$row_logrec['user_name'].'</td>';
+									if ($row_logrec['logrec_end'] == 0) echo '<td style="color:#a7dbd8; font-weight:bold;"><i>User currently logged on</i></td>';
+										else if($row_logrec['logrec_logout'] == 0) echo '<td class="warn">'.date("d.m.Y,  H:i:s", $row_logrec['logrec_end']).'</td>';
+										else echo '<td>'.date("d.m.Y,  H:i:s", $row_logrec['logrec_end']).'</td>';
 					echo '</tr>';
 				}
 				?>

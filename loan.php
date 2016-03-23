@@ -479,10 +479,9 @@
 				$i_due = 0;
 				$i_paid = 0;
 				$loan_default = 0;
-				$color = 0;
 				$int_sum_set = 0;
 				while ($row_duedates = mysql_fetch_assoc($query_duedates)){
-					tr_colored($color);
+					echo '<tr>';
 					if ($row_duedates['ltrans_due'] === NULL) echo '<td></td>';
 						elseif ($row_duedates['ltrans_due'] < $timestamp AND $row_duedates['ltrans_date'] === NULL AND $row_duedates['ltrans_fined'] == 0) echo '<td class="warn">'.date("d.m.Y",$row_duedates['ltrans_due']).'</td>';
 						else echo '<td>'.date("d.m.Y",$row_duedates['ltrans_due']).'</td>';

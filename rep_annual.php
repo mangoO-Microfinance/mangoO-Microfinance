@@ -184,8 +184,8 @@
 				foreach ($inctype as $it){
 					$total_row = 0;
 					foreach ($incomes as $ic) if ($ic['inctype_id'] == $it['inctype_id']) $total_row = $total_row + $ic['inc_amount'];
-					tr_colored($color);	//Function for alternating Row Colors
-					echo '	<td>'.$it['inctype_type'].'</td>
+					echo '<tr>
+									<td>'.$it['inctype_type'].'</td>
 									<td>'.number_format($total_row).' '.$_SESSION['set_cur'].'</td>
 								</tr>';	
 					$total_inc = $total_inc + $total_row;	
@@ -234,8 +234,8 @@
 				foreach ($exptype as $et){
 					$total_row = 0;
 					foreach ($expendit as $ex) if ($ex['exptype_id'] == $et['exptype_id']) $total_row = $total_row + $ex['exp_amount'];
-					tr_colored($color);	//Function for alternating Row Colors
-					echo '	<td>'.$et['exptype_type'].'</td>
+					echo '<tr>
+									<td>'.$et['exptype_type'].'</td>
 									<td>'.number_format($total_row).' '.$_SESSION['set_cur'].'</td>
 								</tr>';
 					$total_exp = $total_exp + $total_row;	
@@ -275,10 +275,9 @@
 				</tr>
 				<?PHP
 				$total_loandue = 0;
-				$color = 0;
 				while($row_loandue = mysql_fetch_assoc($query_loandue)){
-					tr_colored($color);
-					echo '	<td><a href="loan.php?lid='.$row_loandue['loan_id'].'">'.$row_loandue['loan_no'].'</a></td>
+					echo '<tr>
+									<td><a href="loan.php?lid='.$row_loandue['loan_id'].'">'.$row_loandue['loan_no'].'</a></td>
 									<td>'.$row_loandue['loanstatus_status'].'</td>
 									<td>'.date("d.m.Y",$row_loandue['ltrans_due']).'</td>
 									<td>'.number_format($row_loandue['ltrans_principaldue'] + $row_loandue['ltrans_interestdue']).' '.$_SESSION['set_cur'].'</td>										
@@ -313,10 +312,9 @@
 				</tr>
 				<?PHP
 				$total_loanrec = 0;
-				$color = 0;
 				while($row_loanrec = mysql_fetch_assoc($query_loanrec)){
-					tr_colored($color);
-					echo '	<td><a href="loan.php?lid='.$row_loanrec['loan_id'].'">'.$row_loanrec['loan_no'].'</a></td>
+					echo '<tr>
+									<td><a href="loan.php?lid='.$row_loanrec['loan_id'].'">'.$row_loanrec['loan_no'].'</a></td>
 									<td>'.number_format($row_loanrec['ltrans_principaldue'] + $row_loanrec['ltrans_interestdue']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.number_format($row_loanrec['ltrans_principal'] + $row_loanrec['ltrans_interest']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.date("d.m.Y",$row_loanrec['ltrans_date']).'</td>
@@ -362,10 +360,9 @@
 				</tr>
 				<?PHP
 				$total_loanout = 0;
-				$color = 0;
 				while($row_loanout = mysql_fetch_assoc($query_loanout)){
-					tr_colored($color);
-					echo '	<td><a href="loan.php?lid='.$row_loanout['loan_id'].'">'.$row_loanout['loan_no'].'</a></td>
+					echo '<tr>
+									<td><a href="loan.php?lid='.$row_loanout['loan_id'].'">'.$row_loanout['loan_no'].'</a></td>
 									<td>'.$row_loanout['cust_name'].' ('.$row_loanout['cust_no'].')</td>
 									<td>'.number_format($row_loanout['loan_principal']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.$row_loanout['loan_interest'].'%</td>

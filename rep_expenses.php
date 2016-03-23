@@ -110,8 +110,8 @@
 					foreach ($exptype as $et){
 						$total_row = 0;
 						foreach ($expendit as $ex) if ($ex['exptype_id'] == $et['exptype_id']) $total_row = $total_row + $ex['exp_amount'];
-						tr_colored($color);	//Function for alternating Row Colors
-						echo '	<td>'.$et['exptype_type'].'</td>
+						echo '<tr>
+										<td>'.$et['exptype_type'].'</td>
 										<td>'.number_format($total_row).' '.$_SESSION['set_cur'].'</td>
 									</tr>';
 						$total_exp = $total_exp + $total_row;	
@@ -163,8 +163,8 @@
 					<?PHP
 					$total_exp = 0;
 					while($row_expendit = mysql_fetch_assoc($query_expendit)){
-						tr_colored($color);	//Function for alternating Row Colors
-						echo '	<td>'.date("d.m.Y",$row_expendit['exp_date']).'</td>
+						echo '<tr>
+										<td>'.date("d.m.Y",$row_expendit['exp_date']).'</td>
 										<td>'.$row_expendit['exptype_type'].'</td>
 										<td>'.$row_expendit['exp_recipient'].'</td>
 										<td>'.$row_expendit['exp_text'].'</td>

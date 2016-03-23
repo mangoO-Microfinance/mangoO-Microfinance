@@ -57,23 +57,21 @@
 				<th>Phone No.</th>
 				<th>Memb. since</th>
 			</tr>
-			<?PHP		
-			$color = 0;
+			<?PHP
 			$count = 0;
 			while ($row_custact = mysql_fetch_assoc($query_custact)){					
-			
-				tr_colored($color);	//Alternating row colors
-				echo '<td>
-								<a href="customer.php?cust='.$row_custact['cust_id'].'">'.$row_custact['cust_no'].'</a>
-							</td>
-							<td>'.$row_custact['cust_name'].'</td>
-							<td>'.$row_custact['custsex_name'].'</td>
-							<td>'.date("d.m.Y",$row_custact['cust_dob']).'</td>
-							<td>'.$row_custact['cust_occup'].'</td>
-							<td>'.$row_custact['cust_address'].'</td>
-							<td>'.$row_custact['cust_phone'].'</td>
-							<td>'.date("d.m.Y",$row_custact['cust_since']).'</td>
-						</tr>';
+				echo '<tr>
+								<td>
+									<a href="customer.php?cust='.$row_custact['cust_id'].'">'.$row_custact['cust_no'].'</a>
+								</td>
+								<td>'.$row_custact['cust_name'].'</td>
+								<td>'.$row_custact['custsex_name'].'</td>
+								<td>'.date("d.m.Y",$row_custact['cust_dob']).'</td>
+								<td>'.$row_custact['cust_occup'].'</td>
+								<td>'.$row_custact['cust_address'].'</td>
+								<td>'.$row_custact['cust_phone'].'</td>
+								<td>'.date("d.m.Y",$row_custact['cust_since']).'</td>
+							</tr>';
 				
 				array_push($_SESSION['rep_export'], array("Cust. No." => $row_custact['cust_no'], "Customer Name" => $row_custact['cust_name'], "DoB" => date("d.m.Y",$row_custact['cust_dob']), "Gender" => $row_custact['custsex_name'], "Occupation" => $row_custact['cust_occup'], "Address" => $row_custact['cust_address'], "Phone No." => $row_custact['cust_phone'], "Member since" => date("d.m.Y",$row_custact['cust_since'])));
 				

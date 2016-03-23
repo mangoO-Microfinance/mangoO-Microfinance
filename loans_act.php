@@ -63,7 +63,6 @@
 					<th>Issued on</th>
 				</tr>
 				<?PHP
-				$color = 0;
 				$count = 0;
 				while ($row_loans = mysql_fetch_assoc($query_loans)){
 					
@@ -81,9 +80,8 @@
 					}
 					$loan_balance = $loan_balance - $loan_paid;
 					
-					tr_colored($color);	//Alternating row colors
-					
-					echo '	<td><a href="loan.php?lid='.$row_loans['loan_id'].'">'.$row_loans['loan_no'].'</a></td>
+					echo '<tr>
+									<td><a href="loan.php?lid='.$row_loans['loan_id'].'">'.$row_loans['loan_no'].'</a></td>
 									<td>'.$row_loans['cust_name'].' (<a href="customer.php?cust='.$row_loans['cust_id'].'">'.$row_loans['cust_no'].')</a></td>
 									<td>'.$row_loans['loan_period'].'</td>
 									<td>'.number_format($row_loans['loan_principal']).' '.$_SESSION['set_cur'].'</td>

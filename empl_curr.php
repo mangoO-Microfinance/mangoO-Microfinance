@@ -56,24 +56,20 @@
 				<th>Email</th>
 				<th>In</th>
 			</tr>
-			<?PHP		
-			$color = 0;
+			<?PHP
 			$count = 0;
 			while ($row_emplcurr = mysql_fetch_assoc($query_emplcurr)){					
-			
-				tr_colored($color);	//Alternating row colors
-				echo '<td>
-								<a href="employee.php?empl='.$row_emplcurr['empl_id'].'">'.$row_emplcurr['empl_no'].'</a>
-							</td>
-							<td>'.$row_emplcurr['empl_name'].'</td>
-							<td>'.$row_emplcurr['emplsex_name'].'</td>
-							<td>'.date("d.m.Y",$row_emplcurr['empl_dob']).'</td>
-							<td>'.$row_emplcurr['empl_address'].'</td>
-							<td>'.$row_emplcurr['empl_phone'].'</td>
-							<td>'.$row_emplcurr['empl_email'].'</td>
-							<td>'.date("d.m.Y",$row_emplcurr['empl_in']).'</td>
-						</tr>';
-				
+				echo '<tr>
+								<td><a href="employee.php?empl='.$row_emplcurr['empl_id'].'">'.$row_emplcurr['empl_no'].'</a></td>
+								<td>'.$row_emplcurr['empl_name'].'</td>
+								<td>'.$row_emplcurr['emplsex_name'].'</td>
+								<td>'.date("d.m.Y",$row_emplcurr['empl_dob']).'</td>
+								<td>'.$row_emplcurr['empl_address'].'</td>
+								<td>'.$row_emplcurr['empl_phone'].'</td>
+								<td>'.$row_emplcurr['empl_email'].'</td>
+								<td>'.date("d.m.Y",$row_emplcurr['empl_in']).'</td>
+							</tr>';
+					
 				array_push($_SESSION['rep_export'], array("Empl. No." => $row_emplcurr['empl_no'], "Employee Name" => $row_emplcurr['empl_name'], "DoB" => date("d.m.Y",$row_emplcurr['empl_dob']), "Gender" => $row_emplcurr['emplsex_name'], "Address" => $row_emplcurr['empl_address'], "Phone No." => $row_emplcurr['empl_phone'], "Email" => $row_emplcurr['empl_email'], "Empl. In" => date("d.m.Y",$row_emplcurr['empl_in'])));
 				
 				$count++;

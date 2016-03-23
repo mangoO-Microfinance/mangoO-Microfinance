@@ -337,21 +337,6 @@
 	}
 	
 /**
-	* Alternate table rows background color for improved readability
-	* @param int row_color : Indicator for row color
-	*/
-	function tr_colored(&$row_color) {
-		if ($row_color == 0){ 
-			echo '<tr>';
-			$row_color = 1;
-		}
-		else {
-			echo '<tr class="alt">'; 
-			$row_color = 0;
-		}
-	}
-	
-/**
 	* Generate a Javascript alert message
 	* @param string text : Message text
 	*/

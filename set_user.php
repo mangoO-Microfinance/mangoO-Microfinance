@@ -191,19 +191,18 @@
 						<th>Edit</th> 
 					</tr>
 					<?PHP
-					$color=0;
-					foreach ($users as $row_user){					
-						tr_colored($color);		//Alternating row colors
-						echo '<td>'.$row_user['user_name'].'</td>
-									<td>'.$row_user['ugroup_name'].'</td>
-									<td><a href="employee.php?empl='.$row_user['empl_id'].'">'.$row_user['empl_name'].'</a></td>
-									<td>'.date('d.m.Y',$row_user['user_created']).'</td>
-									<td>
-										<a href="set_user.php?user='.$row_user['user_id'].'">
-											<i class="fa fa-edit fa-lg"></i>
-										</a>
-									</td>
-								</tr>';
+					foreach ($users as $row_user){
+						echo '<tr>
+										<td>'.$row_user['user_name'].'</td>
+										<td>'.$row_user['ugroup_name'].'</td>
+										<td><a href="employee.php?empl='.$row_user['empl_id'].'">'.$row_user['empl_name'].'</a></td>
+										<td>'.date('d.m.Y',$row_user['user_created']).'</td>
+										<td>
+											<a href="set_user.php?user='.$row_user['user_id'].'">
+												<i class="fa fa-edit fa-lg"></i>
+											</a>
+										</td>
+									</tr>';
 					}
 					?>
 				</table>

@@ -256,7 +256,7 @@ a:hover {
 	color:#fff;
 }
 
-#tb_table  tr.alt td {
+#tb_table tr:nth-child(even) td {
 	background-color:#fff;
 }
 #tb_table  tr.balance td {

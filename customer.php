@@ -281,8 +281,8 @@
 				</tr>
 			 <?PHP
 			 	while($row_sav = mysql_fetch_assoc($query_sav)) {
-					tr_colored($color);
-					echo '	<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>
+					echo '<tr>	
+									<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>
 									<td>'.$row_sav['savtype_type'].'</td>
 									<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>';
 					if ($row_sav['savtype_id'] == 2) echo '<td>S '.$row_sav['sav_slip'].'</td>';
@@ -321,7 +321,6 @@
 				$query_loans = mysql_query($sql_loans);
 				checkSQL($query_loans);
 				
-				$color = 0;
 				while ($row_loan = mysql_fetch_assoc($query_loans)){
 					
 					//Select last unpaid Due Date from LTRANS 
@@ -343,8 +342,8 @@
 					}
 					$loan_balance = $loan_balance - $loan_paid;
 					
-					tr_colored($color);
-					echo '	<td><a href="loan.php?lid='.$row_loan['loan_id'].'">'.$row_loan['loan_no'].'</a></td>
+					echo '<tr>
+									<td><a href="loan.php?lid='.$row_loan['loan_id'].'">'.$row_loan['loan_no'].'</a></td>
 									<td>'.$row_loan['loanstatus_status'].'</td>
 									<td>'.number_format($row_loan['loan_repaytotal']).'</td>
 									<td>'.number_format($loan_balance).'</td>';

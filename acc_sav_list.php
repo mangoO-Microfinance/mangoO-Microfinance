@@ -44,15 +44,15 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 	</tr>
  <?PHP
 	while($row_sav = mysql_fetch_assoc($query_sav)){
-		tr_colored($color);
-		echo '<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>';
-		echo '<td>'.$row_sav['savtype_type'].'</td>';
-		echo '<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>';
-		echo '<td>'.$row_sav['sav_receipt'].'</td>';
-		echo '<td>'.$row_sav['sav_slip'].'</td>';
-		echo '<td>'.$row_sav['user_name'].'</td>';
-		if ($_SESSION['log_delete'] == 1 and ($row_sav['savtype_id'] == 1 or $row_sav['savtype_id'] == 2)) echo '<td><a href="acc_sav_del.php?sav_id='.$row_sav['sav_id'].'" onClick="return randCheck();"><i class="fa fa-remove fa-lg"></i></a></td>';
-		else echo '<td></td>';
+		echo '<tr>
+						<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>
+						<td>'.$row_sav['savtype_type'].'</td>
+						<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>
+						<td>'.$row_sav['sav_receipt'].'</td>
+						<td>'.$row_sav['sav_slip'].'</td>
+						<td>'.$row_sav['user_name'].'</td>';
+						if ($_SESSION['log_delete'] == 1 and ($row_sav['savtype_id'] == 1 or $row_sav['savtype_id'] == 2)) echo '<td><a href="acc_sav_del.php?sav_id='.$row_sav['sav_id'].'" onClick="return randCheck();"><i class="fa fa-remove fa-lg"></i></a></td>';
+						else echo '<td></td>';
 		echo '</tr>';
 	
 		//Prepare data for export to Excel file

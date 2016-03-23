@@ -121,10 +121,9 @@
 					<th>Delete</th>
 				</tr>
 			<?PHP
-			$color=0;
 			while ($row_expcur = mysql_fetch_assoc($query_expcur)){
-				tr_colored($color); 		//Alternating row colors
-				echo '	<td>'.date("d.m.Y",$row_expcur['exp_date']).'</td>
+				echo '<tr>	
+								<td>'.date("d.m.Y",$row_expcur['exp_date']).'</td>
 								<td>'.$row_expcur['exptype_type'].'</td>
 								<td>'.number_format($row_expcur['exp_amount']).' '.$_SESSION['set_cur'].'</td>
 								<td>'.$row_expcur['exp_recipient'].'</td>

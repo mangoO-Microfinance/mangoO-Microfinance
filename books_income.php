@@ -172,10 +172,9 @@
 				</tr>
 			<?PHP
 			$no_delete = array(2,4,5);	// Do not allow to delete one of the following income types
-			$color=0;
 			while ($row_inccur = mysql_fetch_assoc($query_inccur)){
-				tr_colored($color); 		//Alternating row colors
-				echo '	<td>'.date("d.m.Y",$row_inccur['inc_date']).'</a></td>
+				echo '<tr>	
+								<td>'.date("d.m.Y",$row_inccur['inc_date']).'</a></td>
 								<td>'.$row_inccur['inctype_type'].'</td>
 								<td>'.number_format($row_inccur['inc_amount']).' '.$_SESSION['set_cur'].'</td>
 								<td>'.$row_inccur['cust_name'].' ('.$row_inccur['cust_no'].')</td>

@@ -21,10 +21,9 @@ checkSQL($query_subscrdef);
 		<th>Last Paid</th>
 	</tr>
 	<?PHP
-	$color = 0;
 	while($row_subscrdef = mysql_fetch_assoc($query_subscrdef)){
-		tr_colored($color);
-		echo '	<td><a href="customer.php?cust='.$row_subscrdef['cust_id'].'">'.$row_subscrdef['cust_no'].'</a></td>
+		echo '<tr>
+						<td><a href="customer.php?cust='.$row_subscrdef['cust_id'].'">'.$row_subscrdef['cust_no'].'</a></td>
 						<td>'.$row_subscrdef['cust_name'].'</td>
 						<td>'.date("d.m.Y", $row_subscrdef['cust_lastsub']).'</td>
 					</tr>';

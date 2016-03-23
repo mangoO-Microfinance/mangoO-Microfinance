@@ -58,25 +58,21 @@
 				<th>In</th>
 				<th>Out</th>
 			</tr>
-			<?PHP		
-			$color = 0;
+			<?PHP
 			$count = 0;
-			while ($row_emplpast = mysql_fetch_assoc($query_emplpast)){					
-			
-				tr_colored($color);	//Alternating row colors
-				echo '<td>
-								<a href="employee.php?empl='.$row_emplpast['empl_id'].'">'.$row_emplpast['empl_no'].'</a>
-							</td>
-							<td>'.$row_emplpast['empl_name'].'</td>
-							<td>'.$row_emplpast['emplsex_name'].'</td>
-							<td>'.date("d.m.Y",$row_emplpast['empl_dob']).'</td>
-							<td>'.$row_emplpast['empl_address'].'</td>
-							<td>'.$row_emplpast['empl_phone'].'</td>
-							<td>'.$row_emplpast['empl_email'].'</td>
-							<td>'.date("d.m.Y",$row_emplpast['empl_in']).'</td>
-							<td>'.date("d.m.Y",$row_emplpast['empl_out']).'</td>
-						</tr>';
-				
+			while ($row_emplpast = mysql_fetch_assoc($query_emplpast)){
+				echo '<tr>
+								<td><a href="employee.php?empl='.$row_emplpast['empl_id'].'">'.$row_emplpast['empl_no'].'</a></td>
+								<td>'.$row_emplpast['empl_name'].'</td>
+								<td>'.$row_emplpast['emplsex_name'].'</td>
+								<td>'.date("d.m.Y",$row_emplpast['empl_dob']).'</td>
+								<td>'.$row_emplpast['empl_address'].'</td>
+								<td>'.$row_emplpast['empl_phone'].'</td>
+								<td>'.$row_emplpast['empl_email'].'</td>
+								<td>'.date("d.m.Y",$row_emplpast['empl_in']).'</td>
+								<td>'.date("d.m.Y",$row_emplpast['empl_out']).'</td>
+							</tr>';
+					
 				array_push($_SESSION['rep_export'], array("Empl. No." => $row_emplpast['empl_no'], "Employee Name" => $row_emplpast['empl_name'], "DoB" => date("d.m.Y",$row_emplpast['empl_dob']), "Gender" => $row_emplpast['emplsex_name'], "Address" => $row_emplpast['empl_address'], "Phone No." => $row_emplpast['empl_phone'], "Email" => $row_emplpast['empl_email'], "Empl. In" => date("d.m.Y",$row_emplpast['empl_in']), "Empl. Out" => date("d.m.Y",$row_emplpast['empl_out'])));
 				
 				$count++;

@@ -65,11 +65,10 @@
 				</tr>
 				<?PHP
 				$total_loanpend = 0;
-				$color = 0;
 				$count = 0;
 				while($row_loanpend = mysql_fetch_assoc($query_loanpend)){
-					tr_colored($color);
-					echo '	<td><a href="loan.php?lid='.$row_loanpend['loan_id'].'">'.$row_loanpend['loan_no'].'</a></td>
+					echo '<tr>
+									<td><a href="loan.php?lid='.$row_loanpend['loan_id'].'">'.$row_loanpend['loan_no'].'</a></td>
 									<td>'.$row_loanpend['cust_name'].' ('.$row_loanpend['cust_no'].')</td>
 									<td>'.$row_loanpend['loanstatus_status'].'</td>
 									<td>'.$row_loanpend['loan_period'].'</td>

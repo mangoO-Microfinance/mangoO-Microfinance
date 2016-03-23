@@ -158,10 +158,9 @@
 					<th style="background-color:#a7dbd8">Reports</th>
 				</tr>
 				<?PHP
-					$color=0;
 					foreach ($ugroups as $row_ugroups){
-						tr_colored($color);						
-						echo '<td>'.$row_ugroups['ugroup_name'].'</td>
+						echo '<tr>
+									<td>'.$row_ugroups['ugroup_name'].'</td>
 									<td>
 										<input type="checkbox" disabled="disabled" ';
 										if ($row_ugroups['ugroup_admin']==1) echo 'checked="checked" ';
@@ -189,7 +188,7 @@
 											<i class="fa fa-remove fa-lg"></i>
 										</a>';
 						echo '</td>
-							</tr>';
+								</tr>';
 					}
 					
 					//Error message, if user tries to delete a usergroup that still has members.

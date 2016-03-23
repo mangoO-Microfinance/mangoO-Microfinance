@@ -82,18 +82,16 @@
 					<th>Phone No.</th>
 				</tr>
 				<?PHP		
-				$color = 0;
 				while ($row_custsearch = mysql_fetch_assoc($query_custsearch)){					
-					//Alternating row colors
-					tr_colored($color);
-					echo '<td><a href="customer.php?cust='.$row_custsearch['cust_id'].'">'.$row_custsearch['cust_no'].'</a></td>
-								<td>'.$row_custsearch['cust_name'].'</td>
-								<td>'.date("d.m.Y",$row_custsearch['cust_dob']).'</td>
-								<td>'.$row_custsearch['custsex_name'].'</td>
-								<td>'.$row_custsearch['cust_occup'].'</td>
-								<td>'.$row_custsearch['cust_address'].'</td>
-								<td>'.$row_custsearch['cust_phone'].'</td>
-							</tr>';
+					echo '<tr>
+									<td><a href="customer.php?cust='.$row_custsearch['cust_id'].'">'.$row_custsearch['cust_no'].'</a></td>
+									<td>'.$row_custsearch['cust_name'].'</td>
+									<td>'.date("d.m.Y",$row_custsearch['cust_dob']).'</td>
+									<td>'.$row_custsearch['custsex_name'].'</td>
+									<td>'.$row_custsearch['cust_occup'].'</td>
+									<td>'.$row_custsearch['cust_address'].'</td>
+									<td>'.$row_custsearch['cust_phone'].'</td>
+								</tr>';
 					
 					//Prepare data for export to Excel file
 					array_push($_SESSION['cust_export'], array("Cust No." => $row_custsearch['cust_no'], "Name" => $row_custsearch['cust_name'], "DoB" => date("d.m.Y", $row_custsearch['cust_dob']), "Gender" => $row_custsearch['custsex_name'], "Occupation" => $row_custsearch['cust_occup'], "Address" => $row_custsearch['cust_address'], "Phone No." => $row_custsearch['cust_phone']));

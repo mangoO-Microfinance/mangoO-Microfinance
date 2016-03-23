@@ -23,10 +23,9 @@ checkSQL($query_overd);
 		<th>Amount Due</th>
 	</tr>
 	<?PHP
-	$color = 0;
 	while ($row_overd = mysql_fetch_assoc($query_overd)){
-		tr_colored($color);
-		echo '	<td><a href="loan.php?lid='.$row_overd['loan_id'].'">'.$row_overd['loan_no'].'</a></td>
+		echo '<tr>
+						<td><a href="loan.php?lid='.$row_overd['loan_id'].'">'.$row_overd['loan_no'].'</a></td>
 						<td>'.$row_overd['cust_name'].'</td>
 						<td>'.date("d.m.Y",$row_overd['ltrans_due']).'</td>
 						<td>'.number_format($row_overd['ltrans_principaldue']+$row_overd['ltrans_interestdue']).' '.$_SESSION['set_cur'].'</td>

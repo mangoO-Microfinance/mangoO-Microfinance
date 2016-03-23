@@ -60,23 +60,20 @@
 					<th>Issued</th>
 				</tr>
 				<?PHP		
-				$color = 0;
-				while ($row_loansearch = mysql_fetch_assoc($query_loansearch)){					
-					//Alternating row colors
-					tr_colored($color);
-					echo '<td><a href="loan.php?lid='.$row_loansearch['loan_id'].'">'.$row_loansearch['loan_no'].'</a></td>
-								<td>'.$row_loansearch['cust_name'].' (<a href="customer.php?cust='.$row_loansearch['cust_id'].'">'.$row_loansearch['cust_no'].'</a>)</td>
-								<td>'.$row_loansearch['loanstatus_status'].'</td>
-								<td>'.$row_loansearch['loan_period'].'</td>
-								<td>'.number_format($row_loansearch['loan_principal']).' '.$_SESSION['set_cur'].'</td>
-								<td>'.number_format(($row_loansearch['loan_repaytotal'] - $row_loansearch['loan_principal'])).' '.$_SESSION['set_cur'].'</td>
-								<td>'.date("d.m.Y",$row_loansearch['loan_date']).'</td>
-								<td>';
-								
-								if ($row_loansearch['loan_dateout'] == 0) echo "No";
-								else echo date("d.m.Y", $row_loansearch['loan_dateout']);
-					echo	'</td>
-							</tr>';
+				while ($row_loansearch = mysql_fetch_assoc($query_loansearch)){
+					echo '<tr>
+									<td><a href="loan.php?lid='.$row_loansearch['loan_id'].'">'.$row_loansearch['loan_no'].'</a></td>
+									<td>'.$row_loansearch['cust_name'].' (<a href="customer.php?cust='.$row_loansearch['cust_id'].'">'.$row_loansearch['cust_no'].'</a>)</td>
+									<td>'.$row_loansearch['loanstatus_status'].'</td>
+									<td>'.$row_loansearch['loan_period'].'</td>
+									<td>'.number_format($row_loansearch['loan_principal']).' '.$_SESSION['set_cur'].'</td>
+									<td>'.number_format(($row_loansearch['loan_repaytotal'] - $row_loansearch['loan_principal'])).' '.$_SESSION['set_cur'].'</td>
+									<td>'.date("d.m.Y",$row_loansearch['loan_date']).'</td>
+									<td>';									
+									if ($row_loansearch['loan_dateout'] == 0) echo "No";
+									else echo date("d.m.Y", $row_loansearch['loan_dateout']);
+						echo	'</td>
+								</tr>';
 				}
 				?>
 			</table>
