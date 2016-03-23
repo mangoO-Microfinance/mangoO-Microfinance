@@ -29,18 +29,19 @@
 		<!-- TABLE: Current Employees -->
 		<table id="tb_table">				
 			<colgroup>
-				<col width="8%" />	
-				<col width="17%" />
+				<col width="6%" />	
+				<col width="14%" />
+				<col width="14%" />
 				<col width="8%" />
 				<col width="8%" />
-				<col width="17%" />
-				<col width="17%" />
-				<col width="17%" />
+				<col width="14%" />
+				<col width="14%" />
+				<col width="14%" />
 				<col width="8%" />
 			</colgroup>
 			<tr>
 				<form class="export" action="rep_export.php" method="post">
-					<th class="title" colspan="8">Current Employees
+					<th class="title" colspan="9">Current Employees
 					<!-- Export Button -->
 					<input type="submit" name="export_rep" value="Export" />
 					</th>
@@ -48,7 +49,8 @@
 			</tr>
 			<tr>
 				<th>Empl. No.</th>
-				<th>Name</th>					
+				<th>Name</th>				
+				<th>Position</th>				
 				<th>Gender</th>
 				<th>DoB</th> 
 				<th>Address</th> 
@@ -62,6 +64,7 @@
 				echo '<tr>
 								<td><a href="employee.php?empl='.$row_emplcurr['empl_id'].'">'.$row_emplcurr['empl_no'].'</a></td>
 								<td>'.$row_emplcurr['empl_name'].'</td>
+								<td>'.$row_emplcurr['empl_position'].'</td>
 								<td>'.$row_emplcurr['emplsex_name'].'</td>
 								<td>'.date("d.m.Y",$row_emplcurr['empl_dob']).'</td>
 								<td>'.$row_emplcurr['empl_address'].'</td>
@@ -76,7 +79,7 @@
 			}
 			?>
 			<tr class="balance">
-				<td colspan="8">
+				<td colspan="9*">
 				<?PHP 
 				echo $count.' current employee'; 
 				if ($count != 1) echo 's';

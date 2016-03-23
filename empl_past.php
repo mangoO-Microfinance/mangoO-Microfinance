@@ -29,19 +29,20 @@
 		<!-- TABLE: Former Employees -->
 		<table id="tb_table">				
 			<colgroup>
-				<col width="8%" />	
-				<col width="15%" />
-				<col width="8%" />
-				<col width="8%" />
-				<col width="15%" />
-				<col width="15%" />
-				<col width="15%" />
-				<col width="8%" />
-				<col width="8%" />
+				<col width="7%" />	
+				<col width="13%" />
+				<col width="13%" />
+				<col width="7%" />
+				<col width="7%" />
+				<col width="13%" />
+				<col width="13%" />
+				<col width="13%" />
+				<col width="7%" />
+				<col width="7%" />
 			</colgroup>
 			<tr>
 				<form class="export" action="rep_export.php" method="post">
-					<th class="title" colspan="9">Former Employees
+					<th class="title" colspan="10">Former Employees
 					<!-- Export Button -->
 					<input type="submit" name="export_rep" value="Export" />
 					</th>
@@ -50,6 +51,7 @@
 			<tr>
 				<th>Empl. No.</th>
 				<th>Name</th>					
+				<th>Position</th>					
 				<th>Gender</th>
 				<th>DoB</th> 
 				<th>Address</th> 
@@ -64,6 +66,7 @@
 				echo '<tr>
 								<td><a href="employee.php?empl='.$row_emplpast['empl_id'].'">'.$row_emplpast['empl_no'].'</a></td>
 								<td>'.$row_emplpast['empl_name'].'</td>
+								<td>'.$row_emplpast['empl_position'].'</td>
 								<td>'.$row_emplpast['emplsex_name'].'</td>
 								<td>'.date("d.m.Y",$row_emplpast['empl_dob']).'</td>
 								<td>'.$row_emplpast['empl_address'].'</td>
@@ -79,7 +82,7 @@
 			}
 			?>
 			<tr class="balance">
-				<td colspan="9">
+				<td colspan="10">
 					<?PHP 
 					echo $count.' former employee'; 
 					if ($count != 1) echo 's';

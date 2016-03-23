@@ -16,6 +16,7 @@
 		$empl_dob = strtotime(sanitize($_POST['empl_dob']));
 		$emplsex_id = sanitize($_POST['emplsex_id']);
 		$emplmarried_id = sanitize($_POST['emplmarried_id']);
+		$empl_position = sanitize($_POST['empl_position']);
 		$empl_salary = sanitize($_POST['empl_salary']);
 		$empl_address = sanitize($_POST['empl_address']);
 		$empl_phone = sanitize($_POST['empl_phone']);
@@ -25,7 +26,7 @@
 		else $empl_active = 0;
 		
 		//Insert new employee into EMPLOYEE
-		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, emplmarried_id, empl_salary, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, empl_active, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$emplmarried_id', $empl_salary, '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, $empl_active, '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, emplmarried_id, empl_position, empl_salary, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, empl_active, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$emplmarried_id', '$empl_position', $empl_salary, '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, $empl_active, '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		checkSQL($query_insert);
 		
@@ -88,13 +89,13 @@
 						<td>Number:</td>
 						<td><input type="text" name="empl_no" tabindex=1 /></td>
 						<td>Monthly Salary:</td>
-						<td><input type="number" name="empl_salary" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" tabindex=6 /></td>
+						<td><input type="number" name="empl_salary" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" tabindex=7 /></td>
 					</tr>
 					<tr>
 						<td>Name:</td>
 						<td><input type="text" name="empl_name" placeholder="Full Name" tabindex=2 /></td>
 						<td>Address:</td>
-						<td><input type="text" name="empl_address" placeholder="Place of Residence" tabindex=7 /></td>
+						<td><input type="text" name="empl_address" placeholder="Place of Residence" tabindex=8 /></td>
 					</tr>
 					<tr>
 						<td>Gender:</td>
@@ -108,13 +109,13 @@
 							</select>
 						</td>
 						<td>Phone No:</td>
-						<td><input type="text" name="empl_phone" tabindex=8 /></td>
+						<td><input type="text" name="empl_phone" tabindex=9 /></td>
 					</tr>
 					<tr>
 						<td>DoB:</td>
 						<td><input type="text" id="datepicker" name="empl_dob" placeholder="DD.MM.YYYY" tabindex=4 /></td>
 						<td>E-Mail:</td>
-						<td><input type="text" name="empl_email" placeholder="abc@xyz.com" tabindex=9 /></td>
+						<td><input type="text" name="empl_email" placeholder="abc@xyz.com" tabindex=10 /></td>
 					</tr>
 					<tr>
 						<td>Marital Status:</td>
@@ -128,12 +129,18 @@
 							</select>
 						</td>
 						<td>Employm. Start:</td>
-						<td><input type="text" id="datepicker2" name="empl_in" value="<?PHP echo date("d.m.Y", $timestamp) ?>" tabindex=10 /></td>
+						<td><input type="text" id="datepicker2" name="empl_in" value="<?PHP echo date("d.m.Y", $timestamp) ?>" tabindex=11 /></td>
+					</tr>
+					<tr>
+						<td>Position:</td>
+						<td><input type="text" name="empl_position" placeholder="Job description" tabindex=6 /></td>
 					</tr>
 					<tr>
 						<td colspan="4" class="center">
-							<input type="submit" name="create" value="Continue" tabindex=11 />
+							<input type="submit" name="create" value="Continue" tabindex=12 />
 						</td>
+						<td></td>
+						<td></td>
 					</tr>
 				</table>
 			</form>

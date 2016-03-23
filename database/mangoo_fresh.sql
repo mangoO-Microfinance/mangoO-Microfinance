@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 14. Mrz 2016 um 10:52
+-- Erstellungszeit: 23. Mrz 2016 um 12:25
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -159,6 +159,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `empl_dob` int(11) DEFAULT NULL,
   `emplsex_id` int(11) NOT NULL DEFAULT '1',
   `emplmarried_id` int(11) NOT NULL,
+  `empl_position` varchar(100) DEFAULT NULL,
   `empl_salary` int(11) NOT NULL,
   `empl_address` varchar(100) DEFAULT NULL,
   `empl_phone` varchar(50) DEFAULT NULL,
@@ -175,8 +176,8 @@ CREATE TABLE IF NOT EXISTS `employee` (
 -- Daten für Tabelle `employee`
 --
 
-INSERT INTO `employee` (`empl_id`, `empl_no`, `empl_name`, `empl_dob`, `emplsex_id`, `emplmarried_id`, `empl_salary`, `empl_address`, `empl_phone`, `empl_email`, `empl_in`, `empl_out`, `empl_lastupd`, `empl_active`, `empl_pic`, `user_id`) VALUES
-(0, '0', '0', 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1);
+INSERT INTO `employee` (`empl_id`, `empl_no`, `empl_name`, `empl_dob`, `emplsex_id`, `emplmarried_id`, `empl_position`, `empl_salary`, `empl_address`, `empl_phone`, `empl_email`, `empl_in`, `empl_out`, `empl_lastupd`, `empl_active`, `empl_pic`, `user_id`) VALUES
+(0, '0', '0', 0, 0, 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1);
 
 -- --------------------------------------------------------
 
