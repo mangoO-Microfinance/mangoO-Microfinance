@@ -78,6 +78,7 @@
 								<option value="dashboard/dash_subscr.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_subscr.php") echo "selected='selected'" ?>>Overdue Subscriptions</option>
 								<option value="dashboard/dash_loandefaults.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_loandefaults.php") echo "selected='selected'" ?>>Defaulted Loan Instalments</option>
 								<option value="dashboard/dash_stat_cust.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_stat_cust.php") echo "selected='selected'" ?>>Statistics: Customers</option>
+								<option value="dashboard/dash_stat_finance.php" <?PHP if ($_SESSION['set_dashl'] == "dashboard/dash_stat_finance.php") echo "selected='selected'" ?>>Statistics: Finances</option>
 							</select>
 						</td>
 					</tr>
@@ -90,6 +91,7 @@
 								<option value="dashboard/dash_subscr.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_subscr.php") echo "selected='selected'" ?> >Overdue Subscriptions</option>
 								<option value="dashboard/dash_loandefaults.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_loandefaults.php") echo "selected='selected'" ?>>Defaulted Loan Instalments</option>
 								<option value="dashboard/dash_stat_cust.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_stat_cust.php") echo "selected='selected'" ?>>Statistics: Customers</option>
+								<option value="dashboard/dash_stat_finance.php" <?PHP if ($_SESSION['set_dashr'] == "dashboard/dash_stat_finance.php") echo "selected='selected'" ?>>Statistics: Finances</option>
 							</select>
 						</td>
 					</tr>
