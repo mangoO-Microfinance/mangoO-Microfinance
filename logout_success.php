@@ -10,7 +10,7 @@ header ('refresh:7; url=index.php');
 	<body>
 		<div class="content_center" style="margin-top:2em;">
 			<img src="ico/mangoo_l.png" />
-			<?PHP include 'version.php'; ?>
+			<?PHP include 'version.html'; ?>
 		</div>
 	</body>
 </html>
