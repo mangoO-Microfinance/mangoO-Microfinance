@@ -70,11 +70,11 @@
 				//Selection from INCOMES and INCTYPE
 				$sql_incomes = "SELECT * FROM incomes WHERE inc_date BETWEEN $firstDay AND $lastDay";
 				$query_incomes = mysql_query($sql_incomes);
-				if (!$query_incomes) die('SELECT failed: ' . mysql_showMessage());
+				checkSQL($query_incomes);
 				
 				$sql_inctype = "SELECT * FROM inctype";
 				$query_inctype = mysql_query($sql_inctype);
-				if (!$query_inctype) die('SELECT failed: ' . mysql_showMessage());
+				checkSQL($query_inctype);
 				?>
 				
 				<!-- TABLE: Results -->
@@ -132,7 +132,7 @@
 			else{
 				$sql_incomes = "SELECT * FROM incomes, inctype, customer WHERE incomes.cust_id = customer.cust_id AND incomes.inctype_id = inctype.inctype_id AND inc_date BETWEEN $firstDay AND $lastDay ORDER BY inc_date, inc_receipt";
 				$query_incomes = mysql_query($sql_incomes);
-				if (!$query_incomes) die ('SELECT failed: '.mysql_showMessage());
+				checkSQL($query_incomes);
 				?>
 
 				<!-- TABLE: Results -->

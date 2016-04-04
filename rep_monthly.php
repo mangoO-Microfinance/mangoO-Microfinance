@@ -67,11 +67,11 @@
 			//Select INCOMES and INCTYPE
 			$sql_incomes = "SELECT * FROM incomes WHERE inc_date BETWEEN $firstDay AND $lastDay";
 			$query_incomes = mysql_query($sql_incomes);
-			if (!$query_incomes) die('SELECT failed: ' . mysql_showMessage());
+			checkSQL($query_incomes);
 			
 			$sql_inctype = "SELECT * FROM inctype";
 			$query_inctype = mysql_query($sql_inctype);
-			if (!$query_inctype) die('SELECT failed: ' . mysql_showMessage());
+			checkSQL($query_inctype);
 			
 			
 			/**** EXPENDITURE RELATED DATA ****/
@@ -79,11 +79,11 @@
 			//Select Expenses and EXPTYPE
 			$sql_expendit = "SELECT * FROM expenses WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 			$query_expendit = mysql_query($sql_expendit);
-			if (!$query_expendit) die ('SELECT failed: '.mysql_showMessage());
+			checkSQL($query_expendit);
 			
 			$sql_exptype = "SELECT * FROM exptype";
 			$query_exptype = mysql_query($sql_exptype);
-			if (!$query_exptype) die ('SELECT failed: '.mysql_showMessage());
+			checkSQL($query_exptype);
 			
 			
 			/**** CAPITAL RELATED DATA ****/

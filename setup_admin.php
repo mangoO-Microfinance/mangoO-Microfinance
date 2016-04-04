@@ -18,9 +18,9 @@
 
 		// Connect to Database Server
 		$db_connect = mysql_connect($_SESSION['db_host'], $_SESSION['db_user'], $_SESSION['db_pass']);
-		if(!$db_connect) die('Could not connect to server '.$_SESSION['db_host'].': '.mysql_showMessage());
+		if(!$db_connect) die('Could not connect to server '.$_SESSION['db_host'].': '.mysql_error());
 		$db_select = mysql_select_db($_SESSION['db_name']);
-		if(!$db_select) die('Could not select database '.$_SESSION['db_name'].': '.mysql_showMessage());
+		if(!$db_select) die('Could not select database '.$_SESSION['db_name'].': '.mysql_error());
 
 		// Insert new admin user into database
 		$sql_makeadmin = "INSERT INTO user (user_name, user_pw, ugroup_id, user_created) VALUES ('$admin_name', '$admin_pass', '1', '$timestamp')";

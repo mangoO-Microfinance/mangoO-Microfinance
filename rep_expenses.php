@@ -69,11 +69,11 @@
 			if ($_POST['rep_form'] == 'a'){
 				$sql_expendit = "SELECT * FROM expenses WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
 				$query_expendit = mysql_query($sql_expendit);
-				if (!$query_expendit) die ('SELECT failed: '.mysql_showMessage());
+				checkSQL($query_expendit);
 				
 				$sql_exptype = "SELECT * FROM exptype";
 				$query_exptype = mysql_query($sql_exptype);
-				if (!$query_exptype) die ('SELECT failed: '.mysql_showMessage());
+				checkSQL($query_exptype);
 				?>
 				
 				<!-- TABLE: Results -->
