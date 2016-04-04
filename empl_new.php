@@ -22,11 +22,9 @@
 		$empl_phone = sanitize($_POST['empl_phone']);
 		$empl_email = sanitize($_POST['empl_email']);
 		$empl_in = strtotime(sanitize($_POST['empl_in']));
-		if(isset($_POST['empl_active'])) $empl_active = 1;
-		else $empl_active = 0;
 		
 		//Insert new employee into EMPLOYEE
-		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, emplmarried_id, empl_position, empl_salary, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, empl_active, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$emplmarried_id', '$empl_position', $empl_salary, '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, $empl_active, '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, emplmarried_id, empl_position, empl_salary, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$emplmarried_id', '$empl_position', '$empl_salary', '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		checkSQL($query_insert);
 		
@@ -36,7 +34,7 @@
 		checkSQL($query_maxid);
 		$maxid = mysql_fetch_assoc($query_maxid);
 		$_SESSION['empl_id'] = $maxid['MAX(empl_id)'];
-		
+			
 		// Refer to empl_new_pic.php
 		header('Location: empl_new_pic.php');
 	}
