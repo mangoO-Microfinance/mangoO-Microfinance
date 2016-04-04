@@ -46,7 +46,7 @@ while(time() < $deadline AND ($line = fgets($fp, 1024000))){
 	$query .= $line;
 	if(substr(trim($query),-1)==';' ){
 		if(!mysql_query($query) ){
-			$error = 'Error performing query <strong>' . $query . ' : ' . mysql_showMessage();
+			$error = 'Error performing query <strong>' . $query . ' : ' . mysql_error();
 			file_put_contents($errorFilename, $error."\n");
 			exit;
 		}
