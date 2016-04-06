@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Database backup
+_now = $(date +"%Y-%m-%d")
+_file = "./Dropbox/db_backup/mangoo_bckp_$_now.sql"
+mysqldump --user root --password="" --opt mangoo > "$_file"
+
+# Upload documents backup
+cp -ar /var/www/html/uploads ./Dropbox/doc_backup

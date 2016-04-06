@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#Delete backup files older than 60 days.
+find ./Dropbox/db_backup -mtime +60 -type f -delete

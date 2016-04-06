@@ -1,0 +1,4 @@
+30 12 * * * ~/.mangoo_bckp
+30 16 * * * ~/.mangoo_bckp
+35 16 * * * ~/.mangoo_bckp_del_old
+
