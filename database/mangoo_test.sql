@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 09. Apr 2016 um 12:04
+-- Erstellungszeit: 09. Apr 2016 um 14:25
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -553,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `logrec` (
   `logrec_start` int(11) DEFAULT NULL,
   `logrec_end` int(11) DEFAULT NULL,
   `logrec_logout` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `logrec`
@@ -570,7 +570,8 @@ INSERT INTO `logrec` (`logrec_id`, `user_id`, `logrec_start`, `logrec_end`, `log
 (8, 1, 1459326903, 1459331867, 1),
 (9, 1, 1459784538, 1459791828, 1),
 (10, 1, 1459793363, 1459793767, 1),
-(11, 1, 1459795734, 1459795996, 1);
+(11, 1, 1459795734, 1459795996, 1),
+(12, 1, 1460204664, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1178,9 +1179,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`user_id`, `user_name`, `user_pw`, `ugroup_id`, `empl_id`, `user_created`) VALUES
 (0, '', '', 0, 0, 0),
-(1, 'admin', '$2y$10$5016WJj2YbzEyQG7NQqEj.VTeWF7OkKjhvrtFUtv.Tfl7NkBTSDZy', 1, 1, 1459326888),
-(2, 'ext-admin', '$2y$10$T65ahVIJffc/yLMypkeInORT9A3RwwedxeRlGX9msXdbH4CnP/SoK', 4, 10, 1457428312),
-(3, 'John Doe', '$2y$10$X12Q6IjsvOOgdQz/bHR9u.DXAGDW1.lIWceZRr1M4rdKizmGiE3se', 2, 4, 1457441127);
+(1, 'admin', '$2y$10$7cBzh4VmfY0OBW9ng4iiWemZdK/QE7ZWwGEJTJmMzwA2AV6g3KF/i', 1, 1, 1459326888),
+(2, 'ext-admin', '$2y$10$AjVSpVOtNsULIL5e37MPc.XQN4WADFVvWjb9xE0BQPZNXrEXQuMGO', 4, 10, 1460204701),
+(3, 'John Doe', '$2y$10$tX3iU0FNYBR.H3vyprSpNerTzZqM/H3LD0xhhnyCPDFKsALN2FP2i', 2, 4, 1460204708);
 
 --
 -- Indizes der exportierten Tabellen
@@ -1414,7 +1415,7 @@ MODIFY `loanstatus_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT für Tabelle `logrec`
 --
 ALTER TABLE `logrec`
-MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT für Tabelle `ltrans`
 --
@@ -1465,3 +1466,6 @@ MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 ALTER TABLE `user`
 MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
