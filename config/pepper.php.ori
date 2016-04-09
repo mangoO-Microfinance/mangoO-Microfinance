@@ -1,3 +1,7 @@
+
 <?PHP
-	$pepper = 'kP&x5!m.?Q';
+/**
+	*	Password pepper
+	*/
+	$pepper = 'pc?yACRCM=';
 ?>
