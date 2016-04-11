@@ -202,7 +202,7 @@
 								<option selected="selected"></option>
 								<?PHP
 								foreach ($guarantors as $g){
-									echo '<option value="'.$g['cust_id'].'">'.$g['cust_id'].' '.$g['cust_name'].'</option>';
+									echo '<option value="'.$g['cust_id'].'">'.$g['cust_no'].' '.$g['cust_name'].'</option>';
 								}
 								?>
 							</select>
@@ -213,7 +213,7 @@
 								<option selected="selected"></option>
 								<?PHP
 								foreach ($guarantors as $g){
-									echo '<option value="'.$g['cust_id'].'">'.$g['cust_id'].' '.$g['cust_name'].'</option>';
+									echo '<option value="'.$g['cust_id'].'">'.$g['cust_no'].' '.$g['cust_name'].'</option>';
 								}
 								?>
 							</select>
@@ -226,7 +226,7 @@
 								<option selected="selected"></option>
 								<?PHP
 								foreach ($guarantors as $g){
-									echo '<option value="'.$g['cust_id'].'">'.$g['cust_id'].' '.$g['cust_name'].'</option>';
+									echo '<option value="'.$g['cust_id'].'">'.$g['cust_no'].' '.$g['cust_name'].'</option>';
 								}
 								?>
 							</select>

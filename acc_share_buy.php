@@ -152,7 +152,7 @@
 						<?PHP
 						while ($row_custother = mysql_fetch_assoc($query_custother)){
 							echo '<option value="'.$row_custother['cust_id'].'">'.
-											$row_custother['cust_id'].' '.$row_custother['cust_name'].
+											$row_custother['cust_no'].' '.$row_custother['cust_name'].
 										'</option>';
 						}
 						?>
