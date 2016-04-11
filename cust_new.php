@@ -106,7 +106,7 @@
 		</div>
 		
 		<!-- PAGE HEADING -->
-		<p class="heading">New Customer (<?PHP echo $new_id; ?>)</p> 
+		<p class="heading">New Customer (<?PHP echo $_SESSION['set_cnb'].$new_id.$_SESSION['set_cna']; ?>)</p> 
 		
 		<!-- CONTENT -->
 		<div class="content_center">
@@ -115,7 +115,7 @@
 				<table id ="tb_fields">
 					<tr>
 						<td>Number:</td>
-						<td><input type="text" name="cust_no" value="<?PHP echo $new_id; ?>" tabindex="1" /></td>
+						<td><input type="text" name="cust_no" value="<?PHP echo $_SESSION['set_cnb'].$new_id.$_SESSION['set_cna']; ?>" tabindex="1" /></td>
 						<td>Address:</td>
 						<td><input type="text" name="cust_address" placeholder="Place of Residence" tabindex="6" /></td>
 						<td>Representative:</td>

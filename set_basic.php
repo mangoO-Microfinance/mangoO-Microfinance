@@ -41,6 +41,18 @@
 		$sql_upd_dashr = "UPDATE settings SET set_value = '$new_dash_right' WHERE set_short = 'SET_DBR'";
 		$query_upd_dashr = mysql_query($sql_upd_dashr);
 		checkSQL($query_upd_dashr);
+		
+		//Update Customer Number Before
+		$new_cnb = sanitize($_POST['custnumb1']);
+		$sql_upd_cnb = "UPDATE settings SET set_value = '$new_cnb' WHERE set_short = 'SET_CNB'";
+		$query_upd_cnb = mysql_query($sql_upd_cnb);
+		checkSQL($query_upd_cnb);
+		
+		//Update Customer Number After
+		$new_cna = sanitize($_POST['custnumb2']);
+		$sql_upd_cna = "UPDATE settings SET set_value = '$new_cna' WHERE set_short = 'SET_CNA'";
+		$query_upd_cna = mysql_query($sql_upd_cna);
+		checkSQL($query_upd_cna);
 	}
 	
 	//Get Settings and fill session variables
@@ -100,6 +112,14 @@
 						<td><span>Currency Abbreviation</span></td>
 						<td>
 							<input type="text" min="0" name="cur_short" value="<?PHP echo $_SESSION['set_cur'] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Customer Number Format</span></td>
+						<td>
+							<input type="text" name="custnumb1" value="<?PHP echo $_SESSION['set_cnb']; ?>" placeholder="Before No." style="width:78px;" />
+							<input type="text" name="custnumb2" value="<?PHP echo $_SESSION['set_cna']; ?>" placeholder="After No." style="width:78px;"/>
 						</td>
 					</tr>
 					
