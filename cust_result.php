@@ -6,6 +6,7 @@
 	
 	//Select from CUSTOMER
 	if (isset($_POST['cust_search'])){
+		$cust_search_no = sanitize($_POST['cust_search_no']);
 		$cust_search_name = sanitize($_POST['cust_search_name']);
 		$cust_search_addr = sanitize($_POST['cust_search_addr']);
 		$cust_search_occup = sanitize($_POST['cust_search_occup']);
@@ -13,21 +14,31 @@
 		//Defining WHERE condition
 		$where = "";
 		$title = "Customers";
+		
+		if ($cust_search_no != ""){
+			$where = "cust_no LIKE '%$cust_search_no%'";
+			$title = $title.' with number "'.$cust_search_no.'"';
+		}
+		if ($cust_search_no != "" AND $cust_search_name != "") $where = $where.' AND ';
+		
 		if ($cust_search_name != ""){
-			$where = "cust_name LIKE '%$cust_search_name%'";
+			$where = $where."cust_name LIKE '%$cust_search_name%'";
 			$title = $title.' named "'.ucwords($cust_search_name).'"';
 		}
-		if ($cust_search_name != "" AND $cust_search_addr != "") $where = $where.' AND ';
+		if (($cust_search_no != "" OR $cust_search_name != "") AND $cust_search_addr != "") $where = $where.' AND ';
+		
 		if ($cust_search_addr != ""){
 			$where = $where."cust_address LIKE '%$cust_search_addr%'";
 			$title = $title.' from "'.ucwords($cust_search_addr).'"';
 		}
-		if (($cust_search_name != "" OR $cust_search_addr != "") AND $cust_search_occup != "") $where = $where.' AND ';
+		if (($cust_search_no != "" OR $cust_search_name != "" OR $cust_search_addr != "") AND $cust_search_occup != "") $where = $where.' AND ';
+		
 		if ($cust_search_occup != ""){
 			$where = $where."cust_occup LIKE '%$cust_search_occup%'";
 			$title = $title.' working as "'.ucwords($cust_search_occup).'"';
 		}
-		$sql_custsearch = "SELECT * FROM customer, custsex WHERE $where AND customer.custsex_id = custsex.custsex_id ORDER BY customer.cust_id";
+		
+		$sql_custsearch = "SELECT * FROM customer LEFT JOIN custsex ON customer.custsex_id = custsex.custsex_id WHERE $where ORDER BY customer.cust_id";
 		$query_custsearch = mysql_query($sql_custsearch);
 		checkSQL ($query_custsearch);
 		
