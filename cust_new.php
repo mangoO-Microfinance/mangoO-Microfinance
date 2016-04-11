@@ -62,12 +62,8 @@
 	$query_sex = mysql_query($sql_sex);
 	checkSQL($query_sex);
 	
-	//Determine new CUST_ID
-	$sql_maxid = "SELECT MAX(cust_id) AS maxid FROM customer";
-	$query_maxid = mysql_query($sql_maxid);
-	checkSQL($query_maxid);
-	$result_maxid = mysql_fetch_array($query_maxid);
-	$new_id = $result_maxid['maxid'] + 1;
+	//Build new CUST_NO
+	$newCustNo = buildCustNo();
 ?>
 
 <html>
@@ -106,7 +102,7 @@
 		</div>
 		
 		<!-- PAGE HEADING -->
-		<p class="heading">New Customer (<?PHP echo $_SESSION['set_cnb'].$new_id.$_SESSION['set_cna']; ?>)</p> 
+		<p class="heading">New Customer (<?PHP echo $newCustNo; ?>)</p> 
 		
 		<!-- CONTENT -->
 		<div class="content_center">
@@ -115,7 +111,7 @@
 				<table id ="tb_fields">
 					<tr>
 						<td>Number:</td>
-						<td><input type="text" name="cust_no" value="<?PHP echo $_SESSION['set_cnb'].$new_id.$_SESSION['set_cna']; ?>" tabindex="1" /></td>
+						<td><input type="text" name="cust_no" value="<?PHP echo $newCustNo; ?>" tabindex="1" /></td>
 						<td>Address:</td>
 						<td><input type="text" name="cust_address" placeholder="Place of Residence" tabindex="6" /></td>
 						<td>Representative:</td>

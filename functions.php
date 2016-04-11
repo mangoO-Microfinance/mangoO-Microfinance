@@ -148,10 +148,7 @@
 					$_SESSION['set_maxpsr'] = $row_settings['set_value'];
 					break;
 				case 13:
-					$_SESSION['set_cnb'] = $row_settings['set_value'];
-					break;
-				case 14:
-					$_SESSION['set_cna'] = $row_settings['set_value'];
+					$_SESSION['set_cno'] = $row_settings['set_value'];
 					break;
 			}
 		}
@@ -448,6 +445,48 @@
 		
 		return $query_custinact;
 	}
+	
+/**
+	* Build new customer number
+	* @return varchar custNo :  Newly build customer number
+	*/	
+	function buildCustNo(){		
+		
+		// Determine biggest customer ID
+		$sql_maxID = "SELECT MAX(cust_id) AS maxid FROM customer";
+		$query_maxID = mysql_query($sql_maxID);
+		checkSQL($query_maxID);
+		$result_maxID = mysql_fetch_array($query_maxID);
+
+		// Read customer number format
+		$cnParts = explode("%", $_SESSION['set_cno']);
+		$cnCount = count($cnParts);
+		
+		// Build customer number
+		$i = 0;
+		$custNo = "";
+		for ($i = 1; $i < $cnCount; $i++) {
+			switch($cnParts[$i]){
+				case "N":
+					$custNo = $custNo.($result_maxID['maxid'] + 1);
+					break;
+				case "Y":
+					$custNo = $custNo.date("Y",time());
+					break;
+				case "M":
+					$custNo = $custNo.date("m",time());
+					break;
+				case "D":
+					$custNo = $custNo.date("d",time());
+					break;
+				default:
+					$custNo = $custNo.$cnParts[$i];
+			}
+		}
+		
+		// Return customer number
+		return $custNo;
+	}
 
 /**
 	* Get current employee
@@ -461,7 +500,7 @@
 		
 		return $result_empl;
 	}
-		
+
 /**
 	* Get all current employees
 	* @return array query_emplcurr : Array with the result of the SQL query
