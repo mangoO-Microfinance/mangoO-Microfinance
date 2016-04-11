@@ -5,7 +5,6 @@
 	connect();
 	getCustID();
 	$timestamp = time();
-		
 	
 	// Get current customer's details
 	$result_cust = getCustomer();
@@ -20,7 +19,7 @@
 		checkSQL($query_loanno);
 		$numberofloans = array();
 		while ($row_loanno = mysql_fetch_array($query_loanno)) $numberofloans[] = $row_loanno;
-		$loan_no = 'L-'.$_SESSION['cust_id'].'-'.(count($numberofloans) + 1);
+		$loan_no = 'L-'.$result_cust['cust_no'].'-'.(count($numberofloans) + 1);
 				
 		//Sanitize user input
 		$loan_date = strtotime(sanitize($_POST['loan_date']));
