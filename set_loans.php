@@ -55,6 +55,12 @@
 		$query_upd_auf = mysql_query($sql_upd_auf);
 		checkSQL($query_upd_auf);
 		
+		//Update Extra Loans Input Field
+		$new_xl1 = sanitize($_POST['loanXtra1']);
+		$sql_upd_xl1 = "UPDATE settings SET set_value = '$new_xl1' WHERE set_short = 'SET_XL1'";
+		$query_upd_xl1 = mysql_query($sql_upd_xl1);
+		checkSQL($query_upd_xl1);
+		
 		//If auto-fine option is enabled, make sure dashboard shows loan default list
 		if ($new_auf != NULL){
 			$new_dash_right = "dashboard/dash_loandefaults.php";
@@ -154,6 +160,14 @@
 							<input type="number" min="0" name="maxGuar" value="<?PHP echo $_SESSION['set_maxguar'] ?>" placeholder="Guarantee Limit off" />
 						</td>
 					</tr>
+					
+					<tr>
+						<td>Additional Field</td>
+						<td>
+							<input type="text" name="loanXtra1" value="<?PHP echo $_SESSION['set_xl1'] ?>" placeholder="No additional input field" />
+						</td>
+					</tr>
+					
 				</table>
 				
 				<input type="submit" name="upd_loans" value="Save Changes">

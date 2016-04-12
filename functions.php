@@ -150,6 +150,9 @@
 				case 13:
 					$_SESSION['set_cno'] = $row_settings['set_value'];
 					break;
+				case 14:
+					$_SESSION['set_xl1'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}

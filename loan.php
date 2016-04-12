@@ -28,6 +28,7 @@
 		$loan_fee_receipt = sanitize($_POST['loan_fee_receipt']);
 		$loan_status = sanitize($_POST['loan_status']);
 		$loan_dateout = strtotime(sanitize($_POST['loan_dateout']));
+		$loan_princp_approved = sanitize($_POST['loan_principalapproved']);
 		
 		if($loan_status == 2 AND $loan_issued == 0){
 			
@@ -40,7 +41,7 @@
 			checkSQL($query_inc_lf);
 			
 			//Update the Loan to "Approved" and "Issued"
-			$sql_issue = "UPDATE loans SET loanstatus_id = '$loan_status', loan_issued = '1', loan_dateout = '$loan_dateout', loan_fee_receipt = '$loan_fee_receipt' WHERE loan_id = '$_SESSION[loan_id]'";
+			$sql_issue = "UPDATE loans SET loanstatus_id = '$loan_status', loan_issued = '1', loan_dateout = '$loan_dateout', loan_fee_receipt = '$loan_fee_receipt', loan_principalapproved = '$loan_princp_approved' WHERE loan_id = '$_SESSION[loan_id]'";
 			$query_issue = mysql_query($sql_issue);
 			checkSQL($query_issue);
 		}
@@ -334,7 +335,7 @@
 						<td><input type="text" name="loan_purpose" disabled="disabled" value="<?PHP echo $result_loan['loan_purpose']?>" /></td>
 					</tr>
 					<tr>
-						<td>Principal:</td>
+						<td>Principal applied:</td>
 						<td><input type="text" name="loan_principal" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_principal']).' '.$_SESSION['set_cur'] ?>" /></td>
 						<td>Period:</td>
 						<td><input type="text" name="loan_period" disabled="disabled" value="<?PHP echo $result_loan['loan_period']?>" /></td>
@@ -400,6 +401,24 @@
 						<td>Application Date:</td>
 						<td>
 							<input type="text" value="<?PHP echo date("d.m.Y", $result_loan['loan_date']) ?>" disabled="disabled" />
+						</td>
+					</tr>
+					<tr>
+						<?PHP 
+						// Additional Field 1
+						if($_SESSION['set_xl1'] != "")
+							echo '<td>'.$_SESSION['set_xl1'].'</td>
+										<td><input type="text" disabled="disabled" value="'.$result_loan['loan_xtra1'].'" /></td>';
+						else echo '<td></td><td></td>';
+						?>
+						<td>Principal approved:</td>
+						<td>
+						<?PHP 
+						if($result_loan['loan_issued'] == 1)
+							echo '<input type="text" disabled="disabled" value="'.number_format($result_loan['loan_principalapproved']).' '.$_SESSION['set_cur'].'" />';
+						else 
+							echo '<input type="number" name="loan_principalapproved" placeholder="Approved Principal Amount" value="'.$result_loan['loan_principal'].'" />';
+						?>
 						</td>
 					</tr>
 					<tr>

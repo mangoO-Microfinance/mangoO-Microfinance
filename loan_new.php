@@ -34,6 +34,10 @@
 		$loan_guarant3 = sanitize($_POST['loan_guarant3']);
 		$loan_appfee_receipt = sanitize($_POST['loan_appfee_receipt']);
 		
+		if($_SESSION['set_xlo'] != "") $loan_xtra1 = sanitize($_POST['loan_xtra']);
+		else $loan_xtra1 = NULL;
+		
+		
 		//Calculate expected total interest, monthly rates, and loan fee
 		$loan_principaldue = round($loan_principal / $loan_period, -3);
 		
@@ -45,7 +49,7 @@
 		$loan_fee = $loan_principal / 100 * $_SESSION['fee_loan'];
 		
 		//Insert Loan into LOANS
-		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$_SESSION[log_id]')";
+		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, loan_xtra1, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$loan_xtra1', '$_SESSION[log_id]')";
 		$query_insert_loan = mysql_query($sql_insert_loan);
 		checkSQL($query_insert_loan);
 		
@@ -230,8 +234,8 @@
 								?>
 							</select>
 						</td>
-						<td></td>
-						<td></td>
+						<td><?PHP if($_SESSION['set_xlo'] != "") echo $_SESSION['set_xlo'].':'; ?></td>
+						<td><?PHP if($_SESSION['set_xlo'] != "") echo '<input type="text" name="loan_xtra1" id="loan_xtra1" />'; ?></td>
 					</tr>
 					<tr>
 						<td>Monthly Rate:</td>
