@@ -153,6 +153,9 @@
 				case "SET_XL1":
 					$_SESSION['set_xl1'] = $row_settings['set_value'];
 					break;
+				case "SET_ENO":
+					$_SESSION['set_eno'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}
@@ -528,5 +531,47 @@
 		checkSQL($query_emplpast);
 		
 		return $query_emplpast;
+	}
+	
+/**
+	* Build new employee number
+	* @return varchar emplNo :  Newly build employee number
+	*/	
+	function buildEmplNo(){		
+		
+		// Determine biggest employee ID
+		$sql_maxID = "SELECT MAX(empl_id) AS maxid FROM employee";
+		$query_maxID = mysql_query($sql_maxID);
+		checkSQL($query_maxID);
+		$result_maxID = mysql_fetch_array($query_maxID);
+
+		// Read employee number format
+		$enParts = explode("%", $_SESSION['set_eno']);
+		$enCount = count($enParts);
+		
+		// Build customer number
+		$i = 0;
+		$emplNo = "";
+		for ($i = 1; $i < $enCount; $i++) {
+			switch($enParts[$i]){
+				case "N":
+					$emplNo = $emplNo.($result_maxID['maxid'] + 1);
+					break;
+				case "Y":
+					$emplNo = $emplNo.date("Y",time());
+					break;
+				case "M":
+					$emplNo = $emplNo.date("m",time());
+					break;
+				case "D":
+					$emplNo = $emplNo.date("d",time());
+					break;
+				default:
+					$emplNo = $emplNo.$enParts[$i];
+			}
+		}
+		
+		// Return customer number
+		return $emplNo;
 	}
 ?>

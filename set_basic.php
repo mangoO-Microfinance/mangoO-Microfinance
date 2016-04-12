@@ -42,11 +42,17 @@
 		$query_upd_dashr = mysql_query($sql_upd_dashr);
 		checkSQL($query_upd_dashr);
 		
-		//Update Customer Number Before
+		//Update Customer Number Format
 		$new_cno = sanitize($_POST['cnformat']);
 		$sql_upd_cno = "UPDATE settings SET set_value = '$new_cno' WHERE set_short = 'SET_CNO'";
 		$query_upd_cno = mysql_query($sql_upd_cno);
 		checkSQL($query_upd_cno);
+		
+		//Update Employee Number Format
+		$new_eno = sanitize($_POST['enformat']);
+		$sql_upd_eno = "UPDATE settings SET set_value = '$new_eno' WHERE set_short = 'SET_ENO'";
+		$query_upd_eno = mysql_query($sql_upd_eno);
+		checkSQL($query_upd_eno);
 	}
 	
 	//Get Settings and fill session variables
@@ -112,7 +118,14 @@
 					<tr>
 						<td><span>Customer Number Format</span></td>
 						<td>
-							<input type="text" name="cnformat" value="<?PHP echo $_SESSION['set_cno']; ?>" placeholder="Cust. Number Format"/>
+							<input type="text" name="cnformat" value="<?PHP echo $_SESSION['set_cno']; ?>" placeholder="Customer No. Format"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Employee Number Format</span></td>
+						<td>
+							<input type="text" name="enformat" value="<?PHP echo $_SESSION['set_eno']; ?>" placeholder="Employee No. Format"/>
 						</td>
 					</tr>
 					

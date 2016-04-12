@@ -48,6 +48,9 @@
 	$sql_mstat = "SELECT * FROM emplmarried";
 	$query_mstat = mysql_query($sql_mstat);
 	checkSQL($query_mstat);
+	
+	//Build new EMPL_NO
+	$newEmplNo = buildEmplNo();
 ?>
 
 <html>
@@ -85,7 +88,7 @@
 				<table id ="tb_fields" style="max-width:1000px;">
 					<tr>
 						<td>Number:</td>
-						<td><input type="text" name="empl_no" tabindex=1 /></td>
+						<td><input type="text" name="empl_no" value="<?PHP echo $newEmplNo; ?>" tabindex=1 /></td>
 						<td>Monthly Salary:</td>
 						<td><input type="number" name="empl_salary" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" tabindex=7 /></td>
 					</tr>
