@@ -110,47 +110,47 @@
 		checkSQL($query_settings);
 		while($row_settings = mysql_fetch_assoc($query_settings)){
 			
-			switch ($row_settings['set_id']){
-				case 1:
+			switch ($row_settings['set_short']){
+				case "SET_MSB":
 					$_SESSION['set_msb'] = $row_settings['set_value'];
 					break;
-				case 2:
+				case "SET_MLP":
 					$_SESSION['set_minlp'] = $row_settings['set_value'];
 					break;
-				case 3:
+				case "SET_XLP":
 					$_SESSION['set_maxlp'] = $row_settings['set_value'];
 					break;
-				case 4:
+				case "SET_CUR":
 					$_SESSION['set_cur'] = $row_settings['set_value'];
 					break;
-				case 5:
+				case "SET_AUF":
 					$_SESSION['set_auf'] = $row_settings['set_value'];
 					break;
-				case 6:
+				case "SET_DEA":
 					$_SESSION['set_deact'] = $row_settings['set_value'];
 					break;
-				case 7:
+				case "SET_DBL":
 					$_SESSION['set_dashl'] = $row_settings['set_value'];
 					break;
-				case 8:
+				case "SET_DBR":
 					$_SESSION['set_dashr'] = $row_settings['set_value'];
 					break;
-				case 9:
+				case "SET_ICL":
 					$_SESSION['set_intcalc'] = $row_settings['set_value'];
 					break;
-				case 10:
+				case "SET_GUA":
 					$_SESSION['set_maxguar'] = $row_settings['set_value'];
 					break;
-				case 11:
+				case "SET_MEM":
 					$_SESSION['set_minmemb'] = $row_settings['set_value'];
 					break;
-				case 12:
+				case "SET_PSR":
 					$_SESSION['set_maxpsr'] = $row_settings['set_value'];
 					break;
-				case 13:
+				case "SET_CNO":
 					$_SESSION['set_cno'] = $row_settings['set_value'];
 					break;
-				case 14:
+				case "SET_XL1":
 					$_SESSION['set_xl1'] = $row_settings['set_value'];
 					break;
 			}
@@ -165,29 +165,29 @@
 		$query_fees = mysql_query($sql_fees);
 		checkSQL($query_fees);
 		while ($row_fees = mysql_fetch_assoc($query_fees)){
-			switch ($row_fees['fee_id']){
-				case 1:
+			switch ($row_fees['fee_short']){
+				case "FEE_ENT":
 					$_SESSION['fee_entry'] = $row_fees['fee_value'];
 					break;
-				case 2:
+				case "FEE_WDL":
 					$_SESSION['fee_withdraw'] = $row_fees['fee_value'];
 					break;
-				case 3:
+				case "FEE_STS":
 					$_SESSION['fee_stationary'] = $row_fees['fee_value'];
 					break;
-				case 4:
+				case "FEE_ASB":
 					$_SESSION['fee_subscr'] = $row_fees['fee_value'];
 					break;
-				case 5:
+				case "FEE_LOF":
 					$_SESSION['fee_loan'] = $row_fees['fee_value'];
 					break;
-				case 6:
+				case "FEE_LAP":
 					$_SESSION['fee_loanappl'] = $row_fees['fee_value'];
 					break;
-				case 7:
+				case "FEE_LDF":
 					$_SESSION['fee_loanfine'] = $row_fees['fee_value'];
 					break;
-				case 8:
+				case "FEE_LIR":
 					$_SESSION['fee_loaninterestrate'] = $row_fees['fee_value'];
 					break;
 			}
