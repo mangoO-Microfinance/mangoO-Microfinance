@@ -12,11 +12,14 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 
 <table id="tb_table">
 	<colgroup>
-		<col width="12%">
-		<col width="20%">
-		<col width="20%">
-		<col width="12%">
-		<col width="12%">
+		<col width="10%">
+		<!--
+		<col width="10%">
+		-->
+		<col width="18%">
+		<col width="18%">
+		<col width="10%">
+		<col width="10%">
 		<col width="18%">
 		<col width="6%">
 	</colgroup>
@@ -35,6 +38,9 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 	?>
 	<tr>
 		<th>Date</th>
+		<!--
+		<th>Fixed</th>
+		-->
 		<th>Transaction Type</th>
 		<th>Amount</th>
 		<th>Receipt</th>
@@ -45,8 +51,12 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
  <?PHP
 	while($row_sav = mysql_fetch_assoc($query_sav)){
 		echo '<tr>
-						<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>
-						<td>'.$row_sav['savtype_type'].'</td>
+						<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>';
+			/*
+			if($row_sav['sav_fixed'] != 0) echo '<td>'.date("d.m.Y",$row_sav['sav_fixed']).'</td>';
+			else echo '<td></td>';
+			*/
+			echo '<td>'.$row_sav['savtype_type'].'</td>
 						<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>
 						<td>'.$row_sav['sav_receipt'].'</td>
 						<td>'.$row_sav['sav_slip'].'</td>

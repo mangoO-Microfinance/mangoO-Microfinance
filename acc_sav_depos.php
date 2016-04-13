@@ -18,9 +18,11 @@
 		$sav_amount = sanitize($_POST['sav_amount']);
 		$sav_receipt = sanitize($_POST['sav_receipt']);
 		$sav_date = strtotime(sanitize($_POST['sav_date']));
+		if($_POST['sav_fixed'] != "") $sav_fixed = strtotime(sanitize($_POST['sav_fixed']));
+		else $sav_fixed = NULL;
 		
 		// Insert savings transaction into SAVINGS
-		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_fixed, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$sav_fixed', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		checkSQL($query_insert);
 		
@@ -85,6 +87,12 @@
 						<td>Amount:</td>
 						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" class="defaultnumber" min=1 required="required" /></td>
 					</tr>
+					<!--
+					<tr>
+						<td>Fix Deposit until:</td>
+						<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="for Fixed Deposits" /></td>
+					</tr>
+					-->
 					<tr>
 						<td colspan="2" class="center"><input type="submit" name="deposit" value="Deposit" /></td>
 					</tr>
