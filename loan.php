@@ -1,9 +1,11 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
+	require 'function_loans.php';
 	checkLogin();
 	connect();
 	getLoanID();
+	
 	$timestamp = time();
 	
 	// Select details of current loan from LOANS, LOANSTATUS, CUSTOMER
@@ -16,9 +18,8 @@
 	// Get current customer's savings account balance
 	$sav_balance = getSavingsBalance($_SESSION['cust_id']);
 	
-	/** UPDATE STATUS-Button **/
+	/** UPDATE STATUS Button **/
 	if (isset($_POST['updatestatus'])){
-		
 		// Sanitize user input
 		$loan_principal = $_SESSION['loan_principal'];
 		$loan_interest = $_SESSION['loan_interest'];
@@ -63,16 +64,16 @@
 		$loan_repay_date = sanitize(strtotime($_POST['loan_repay_date']));
 		$loan_repay_sav = sanitize($_POST['loan_repay_sav']);
 		
-	/** If the paid amount exceeds the total outstanding balance, 
-		* the remaining principal and interest are served 
-		* and the rest goes to savings. */
+		// If the paid amount exceeds the total outstanding balance, 
+		// the outstanding principal and interest are served 
+		// and the rest goes to savings.
 		if ($loan_repay_amount > $_SESSION['balance']){
 			$loan_repay_interest = $_SESSION['i_balance'];
 			$loan_repay_principal = $_SESSION['p_balance'];
 			$loan_repay_savings = $loan_repay_amount - $loan_repay_interest - $loan_repay_principal;
 		}
 		
-		/** If, however, the paid amount is smaller than the total outstanding balance... */
+		// If, however, the paid amount is smaller than the total outstanding balance... 
 		else {
 			
 			// Check if total interest has been paid off.
@@ -90,26 +91,23 @@
 			// Otherwise, if principal AND interest both show an open balance...
 			elseif ($_SESSION['i_balance'] > 0 AND $_SESSION['p_balance'] > 0){
 				
-				/**
-					* Check if the paid amount is less than the interest due. 
-					* In that case, everything goes to interest only.
-					*/
+				// Check if the paid amount is less than the interest due. 
+				// In that case, everything goes to interest only.
 				if ($loan_repay_amount < $_SESSION['interest_sum']){
 					$loan_repay_interest = $loan_repay_amount;
 					$loan_repay_principal = 0;
 				}
 				
-			/** 
-				* If, however, the paid amount exceeds 
-				* the due interest PLUS the total outstanding balance, 
-				* the excess money is used on interest.
-				*/
+				// If, however, the paid amount exceeds 
+				// the due interest PLUS the total outstanding balance, 
+				// the excess money is used on interest.
 				elseif ($loan_repay_amount > ($_SESSION['interest_sum'] + $_SESSION['p_balance'])){
 					$loan_repay_principal = $_SESSION['p_balance'];
 					$loan_repay_interest = $loan_repay_amount - $loan_repay_principal;
 				}
 				
-				//Otherwise, the paid amount is split between interest and principal. This is probably the most common case!
+				//Otherwise, the paid amount is split between interest and principal. 
+				// This is probably the most common case!
 				else {
 					$loan_repay_interest = $_SESSION['interest_sum'];
 					$loan_repay_principal = $loan_repay_amount - $loan_repay_interest;
@@ -169,13 +167,19 @@
 			// Update savings account balance
 			updateSavingsBalance($_SESSION['cust_id']);
 		}
-
+		
+		/*
+		// Re-calculate interest payments
+		$loan_balances = getLoanBalance($_SESSION['loan_id']);
+		$loan_pBalance = $loan_balances['pdue'] - $loan_balances['ppaid'];
+		updateInterFloat($_SESSION['loan_id'], $loan_pBalance, $result_loan['loan_interest']);
+		*/
+		
 		header('Location: loan.php?lid='.$_SESSION['loan_id']);
 	}
 	
 	/** CHARGE DEFAULT FINE Button **/
 	if(isset($_POST['fine'])){
-		
 		// Sanitize user input
 		$fine_amount = sanitize($_POST['fine_amount']);
 		$fine_receipt = sanitize($_POST['fine_receipt']);
@@ -220,12 +224,12 @@
 	}
 	
 	// Select Instalments from LTRANS
-	$sql_duedates = "SELECT * FROM ltrans, user WHERE ltrans.user_id = user.user_id AND loan_id = $_SESSION[loan_id] ORDER BY ltrans_id";
+	$sql_duedates = "SELECT * FROM ltrans LEFT JOIN user ON ltrans.user_id = user.user_id WHERE loan_id = $_SESSION[loan_id] ORDER BY ltrans_id";
 	$query_duedates = mysql_query($sql_duedates);
 	checkSQL($query_duedates);
 	
 	// Select Guarantors from CUSTOMER
-	$sql_guarant = "SELECT cust_id, cust_name FROM customer";
+	$sql_guarant = "SELECT cust_id, cust_no, cust_name FROM customer";
 	$query_guarant = mysql_query($sql_guarant);
 	checkSQL($query_guarant);
 	$guarantors = array();
@@ -304,10 +308,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				includeMenu(3);
-		?>
-		<!-- MENU MAIN -->
+		<?PHP includeMenu(3); ?>
 		<div id="menu_main">
 			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
 			<a href="loan_search.php">Search</a>
@@ -337,21 +338,23 @@
 					<tr>
 						<td>Principal applied:</td>
 						<td><input type="text" name="loan_principal" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_principal']).' '.$_SESSION['set_cur'] ?>" /></td>
-						<td>Period:</td>
-						<td><input type="text" name="loan_period" disabled="disabled" value="<?PHP echo $result_loan['loan_period']?>" /></td>
+						<td>Interest Rate:</td>
+						<td><input type="text" name="loan_interest" disabled="disabled" value="<?PHP echo $result_loan['loan_interest'].'% per Month'?>" /></td>
 					</tr>
 					<tr>
-						<td>Interest:</td>
-						<td><input type="text" name="loan_interest" disabled="disabled" value="<?PHP echo $result_loan['loan_interest'].'% per Month'?>" /></td>
+						<td>Period:</td>
+						<td><input type="text" name="loan_period" disabled="disabled" value="<?PHP echo $result_loan['loan_period']?>" /></td>
 						<td>Loan Fee:</td>
 						<td><input type="text" name="loan_fee" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_fee']).' '.$_SESSION['set_cur'] ?>" /></td>
 					</tr>
+					<!--
 					<tr>
 						<td>Monthly Rate:</td>
-						<td><input type="text" name="loan_rate" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_rate']).' '.$_SESSION['set_cur'] ?>" /></td>
+						<td><input type="text" name="loan_rate" disabled="disabled" value="<?PHP //echo number_format($result_loan['loan_rate']).' '.$_SESSION['set_cur'] ?>" /></td>
 						<td>Repay Total:</td>
-						<td><input type="text" name="loan_repaytotal" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_repaytotal']).' '.$_SESSION['set_cur'] ?>"/></td>
+						<td><input type="text" name="loan_repaytotal" disabled="disabled" value="<?PHP //echo number_format($result_loan['loan_repaytotal']).' '.$_SESSION['set_cur'] ?>"/></td>
 					</tr>
+					-->
 					<tr>
 						<td>Secur. 1:</td>
 						<td>
@@ -374,7 +377,7 @@
 						echo '<td><input type="text" name="loan_guarant1" disabled="disabled" ';
 						foreach ($guarantors as $g1){
 							if ($g1['cust_id'] == $result_loan['loan_guarant1'])
-								echo 'value="'.$g1['cust_id'].' '.$g1['cust_name'].'"';
+								echo 'value="'.$g1['cust_no'].' '.$g1['cust_name'].'"';
 						}
 						echo ' /></td>';
 						?>
@@ -383,7 +386,7 @@
 						echo '<td><input type="text" name="loan_guarant2" disabled="disabled" ';
 						foreach ($guarantors as $g2){
 							if ($g2['cust_id'] == $result_loan['loan_guarant2'])
-								echo 'value="'.$g2['cust_id'].' '.$g2['cust_name'].'"';
+								echo 'value="'.$g2['cust_no'].' '.$g2['cust_name'].'"';
 						}
 						echo ' /></td>';
 						?>
@@ -394,16 +397,11 @@
 						echo '<td><input type="text" name="loan_guarant3" disabled="disabled" ';
 						foreach ($guarantors as $g3){
 							if ($g3['cust_id'] == $result_loan['loan_guarant3'])
-								echo 'value="'.$g3['cust_id'].' '.$g3['cust_name'].'"';
+								echo 'value="'.$g3['cust_no'].' '.$g3['cust_name'].'"';
 						}
 						echo ' /></td>';
 						?>
-						<td>Application Date:</td>
-						<td>
-							<input type="text" value="<?PHP echo date("d.m.Y", $result_loan['loan_date']) ?>" disabled="disabled" />
-						</td>
-					</tr>
-					<tr>
+						
 						<?PHP 
 						// Additional Field 1
 						if($_SESSION['set_xl1'] != "")
@@ -411,6 +409,12 @@
 										<td><input type="text" disabled="disabled" value="'.$result_loan['loan_xtra1'].'" /></td>';
 						else echo '<td></td><td></td>';
 						?>
+					</tr>
+					<tr>
+						<td>Application Date:</td>
+						<td>
+							<input type="text" value="<?PHP echo date("d.m.Y", $result_loan['loan_date']) ?>" disabled="disabled" />
+						</td>
 						<td>Principal approved:</td>
 						<td>
 						<?PHP 
@@ -453,13 +457,13 @@
 						<td colspan=4 style="text-align:center">
 							<input type="hidden" name="loan_issued" id="loan_issued" value="<?PHP echo $result_loan['loan_issued']?>" />
 							<input type="hidden" name="loan_fee_receipt" id="loan_fee_receipt" value="" />
-							<input type="submit" name="updatestatus" value="Update Status" />
+							<input type="submit" name="updatestatus" value="Update" />
 						</td>
 					</tr>
 				</table>
 				<?PHP
 				//Pass relevant data to SESSION
-				$_SESSION['loan_principal'] = $result_loan['loan_principal'];
+				$_SESSION['loan_principal'] = $result_loan['loan_principalapproved'];
 				$_SESSION['loan_interest'] = $result_loan['loan_interest'];
 				$_SESSION['loan_period'] = $result_loan['loan_period'];
 				$_SESSION['loan_fee'] = $result_loan['loan_fee'];
@@ -563,7 +567,7 @@
 				<tr class="balance">
 					<td>Total:</td>
 					<td></td>
-					<td><?PHP echo number_format($p_due); ?></td>
+					<td><?PHP echo number_format($_SESSION['loan_principal']); ?></td>
 					<td><?PHP echo number_format($p_paid); ?></td>
 					<td><?PHP echo number_format($i_due); ?></td>
 					<td><?PHP echo number_format($i_paid); ?></td>
@@ -572,7 +576,7 @@
 				<tr>
 					<td>Remaining:</td>
 					<td></td>
-					<td><?PHP echo number_format($p_due - $p_paid); ?></td>
+					<td><?PHP echo number_format($_SESSION['loan_principal'] - $p_paid); ?></td>
 					<td></td>
 					<td><?PHP echo number_format($i_due - $i_paid); ?></td>
 					<td colspan="5"></td>

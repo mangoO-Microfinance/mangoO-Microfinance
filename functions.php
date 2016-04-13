@@ -16,7 +16,8 @@
 	
 /**
 	* Generate unique fingerprint for every user session
-	* @return string fingerprint : Unique fingerprint generated from remote server address, random string, and user agent
+	* @return string fingerprint : Unique fingerprint generated from remote server address, 
+	* random string, and user agent
 	*/
 	function fingerprint(){
 		return $fingerprint = md5($_SERVER['REMOTE_ADDR'].'jikI/20Y,!'.$_SERVER['HTTP_USER_AGENT']);
