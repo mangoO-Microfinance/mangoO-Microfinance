@@ -22,25 +22,25 @@
 		<!-- CONTENT: Customer Search -->
 		<div class="content_center">
 			
-			<!--
+			<!-- *** ACTIVATE FOR QUICK SEARCH BY CUST_ID ***
 			<form action="customer.php" method="get" style="margin-bottom:4.5em;">
 				<p class="heading_narrow">Quick Search by ID</p>
 				<input type="text" name="cust" placeholder="Customer ID" />
 				<input type="submit" value="Search" />
 			</form>
 			-->
-			
+
 			<form action="cust_result.php" method="post">
-				<p class="heading_narrow">Detailed Customer Search</p>
-				<input type="text" name="cust_search_no" placeholder="Number or number part"/>
+				<p class="heading">Detailed Customer Search</p>
+				<input type="text" name="cust_search_no" placeholder="Number or number part" tabindex=1 />
 				<br/><br/>
-				<input type="text" name="cust_search_name" placeholder="Name or name part"/>
+				<input type="text" name="cust_search_name" placeholder="Name or name part" tabindex=2 />
 				<br/><br/>
-				<input type="text" name="cust_search_occup" placeholder="Occupation or part"/>
+				<input type="text" name="cust_search_occup" placeholder="Occupation or part" tabindex=3 />
 				<br/><br/>
-				<input type="text" name="cust_search_addr" placeholder="Address or address part"/>
-				<br/><br/>
-				<input type="submit" name="cust_search" value="Search" />
+				<input type="text" name="cust_search_addr" placeholder="Address or address part" tabindex=4 />
+				<br/><br/><br/>
+				<input type="submit" name="cust_search" value="Search" tabindex=5 />
 			</form>
 		</div>
 	</body>
