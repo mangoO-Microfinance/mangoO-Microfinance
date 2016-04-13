@@ -385,7 +385,37 @@
 		$sql_savbal_upd_all = "UPDATE savbalance SET savbalance.savbal_balance = (SELECT SUM(savings.sav_amount) FROM savings WHERE savings.cust_id = savbalance.cust_id)";
 		$query_savbal_upd_all = mysql_query($sql_savbal_upd_all);
 		checkSQL($query_savbal_upd_all);
-	}	
+	}
+	
+/**
+	* Calculate balances for a specific loan
+	* @return array $loanbal : Array with principal balance,
+	*/
+	function getLoanBalance($loan_id){
+		
+		//Select Loan Balance from LTRANS
+		$sql_balances = "SELECT ltrans_principaldue, ltrans_interestdue, ltrans_principal, ltrans_interest FROM ltrans WHERE ltrans.loan_id = '$loan_id'";
+		$query_balances = mysql_query($sql_balances);
+		checkSQL($query_balances);
+		
+		//Calculate outstanding balances
+		$loan_balances = array(
+			"pdue" => 0,
+			"idue" => 0,
+			"ppaid" => 0,
+			"ipaid" => 0,
+			"balance" => 0
+		);
+		while ($row_balances = mysql_fetch_assoc($query_balances)){
+			$loan_balances['pdue'] = $loan_balances['pdue'] + $row_balances['ltrans_principaldue'];
+			$loan_balances['idue'] = $loan_balances['idue'] + $row_balances['ltrans_interestdue'];
+			$loan_balances['ppaid'] = $loan_balances['ppaid'] + $row_balances['ltrans_principal'];
+			$loan_balances['ipaid'] = $loan_balances['ipaid'] + $row_balances['ltrans_interest'];
+		}
+		$loan_balances['balance'] = ($loan_balances['pdue'] + $loan_balances['idue']) - ($loan_balances['ppaid'] + $loan_balances['ipaid']);
+		
+		return $loan_balances;
+	}
 	
 /**
 	* Calculate current customer's share account balance

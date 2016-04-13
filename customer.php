@@ -309,11 +309,11 @@
 					<th class="title" colspan="6">Loans Account</th>
 				</tr>
 				<tr>
-					<th>No.</th>
+					<th>Loan No.</th>
 					<th>Status</th>
-					<th>Total Repay</th>
-					<th>Remaining</th>
-					<th>Rate Due</th>
+					<th>Amount</th>
+					<th>Balance</th>
+					<th>Next Rate</th>
 				</tr>
 				<?PHP
 				//Select all loans for current customer
@@ -329,31 +329,24 @@
 					checkSQL($query_ltrans);
 					$next_due = mysql_fetch_assoc($query_ltrans);
 					
-					//Select Loan Balance from LTRANS
-					$sql_balance = "SELECT ltrans_principaldue, ltrans_interestdue, ltrans_principal, ltrans_interest FROM ltrans, loans WHERE ltrans.loan_id = loans.loan_id AND loans.loanstatus_id = '2' AND loans.loan_id = '$row_loan[loan_id]'";
-					$query_balance = mysql_query($sql_balance);
-					checkSQL($query_balance);
-					
-					$loan_balance = 0;
-					$loan_paid = 0;
-					while ($row_balance = mysql_fetch_assoc($query_balance)){
-						$loan_paid = $loan_paid + $row_balance['ltrans_principal'] + $row_balance['ltrans_interest'];
-						$loan_balance = $loan_balance + $row_balance['ltrans_interestdue'] + $row_balance['ltrans_principaldue'];
-					}
-					$loan_balance = $loan_balance - $loan_paid;
+					// Get loan balances					
+					$loan_balances = getLoanBalance($row_loan['loan_id']);
 					
 					echo '<tr>
 									<td><a href="loan.php?lid='.$row_loan['loan_id'].'">'.$row_loan['loan_no'].'</a></td>
-									<td>'.$row_loan['loanstatus_status'].'</td>
-									<td>'.number_format($row_loan['loan_repaytotal']).'</td>
-									<td>'.number_format($loan_balance).'</td>';
+									<td>'.$row_loan['loanstatus_status'].'</td>';
+					if ($row_loan['loan_issued'] == 1) echo '
+									<td>'.number_format($loan_balances['pdue']+$loan_balances['idue']).'</td>
+									<td>'.number_format($loan_balances['balance']).'</td>';
+					else echo '<td>'.number_format($row_loan['loan_principal']).'</td>
+										 <td>N/A</td>';
 					if ($row_loan['loanstatus_id'] == 2 and isset($next_due)) {
 						echo '<td';
 						if ($next_due['MIN(ltrans_due)'] < time()) echo ' class="warn"';
 						if ($next_due['MIN(ltrans_due)'] != null) echo '>'.date("d.m.Y",$next_due['MIN(ltrans_due)']).'</td>';
 						else echo '></td>';
 					}
-					else echo '<td></td>';
+					else echo '<td>N/A</td>';
 					echo '</tr>';
 					}
 				?>

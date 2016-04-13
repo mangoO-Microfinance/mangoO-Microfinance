@@ -22,11 +22,7 @@
 	<body>
 		
 		<!-- MENU -->
-		<?PHP 
-				includeMenu(3);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP includeMenu(3); ?>
 		<div id="menu_main">
 			<a href="loan_search.php">Search</a>
 			<a href="loans_act.php">Active Loans</a>
@@ -59,7 +55,7 @@
 					<th>Customer</th>
 					<th>Status</th>
 					<th>Loan Period</th>
-					<th>Principal</th>
+					<th>Principal applied</th>
 					<th>Interest</th>
 					<th>Applied for on</th>
 				</tr>
@@ -77,6 +73,7 @@
 									<td>'.date("d.m.Y",$row_loanpend['loan_date']).'</td>
 								</tr>';
 					
+					// Export Array
 					array_push($_SESSION['rep_export'], array("Loan No." => $row_loanpend['loan_no'], "Customer" => $row_loanpend['cust_name'].' ('.$row_loanpend['cust_no'].')', "Status" => $row_loanpend['loanstatus_status'], "Loan Period" => $row_loanpend['loan_period'], "Principal" => $row_loanpend['loan_principal'], "Interest" => ($row_loanpend['loan_repaytotal'] - $row_loanpend['loan_principal']), "Repay Total" => $row_loanpend['loan_repaytotal'], "Applied for on" => date("d.m.Y",$row_loanpend['loan_date'])));
 					
 					$count++;

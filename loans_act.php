@@ -21,11 +21,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				includeMenu(3);
-		?>
-		
-		<!-- MENU MAIN -->
+		<?PHP includeMenu(3);	?>
 		<div id="menu_main">
 			<a href="loan_search.php">Search</a>
 			<a href="loans_act.php" id="item_selected">Active Loans</a>
@@ -66,30 +62,20 @@
 				$count = 0;
 				while ($row_loans = mysql_fetch_assoc($query_loans)){
 					
-					//Select Loan Balance from LTRANS
-					$sql_balance = "SELECT ltrans_principaldue, ltrans_interestdue, ltrans_principal, ltrans_interest FROM ltrans, loans WHERE ltrans.loan_id = loans.loan_id AND loans.loan_id = '$row_loans[loan_id]'";
-					$query_balance = mysql_query($sql_balance);
-					checkSQL($query_balance);
-					
-					//Calculate outstanding balance
-					$loan_balance = 0;
-					$loan_paid = 0;
-					while ($row_balance = mysql_fetch_assoc($query_balance)){
-						$loan_paid = $loan_paid + $row_balance['ltrans_principal'] + $row_balance['ltrans_interest'];
-						$loan_balance = $loan_balance + $row_balance['ltrans_interestdue'] + $row_balance['ltrans_principaldue'];
-					}
-					$loan_balance = $loan_balance - $loan_paid;
+					$loan_balances = getLoanBalance($row_loans['loan_id']);
 					
 					echo '<tr>
 									<td><a href="loan.php?lid='.$row_loans['loan_id'].'">'.$row_loans['loan_no'].'</a></td>
 									<td>'.$row_loans['cust_name'].' (<a href="customer.php?cust='.$row_loans['cust_id'].'">'.$row_loans['cust_no'].')</a></td>
 									<td>'.$row_loans['loan_period'].'</td>
-									<td>'.number_format($row_loans['loan_principal']).' '.$_SESSION['set_cur'].'</td>
-									<td>'.number_format(($row_loans['loan_repaytotal'] - $row_loans['loan_principal'])).' '.$_SESSION['set_cur'].'</td>
-									<td>'.number_format($loan_balance).' '.$_SESSION['set_cur'].'</td>
+									<td>'.number_format($loan_balances['pdue']).' '.$_SESSION['set_cur'].'</td>
+									<td>'.number_format($loan_balances['idue']).' '.$_SESSION['set_cur'].'</td>
+									<td>'.number_format($loan_balances['balance']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.date("d.m.Y", $row_loans['loan_dateout']).'</td>				
 								</tr>';
-					array_push($_SESSION['rep_export'], array("Loan No." => $row_loans['loan_no'], "Customer" => $row_loans['cust_name'].' ('.$row_loans['cust_no'].')', "Status" => $row_loans['loanstatus_status'],"Loan Period" => $row_loans['loan_period'], "Principal" => $row_loans['loan_principal'], "Interest" => ($row_loans['loan_repaytotal'] - $row_loans['loan_principal']), "Remaining" => $loan_balance, "Issued on" => date("d.m.Y", $row_loans['loan_dateout'])));
+					
+					// Export Array
+					array_push($_SESSION['rep_export'], array("Loan No." => $row_loans['loan_no'], "Customer" => $row_loans['cust_name'].' ('.$row_loans['cust_no'].')', "Status" => $row_loans['loanstatus_status'],"Loan Period" => $row_loans['loan_period'], "Principal" => $loan_balances['pdue'], "Interest" => $loan_balances['idue'], "Remaining" => $loan_balances['balance'], "Issued on" => date("d.m.Y", $row_loans['loan_dateout'])));
 					
 					$count++;
 				}
