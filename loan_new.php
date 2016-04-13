@@ -35,8 +35,8 @@
 		$loan_appfee_receipt = sanitize($_POST['loan_appfee_receipt']);
 		if($_SESSION['set_xl1'] != "") $loan_xtra1 = sanitize($_POST['loan_xtra1']);
 		else $loan_xtra1 = NULL;
-		
-		echo $loan_xtra1;
+		if($_SESSION['fee_xl1'] != 0) $loan_xtraFee1 = $_SESSION['fee_xl1'];
+		else $loan_xtraFee1 = NULL;
 		
 		//Calculate expected total interest, monthly rates, and fees
 		$loan_principaldue = round($loan_principal / $loan_period, -3);
@@ -48,7 +48,7 @@
 		$loan_insurance = $loan_principal / 100 * $_SESSION['fee_loaninsurance'];
 		
 		//Insert Loan into LOANS
-		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_insurance, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, loan_xtra1, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_insurance', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$loan_xtra1', '$_SESSION[log_id]')";
+		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_insurance, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, loan_xtra1, loan_xtraFee1, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_insurance', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$loan_xtra1', '$loan_xtraFee1', '$_SESSION[log_id]')";
 		$query_insert_loan = mysql_query($sql_insert_loan);
 		checkSQL($query_insert_loan);
 		

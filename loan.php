@@ -47,6 +47,14 @@
 			$sql_inc_ins = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', '10', '$loan_insurance', '$loan_dateout', '$loan_fee_receipt', '$timestamp', '$_SESSION[log_id]')";
 			$query_inc_ins = mysql_query($sql_inc_ins);
 			checkSQL($query_inc_ins);
+						
+			//Insert Additional Loan Fee into INCOMES
+			if($_SESSION['fee_xl1'] != 0){
+				$loan_xtraFee1 = $_SESSION['fee_xl1'];
+				$sql_inc_xtraFee1 = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', '11', '$loan_xtraFee1', '$loan_dateout', '$loan_fee_receipt', '$timestamp', '$_SESSION[log_id]')";
+				$query_inc_xtraFee1 = mysql_query($sql_inc_xtraFee1);
+				checkSQL($query_inc_xtraFee1);
+			}
 			
 			//Update loan information. Set loan to "Approved" and "Issued".
 			$sql_issue = "UPDATE loans SET loanstatus_id = '$loan_status', loan_issued = '1', loan_dateout = '$loan_dateout', loan_principalapproved = '$loan_princp_approved', loan_fee = '$loan_fee', loan_fee_receipt = '$loan_fee_receipt', loan_insurance = '$loan_insurance', loan_insurance_receipt = '$loan_fee_receipt' WHERE loan_id = '$_SESSION[loan_id]'";
@@ -355,14 +363,19 @@
 					<tr>
 						<td>Period:</td>
 						<td><input type="text" name="loan_period" disabled="disabled" value="<?PHP echo $result_loan['loan_period']?>" /></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
 						<td>Loan Fee:</td>
 						<td><input type="text" name="loan_fee" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_fee']).' '.$_SESSION['set_cur'] ?>" /></td>
+					</tr>
+					<tr>
 						<td>Loan Insurance:</td>
 						<td><input type="text" name="loan_insurance" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_insurance']).' '.$_SESSION['set_cur'] ?>" /></td>
+						<?PHP
+						// Additional Fee
+						if($_SESSION['fee_xl1'] != 0)
+							echo '<td>'.$_SESSION['fee_xl1_name'].':</td>
+										<td><input type="text" name="loan_xtraFee1" disabled="disabled" value="'.number_format($result_loan['loan_xtraFee1']).' '.$_SESSION['set_cur'].'" /></td>';
+						else echo '<td></td><td></td>';
+						?>
 					</tr>
 					<!--
 					<tr>
@@ -418,11 +431,10 @@
 						}
 						echo ' /></td>';
 						?>
-						
 						<?PHP 
 						// Additional Field 1
 						if($_SESSION['set_xl1'] != "")
-							echo '<td>'.$_SESSION['set_xl1'].'</td>
+							echo '<td>'.$_SESSION['set_xl1'].':</td>
 										<td><input type="text" disabled="disabled" value="'.$result_loan['loan_xtra1'].'" /></td>';
 						else echo '<td></td><td></td>';
 						?>

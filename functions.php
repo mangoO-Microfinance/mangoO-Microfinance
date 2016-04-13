@@ -197,6 +197,10 @@
 				case "FEE_INS":
 					$_SESSION['fee_loaninsurance'] = $row_fees['fee_value'];
 					break;
+				case "FEE_XL1":
+					$_SESSION['fee_xl1_name'] = $row_fees['fee_name'];
+					$_SESSION['fee_xl1'] = $row_fees['fee_value'];
+					break;
 			}
 		}
 	}
