@@ -24,7 +24,8 @@
 		$sql_insert_sh = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_receipt, share_created, user_id) VALUES ('$_SESSION[cust_id]', '$share_date', '$share_amount', '$share_value', '$share_receipt', $timestamp, '$_SESSION[log_id]')";
 		$query_insert_sh = mysql_query($sql_insert_sh);
 		checkSQL($query_insert_sh);
-		header('Location: customer.php?cust='.$_SESSION['cust_id']);
+		
+		header('Location: acc_share_buy.php?cust='.$_SESSION['cust_id']);
 	}
 
 	//TRANSFER-Button
