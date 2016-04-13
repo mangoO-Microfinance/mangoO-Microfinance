@@ -87,7 +87,7 @@
 						<td>Amount:</td>
 						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" class="defaultnumber" min=1 required="required" /></td>
 					</tr>
-					<!--
+					<!-- *** ACTIVATE FOR FIXED SAVINGS! ***
 					<tr>
 						<td>Fix Deposit until:</td>
 						<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="for Fixed Deposits" /></td>

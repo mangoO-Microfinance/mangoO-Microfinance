@@ -13,7 +13,7 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 <table id="tb_table">
 	<colgroup>
 		<col width="10%">
-		<!--
+		<!-- *** ACTIVATE FOR FIXED SAVINGS! ***
 		<col width="10%">
 		-->
 		<col width="18%">
@@ -38,8 +38,8 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 	?>
 	<tr>
 		<th>Date</th>
-		<!--
-		<th>Fixed</th>
+		<!-- *** ACTIVATE FOR FIXED SAVINGS! ***
+ 		<th>Fixed</th>
 		-->
 		<th>Transaction Type</th>
 		<th>Amount</th>
@@ -52,7 +52,8 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 	while($row_sav = mysql_fetch_assoc($query_sav)){
 		echo '<tr>
 						<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>';
-			/*
+			/* 
+			// *** ACTIVATE FOR FIXED SAVINGS! ***
 			if($row_sav['sav_fixed'] != 0) echo '<td>'.date("d.m.Y",$row_sav['sav_fixed']).'</td>';
 			else echo '<td></td>';
 			*/
