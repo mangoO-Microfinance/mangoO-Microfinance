@@ -25,7 +25,7 @@
 		$loan_interest = $_SESSION['loan_interest'];
 		$loan_period = $_SESSION['loan_period'];
 		$loan_issued = $_SESSION['loan_issued'];
-		$loan_fee = $_SESSION['loan_fee'];
+		
 		$loan_fee_receipt = sanitize($_POST['loan_fee_receipt']);
 		$loan_status = sanitize($_POST['loan_status']);
 		$loan_dateout = strtotime(sanitize($_POST['loan_dateout']));
@@ -37,12 +37,19 @@
 			include ($_SESSION['set_intcalc']);
 			
 			//Insert Loan Fee into INCOMES
+			$loan_fee = $loan_princp_approved / 100 * $_SESSION['fee_loan'];
 			$sql_inc_lf = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', '3', '$loan_fee', '$loan_dateout', '$loan_fee_receipt', '$timestamp', '$_SESSION[log_id]')";
 			$query_inc_lf = mysql_query($sql_inc_lf);
 			checkSQL($query_inc_lf);
 			
-			//Update the Loan to "Approved" and "Issued"
-			$sql_issue = "UPDATE loans SET loanstatus_id = '$loan_status', loan_issued = '1', loan_dateout = '$loan_dateout', loan_fee_receipt = '$loan_fee_receipt', loan_principalapproved = '$loan_princp_approved' WHERE loan_id = '$_SESSION[loan_id]'";
+			//Insert Loan Insurance into INCOMES
+			$loan_insurance = $loan_princp_approved / 100 * $_SESSION['fee_loaninsurance'];
+			$sql_inc_ins = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', '10', '$loan_insurance', '$loan_dateout', '$loan_fee_receipt', '$timestamp', '$_SESSION[log_id]')";
+			$query_inc_ins = mysql_query($sql_inc_ins);
+			checkSQL($query_inc_ins);
+			
+			//Update loan information. Set loan to "Approved" and "Issued".
+			$sql_issue = "UPDATE loans SET loanstatus_id = '$loan_status', loan_issued = '1', loan_dateout = '$loan_dateout', loan_principalapproved = '$loan_princp_approved', loan_fee = '$loan_fee', loan_fee_receipt = '$loan_fee_receipt', loan_insurance = '$loan_insurance', loan_insurance_receipt = '$loan_fee_receipt' WHERE loan_id = '$_SESSION[loan_id]'";
 			$query_issue = mysql_query($sql_issue);
 			checkSQL($query_issue);
 		}
@@ -57,13 +64,13 @@
 	
 	/** MAKE REPAYMENT Button **/
 	if(isset($_POST['repay'])){
-		
+	
 		//Sanitize User Input
 		$loan_repay_amount = sanitize($_POST['loan_repay_amount']);
 		$loan_repay_receipt = sanitize($_POST['loan_repay_receipt']);
 		$loan_repay_date = sanitize(strtotime($_POST['loan_repay_date']));
 		$loan_repay_sav = sanitize($_POST['loan_repay_sav']);
-		
+	
 		// If the paid amount exceeds the total outstanding balance, 
 		// the outstanding principal and interest are served 
 		// and the rest goes to savings.
@@ -168,23 +175,26 @@
 			updateSavingsBalance($_SESSION['cust_id']);
 		}
 		
-		/*
 		// Re-calculate interest payments
-		$loan_balances = getLoanBalance($_SESSION['loan_id']);
-		$loan_pBalance = $loan_balances['pdue'] - $loan_balances['ppaid'];
-		updateInterFloat($_SESSION['loan_id'], $loan_pBalance, $result_loan['loan_interest']);
-		*/
+		if($_SESSION['set_intcalc'] == "modules/mod_inter_float.php") {
+			$loan_balances = getLoanBalance($_SESSION['loan_id']);
+			$loan_pBalance = $result_loan['loan_principalapproved'] - $loan_balances['ppaid'];
+			updateInterFloat($_SESSION['loan_id'], $loan_pBalance, $result_loan['loan_interest']);
+		}
 		
+		// Re-load loan.php
 		header('Location: loan.php?lid='.$_SESSION['loan_id']);
 	}
 	
 	/** CHARGE DEFAULT FINE Button **/
 	if(isset($_POST['fine'])){
+		
 		// Sanitize user input
 		$fine_amount = sanitize($_POST['fine_amount']);
 		$fine_receipt = sanitize($_POST['fine_receipt']);
 		$fine_date = strtotime(sanitize($_POST['fine_date']));
-		$fine_sav = sanitize($_POST['fine_sav']);
+		if(isset($_POST['fine_sav'])) $fine_sav = sanitize($_POST['fine_sav']);
+		else $fine_sav = 0;
 		
 		// Get LTRANS_ID for chargable transaction 
 		$sql_ltrans = "SELECT MIN(ltrans_id) FROM ltrans WHERE ltrans.loan_id = '$_SESSION[loan_id]' AND ltrans_due < '$timestamp' AND ltrans_fined = '0' AND ltrans_date IS NULL";
@@ -214,13 +224,14 @@
 			checkSQL($query_savid);
 			$sav_id = mysql_fetch_row($query_savid);
 		}
+		else $sav_id[0] = NULL;
 		
 		// Insert fine as income in INCOMES
-		$sql_fine_inc = "INSERT INTO incomes (cust_id, ltrans_id, sav_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$ltrans[0]', $sav_id[0], '5', '$fine_amount', '$fine_date', '$fine_receipt', $timestamp, '$_SESSION[log_id]')";
+		$sql_fine_inc = "INSERT INTO incomes (cust_id, ltrans_id, sav_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$ltrans[0]', '$sav_id[0]', '5', '$fine_amount', '$fine_date', '$fine_receipt', $timestamp, '$$_SESSION[log_id]')";
 		$query_fine_inc = mysql_query($sql_fine_inc);
 		checkSQL($query_fine_inc);
 		
-		header('Location: loan.php?lid='.$_SESSION['loan_id']);
+		header('Location: loan.php?lid='.$_SESSION[loan_id]);
 	}
 	
 	// Select Instalments from LTRANS
@@ -339,13 +350,19 @@
 						<td>Principal applied:</td>
 						<td><input type="text" name="loan_principal" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_principal']).' '.$_SESSION['set_cur'] ?>" /></td>
 						<td>Interest Rate:</td>
-						<td><input type="text" name="loan_interest" disabled="disabled" value="<?PHP echo $result_loan['loan_interest'].'% per Month'?>" /></td>
+						<td><input type="text" name="loan_interest" disabled="disabled" value="<?PHP echo $result_loan['loan_interest'].'% per month'?>" /></td>
 					</tr>
 					<tr>
 						<td>Period:</td>
 						<td><input type="text" name="loan_period" disabled="disabled" value="<?PHP echo $result_loan['loan_period']?>" /></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
 						<td>Loan Fee:</td>
 						<td><input type="text" name="loan_fee" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_fee']).' '.$_SESSION['set_cur'] ?>" /></td>
+						<td>Loan Insurance:</td>
+						<td><input type="text" name="loan_insurance" disabled="disabled" value="<?PHP echo number_format($result_loan['loan_insurance']).' '.$_SESSION['set_cur'] ?>" /></td>
 					</tr>
 					<!--
 					<tr>

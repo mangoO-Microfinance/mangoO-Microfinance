@@ -194,6 +194,9 @@
 				case "FEE_LIR":
 					$_SESSION['fee_loaninterestrate'] = $row_fees['fee_value'];
 					break;
+				case "FEE_INS":
+					$_SESSION['fee_loaninsurance'] = $row_fees['fee_value'];
+					break;
 			}
 		}
 	}

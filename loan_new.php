@@ -33,23 +33,22 @@
 		$loan_guarant2 = sanitize($_POST['loan_guarant2']);
 		$loan_guarant3 = sanitize($_POST['loan_guarant3']);
 		$loan_appfee_receipt = sanitize($_POST['loan_appfee_receipt']);
-		
-		if($_SESSION['set_xlo'] != "") $loan_xtra1 = sanitize($_POST['loan_xtra']);
+		if($_SESSION['set_xl1'] != "") $loan_xtra1 = sanitize($_POST['loan_xtra1']);
 		else $loan_xtra1 = NULL;
 		
+		echo $loan_xtra1;
 		
-		//Calculate expected total interest, monthly rates, and loan fee
+		//Calculate expected total interest, monthly rates, and fees
 		$loan_principaldue = round($loan_principal / $loan_period, -3);
-		
 		$loan_interesttotal = ceil((($loan_principal / 100 * $loan_interest) * $loan_period)/50)*50;		
 		$loan_interestdue = round($loan_principal / 100 * $loan_interest);
 		$loan_repaytotal = $loan_principal + $loan_interesttotal;
 		$loan_rate = $loan_principaldue + $loan_interestdue;
-		
 		$loan_fee = $loan_principal / 100 * $_SESSION['fee_loan'];
+		$loan_insurance = $loan_principal / 100 * $_SESSION['fee_loaninsurance'];
 		
 		//Insert Loan into LOANS
-		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, loan_xtra1, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$loan_xtra1', '$_SESSION[log_id]')";
+		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_insurance, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, loan_xtra1, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_insurance', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$loan_xtra1', '$_SESSION[log_id]')";
 		$query_insert_loan = mysql_query($sql_insert_loan);
 		checkSQL($query_insert_loan);
 		
@@ -130,12 +129,16 @@
 				amount = (document.getElementById("loan_principal").value * 1);
 				interest = (document.getElementById("loan_interest").value * 1);
 				instal = (document.getElementById("loan_period").value * 1);
+				/*
 				repaytotal = Math.ceil((amount + (amount/100*interest*instal)) / 50) * 50;
 				rate = Math.round(repaytotal / instal);
-				fee = (amount/100*feerate);
 				document.getElementById("loan_repaytotal").value = repaytotal;
 				document.getElementById("loan_rate").value = rate;
+				*/
+				fee = (amount/100*feerate);
+				insurance=(amount/100*<?PHP echo $_SESSION['fee_loaninsurance']; ?>);
 				document.getElementById("loan_fee").value = fee;
+				document.getElementById("loan_insurance").value = insurance;
 			}
 			
 			function validate(form){
@@ -237,17 +240,21 @@
 						<td><?PHP if($_SESSION['set_xl1'] != "") echo $_SESSION['set_xl1'].':'; ?></td>
 						<td><?PHP if($_SESSION['set_xl1'] != "") echo '<input type="text" name="loan_xtra1" id="loan_xtra1" />'; ?></td>
 					</tr>
+					
+					<!--
 					<tr>
 						<td>Monthly Rate:</td>
 						<td><input type="text" name="loan_rate" id="loan_rate" disabled="disabled" /></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
 						<td>Repay Total:</td>
 						<td><input type="text" name="loan_repaytotal" id="loan_repaytotal" disabled="disabled" /></td>
+					</tr>
+					-->
+					
+					<tr>
 						<td>Loan Fee:</td>
 						<td><input type="text" name="loan_fee" id="loan_fee" disabled="disabled" /></td>
+						<td>Loan Insurance:</td>
+						<td><input type="text" name="loan_insurance" id="loan_insurance" disabled="disabled" /></td>
 					</tr>
 					
 					<tr>

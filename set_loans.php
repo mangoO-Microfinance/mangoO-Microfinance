@@ -13,11 +13,17 @@
 		$query_upd_intcalcmethod = mysql_query($sql_upd_intcalcmethod);
 		checkSQL($query_upd_intcalcmethod);
 		
-		//Update Loan Interest Rate
+		//Update Interest Rate
 		$new_loaninterest = sanitize($_POST['loaninterest']);
-		$sql_upd_loaninterest = "UPDATE fees SET fee_value = '$new_loaninterest' WHERE fee_id = 8";
+		$sql_upd_loaninterest = "UPDATE fees SET fee_value = '$new_loaninterest' WHERE fee_short = 'FEE_LIR'";
 		$query_upd_loaninterest = mysql_query($sql_upd_loaninterest);
 		checkSQL($query_upd_loaninterest);
+	
+		//Update Loan Insurance Rate
+		$new_insurance = sanitize($_POST['insurance']);
+		$sql_upd_insurance = "UPDATE fees SET fee_value = '$new_insurance' WHERE fee_short = 'FEE_INS'";
+		$query_upd_insurance = mysql_query($sql_upd_insurance);
+		checkSQL($query_upd_insurance);
 	
 		//Update Minimum Loan Principal
 		$new_minLP = sanitize($_POST['minLP']);
@@ -113,9 +119,16 @@
 					</tr>
 					
 					<tr>
-						<td>Loan Interest Rate (%)</td>
+						<td>Interest Rate (%)</td>
 						<td>
 							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" placeholder="Pecentage" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Loan Insurance (%)</td>
+						<td>
+							<input type="text" min="0" name="insurance" value="<?PHP echo $_SESSION['fee_loaninsurance'] ?>" placeholder="Pecentage" />
 						</td>
 					</tr>
 					

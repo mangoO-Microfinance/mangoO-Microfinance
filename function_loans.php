@@ -8,7 +8,7 @@
 /**
 	* Charge Loan Default Fine
 	*/
-	function chargeFine(){
+	function chargeFine($loanID, $fine_amount, $fine_receipt, $fine_date, $fine_sav, $logID){
 	}
 
 /**
@@ -21,6 +21,7 @@
 	* Re-calculate due payments
 	*/
 	function updateInterFloat($loanID, $principal, $interRate){
+		
 		$sql_instalments = "SELECT ltrans_id FROM ltrans WHERE ltrans_date IS NULL AND ltrans.loan_id = '$loanID'";
 		$query_instalments = mysql_query($sql_instalments);
 		checkSQL($query_instalments);

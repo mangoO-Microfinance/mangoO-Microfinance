@@ -6,6 +6,7 @@ $loan_princp_due = round($loan_princp_approved / $loan_period, -3);
 $difference_principal = $loan_princp_approved - ($loan_princp_due * $loan_period);
 
 //Calculate Due Dates & Due Payments and insert them into LTRANS
+//$ltrans_due = $loan_dateout + convertDays(31);
 $ltrans_due = $loan_dateout + convertDays(31);
 $ltrans_princp_due = $loan_princp_due;
 $ltrans_princp_remain = $loan_princp_approved;
