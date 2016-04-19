@@ -18,11 +18,12 @@
 		$sav_amount = sanitize($_POST['sav_amount']);
 		$sav_receipt = sanitize($_POST['sav_receipt']);
 		$sav_date = strtotime(sanitize($_POST['sav_date']));
+		$sav_payer = sanitize($_POST['sav_payer']);
 		if($_POST['sav_fixed'] != "") $sav_fixed = strtotime(sanitize($_POST['sav_fixed']));
 		else $sav_fixed = NULL;
 		
 		// Insert savings transaction into SAVINGS
-		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_fixed, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$sav_fixed', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_payer, sav_fixed, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$sav_payer', '$sav_fixed', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		checkSQL($query_insert);
 		
@@ -69,7 +70,7 @@
 		</div>
 				
 		<!-- LEFT SIDE: Input for new Deposit -->
-		<div class="content_left">
+		<div class="content_left" style="width:35%;">
 			
 			<p class="heading_narrow">Deposit for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
 			
@@ -93,6 +94,8 @@
 						<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="for Fixed Deposits" /></td>
 					</tr>
 					-->
+					<td>Depositor:</td>
+						<td><input type="text" name="sav_payer" placeholder="if not account holder" /></td>
 					<tr>
 						<td colspan="2" class="center"><input type="submit" name="deposit" value="Deposit" /></td>
 					</tr>
@@ -101,7 +104,7 @@
 		</div>
 			
 		<!-- RIGHT SIDE: Statement for Savings Account -->
-		<div class="content_right">			
+		<div class="content_right" style="width:65%;">			
 			
 			<?PHP include 'acc_sav_list.php'; ?>
 			

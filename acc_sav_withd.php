@@ -98,7 +98,7 @@
 		</div>	
 		
 		<!-- LEFT SIDE: Input for new Withdrawal -->
-		<div class="content_left">
+		<div class="content_left" style="width:35%;">
 			<p class="heading_narrow">Withdrawal for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?> </p>
 				
 			<form action="acc_sav_withd.php" method="post" onsubmit="return validate(this);">
@@ -131,7 +131,7 @@
 		</div>
 				
 		<!-- RIGHT SIDE: Statement for Savings Account -->
-		<div class="content_right">			
+		<div class="content_right" style="width:65%;">			
 			
 			<?PHP include 'acc_sav_list.php'; ?>
 		

@@ -12,20 +12,21 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 
 <table id="tb_table">
 	<colgroup>
-		<col width="10%">
+		<col width="8%">
 		<!-- *** ACTIVATE FOR FIXED SAVINGS! ***
-		<col width="10%">
+		<col width="8%">
 		-->
-		<col width="18%">
-		<col width="18%">
-		<col width="10%">
-		<col width="10%">
-		<col width="18%">
-		<col width="6%">
+		<col width="16%">
+		<col width="16%">
+		<col width="8%">
+		<col width="8%">
+		<col width="16%">
+		<col width="16%">
+		<col width="4%">
 	</colgroup>
 	<tr>
 		<form class="export" action="acc_sav_export.php" method="post">
-			<th class="title" colspan="7">Savings Account
+			<th class="title" colspan="8">Savings Account
 			<!-- Export Button -->
 			<input type="submit" name="export_rep" value="Export" />
 			</th>
@@ -33,7 +34,7 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 	</tr>
 	<?PHP
 	echo '<tr class="balance">
-					<td colspan="7">Balance: '.number_format($sav_balance).' '.$_SESSION['set_cur'].'</td>
+					<td colspan="8">Balance: '.number_format($sav_balance).' '.$_SESSION['set_cur'].'</td>
 				</tr>';
 	?>
 	<tr>
@@ -41,10 +42,11 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 		<!-- *** ACTIVATE FOR FIXED SAVINGS! ***
  		<th>Fixed</th>
 		-->
-		<th>Transaction Type</th>
+		<th>Transaction</th>
 		<th>Amount</th>
 		<th>Receipt</th>
 		<th>W/Slip</th>
+		<th>Depositor</th>
 		<th>Authorised by</th>
 		<th>Delete</th>
 	</tr>
@@ -61,6 +63,7 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 						<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>
 						<td>'.$row_sav['sav_receipt'].'</td>
 						<td>'.$row_sav['sav_slip'].'</td>
+						<td>'.$row_sav['sav_payer'].'</td>
 						<td>'.$row_sav['user_name'].'</td>';
 						if ($_SESSION['log_delete'] == 1 and ($row_sav['savtype_id'] == 1 or $row_sav['savtype_id'] == 2)) echo '<td><a href="acc_sav_del.php?sav_id='.$row_sav['sav_id'].'" onClick="return randCheck();"><i class="fa fa-remove fa-lg"></i></a></td>';
 						else echo '<td></td>';
