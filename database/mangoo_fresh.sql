@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 09. Apr 2016 um 12:17
+-- Erstellungszeit: 19. Apr 2016 um 11:47
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -249,7 +249,7 @@ INSERT INTO `exptype` (`exptype_id`, `exptype_type`, `exptype_short`) VALUES
 (11, 'Rent', 'EXP_RNT'),
 (12, 'Staff Facilitation', 'EXP_SFC'),
 (13, 'Staff Welfare', 'EXP_SWF'),
-(14, 'Stationary', 'EXP_STN'),
+(14, 'Stationery', 'EXP_STN'),
 (15, 'Tax', 'EXP_TAX'),
 (16, 'Transport', 'EXP_TRN'),
 (17, 'Insurance', 'EXP_INS'),
@@ -266,22 +266,24 @@ CREATE TABLE IF NOT EXISTS `fees` (
 `fee_id` int(11) NOT NULL,
   `fee_name` varchar(50) NOT NULL,
   `fee_short` varchar(8) NOT NULL,
-  `fee_value` float NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+  `fee_value` float DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `fees`
 --
 
 INSERT INTO `fees` (`fee_id`, `fee_name`, `fee_short`, `fee_value`) VALUES
-(1, 'Entry Fee', 'FEE_ENT', 10000),
+(1, 'Entrance Fee', 'FEE_ENT', 10000),
 (2, 'Withdrawal Fee', 'FEE_WDL', 1000),
-(3, 'Stationary Sales', 'FEE_STS', 2000),
+(3, 'Stationery Sales', 'FEE_STS', 2000),
 (4, 'Anual Subscription', 'FEE_ASB', 5000),
 (5, 'Loan Fee', 'FEE_LOF', 1),
 (6, 'Loan Application Fee', 'FEE_LAP', 10000),
 (7, 'Loan Default Fine', 'FEE_LDF', 15000),
-(8, 'Loan Interest Rate', 'FEE_LIR', 3);
+(8, 'Loan Interest Rate', 'FEE_LIR', 3),
+(9, 'Loan Insurance', 'FEE_INS', 1.5),
+(10, 'Loan Stationery', 'FEE_XL1', 5000);
 
 -- --------------------------------------------------------
 
@@ -314,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `inctype` (
 `inctype_id` int(11) NOT NULL,
   `inctype_type` varchar(50) NOT NULL,
   `inctype_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `inctype`
@@ -326,11 +328,12 @@ INSERT INTO `inctype` (`inctype_id`, `inctype_type`, `inctype_short`) VALUES
 (3, 'Loan Fee', 'INC_LOF'),
 (4, 'Loan Interest', 'INC_INT'),
 (5, 'Loan Default Fine', 'INC_LDF'),
-(6, 'Stationary Sales', 'INC_STS'),
+(6, 'Stationery Sales', 'INC_STS'),
 (7, 'Loan Application Fee', 'INC_LAF'),
 (8, 'Subscription Fee', 'INC_SUF'),
 (9, 'Other', 'INC_OTH'),
-(10, 'Insurance', 'INC_INS');
+(10, 'Insurance', 'INC_INS'),
+(11, 'Loan Stationery', 'INC_XL1');
 
 -- --------------------------------------------------------
 
@@ -347,14 +350,16 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `loan_dateout` int(11) NOT NULL,
   `loan_issued` int(2) NOT NULL,
   `loan_principal` int(11) NOT NULL,
+  `loan_principalapproved` int(11) NOT NULL,
   `loan_interest` float NOT NULL,
   `loan_appfee_receipt` int(11) NOT NULL,
   `loan_fee` int(11) NOT NULL,
   `loan_fee_receipt` int(11) NOT NULL,
+  `loan_insurance` int(11) NOT NULL,
+  `loan_insurance_receipt` int(11) NOT NULL,
   `loan_rate` decimal(11,0) NOT NULL,
   `loan_period` int(11) NOT NULL,
   `loan_repaytotal` int(11) NOT NULL,
-  `loan_repaystart` int(11) NOT NULL,
   `loan_purpose` varchar(250) NOT NULL,
   `loan_sec1` varchar(250) NOT NULL,
   `loan_sec2` varchar(250) NOT NULL,
@@ -363,6 +368,8 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `loan_guarant3` int(11) NOT NULL,
   `loan_feepaid` int(1) NOT NULL DEFAULT '0',
   `loan_created` int(15) DEFAULT NULL,
+  `loan_xtra1` varchar(255) DEFAULT NULL,
+  `loan_xtraFee1` int(11) DEFAULT NULL,
   `user_id` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -455,6 +462,8 @@ CREATE TABLE IF NOT EXISTS `savings` (
   `sav_amount` int(15) NOT NULL DEFAULT '0',
   `sav_receipt` int(11) DEFAULT NULL,
   `sav_slip` int(10) NOT NULL,
+  `sav_payer` varchar(255) DEFAULT NULL,
+  `sav_fixed` int(11) DEFAULT NULL,
   `sav_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -513,8 +522,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
 `set_id` int(11) NOT NULL,
   `set_name` varchar(100) NOT NULL,
   `set_short` varchar(8) NOT NULL,
-  `set_value` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+  `set_value` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `settings`
@@ -528,11 +537,14 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 (5, 'Auto-fine Defaulters', 'SET_AUF', ''),
 (6, 'Account Deactivation', 'SET_DEA', ''),
 (7, 'Dashboard Left', 'SET_DBL', 'dashboard/dash_stat_cust.php'),
-(8, 'Dashboard Right', 'SET_DBR', 'dashboard/dash_none.php'),
-(9, 'Interest Calculation', 'SET_ICL', 'modules/mod_inter_fixed.php'),
+(8, 'Dashboard Right', 'SET_DBR', 'dashboard/dash_loandefaults.php'),
+(9, 'Interest Calculation', 'SET_ICL', 'modules/mod_inter_float.php'),
 (10, 'Guarantor Limit', 'SET_GUA', '3'),
 (11, 'Minimum Membership', 'SET_MEM', '6'),
-(12, 'Maximum Principal-Savings Ratio', 'SET_PSR', '500');
+(12, 'Maximum Principal-Savings Ratio', 'SET_PSR', ''),
+(13, 'Customer Number Format', 'SET_CNO', '%N%/%Y'),
+(14, 'Employee Number Format', 'SET_ENO', '%N%-%Y'),
+(15, 'Additional Field Loans', 'SET_XL1', 'Spouse');
 
 -- --------------------------------------------------------
 
@@ -578,17 +590,14 @@ CREATE TABLE IF NOT EXISTS `ugroup` (
   `ugroup_delete` int(2) NOT NULL,
   `ugroup_report` int(11) NOT NULL,
   `ugroup_created` int(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `ugroup`
 --
 
 INSERT INTO `ugroup` (`ugroup_id`, `ugroup_name`, `ugroup_admin`, `ugroup_delete`, `ugroup_report`, `ugroup_created`) VALUES
-(1, 'Administrator', 1, 1, 1, 1453123220),
-(2, 'Management', 0, 1, 1, 1453144125),
-(3, 'Employee', 0, 1, 0, 1453125729),
-(4, 'Ext-Admin', 1, 0, 0, 1453123276);
+(1, 'Administrator', 1, 1, 1, 1453123220);
 
 -- --------------------------------------------------------
 
@@ -819,7 +828,7 @@ MODIFY `exptype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 -- AUTO_INCREMENT für Tabelle `fees`
 --
 ALTER TABLE `fees`
-MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT für Tabelle `incomes`
 --
@@ -829,7 +838,7 @@ MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `inctype`
 --
 ALTER TABLE `inctype`
-MODIFY `inctype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `inctype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT für Tabelle `loans`
 --
@@ -874,7 +883,7 @@ MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `settings`
 --
 ALTER TABLE `settings`
-MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT für Tabelle `shares`
 --
@@ -889,7 +898,7 @@ MODIFY `shareval_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `ugroup`
 --
 ALTER TABLE `ugroup`
-MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
