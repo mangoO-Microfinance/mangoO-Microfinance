@@ -32,7 +32,7 @@
 	checkSQL($query_inccur);
 	
 	//Select Types of Incomes from INCTYPE
-	$sql_inctype = "SELECT * FROM inctype";
+	$sql_inctype = "SELECT * FROM inctype ORDER BY inctype_type";
 	$query_inctype = mysql_query($sql_inctype);
 	checkSQL ($query_inctype);
 	
