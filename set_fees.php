@@ -63,6 +63,13 @@
 		$sql_upd_ldefaultfine = "UPDATE fees SET fee_value = '$new_ldefaultfine' WHERE fee_id = 7";
 		$query_upd_ldefaultfine = mysql_query($sql_upd_ldefaultfine);
 		checkSQL($query_upd_ldefaultfine);
+			
+		//Update Loan Insurance Rate
+		$new_insurance = sanitize($_POST['insurance']);
+		$sql_upd_insurance = "UPDATE fees SET fee_value = '$new_insurance' WHERE fee_short = 'FEE_INS'";
+		$query_upd_insurance = mysql_query($sql_upd_insurance);
+		checkSQL($query_upd_insurance);
+	
 	}
 	
 	//Get current Fees and Charges
@@ -78,10 +85,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				includeMenu(6);
-		?>
-		<!-- MENU MAIN -->
+		<?PHP includeMenu(6); ?>
 		<div id="menu_main">
 			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php">Loan Settings</a>
@@ -145,6 +149,13 @@
 						<td>Loan Fee (%)</td>
 						<td>
 							<input type="text" min="0" name="loanfeerate" value="<?PHP echo $_SESSION['fee_loan'] ?>" placeholder="Percentage of Principal"/>
+						</td>
+					</tr>
+				
+					<tr>
+						<td>Loan Insurance (%)</td>
+						<td>
+							<input type="text" min="0" name="insurance" value="<?PHP echo $_SESSION['fee_loaninsurance'] ?>" placeholder="Pecentage" />
 						</td>
 					</tr>
 				

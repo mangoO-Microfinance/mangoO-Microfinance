@@ -18,13 +18,7 @@
 		$sql_upd_loaninterest = "UPDATE fees SET fee_value = '$new_loaninterest' WHERE fee_short = 'FEE_LIR'";
 		$query_upd_loaninterest = mysql_query($sql_upd_loaninterest);
 		checkSQL($query_upd_loaninterest);
-	
-		//Update Loan Insurance Rate
-		$new_insurance = sanitize($_POST['insurance']);
-		$sql_upd_insurance = "UPDATE fees SET fee_value = '$new_insurance' WHERE fee_short = 'FEE_INS'";
-		$query_upd_insurance = mysql_query($sql_upd_insurance);
-		checkSQL($query_upd_insurance);
-	
+
 		//Update Minimum Loan Principal
 		$new_minLP = sanitize($_POST['minLP']);
 		$sql_upd_minLP = "UPDATE settings SET set_value = '$new_minLP' WHERE set_short = 'SET_MLP'";
@@ -95,10 +89,7 @@
 	
 	<body>
 		<!-- MENU -->
-		<?PHP 
-				includeMenu(6);
-		?>
-		<!-- MENU MAIN -->
+		<?PHP includeMenu(6);	?>
 		<div id="menu_main">
 			<a href="set_basic.php">Basic Settings</a>
 			<a href="set_loans.php" id="item_selected">Loan Settings</a>
@@ -110,7 +101,6 @@
 	
 		<!-- LEFT SIDE: Fees -->	
 		<div class="content_settings">
-			
 			
 			<form action="set_loans.php" method="post">
 			
@@ -132,13 +122,6 @@
 						<td>Interest Rate (%)</td>
 						<td>
 							<input type="text" min="0" name="loaninterest" value="<?PHP echo $_SESSION['fee_loaninterestrate'] ?>" placeholder="Pecentage" />
-						</td>
-					</tr>
-					
-					<tr>
-						<td>Loan Insurance (%)</td>
-						<td>
-							<input type="text" min="0" name="insurance" value="<?PHP echo $_SESSION['fee_loaninsurance'] ?>" placeholder="Pecentage" />
 						</td>
 					</tr>
 					
