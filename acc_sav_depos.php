@@ -15,20 +15,28 @@
 	if (isset($_POST['deposit'])){
 		
 		// Sanitize user input
+		$sav_date = strtotime(sanitize($_POST['sav_date']));
 		$sav_amount = sanitize($_POST['sav_amount']);
 		$sav_receipt = sanitize($_POST['sav_receipt']);
-		$sav_date = strtotime(sanitize($_POST['sav_date']));
 		$sav_payer = sanitize($_POST['sav_payer']);
 		if($_POST['sav_fixed'] != "") $sav_fixed = strtotime(sanitize($_POST['sav_fixed']));
 		else $sav_fixed = NULL;
+		$savtype_id = sanitize($_POST['savtype_id']);
 		
 		// Insert savings transaction into SAVINGS
-		$sql_insert = "INSERT INTO savings (cust_id, sav_date, sav_amount, savtype_id, sav_receipt, sav_payer, sav_fixed, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$sav_date', '$sav_amount', '1', '$sav_receipt', '$sav_payer', '$sav_fixed', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert = "INSERT INTO savings (savtype_id, cust_id, sav_date, sav_amount, sav_receipt, sav_payer, sav_fixed, sav_created, user_id) VALUES ('$savtype_id', '$_SESSION[cust_id]', '$sav_date', '$sav_amount', '$sav_receipt', '$sav_payer', '$sav_fixed', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert = mysql_query($sql_insert);
 		checkSQL($query_insert);
 		
 		// Update savings account balance
 		updateSavingsBalance($_SESSION['cust_id']);
+		
+		// Include Expense, if transaction was Savings Interest
+		if ($savtype_id == 3){
+			$sql_expense = "INSERT INTO expenses (cust_id, exptype_id, exp_amount, exp_date, exp_voucher, exp_created, user_id) VALUES ('$_SESSION[cust_id]', '19', '$sav_amount', '$sav_date', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
+			$query_expense = mysql_query($sql_expense);
+			checkSQL($query_expense);
+		}
 		
 		//Refer to acc_sav_depos.php
 		header('Location: acc_sav_depos.php?cust='.$_SESSION['cust_id']);
@@ -80,25 +88,36 @@
 						<td>Date:</td>
 						<td><input type="text" id="datepicker" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" placeholder="Please enter date" tabindex="1" required="required" /></td>
 					</tr>
-					<tr>
-						<td>Receipt No:</td>
-						<td><input type="number" name="sav_receipt" placeholder="for Deposit Transaction" class="defaultnumber" tabindex="2" required="required" /></td>
-					</tr>
+					<?PHP
+					if ($_SESSION['set_sfx'] == 1)
+						echo '
+						<tr>
+							<td>Transaction Type:</td>
+							<td>
+								<select name="savtype_id">
+									<option value="1">Deposit</option>
+									<option value="3">Savings Interest</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Fixed Deposit:</td>
+							<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="Deposit fixed until" tabindex="2" /></td>
+						</tr>';
+					else echo '<input type="hidden" name="savtype_id" value="1" />';
+					?>
 					<tr>
 						<td>Amount:</td>
 						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" class="defaultnumber" min=1 tabindex="3" required="required" /></td>
 					</tr>
-					<?PHP
-					if ($_SESSION['set_sfx'] == 1){
-						echo '
-						<tr>
-							<td>Fixed Deposit:</td>
-							<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="Deposit fixed until" tabindex="4" /></td>
-						</tr>';
-					}
-					?>
-					<td>Depositor:</td>
+					<tr>
+						<td>Receipt No:</td>
+						<td><input type="number" name="sav_receipt" placeholder="for Deposit Transaction" class="defaultnumber" tabindex="4" required="required" /></td>
+					</tr>
+					<tr>
+						<td>Depositor:</td>
 						<td><input type="text" name="sav_payer" placeholder="if not account holder" tabindex="5" /></td>
+					</tr>
 					<tr>
 						<td colspan="2" class="center"><input type="submit" name="deposit" value="Deposit" tabindex="6" /></td>
 					</tr>
