@@ -157,6 +157,9 @@
 				case "SET_ENO":
 					$_SESSION['set_eno'] = $row_settings['set_value'];
 					break;
+				case "SET_SFX":
+					$_SESSION['set_sfx'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}

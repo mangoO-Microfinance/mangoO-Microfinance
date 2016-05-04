@@ -78,26 +78,29 @@
 				<table id="tb_fields">
 					<tr>
 						<td>Date:</td>
-						<td><input type="text" id="datepicker" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" required="required" /></td>
+						<td><input type="text" id="datepicker" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" placeholder="Please enter date" tabindex="1" required="required" /></td>
 					</tr>
 					<tr>
 						<td>Receipt No:</td>
-						<td><input type="number" name="sav_receipt" placeholder="for Deposit" class="defaultnumber" required="required" /></td>
+						<td><input type="number" name="sav_receipt" placeholder="for Deposit Transaction" class="defaultnumber" tabindex="2" required="required" /></td>
 					</tr>
 					<tr>
 						<td>Amount:</td>
-						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" class="defaultnumber" min=1 required="required" /></td>
+						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" class="defaultnumber" min=1 tabindex="3" required="required" /></td>
 					</tr>
-					<!-- *** ACTIVATE FOR FIXED SAVINGS! ***
-					<tr>
-						<td>Fix Deposit until:</td>
-						<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="for Fixed Deposits" /></td>
-					</tr>
-					-->
+					<?PHP
+					if ($_SESSION['set_sfx'] == 1){
+						echo '
+						<tr>
+							<td>Fixed Deposit:</td>
+							<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="Deposit fixed until" tabindex="4" /></td>
+						</tr>';
+					}
+					?>
 					<td>Depositor:</td>
-						<td><input type="text" name="sav_payer" placeholder="if not account holder" /></td>
+						<td><input type="text" name="sav_payer" placeholder="if not account holder" tabindex="5" /></td>
 					<tr>
-						<td colspan="2" class="center"><input type="submit" name="deposit" value="Deposit" /></td>
+						<td colspan="2" class="center"><input type="submit" name="deposit" value="Deposit" tabindex="6" /></td>
 					</tr>
 				</table>
 			</form>

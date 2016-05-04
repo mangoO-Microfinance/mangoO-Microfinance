@@ -13,9 +13,9 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 <table id="tb_table">
 	<colgroup>
 		<col width="8%">
-		<!-- *** ACTIVATE FOR FIXED SAVINGS! ***
-		<col width="8%">
-		-->
+		<?PHP
+		if ($_SESSION['set_sfx'] == 1) echo '<col width="8%">';
+		?>
 		<col width="16%">
 		<col width="16%">
 		<col width="8%">
@@ -26,22 +26,27 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 	</colgroup>
 	<tr>
 		<form class="export" action="acc_sav_export.php" method="post">
-			<th class="title" colspan="8">Savings Account
+			<?PHP
+			if ($_SESSION['set_sfx'] == 1) echo '<th class="title" colspan="9">Savings Account';
+			else echo '<th class="title" colspan="8">Savings Account';
+			?>
 			<!-- Export Button -->
 			<input type="submit" name="export_rep" value="Export" />
 			</th>
 		</form>
 	</tr>
 	<?PHP
-	echo '<tr class="balance">
-					<td colspan="8">Balance: '.number_format($sav_balance).' '.$_SESSION['set_cur'].'</td>
+	echo '<tr class="balance">';
+		if ($_SESSION['set_sfx'] == 1) echo '<td colspan="9">';
+		else echo '<td colspan="8">';
+		echo 'Balance: '.number_format($sav_balance).' '.$_SESSION['set_cur'].'</td>
 				</tr>';
 	?>
 	<tr>
 		<th>Date</th>
-		<!-- *** ACTIVATE FOR FIXED SAVINGS! ***
- 		<th>Fixed</th>
-		-->
+		<?PHP
+		if ($_SESSION['set_sfx'] == 1) echo '<th>Fixed</th>';
+		?>
 		<th>Transaction</th>
 		<th>Amount</th>
 		<th>Receipt</th>
@@ -54,11 +59,10 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 	while($row_sav = mysql_fetch_assoc($query_sav)){
 		echo '<tr>
 						<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>';
-			/* 
-			// *** ACTIVATE FOR FIXED SAVINGS! ***
-			if($row_sav['sav_fixed'] != 0) echo '<td>'.date("d.m.Y",$row_sav['sav_fixed']).'</td>';
-			else echo '<td></td>';
-			*/
+			if ($_SESSION['set_sfx'] == 1){
+				if($row_sav['sav_fixed'] != 0) echo '<td>'.date("d.m.Y",$row_sav['sav_fixed']).'</td>';
+				else echo '<td></td>';
+			}
 			echo '<td>'.$row_sav['savtype_type'].'</td>
 						<td>'.number_format($row_sav['sav_amount']).' '.$_SESSION['set_cur'].'</td>
 						<td>'.$row_sav['sav_receipt'].'</td>

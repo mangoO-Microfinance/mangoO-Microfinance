@@ -53,6 +53,13 @@
 		$sql_upd_eno = "UPDATE settings SET set_value = '$new_eno' WHERE set_short = 'SET_ENO'";
 		$query_upd_eno = mysql_query($sql_upd_eno);
 		checkSQL($query_upd_eno);
+		
+		//Update Fixed-term Savings Deposits
+		if (isset($_POST['savFixed'])) $new_savFixed = sanitize($_POST['savFixed']);
+		else $new_savFixed = 0;
+		$sql_upd_savFixed = "UPDATE settings SET set_value = '$new_savFixed' WHERE set_short = 'SET_SFX'";
+		$query_upd_savFixed = mysql_query($sql_upd_savFixed);
+		checkSQL($query_upd_savFixed);
 	}
 	
 	//Get Settings and fill session variables
@@ -133,6 +140,14 @@
 						<td><span>Minimum Savings Balance</span></td>
 						<td>
 							<input type="number" min="0" name="minsavbal" value="<?PHP echo $_SESSION['set_msb']; ?>" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Fixed-term Saving Deposits</span></td>
+						<td>
+							<input type="radio" name="savFixed" value="1" <?PHP if ($_SESSION['set_sfx'] == 1) echo 'checked="checked"'; ?> /> On
+							<input type="radio" name="savFixed" value="0" <?PHP if ($_SESSION['set_sfx'] != 1) echo 'checked="checked"'; ?> style="margin-left:.75em;" /> Off
 						</td>
 					</tr>
 					
