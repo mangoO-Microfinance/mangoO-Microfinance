@@ -86,7 +86,7 @@
 				<table id="tb_fields">
 					<tr>
 						<td>Date:</td>
-						<td><input type="text" id="datepicker" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" placeholder="Please enter date" tabindex="1" required="required" /></td>
+						<td><input type="text" id="datepicker" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" placeholder="DD.MM.YYYY" tabindex="1" required="required" /></td>
 					</tr>
 					<?PHP
 					if ($_SESSION['set_sfx'] == 1)
@@ -101,8 +101,8 @@
 							</td>
 						</tr>
 						<tr>
-							<td>Fixed Deposit:</td>
-							<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="Deposit fixed until" tabindex="2" /></td>
+							<td>Fix Deposit until:</td>
+							<td><input type="text" id="datepicker2" name="sav_fixed" placeholder="DD.MM.YYYY" tabindex="2" /></td>
 						</tr>';
 					else echo '<input type="hidden" name="savtype_id" value="1" />';
 					?>
