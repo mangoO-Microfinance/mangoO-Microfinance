@@ -6,7 +6,7 @@
 	getLoanID();
 	
 	//Retrieve loan_id and loan_no of newly created loan from LOANS. Pass securities to SESSION variable.
-	$sql_loan = "SELECT loan_no, loan_sec1, loan_sec2 FROM loans WHERE loan_id = '$_SESSION[loan_id]'";
+	$sql_loan = "SELECT loan_id, loan_no, loan_sec1, loan_sec2 FROM loans WHERE loan_id = '$_SESSION[loan_id]'";
 	$query_loan = mysql_query($sql_loan);
 	checkSQL($query_loan);
 	$result_loan = mysql_fetch_assoc($query_loan);
@@ -30,7 +30,7 @@
 			//Determine where file 1 is going to be stored and create file name
 			$path_part1 = pathinfo($_FILES['sec1']['name']);
 			$extension1 = $path_part1['extension'];
-			$file_name1 = $result_loan['loan_no'].'_Security-01';
+			$file_name1 = $result_loan['loan_id'].'_sec-01';
 					
 			//Add original filename 1 to target path 1 
 			$target_path1 = $target_path.$file_name1.'.'.$extension1;
@@ -50,7 +50,7 @@
 			//Determine where file 2 is going to be stored and create file name
 			$path_part2 = pathinfo($_FILES['sec2']['name']);
 			$extension2 = $path_part2['extension'];
-			$file_name2 = $result_loan['loan_no'].'_Security-02';
+			$file_name2 = $result_loan['loan_id'].'_sec-02';
 				
 			//Add original filename to target path 2
 			$target_path2 = $target_path.$file_name2.'.'.$extension2;
