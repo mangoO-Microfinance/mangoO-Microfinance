@@ -99,7 +99,8 @@
 			function validateSubscr(form){
 				fail = validateDate(form.subscr_date.value)
 				fail += validateReceipt(form.subscr_receipt.value)
-				fail += validateOverdraft(<?PHP echo $_SESSION['fee_subscr']; ?>, <?PHP echo $savbalance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
+				if (document.getElementById('subscr_from_sav').checked){
+					fail += validateOverdraft(<?PHP echo $_SESSION['fee_subscr']; ?>, <?PHP echo $savbalance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)}
 				if (fail == "") return true
 				else { alert(fail); return false }
 			}
