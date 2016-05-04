@@ -13,7 +13,7 @@
 	getShareValue();
 	
 	//Get current customer's details
-	$result_cust = getCustomer();
+	$result_cust = getCustomer($_SESSION['cust_id']);
 
 	//Get current customer's share balance
 	$share_balance = getShareBalance($_SESSION['cust_id']);

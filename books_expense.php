@@ -122,7 +122,7 @@
 				</tr>
 			<?PHP
 			while ($row_expcur = mysql_fetch_assoc($query_expcur)){
-				if ($row_expcur['cust_id'] != 0){
+				if ($row_expcur['cust_id'] != 0 AND $row_expcur['cust_id'] != NULL){
 					$result_cust = getCustomer($row_expcur['cust_id']);
 					$exp_recipient = $result_cust['cust_name'].' (<a href="customer.php?cust='.$row_expcur['cust_id'].'">'.$result_cust['cust_no'].'</a>)';
 				}

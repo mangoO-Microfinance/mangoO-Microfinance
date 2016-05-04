@@ -7,7 +7,7 @@
 	$timestamp = time();
 	
 	// Get current customer's details
-	$result_cust = getCustomer();
+	$result_cust = getCustomer($_SESSION['cust_id']);
 	$savbalance = getSavingsBalance($_SESSION['cust_id']);	
 	
 	//NEW LOAN-Button

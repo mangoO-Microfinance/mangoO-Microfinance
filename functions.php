@@ -448,8 +448,8 @@
 	* Get current customer's details
 	* @return array result_cust : Associative array with the details of the current customer
 	*/
-	function getCustomer(){
-		$sql_cust = "SELECT * FROM customer LEFT JOIN custsex ON customer.custsex_id = custsex.custsex_id LEFT JOIN custmarried ON customer.custmarried_id = custmarried.custmarried_id LEFT JOIN custsick ON customer.custsick_id = custsick.custsick_id LEFT JOIN user ON customer.user_id = user.user_id WHERE cust_id = '$_SESSION[cust_id]'";
+	function getCustomer($custID){
+		$sql_cust = "SELECT * FROM customer LEFT JOIN custsex ON customer.custsex_id = custsex.custsex_id LEFT JOIN custmarried ON customer.custmarried_id = custmarried.custmarried_id LEFT JOIN custsick ON customer.custsick_id = custsick.custsick_id LEFT JOIN user ON customer.user_id = user.user_id WHERE cust_id = '$custID'";
 		$query_cust = mysql_query($sql_cust);
 		checkSQL($query_cust);
 		$result_cust = mysql_fetch_assoc($query_cust);

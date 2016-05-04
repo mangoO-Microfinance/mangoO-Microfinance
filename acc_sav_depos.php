@@ -43,7 +43,7 @@
 	}
 	
 	//Get current customer's details
-	$result_cust = getCustomer();
+	$result_cust = getCustomer($_SESSION['cust_id']);
 ?>
 
 <html>
