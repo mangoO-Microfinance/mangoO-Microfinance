@@ -61,16 +61,6 @@
 		$query_upd_xl1 = mysql_query($sql_upd_xl1);
 		checkSQL($query_upd_xl1);
 		
-		//Update Additional Loans Fee
-		$new_xFee1 = sanitize($_POST['xtraFee1']);	
-		$new_xFee1_name = sanitize($_POST['xtraFee1_name']);
-		$sql_upd_xFee1 = "UPDATE fees SET fee_name= '$new_xFee1_name', fee_value = '$new_xFee1' WHERE fee_short = 'FEE_XL1'";
-		$query_upd_xFee1 = mysql_query($sql_upd_xFee1);
-		checkSQL($query_upd_xFee1);
-		$sql_upd_inctype = "UPDATE inctype SET inctype_type = '$new_xFee1_name' WHERE inctype_short = 'INC_XL1'";
-		$query_upd_inctype = mysql_query($sql_upd_inctype);
-		checkSQL($query_upd_inctype);
-		
 		//If auto-fine option is enabled, make sure dashboard shows loan default list
 		if ($new_auf != NULL){
 			$new_dash_right = "dashboard/dash_loandefaults.php";
@@ -171,14 +161,6 @@
 						<td>Additional Field</td>
 						<td>
 							<input type="text" name="xtraField1" value="<?PHP echo $_SESSION['set_xl1'] ?>" placeholder="No additional input field" />
-						</td>
-					</tr>
-					
-					<tr>
-						<td>Additional Fee</td>
-						<td>
-							<input type="text" name="xtraFee1_name" style="width:78px;" value="<?PHP echo $_SESSION['fee_xl1_name'] ?>" placeholder="Fee name" />
-							<input type="text" name="xtraFee1" style="width:78px;"value="<?PHP echo $_SESSION['fee_xl1'] ?>" placeholder="No fee" />
 						</td>
 					</tr>
 					

@@ -69,7 +69,16 @@
 		$sql_upd_insurance = "UPDATE fees SET fee_value = '$new_insurance' WHERE fee_short = 'FEE_INS'";
 		$query_upd_insurance = mysql_query($sql_upd_insurance);
 		checkSQL($query_upd_insurance);
-	
+		
+		//Update Additional Fee on Loans
+		$new_xFee1 = sanitize($_POST['xtraFee1']);	
+		$new_xFee1_name = sanitize($_POST['xtraFee1_name']);
+		$sql_upd_xFee1 = "UPDATE fees SET fee_name= '$new_xFee1_name', fee_value = '$new_xFee1' WHERE fee_short = 'FEE_XL1'";
+		$query_upd_xFee1 = mysql_query($sql_upd_xFee1);
+		checkSQL($query_upd_xFee1);
+		$sql_upd_inctype = "UPDATE inctype SET inctype_type = '$new_xFee1_name' WHERE inctype_short = 'INC_XL1'";
+		$query_upd_inctype = mysql_query($sql_upd_inctype);
+		checkSQL($query_upd_inctype);
 	}
 	
 	//Get current Fees and Charges
@@ -163,6 +172,14 @@
 						<td>Loan Default Fine</td>
 						<td>
 							<input type="number" min="0" name="ldefaultfine" value="<?PHP echo $_SESSION['fee_loanfine'] ?>" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
+						</td>
+					</tr>
+				
+					<tr>
+						<td>Additional Fee on Loans</td>
+						<td>
+							<input type="text" name="xtraFee1_name" style="width:78px;" value="<?PHP echo $_SESSION['fee_xl1_name'] ?>" placeholder="Fee name" />
+							<input type="text" name="xtraFee1" style="width:78px;"value="<?PHP echo $_SESSION['fee_xl1'] ?>" placeholder="No fee" />
 						</td>
 					</tr>
 				
