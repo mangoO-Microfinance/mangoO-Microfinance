@@ -87,7 +87,7 @@
 					<tr>
 						<td>Amount:</td>
 						<td><input type="number" name="exp_amount" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" /></td>
-						<td>Recipient:</td>
+						<td>Payed to:</td>
 						<td><input type="text" name="exp_recipient"/></td>
 					</tr>
 					<tr>
@@ -115,18 +115,23 @@
 					<th>Date</th>
 					<th>Type</th>
 					<th>Amount</th>
-					<th>Recipient</th>
+					<th>Payed to</th>
 					<th>Details</th>
 					<th>Voucher</th>
 					<th>Delete</th>
 				</tr>
 			<?PHP
 			while ($row_expcur = mysql_fetch_assoc($query_expcur)){
+				if ($row_expcur['cust_id'] != 0){
+					$result_cust = getCustomer($row_expcur['cust_id']);
+					$exp_recipient = $result_cust['cust_name'].' (<a href="customer.php?cust='.$row_expcur['cust_id'].'">'.$result_cust['cust_no'].'</a>)';
+				}
+				else $exp_recipient = $row_expcur['exp_recipient'];
 				echo '<tr>	
 								<td>'.date("d.m.Y",$row_expcur['exp_date']).'</td>
 								<td>'.$row_expcur['exptype_type'].'</td>
 								<td>'.number_format($row_expcur['exp_amount']).' '.$_SESSION['set_cur'].'</td>
-								<td>'.$row_expcur['exp_recipient'].'</td>
+								<td>'.$exp_recipient.'</td>
 								<td>'.$row_expcur['exp_text'].'</td>
 								<td>'.$row_expcur['exp_voucher'].'</td>
 								<td>';
