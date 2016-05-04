@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Apr 2016 um 11:47
+-- Erstellungszeit: 04. Mai 2016 um 16:40
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -253,8 +253,8 @@ INSERT INTO `exptype` (`exptype_id`, `exptype_type`, `exptype_short`) VALUES
 (15, 'Tax', 'EXP_TAX'),
 (16, 'Transport', 'EXP_TRN'),
 (17, 'Insurance', 'EXP_INS'),
-(18, 'Annual Share Dividend', 'EXP_SHD'),
-(19, 'Annual Savings Interest', 'EXP_INT');
+(18, 'Share Dividend', 'EXP_SHD'),
+(19, 'Savings Interest', 'EXP_INT');
 
 -- --------------------------------------------------------
 
@@ -523,7 +523,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `set_name` varchar(100) NOT NULL,
   `set_short` varchar(8) NOT NULL,
   `set_value` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `settings`
@@ -544,7 +544,8 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 (12, 'Maximum Principal-Savings Ratio', 'SET_PSR', ''),
 (13, 'Customer Number Format', 'SET_CNO', '%N%/%Y'),
 (14, 'Employee Number Format', 'SET_ENO', '%N%-%Y'),
-(15, 'Additional Field Loans', 'SET_XL1', 'Spouse');
+(15, 'Additional Field Loans', 'SET_XL1', 'Spouse'),
+(16, 'Fixed Savings', 'SET_SFX', '0');
 
 -- --------------------------------------------------------
 
@@ -883,7 +884,7 @@ MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `settings`
 --
 ALTER TABLE `settings`
-MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT für Tabelle `shares`
 --
@@ -904,3 +905,6 @@ MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 ALTER TABLE `user`
 MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

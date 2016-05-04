@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Apr 2016 um 11:24
+-- Erstellungszeit: 04. Mai 2016 um 16:31
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -88,9 +88,9 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 (9, '009/2006', 'John Knox', -1767229200, 1, 'Edinburgh', '024 111572', '', 'Reformer', 1, '', '', NULL, 1174992000, 0, 1430446400, 1, 1457435038, 'uploads/photos/customers/cust9_146x190.jpg', 1),
 (10, '010/2006', 'Caspar Olevian', -1053824400, 1, 'Heidelberg', '015 031587', '', 'Reformer', 2, 'Philippine von Metz', 'Wife', NULL, 1178880000, 0, 1431310400, 1, 1457435215, 'uploads/photos/customers/cust10_146x190.jpg', 1),
 (11, '011/2006', 'Nydius Melvinus', -341802000, 3, 'Kiziba Kikyusa Archdeaconry', '0772-968414', 'huxpoll@yahoo.com', 'Preacher', 2, 'Mrs. Luna Mwamiza', 'Wife', NULL, 1182768000, 1, 1402174400, 0, 1454656213, NULL, 1),
-(12, '012/2006', 'Joshua Vandenburg  ', -552448800, 1, 'Kiziba Kikyusa Arch', '0772-551662', '', 'Clergy Man', 2, '', '', NULL, 1186656000, 0, 1433038400, 1, 1420070400, NULL, 1),
+(12, '012/2006', 'Joshua Vandenburg  ', -552448800, 1, 'Kiziba Kikyusa Arch', '0772-551662', '', 'Clergy Man', 2, '', '', NULL, 1186656000, 0, 1469138400, 1, 1420070400, NULL, 1),
 (13, '013/2006', 'Melania Mitchem  ', 158364000, 1, 'Kalere', '0782-380513', '', 'Clergy', 1, '', '', NULL, 1190544000, 0, 1413902400, 0, 1420070400, NULL, 1),
-(14, '014/2006', 'Clemmie Ellithorpe  ', -929930400, 1, 'Kazinga Butuntumula', NULL, '', 'Clergy Man', 2, '', '', NULL, 1194432000, 0, 1434766400, 0, 1427241600, NULL, 3),
+(14, '014/2006', 'Clemmie Ellithorpe  ', -929930400, 1, 'Kazinga Butuntumula', '021513', '', 'Clergy Man', 2, '', '', NULL, 1194432000, 0, 1469138400, 1, 1469178601, NULL, 1),
 (15, '015/2006', 'Kristofer Artis  ', -90000, 1, 'Kisenyi', '0', '', '', 0, '', '', NULL, 1198320000, 0, 1435630400, 1, 1452688368, NULL, 1),
 (16, '016/2007', 'Lulu Obando  ', -440989200, 7, 'Sempa Parish ', '0782-096008', '', 'Clergy Man', 2, '', '', NULL, 1202208000, 0, 1436424400, 1, 1458640847, NULL, 1),
 (17, '017/2006', 'Kai Soriano  ', -86403600, 1, 'Luteete', '02314 549945', '', 'Pastor / Teacher', 2, '', '', NULL, 1206096000, 0, 1437358400, 1, 1453822238, NULL, 1),
@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `exp_voucher` int(11) DEFAULT NULL,
   `exp_created` int(11) DEFAULT NULL,
   `user_id` int(6) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `expenses`
@@ -339,7 +339,8 @@ INSERT INTO `expenses` (`exp_id`, `cust_id`, `exptype_id`, `exp_amount`, `exp_da
 (1, NULL, 1, 15000, 1453158000, 'Airtime for Manager', 'Airtel', 0, 201, 1453207875, 2),
 (2, NULL, 6, 60000, 1453676400, '2GB data bundle', 'MTN', 70812, 562, 1453213126, 1),
 (3, NULL, 4, 50000, 1454281200, 'Power Bill for January', 'UMEME', 21511494, 156, 1454318269, 1),
-(4, NULL, 7, 80000, 1459461600, 'Purchase of Charger', 'Millenium Computers 3000', 13561, 531, 1459795825, 1);
+(4, NULL, 7, 80000, 1459461600, 'Purchase of Charger', 'Millenium Computers 3000', 13561, 531, 1459795825, 1),
+(6, 6, 19, 9000, 1467324000, NULL, NULL, NULL, 1011, 1462354956, 1);
 
 -- --------------------------------------------------------
 
@@ -375,8 +376,8 @@ INSERT INTO `exptype` (`exptype_id`, `exptype_type`, `exptype_short`) VALUES
 (15, 'Tax', 'EXP_TAX'),
 (16, 'Transport', 'EXP_TRN'),
 (17, 'Insurance', 'EXP_INS'),
-(18, 'Annual Share Dividend', 'EXP_SHD'),
-(19, 'Annual Savings Interest', 'EXP_INT');
+(18, 'Share Dividend', 'EXP_SHD'),
+(19, 'Savings Interest', 'EXP_INT');
 
 -- --------------------------------------------------------
 
@@ -426,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   `inc_text` varchar(200) NOT NULL,
   `inc_created` int(11) NOT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `incomes`
@@ -501,7 +502,11 @@ INSERT INTO `incomes` (`inc_id`, `inctype_id`, `cust_id`, `loan_id`, `ltrans_id`
 (71, 10, 75, 17, NULL, NULL, 75000, 1461448800, 2344, '', 1460790080, 1),
 (72, 11, 75, 17, NULL, NULL, 5000, 1461448800, 2344, '', 1460790080, 1),
 (73, 4, 75, NULL, 253, NULL, 150000, 1464127200, 123, '', 1460790208, 1),
-(74, 4, 75, NULL, 254, NULL, 130500, 1465336800, 999, '', 1460790288, 1);
+(74, 4, 75, NULL, 254, NULL, 130500, 1465336800, 999, '', 1460790288, 1),
+(75, 8, 12, NULL, NULL, 0, 5000, 1469138400, 999, '', 1469178552, 1),
+(76, 8, 14, NULL, NULL, 0, 5000, 1469138400, 888, '', 1469178616, 1),
+(77, 1, 101, NULL, NULL, NULL, 10000, 1462312800, 8488, '', 1462346717, 1),
+(78, 6, 101, NULL, NULL, NULL, 2000, 1462312800, 8488, '', 1462346717, 1);
 
 -- --------------------------------------------------------
 
@@ -626,7 +631,7 @@ CREATE TABLE IF NOT EXISTS `logrec` (
   `logrec_start` int(11) DEFAULT NULL,
   `logrec_end` int(11) DEFAULT NULL,
   `logrec_logout` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `logrec`
@@ -654,7 +659,14 @@ INSERT INTO `logrec` (`logrec_id`, `user_id`, `logrec_start`, `logrec_end`, `log
 (19, 1, 1460529114, 1460564336, 1),
 (20, 1, 1460625771, 1460627784, 1),
 (21, 1, 1460629702, 1460630173, 1),
-(22, 1, 1460789156, NULL, 0);
+(22, 1, 1460789156, 1461143055, 0),
+(23, 1, 1461143055, 1461315675, 0),
+(24, 1, 1461315675, 1469179191, 1),
+(25, 1, 1469179204, 1469179207, 1),
+(26, 1, 1461570119, 1461570773, 1),
+(27, 1, 1461844411, 1462345641, 0),
+(28, 1, 1462345641, 1462355982, 1),
+(29, 1, 1462369592, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -804,7 +816,7 @@ CREATE TABLE IF NOT EXISTS `savbalance` (
   `savbal_date` int(11) NOT NULL,
   `savbal_created` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `savbalance`
@@ -816,7 +828,7 @@ INSERT INTO `savbalance` (`savbal_id`, `cust_id`, `savbal_balance`, `savbal_date
 (3, 3, 18000, 1459329125, 1459329125, 1),
 (4, 4, 158500, 1459329125, 1459329125, 1),
 (5, 5, 299700, 1459329125, 1459329125, 1),
-(6, 6, 25700, 1459329125, 1459329125, 1),
+(6, 6, 177700, 1459329125, 1459329125, 1),
 (7, 7, 105900, 1459329125, 1459329125, 1),
 (8, 8, 93000, 1459329125, 1459329125, 1),
 (9, 9, 100000, 1459329125, 1459329125, 1),
@@ -910,7 +922,8 @@ INSERT INTO `savbalance` (`savbal_id`, `cust_id`, `savbal_balance`, `savbal_date
 (97, 97, 377800, 1459329125, 1459329125, 1),
 (98, 98, 28000, 1459329125, 1459329125, 1),
 (99, 99, 62, 1459329125, 1459329125, 1),
-(100, 100, 49000, 1459329125, 1459329125, 1);
+(100, 100, 49000, 1459329125, 1459329125, 1),
+(101, 101, 225000, 1462346717, 1462346717, 1);
 
 -- --------------------------------------------------------
 
@@ -932,7 +945,7 @@ CREATE TABLE IF NOT EXISTS `savings` (
   `sav_fixed` int(11) DEFAULT NULL,
   `sav_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=461 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=468 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `savings`
@@ -1075,7 +1088,11 @@ INSERT INTO `savings` (`sav_id`, `savtype_id`, `sav_mother`, `cust_id`, `ltrans_
 (454, 4, 453, 50, NULL, 1460412000, -1000, 321, 11, NULL, NULL, 1460483457, 1),
 (458, 1, NULL, 4, NULL, 1460498400, 120000, 5015, 0, NULL, 1468360800, 1460559554, 1),
 (459, 1, NULL, 25, NULL, 1460498400, 26000, 26, 0, NULL, 0, 1460560269, 1),
-(460, 1, NULL, 67, NULL, 1460584800, 42000, 516, 0, 'Markus', 0, 1460626282, 1);
+(460, 1, NULL, 67, NULL, 1460584800, 42000, 516, 0, 'Markus', 0, 1460626282, 1),
+(461, 1, NULL, 101, NULL, 1462312800, 225000, 56, 0, 'His Wife', 0, 1462346751, 1),
+(462, 1, NULL, 6, NULL, 1462312800, 120000, 516, 0, 'Alex Murenge', 1467237600, 1462352971, 1),
+(463, 1, NULL, 6, NULL, 1462312800, 23000, 213, 0, 'Martin Luther', 0, 1462354130, 1),
+(467, 3, NULL, 6, NULL, 1467324000, 9000, 1011, 0, 'Iryaruvumba SACCO', 0, 1462354956, 1);
 
 -- --------------------------------------------------------
 
@@ -1119,7 +1136,7 @@ CREATE TABLE IF NOT EXISTS `securities` (
   `sec_value` int(11) NOT NULL,
   `sec_path` varchar(200) NOT NULL,
   `sec_returned` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `securities`
@@ -1140,7 +1157,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `set_name` varchar(100) NOT NULL,
   `set_short` varchar(8) NOT NULL,
   `set_value` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `settings`
@@ -1161,7 +1178,8 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 (12, 'Maximum Principal-Savings Ratio', 'SET_PSR', ''),
 (13, 'Customer Number Format', 'SET_CNO', '%N%/%Y'),
 (14, 'Employee Number Format', 'SET_ENO', '%N%-%Y'),
-(15, 'Additional Field Loans', 'SET_XL1', 'Spouse');
+(15, 'Additional Field Loans', 'SET_XL1', 'Spouse'),
+(16, 'Fixed Savings', 'SET_SFX', '0');
 
 -- --------------------------------------------------------
 
@@ -1180,7 +1198,7 @@ CREATE TABLE IF NOT EXISTS `shares` (
   `share_transfrom` int(11) DEFAULT NULL,
   `share_created` int(15) DEFAULT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=229 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `shares`
@@ -1288,7 +1306,8 @@ INSERT INTO `shares` (`share_id`, `cust_id`, `share_date`, `share_amount`, `shar
 (224, 4, 1454713200, -1, -20000, 1020, 0, NULL, 1454663138, 1),
 (225, 16, 1460498400, 1, 20000, 851, 0, NULL, 1460562659, 1),
 (226, 16, 1460584800, 1, 20000, 848, 0, NULL, 1460562702, 1),
-(228, 16, 1460671200, -1, -20000, 883, 0, NULL, 1460562743, 1);
+(228, 16, 1460671200, -1, -20000, 883, 0, NULL, 1460562743, 1),
+(229, 101, 1462312800, 1, 20000, 8488, 0, NULL, 1462346722, 1);
 
 -- --------------------------------------------------------
 
@@ -1557,7 +1576,7 @@ MODIFY `emplsex_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT für Tabelle `expenses`
 --
 ALTER TABLE `expenses`
-MODIFY `exp_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `exp_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT für Tabelle `exptype`
 --
@@ -1572,7 +1591,7 @@ MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 -- AUTO_INCREMENT für Tabelle `incomes`
 --
 ALTER TABLE `incomes`
-MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=75;
+MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=79;
 --
 -- AUTO_INCREMENT für Tabelle `inctype`
 --
@@ -1592,7 +1611,7 @@ MODIFY `loanstatus_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT für Tabelle `logrec`
 --
 ALTER TABLE `logrec`
-MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT für Tabelle `ltrans`
 --
@@ -1602,12 +1621,12 @@ MODIFY `ltrans_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=259;
 -- AUTO_INCREMENT für Tabelle `savbalance`
 --
 ALTER TABLE `savbalance`
-MODIFY `savbal_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=101;
+MODIFY `savbal_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=102;
 --
 -- AUTO_INCREMENT für Tabelle `savings`
 --
 ALTER TABLE `savings`
-MODIFY `sav_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=461;
+MODIFY `sav_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=468;
 --
 -- AUTO_INCREMENT für Tabelle `savtype`
 --
@@ -1617,17 +1636,17 @@ MODIFY `savtype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 -- AUTO_INCREMENT für Tabelle `securities`
 --
 ALTER TABLE `securities`
-MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `settings`
 --
 ALTER TABLE `settings`
-MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT für Tabelle `shares`
 --
 ALTER TABLE `shares`
-MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=229;
+MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=230;
 --
 -- AUTO_INCREMENT für Tabelle `shareval`
 --
@@ -1643,3 +1662,6 @@ MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 ALTER TABLE `user`
 MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

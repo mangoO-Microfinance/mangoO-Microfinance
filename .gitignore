@@ -46,3 +46,4 @@ config/config.php
 *.odt#
 uploads/securities/L-5-1_Security-01.JPG
 config/pepper.php
+database/makeFresh.sql
