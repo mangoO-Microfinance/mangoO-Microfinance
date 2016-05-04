@@ -22,7 +22,7 @@ if(isset($_POST['subscr_renew'])){
 	if ($subscr_from_sav == 1){
 		$fee_subscr_sav = $_SESSION['fee_subscr'] * (-1);
 		
-		$sql_insert_fee = "INSERT INTO savings (cust_id, sav_date, sav_amount, sav_balance, savtype_id, sav_receipt, sav_created, user_id) VALUES ('$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', $sav_balance, '5', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
+		$sql_insert_fee = "INSERT INTO savings (savtype_id, cust_id, sav_date, sav_amount, sav_receipt, sav_created, user_id) VALUES ('5', '$_SESSION[cust_id]', '$subscr_date', '$fee_subscr_sav', '$subscr_receipt', '$timestamp', '$_SESSION[log_id]')";
 		$query_insert_fee = mysql_query ($sql_insert_fee);
 		checkSQL($query_insert_fee);
 		
@@ -52,11 +52,11 @@ if(isset($_POST['subscr_renew'])){
 
 <div id="content_hidden" style="display:<?PHP echo $visibility; ?>;">
 	<form action="customer.php" method="post" onSubmit="return validateSubscr(this)">
-		<input type="text" name="subscr_date" value="<?PHP echo date('d.m.Y', $timestamp); ?>" placeholder="DD.MM.YYYY" />
+		<input type="text" name="subscr_date" id="datepicker2" value="<?PHP echo date('d.m.Y', $timestamp); ?>" placeholder="DD.MM.YYYY" />
 		<br/><br/>
 		<input type="number" name="subscr_receipt" placeholder="Receipt No." min="1"/>
 		<br/><br/>
-		<input type="checkbox" name="subscr_from_sav" value="1" /> deduct from Savings
+		<input type="checkbox" name="subscr_from_sav" id="subscr_from_sav" value="1" /> deduct from Savings
 		<br/><br/>
 		<input type="submit" name="subscr_renew" value="Renew Subscription" />
 	</form>
