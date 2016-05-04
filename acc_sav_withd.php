@@ -105,26 +105,26 @@
 				<table id="tb_fields">
 					<tr>
 						<td>Date:</td>
-						<td><input type="text" id="datepicker" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" required="required" /></td>
-					</tr>
-					<tr>
-						<td>W/drawal Slip:</td>
-						<td><input type="number" name="sav_slip" placeholder="Slip No." class="defaultnumber" required="required" /></td>
+						<td><input type="text" id="datepicker" name="sav_date" value="<?PHP echo date("d.m.Y",$timestamp); ?>" tabindex="1" required="required" /></td>
 					</tr>
 					<tr>
 						<td>Amount:</td>
-						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur'] ?>" class="defaultnumber" min=1 required="required" /></td>
+						<td><input type="number" name="sav_amount" placeholder="<?PHP echo $_SESSION['set_cur'] ?>" class="defaultnumber" min=1 tabindex="2" required="required" /></td>
+					</tr>
+					<tr>
+						<td>W/drawal Slip:</td>
+						<td><input type="number" name="sav_slip" placeholder="Slip No." class="defaultnumber" tabindex="3" required="required" /></td>
 					</tr>
 					<tr>
 						<td>Receipt No:</td>
-						<td><input type="number" name="sav_receipt" placeholder="for Withdrawal Fee" class="defaultnumber" required="required" /></td>
+						<td><input type="number" name="sav_receipt" placeholder="for Withdrawal Fee" class="defaultnumber" tabindex="4" required="required" /></td>
 					</tr>
 					<tr>
 						<td>W/drawal Fee:</td>
-						<td><input type="checkbox" name="sav_deduct" id="sav_deduct" value="1" /> deduct from Savings</td>
+						<td><input type="checkbox" name="sav_deduct" id="sav_deduct" value="1" tabindex="5" /> deduct from Savings</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="center"><input type="submit" name="withdraw" value="Withdraw" /></td>
+						<td colspan="2" class="center"><input type="submit" name="withdraw" value="Withdraw" tabindex="6"  /></td>
 					</tr>
 				</table>
 			</form>
