@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 04. Mai 2016 um 16:31
+-- Erstellungszeit: 05. Mai 2016 um 13:51
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -399,14 +399,14 @@ CREATE TABLE IF NOT EXISTS `fees` (
 INSERT INTO `fees` (`fee_id`, `fee_name`, `fee_short`, `fee_value`) VALUES
 (1, 'Entrance Fee', 'FEE_ENT', 10000),
 (2, 'Withdrawal Fee', 'FEE_WDL', 1000),
-(3, 'Stationery Sales', 'FEE_STS', 2000),
+(3, 'Stationery Sales', 'FEE_STS', 3000),
 (4, 'Anual Subscription', 'FEE_ASB', 5000),
 (5, 'Loan Fee', 'FEE_LOF', 1),
 (6, 'Loan Application Fee', 'FEE_LAP', 10000),
 (7, 'Loan Default Fine', 'FEE_LDF', 15000),
 (8, 'Loan Interest Rate', 'FEE_LIR', 3),
 (9, 'Loan Insurance', 'FEE_INS', 1.5),
-(10, 'Loan Stationery', 'FEE_XL1', 5000);
+(10, 'Loan Stationary', 'FEE_XL1', 1000);
 
 -- --------------------------------------------------------
 
@@ -535,7 +535,7 @@ INSERT INTO `inctype` (`inctype_id`, `inctype_type`, `inctype_short`) VALUES
 (8, 'Subscription Fee', 'INC_SUF'),
 (9, 'Other', 'INC_OTH'),
 (10, 'Insurance', 'INC_INS'),
-(11, 'Loan Stationery', 'INC_XL1');
+(11, 'Loan Stationary', 'INC_XL1');
 
 -- --------------------------------------------------------
 
@@ -631,7 +631,7 @@ CREATE TABLE IF NOT EXISTS `logrec` (
   `logrec_start` int(11) DEFAULT NULL,
   `logrec_end` int(11) DEFAULT NULL,
   `logrec_logout` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `logrec`
@@ -666,7 +666,9 @@ INSERT INTO `logrec` (`logrec_id`, `user_id`, `logrec_start`, `logrec_end`, `log
 (26, 1, 1461570119, 1461570773, 1),
 (27, 1, 1461844411, 1462345641, 0),
 (28, 1, 1462345641, 1462355982, 1),
-(29, 1, 1462369592, NULL, 0);
+(29, 1, 1462369592, 1462376237, 0),
+(30, 1, 1462376237, 1462377696, 1),
+(31, 1, 1462448431, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1157,7 +1159,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `set_name` varchar(100) NOT NULL,
   `set_short` varchar(8) NOT NULL,
   `set_value` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `settings`
@@ -1170,8 +1172,8 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 (4, 'Currency Abbreviation', 'SET_CUR', 'UGX'),
 (5, 'Auto-fine Defaulters', 'SET_AUF', ''),
 (6, 'Account Deactivation', 'SET_DEA', ''),
-(7, 'Dashboard Left', 'SET_DBL', 'dashboard/dash_stat_cust.php'),
-(8, 'Dashboard Right', 'SET_DBR', 'dashboard/dash_loandefaults.php'),
+(7, 'Dashboard Left', 'SET_DBL', 'dashboard/dash_subscr.php'),
+(8, 'Dashboard Right', 'SET_DBR', 'dashboard/dash_none.php'),
 (9, 'Interest Calculation', 'SET_ICL', 'modules/mod_inter_float.php'),
 (10, 'Guarantor Limit', 'SET_GUA', '3'),
 (11, 'Minimum Membership', 'SET_MEM', '6'),
@@ -1179,7 +1181,8 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 (13, 'Customer Number Format', 'SET_CNO', '%N%/%Y'),
 (14, 'Employee Number Format', 'SET_ENO', '%N%-%Y'),
 (15, 'Additional Field Loans', 'SET_XL1', 'Spouse'),
-(16, 'Fixed Savings', 'SET_SFX', '0');
+(16, 'Fixed Savings', 'SET_SFX', '1'),
+(17, 'Customer Search by ID', 'SET_CSI', '0');
 
 -- --------------------------------------------------------
 
@@ -1611,7 +1614,7 @@ MODIFY `loanstatus_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT für Tabelle `logrec`
 --
 ALTER TABLE `logrec`
-MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT für Tabelle `ltrans`
 --
@@ -1641,7 +1644,7 @@ MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT für Tabelle `settings`
 --
 ALTER TABLE `settings`
-MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT für Tabelle `shares`
 --
