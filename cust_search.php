@@ -22,13 +22,15 @@
 		<!-- CONTENT: Customer Search -->
 		<div class="content_center">
 			
-			<!-- *** ACTIVATE FOR QUICK SEARCH BY CUST_ID ***
-			<form action="customer.php" method="get" style="margin-bottom:4.5em;">
-				<p class="heading">Quick Search by ID</p>
-				<input type="text" name="cust" placeholder="Customer ID" />
-				<input type="submit" value="Search" />
-			</form>
-			-->
+			<?PHP
+			if ($_SESSION['set_csi'] == 1)
+			echo '
+				<form action="customer.php" method="get" style="margin-bottom:4.5em;">
+					<p class="heading">Quick Search by ID</p>
+					<input type="text" name="cust" placeholder="Customer ID" />
+					<input type="submit" value="Search" />
+				</form>';
+			?>
 
 			<form action="cust_result.php" method="post">
 				<p class="heading">Detailed Customer Search</p>

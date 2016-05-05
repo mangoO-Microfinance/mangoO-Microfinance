@@ -60,6 +60,13 @@
 		$sql_upd_savFixed = "UPDATE settings SET set_value = '$new_savFixed' WHERE set_short = 'SET_SFX'";
 		$query_upd_savFixed = mysql_query($sql_upd_savFixed);
 		checkSQL($query_upd_savFixed);
+		
+		//Update Customer Search by ID
+		if (isset($_POST['csearchID'])) $new_csearchID = sanitize($_POST['csearchID']);
+		else $new_csearchID = 0;
+		$sql_upd_csearchID = "UPDATE settings SET set_value = '$new_csearchID' WHERE set_short = 'SET_CSI'";
+		$query_upd_csearchID = mysql_query($sql_upd_csearchID);
+		checkSQL($query_upd_csearchID);
 	}
 	
 	//Get Settings and fill session variables
@@ -119,6 +126,14 @@
 						<td><span>Currency Abbreviation</span></td>
 						<td>
 							<input type="text" min="0" name="cur_short" value="<?PHP echo $_SESSION['set_cur'] ?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>Customer Search by ID</span></td>
+						<td>
+							<input type="radio" name="csearchID" value="1" <?PHP if ($_SESSION['set_csi'] == 1) echo 'checked="checked"'; ?> /> On
+							<input type="radio" name="csearchID" value="0" <?PHP if ($_SESSION['set_csi'] != 1) echo 'checked="checked"'; ?> style="margin-left:.75em;" /> Off
 						</td>
 					</tr>
 					

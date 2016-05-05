@@ -160,6 +160,9 @@
 				case "SET_SFX":
 					$_SESSION['set_sfx'] = $row_settings['set_value'];
 					break;
+				case "SET_CSI":
+					$_SESSION['set_csi'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}
