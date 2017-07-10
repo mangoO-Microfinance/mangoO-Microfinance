@@ -2,7 +2,7 @@
 
 mangoO Microfinance Management is a lightweight, yet powerful software solution for small microfinance institutions. It uses web technologies like PHP, MySQL, JavaScript (with jQuery), and CSS. 
 
-mangoO was initially developed for [Luweero Diocese SACCO (Savings and Credit Cooperative)](http://www.luweerodiocese.org/sacco) of the Anglican Luweero Diocese in Uganda. Typically, customers of such SACCOs will have to buy shares to become members of the society. These members will then hold both a savings and a loans account with the financial institution.
+mangoO was initially developed for Luweero Diocese SACCO (Savings and Credit Cooperative) of the Anglican Luweero Diocese in Uganda. Typically, customers of such SACCOs will have to buy shares to become members of the society. These members will then hold both a savings and a loans account with the financial institution.
 
 The development of mangoO Microfinance Management was funded by [Christian Services International (Stuttgart, Germany)](http://www.gottes-liebe-weltweit.de).
 
