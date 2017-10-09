@@ -3,40 +3,40 @@ $sixtydays = time() - convertDays(60);
 
 // Getting expenses
 $sql_exp = "SELECT exp_amount FROM expenses WHERE exp_date > $sixtydays";
-$query_exp = mysql_query($sql_exp);
-checkSQL($query_exp);
+$query_exp = mysqli_query($db_link, $sql_exp);
+checkSQL($query_exp, $db_link);
 $exp_total = 0;
-while($row_exp = mysql_fetch_assoc($query_exp)){
+while($row_exp = mysqli_fetch_assoc($query_exp)){
 	$exp_total = $exp_total + $row_exp['exp_amount'];
 }
 
 // Getting income
 $sql_inc = "SELECT inc_amount FROM incomes WHERE inc_date > $sixtydays";
-$query_inc = mysql_query($sql_inc);
-checkSQL($query_inc);
+$query_inc = mysqli_query($db_link, $sql_inc);
+checkSQL($query_inc, $db_link);
 $inc_total = 0;
-while($row_inc = mysql_fetch_assoc($query_inc)){
+while($row_inc = mysqli_fetch_assoc($query_inc)){
 	$inc_total = $inc_total + $row_inc['inc_amount'];
 }
 
 // Convert to percent
-$inc_percent = $inc_total/($inc_total+$exp_total)*100;
-$exp_percent = $exp_total/($inc_total+$exp_total)*100;
+$inc_percent = $inc_percent === 0 ? 0 : $inc_total/($inc_total+$exp_total)*100;
+$exp_percent = $exp_percent === 0 ? 0 : $exp_total/($inc_total+$exp_total)*100;
 
 // Getting savings
 $sql_sav = "SELECT sav_amount FROM savings WHERE sav_date > $sixtydays";
-$query_sav = mysql_query($sql_sav);
-checkSQL($query_sav);
+$query_sav = mysqli_query($db_link, $sql_sav);
+checkSQL($query_sav, $db_link);
 $sav_depos = 0;
 $sav_withd = 0;
-while($row_sav = mysql_fetch_assoc($query_sav)){
+while($row_sav = mysqli_fetch_assoc($query_sav)){
 	if($row_sav['sav_amount'] > 0) $sav_depos = $sav_depos + $row_sav['sav_amount'];
 	elseif($row_sav['sav_amount'] < 0) $sav_withd = $sav_withd + ($row_sav['sav_amount'] * -1);
 }
 
 // Convert to percent
-$sav_depos_percent = $sav_depos/($sav_depos+$sav_withd)*100;
-$sav_withd_percent = $sav_withd/($sav_depos+$sav_withd)*100;
+$sav_depos_percent = $sav_depos_percent === 0 ? 0 : $sav_depos/($sav_depos+$sav_withd)*100;
+$sav_withd_percent = $sav_withd_percent === 0 ? 0 : $sav_withd/($sav_depos+$sav_withd)*100;
 ?>
 
 <!-- Income / Expense Ratio -->
