@@ -11,13 +11,13 @@
 		require 'config/pepper.php';
 
 		// Sanitize user input
-		$log_user = sanitize($_POST['log_user']);
-		$log_pw = sanitize($_POST['log_pw']);
+		$log_user = sanitize($_POST['log_user'], $db_link);
+		$log_pw = sanitize($_POST['log_pw'], $db_link);
 
 		// Select user details from USER
 		$sql_log = "SELECT * FROM user, ugroup WHERE user.ugroup_id = ugroup.ugroup_id AND user_name = '$log_user'";
 		$query_log = mysqli_query($db_link, $sql_log);
-		checkSQL($query_log);
+		checkSQL($query_log, $db_link);
 		$result_log = mysqli_fetch_assoc($query_log);
 
 		// Verify Password
@@ -36,24 +36,24 @@
 			// Check if user logged out properly last time
 			$sql_logout = "SELECT logrec_id, logrec_logout FROM logrec WHERE logrec_id IN (SELECT MAX(logrec_id) FROM logrec WHERE user_id = '$_SESSION[log_id]')";
 			$query_logout = mysqli_query($db_link, $sql_logout);
-			checkSQL($query_logout);
+			checkSQL($query_logout, $db_link);
 			$logout = mysqli_fetch_array($query_logout);
 			$_SESSION['logrec_logout'] = $logout[1];
 
 			// Close all open sessions for that user
 			$sql_close_logrec = "UPDATE logrec SET logrec_end = '$_SESSION[log_time]' WHERE user_id = '$_SESSION[log_id]' AND logrec_end IS NULL";
 			$query_close_logrec = mysqli_query($db_link, $sql_close_logrec);
-			checkSQL($query_close_logrec);
+			checkSQL($query_close_logrec, $db_link);
 
 			// Record Login in LOGREC
 			$sql_logrec = "INSERT INTO logrec (user_id, logrec_start, logrec_logout) VALUES ('$_SESSION[log_id]', '$_SESSION[log_time]', '0')";
 			$query_logrec = mysqli_query($db_link, $sql_logrec);
-			checkSQL($query_logrec);
+			checkSQL($query_logrec, $db_link);
 
 			// Find LOGREC_ID for current user
 			$sql_logrecid = "SELECT MAX(logrec_id) FROM logrec WHERE user_id = '$_SESSION[log_id]'";
 			$query_logrecid = mysqli_query($db_link, $sql_logrecid);
-			checkSQL ($query_logrecid);
+			checkSQL ($query_logrecid, $db_link);
 			$logrecid = mysqli_fetch_array($query_logrecid);
 			$_SESSION['logrec_id'] = $logrecid['MAX(logrec_id)'];
 
