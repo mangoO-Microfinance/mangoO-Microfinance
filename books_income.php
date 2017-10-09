@@ -2,55 +2,55 @@
 <?PHP
 	require 'functions.php';
 	checkLogin();
-	connect();
+	$db_link = connect();
 	$timestamp = time();
 	
 	//NEW INCOME-Button
 	if(isset($_POST['incnew'])){
 		
 		//Sanitize user input
-		$inctype_id = sanitize($_POST['inctype_id']);
-		$inc_amount = sanitize($_POST['inc_amount']);
-		$inc_date = strtotime(sanitize($_POST['inc_date']));
-		$inc_text = sanitize($_POST['inc_text']);
-		$inc_recipient = sanitize($_POST['cust_id']);
-		$inc_loan = sanitize($_POST['loan_id']);
-		$inc_receipt = sanitize($_POST['inc_receipt']);
+		$inctype_id = sanitize($db_link, $_POST['inctype_id']);
+		$inc_amount = sanitize($db_link, $_POST['inc_amount']);
+		$inc_date = strtotime(sanitize($db_link, $_POST['inc_date']));
+		$inc_text = sanitize($db_link, $_POST['inc_text']);
+		$inc_recipient = sanitize($db_link, $_POST['cust_id']);
+		$inc_loan = sanitize($db_link, $_POST['loan_id']);
+		$inc_receipt = sanitize($db_link, $_POST['inc_receipt']);
 		if($inc_recipient == 0) $inc_recipient = NULL;
 		if($inc_loan == 0) $inc_loan = NULL;
 		
 		//Insert into INCOMES
 		$sql_incnew = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_text, inc_created, user_id) VALUES ('$inc_recipient', '$inc_loan', '$inctype_id', '$inc_amount', '$inc_date', '$inc_receipt', '$inc_text', '$timestamp', '$_SESSION[log_id]')";
-		$query_incnew = mysql_query($sql_incnew);
-		checkSQL($query_incnew);
+		$query_incnew = mysqli_query($db_link, $sql_incnew);
+		checkSQL($db_link, $query_incnew);
 	}
 
 	//Select recent incomes from INCOMES
 	$sixtydays = time() - convertDays(60);
 	$sql_inccur = "SELECT * FROM incomes LEFT JOIN inctype ON incomes.inctype_id = inctype.inctype_id LEFT JOIN customer ON incomes.cust_id = customer.cust_id WHERE inc_date > $sixtydays ORDER BY inc_date DESC, inc_receipt DESC, incomes.cust_id";
-	$query_inccur = mysql_query($sql_inccur);
-	checkSQL($query_inccur);
+	$query_inccur = mysqli_query($db_link, $sql_inccur);
+	checkSQL($db_link, $query_inccur);
 	
 	//Select Types of Incomes from INCTYPE
 	$sql_inctype = "SELECT * FROM inctype ORDER BY inctype_type";
-	$query_inctype = mysql_query($sql_inctype);
-	checkSQL ($query_inctype);
+	$query_inctype = mysqli_query($db_link, $sql_inctype);
+	checkSQL($db_link, $query_inctype);
 	
 	//Select Customers from CUSTOMER
 	$sql_custfrom = "SELECT * FROM customer WHERE cust_active = 1";
-	$query_custfrom = mysql_query($sql_custfrom);
-	checkSQL($query_custfrom);
+	$query_custfrom = mysqli_query($db_link, $sql_custfrom);
+	checkSQL($db_link, $query_custfrom);
 	$custfrom = array();
-	while ($row_custfrom = mysql_fetch_assoc($query_custfrom)){
+	while ($row_custfrom = mysqli_fetch_assoc($query_custfrom)){
 		$custfrom[] = $row_custfrom;
 	};
 	
 	//Select Loans from LOANS
 	$sql_loans = "SELECT * FROM loans INNER JOIN customer ON loans.cust_id = customer.cust_id WHERE loanstatus_id IN (1,2) ORDER BY cust_no, loan_no";
-	$query_loans = mysql_query($sql_loans);
-	checkSQL($query_loans);
+	$query_loans = mysqli_query($db_link, $sql_loans);
+	checkSQL($db_link, $query_loans);
 	$loans = array();
-	while ($row_loans = mysql_fetch_assoc($query_loans)){
+	while ($row_loans = mysqli_fetch_assoc($query_loans)){
 		$loans[] = $row_loans;
 	};
 ?>
@@ -98,7 +98,7 @@
 							<select name="inctype_id" />
 								<?PHP
 								$no_show = array(2,4,5);	// Do not allow to choose one of the following income types
-								while ($row_inctype = mysql_fetch_assoc($query_inctype)){
+								while ($row_inctype = mysqli_fetch_assoc($query_inctype)){
 									if(!in_array($row_inctype['inctype_id'], $no_show)){
 										echo '<option value="'.$row_inctype['inctype_id'].'">'.$row_inctype['inctype_type'].'</option>';
 									}
@@ -172,7 +172,7 @@
 				</tr>
 			<?PHP
 			$no_delete = array(2,4,5);	// Do not allow to delete one of the following income types
-			while ($row_inccur = mysql_fetch_assoc($query_inccur)){
+			while ($row_inccur = mysqli_fetch_assoc($query_inccur)){
 				echo '<tr>	
 								<td>'.date("d.m.Y",$row_inccur['inc_date']).'</a></td>
 								<td>'.$row_inccur['inctype_type'].'</td>
