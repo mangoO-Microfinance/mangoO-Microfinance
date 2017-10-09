@@ -41,14 +41,16 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Individual files
 throw.php
 config/config.php
 *.odt#
 uploads/securities/L-5-1_Security-01.JPG
 config/pepper.php
 database/makeFresh.sql
+config/config.php
 
-
-#idea directories
+# Idea Directories
 .idea
 *.iml
