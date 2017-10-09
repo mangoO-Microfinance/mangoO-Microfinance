@@ -11,7 +11,7 @@
 	$ugroups = array();
 	$sql_ugroups = "SELECT * FROM ugroup";
 	$query_ugroups = mysqli_query($db_link, $sql_ugroups);
-	checkSQL($db_link, $db_link, $query_ugroups);
+	checkSQL($db_link, $query_ugroups);
 	while($row_ugroups = mysqli_fetch_assoc($query_ugroups)){
 		$ugroups[] = $row_ugroups;
 		$ugroup_names[] = $row_ugroups['ugroup_name'];
