@@ -3,13 +3,13 @@
 	require 'functions.php';
 	checkLogin();
 	checkPermissionAdmin();
-	connect();
+	$db_link = connect();
 ?>
 <html>
 	<?PHP includeHead('Settings | Log Records',1) ?>
 	<body>
 		<!-- MENU -->
-		<?PHP 
+		<?PHP
 				includeMenu(6);
 		?>
 		<!-- MENU MAIN -->
@@ -21,11 +21,11 @@
 			<a href="set_ugroup.php">Usergroups</a>
 			<a href="set_logrec.php" id="item_selected">Log Records</a>
 		</div>
-		
+
 		<!-- CONTENT: Logrec Data -->
 		<div class="content_center">
-			
-			<table id="tb_table">				
+
+			<table id="tb_table">
 				<colgroup>
 					<col width="10%">
 					<col width="30%">
@@ -36,16 +36,16 @@
 					<th class="title" colspan="4">Login/Logoff Records (Last 500 Entries)</th>
 				</tr>
 				<tr>
-					<th>No.</th>		
-					<th>Logon Time</th>					
+					<th>No.</th>
+					<th>Logon Time</th>
 					<th>User Name</th>
-					<th>Logoff Time</th> 
+					<th>Logoff Time</th>
 				</tr>
 				<?PHP
 				$sql_logrec = "SELECT * FROM logrec, user WHERE logrec.user_id = user.user_id ORDER BY logrec_id DESC LIMIT 500";
-				$query_logrec = mysql_query($sql_logrec);
-				checkSQL($query_logrec);
-				while ($row_logrec = mysql_fetch_assoc($query_logrec)){					
+				$query_logrec = mysqli_query($db_link, $sql_logrec);
+				checkSQL($db_link, $query_logrec);
+				while ($row_logrec = mysqli_fetch_assoc($query_logrec)){
 					echo '<tr>
 									<td>'.$row_logrec['logrec_id'].'</td>
 									<td>'.date("d.m.Y,  H:i:s", $row_logrec['logrec_start']).'</td>

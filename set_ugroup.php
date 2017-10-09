@@ -3,28 +3,28 @@
 	require 'functions.php';
 	checkLogin();
 	checkPermissionAdmin();
-	connect();
+	$db_link = connect();
 	$ugroup_id = 0;
 	$error = "no";
-	
+
 	//Select all Usergroups from UGROUP
 	$ugroups = array();
 	$sql_ugroups = "SELECT * FROM ugroup";
-	$query_ugroups = mysql_query($sql_ugroups);
-	checkSQL($query_ugroups);
-	while($row_ugroups = mysql_fetch_assoc($query_ugroups)){
+	$query_ugroups = mysqli_query($db_link, $sql_ugroups);
+	checkSQL($db_link, $db_link, $query_ugroups);
+	while($row_ugroups = mysqli_fetch_assoc($query_ugroups)){
 		$ugroups[] = $row_ugroups;
 		$ugroup_names[] = $row_ugroups['ugroup_name'];
 	}
-	
+
 	//Check for error from set_ugroup_del.php
 	if(isset($_GET['error'])){
-		$error =  sanitize($_GET['error']);
+		$error =  sanitize($db_link, $_GET['error']);
 	}
-	
+
 	//Set heading and variable according to selection
 	if(isset($_GET['ugroup'])){
-		$ugroup_id = sanitize($_GET['ugroup']);
+		$ugroup_id = sanitize($db_link, $_GET['ugroup']);
 		foreach ($ugroups as $row_ugroup){
 			if ($row_ugroup['ugroup_id'] == $ugroup_id){
 				$ugroup_name = $row_ugroup['ugroup_name'];
@@ -36,13 +36,13 @@
 		$heading = "Edit Usergroup";
 	}
 	else $heading = "Create Usergroup";
-	
+
 	//SAVE-Button
 	if(isset($_POST['save_changes'])){
-		
+
 		//Sanitize user input
-		$ugroup_id = sanitize($_POST['ugroup_id']);
-		$ugroup_name = sanitize($_POST['ugroup_name']);
+		$ugroup_id = sanitize($db_link, $_POST['ugroup_id']);
+		$ugroup_name = sanitize($db_link, $_POST['ugroup_name']);
 		if(isset($_POST['ugroup_admin'])) $ugroup_admin = '1';
 			else $ugroup_admin = '0';
 		if(isset($_POST['ugroup_delete'])) $ugroup_delete = '1';
@@ -52,19 +52,19 @@
 		$timestamp = time();
 
 		if ($ugroup_id == 0){
-			//Insert new usergroup into UGROUP		
+			//Insert new usergroup into UGROUP
 			$sql_ugroup_insert = "INSERT INTO ugroup (ugroup_name, ugroup_admin, ugroup_delete, ugroup_report, ugroup_created) VALUES ('$ugroup_name', '$ugroup_admin', '$ugroup_delete', '$ugroup_report', '$timestamp')";
-			$query_ugroup_insert = mysql_query($sql_ugroup_insert);
-			checkSQL($query_ugroup_insert);
+			$query_ugroup_insert = mysqli_query($db_link, $sql_ugroup_insert);
+			checkSQL($db_link, $query_ugroup_insert);
 		}
-		
+
 		else{
 			//Update existing usergroup
 			$sql_ugroup_upd = "UPDATE ugroup SET ugroup_name = '$ugroup_name',  ugroup_admin=$ugroup_admin, ugroup_delete=$ugroup_delete, ugroup_report=$ugroup_report, ugroup_created=$timestamp WHERE ugroup_id = $ugroup_id";
-			$query_ugroup_upd = mysql_query($sql_ugroup_upd);
-			checkSQL($query_ugroup_upd);
+			$query_ugroup_upd = mysqli_query($db_link, $sql_ugroup_upd);
+			checkSQL($db_link, $query_ugroup_upd);
 		}
-		
+
 		header('Location:set_ugroup.php');
 	}
 ?>
@@ -79,11 +79,11 @@
 			}
 		</script>
 		<script src="functions_validate.js"></script>
-	</head>	
-	
+	</head>
+
 	<body>
 		<!-- MENU -->
-		<?PHP 
+		<?PHP
 				includeMenu(6);
 		?>
 		<!-- MENU MAIN -->
@@ -95,14 +95,14 @@
 			<a href="set_ugroup.php" id="item_selected">Usergroups</a>
 			<a href="set_logrec.php">Log Records</a>
 		</div>
-		
+
 		<!-- LEFT SIDE: Create New Usergroup Form -->
 		<div class="content_left">
 			<div class="content_settings" style="text-align:left; width:80%;">
 				<?PHP echo '<p class="heading">'.$heading.'</p>'; ?>
-			
+
 				<form action="set_ugroup.php" method="post" onSubmit="return validate(this)">
-					<table id="tb_set" style="margin:auto;">	
+					<table id="tb_set" style="margin:auto;">
 						<tr>
 							<td>Usergroup Name</td>
 							<td><input type="text" name="ugroup_name" placeholder="Usergroup Name" value="<?PHP if (isset($ugroup_name)) echo $ugroup_name; ?>"/></td>
@@ -110,19 +110,19 @@
 						<tr>
 							<td>Permissions</td>
 							<td>
-								<input type="checkbox" name="ugroup_admin" <?PHP if(isset($ugroup_admin) AND $ugroup_admin == 1) echo 'checked="checked" '; ?> /> 
+								<input type="checkbox" name="ugroup_admin" <?PHP if(isset($ugroup_admin) AND $ugroup_admin == 1) echo 'checked="checked" '; ?> />
 								Administrator</td>
 						</tr>
 						<tr>
 							<td></td>
 							<td>
-								<input type="checkbox" name="ugroup_delete" <?PHP if(isset($ugroup_delete) AND $ugroup_delete == 1) echo 'checked="checked" '; ?> /> 
+								<input type="checkbox" name="ugroup_delete" <?PHP if(isset($ugroup_delete) AND $ugroup_delete == 1) echo 'checked="checked" '; ?> />
 								Deleting</td>
 						</tr>
 						<tr>
 							<td></td>
 							<td>
-								<input type="checkbox" name="ugroup_report" <?PHP if(isset($ugroup_report) AND $ugroup_report == 1) echo 'checked="checked" '; ?> /> 
+								<input type="checkbox" name="ugroup_report" <?PHP if(isset($ugroup_report) AND $ugroup_report == 1) echo 'checked="checked" '; ?> />
 								Reports</td>
 						</tr>
 					</table>
@@ -131,10 +131,10 @@
 				</form>
 			</div>
 		</div>
-	
+
 		<!-- RIGHT SIDE: TABLE: Existing Usergroups -->
 		<div class="content_right">
-			<table id="tb_table">				
+			<table id="tb_table">
 				<colgroup>
 					<col width="27%">
 					<col width="19%">
@@ -190,11 +190,11 @@
 						echo '</td>
 								</tr>';
 					}
-					
+
 					//Error message, if user tries to delete a usergroup that still has members.
 					if ($error == "dep") echo '<script>alert(\'One or more users are still members of this usergroup. Usergroup cannot be deleted!\')</script>';
 				?>
 			</table>
-		</div>		
+		</div>
 	</body>
 </html>

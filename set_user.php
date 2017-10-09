@@ -3,43 +3,43 @@
 	require 'functions.php';
 	checkLogin();
 	checkPermissionAdmin();
-	connect();
+	$db_link = connect();
 	$user_id = 0;
 	$employee = 0;
-	
+
 	//Select all users from USER
 	$users = array();
 	$user_names = array();
 	$sql_users = "SELECT user.user_id, user.user_name, user.user_created, ugroup.ugroup_id, ugroup.ugroup_name, employee.empl_id, employee.empl_name FROM user, ugroup, employee WHERE ugroup.ugroup_id = user.ugroup_id AND user.empl_id = employee.empl_id ORDER BY user_name";
-	$query_users = mysql_query($sql_users);
-	checkSQL ($query_users);
-	while($row_users = mysql_fetch_assoc($query_users)){
+	$query_users = mysqli_query($db_link, $sql_users);
+	checkSQL($db_link, $query_users);
+	while($row_users = mysqli_fetch_assoc($query_users)){
 		$users[] = $row_users;
 		$user_names[] = $row_users['user_name'];
 	}
-	
+
 	//Select all usergroups from UGROUP
 	$sql_ugroup = "SELECT ugroup_id, ugroup_name FROM ugroup";
-	$query_ugroup = mysql_query($sql_ugroup);
-	checkSQL($query_ugroup);
-	
+	$query_ugroup = mysqli_query($db_link, $sql_ugroup);
+	checkSQL($db_link, $query_ugroup);
+
 	// Select all employees from EMPLOYEE
 	$sql_employees = "SELECT empl_id, empl_name FROM employee WHERE empl_id != 0";
-	$query_employees = mysql_query($sql_employees);
-	checkSQL($query_employees);
+	$query_employees = mysqli_query($db_link, $sql_employees);
+	checkSQL($db_link, $query_employees);
 
-	// Select employees from EMPLOYEE who are already associated with a user 
+	// Select employees from EMPLOYEE who are already associated with a user
 	$sql_empl_assoc = "SELECT empl_id FROM employee WHERE empl_id != 0 AND empl_id IN (SELECT empl_id FROM user)";
-	$query_empl_assoc = mysql_query($sql_empl_assoc);
-	checkSQL($query_empl_assoc);
+	$query_empl_assoc = mysqli_query($db_link, $sql_empl_assoc);
+	checkSQL($db_link, $query_empl_assoc);
 	$empl_assoc = array();
-	while($row_empl_assoc = mysql_fetch_assoc($query_empl_assoc)){
+	while($row_empl_assoc = mysqli_fetch_assoc($query_empl_assoc)){
 		$empl_assoc[] = $row_empl_assoc['empl_id'];
 	}
-	
+
 	//Set heading and variables according to selection
 	if(isset($_GET['user'])){
-		$user_id = sanitize($_GET['user']);
+		$user_id = sanitize($db_link, $_GET['user']);
 		foreach ($users as $row_user){
 			if ($row_user['user_id'] == $user_id){
 				$user_id = $row_user['user_id'];
@@ -51,33 +51,33 @@
 		$heading = "Edit User";
 	}
 	else $heading = "Create User";
-	
+
 	//SAVE Button
 	if(isset($_POST["save_changes"])){
-		
+
 		// Include password pepper
 		require 'config/pepper.php';
-		
+
 		//Sanitize user input
-		$user_id = sanitize($_POST['user_id']);
-		$user_name = sanitize($_POST['user_name']);
-		$user_pw = password_hash((sanitize($_POST['user_pw'])).$pepper, PASSWORD_DEFAULT);
-		$empl_id = sanitize($_POST['empl_id']);
-		$ugroup = sanitize($_POST['ugroup']);
+		$user_id = sanitize($db_link, $_POST['user_id']);
+		$user_name = sanitize($db_link, $_POST['user_name']);
+		$user_pw = password_hash((sanitize($db_link, $_POST['user_pw'])).$pepper, PASSWORD_DEFAULT);
+		$empl_id = sanitize($db_link, $_POST['empl_id']);
+		$ugroup = sanitize($db_link, $_POST['ugroup']);
 		if($user_id == 1) $ugroup = 1;
 		$timestamp = time();
-		
+
 		if($user_id == 0){
 			// Insert new user into USER
 			$sql_user_ins = "INSERT INTO user (user_name, user_pw, ugroup_id, empl_id, user_created) VALUES ('$user_name', '$user_pw', '$ugroup', '$empl_id', '$timestamp')";
-			$query_user_ins = mysql_query($sql_user_ins);
-			checkSQL($query_user_ins);
+			$query_user_ins = mysqli_query($db_link, $sql_user_ins);
+			checkSQL($db_link, $query_user_ins);
 		}
 		else {
 			// Update existing user
 			$sql_user_upd = "UPDATE user SET user_name = '$user_name', user_pw = '$user_pw', ugroup_id = $ugroup, empl_id = $empl_id, user_created = $timestamp WHERE user_id = $user_id";
-			$query_user_upd = mysql_query($sql_user_upd);
-			checkSQL($query_user_upd);
+			$query_user_upd = mysqli_query($db_link, $sql_user_upd);
+			checkSQL($db_link, $query_user_upd);
 		}
 		header('Location:set_user.php');
 	}
@@ -91,15 +91,15 @@
 				fail += validatePw(form.user_pw.value, form.user_pw_conf.value)
 				fail += validateEmployee(form.empl_id.value, <?PHP echo json_encode($empl_assoc); ?>, <?PHP echo $employee; ?>)
 				if (fail == "") return true
-				else { 
-					alert(fail); 
+				else {
+					alert(fail);
 					return false
 				}
 			}
 		</script>
 		<script src="functions_validate.js"></script>
 	</head>
-	
+
 	<body>
 		<!-- MENU -->
 		<?PHP includeMenu(6); ?>
@@ -111,15 +111,15 @@
 			<a href="set_ugroup.php">Usergroups</a>
 			<a href="set_logrec.php">Log Records</a>
 		</div>
-		
+
 		<!-- LEFT SIDE: Create New User Form -->
 		<div class="content_left">
 			<div class="content_settings" style="text-align:left; width:80%;">
-				
+
 				<p class="heading"><?PHP echo $heading; ?></p>
-			
+
 				<form action="set_user.php" method="post" onSubmit="return validate(this)">
-				
+
 					<table id="tb_set" style="margin:auto;">
 						<tr>
 							<td>Username</td>
@@ -138,7 +138,7 @@
 							<td class="center">
 								<select name="ugroup" size="1" <?PHP if ($user_id == 1) echo ' disabled="disabled"'; ?> >
 									<?PHP
-									while ($row_ugroup = mysql_fetch_assoc($query_ugroup)){
+									while ($row_ugroup = mysqli_fetch_assoc($query_ugroup)){
 											echo '<option value="'.$row_ugroup['ugroup_id'].'"';
 											if (isset($user_ugroup) and $row_ugroup['ugroup_id'] == $user_ugroup) echo ' selected="selected	"';
 											echo '>'.$row_ugroup['ugroup_name'].'</option>';
@@ -153,7 +153,7 @@
 								<select name="empl_id" size="1">';
 									<option value="0">None</option>
 									<?PHP
-										while ($row_employees = mysql_fetch_assoc($query_employees)){
+										while ($row_employees = mysqli_fetch_assoc($query_employees)){
 											echo '<option value="'.$row_employees['empl_id'].'"';
 											if (isset($employee) and $row_employees['empl_id'] == $employee) echo ' selected="selected	"';
 											echo '>'.$row_employees['empl_name'].'</option>';
@@ -165,14 +165,14 @@
 					</table>
 					<input type="submit" name="save_changes" value="Save Changes" />
 					<input type="hidden" name="user_id" value="<?PHP echo $user_id; ?>" />
-				</form>			
+				</form>
 			</div>
 		</div>
-		
+
 		<!-- RIGHT SIDE: List of Users -->
 		<div class="content_right">
 			<form action="set_ugroup.php" method="post">
-				<table id="tb_table">				
+				<table id="tb_table">
 					<colgroup>
 						<col width="26%">
 						<col width="26%">
@@ -188,7 +188,7 @@
 						<th>User Group</th>
 						<th>Employee</th>
 						<th>Changed</th>
-						<th>Edit</th> 
+						<th>Edit</th>
 					</tr>
 					<?PHP
 					foreach ($users as $row_user){
