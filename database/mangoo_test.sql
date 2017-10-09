@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
--- http://www.phpmyadmin.net
+-- version 4.6.6deb4
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 05. Mai 2016 um 13:51
--- Server Version: 5.6.21
--- PHP-Version: 5.6.3
+-- Host: localhost:3306
+-- Erstellungszeit: 09. Okt 2017 um 16:26
+-- Server-Version: 10.1.25-MariaDB-
+-- PHP-Version: 7.0.22-0ubuntu0.17.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Datenbank: `mangoo`
@@ -26,10 +26,10 @@ SET time_zone = "+00:00";
 -- Tabellenstruktur für Tabelle `custmarried`
 --
 
-CREATE TABLE IF NOT EXISTS `custmarried` (
-`custmarried_id` int(11) NOT NULL,
-  `custmarried_status` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+CREATE TABLE `custmarried` (
+  `custmarried_id` int(11) NOT NULL,
+  `custmarried_status` varchar(15) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `custmarried`
@@ -48,28 +48,28 @@ INSERT INTO `custmarried` (`custmarried_id`, `custmarried_status`) VALUES
 -- Tabellenstruktur für Tabelle `customer`
 --
 
-CREATE TABLE IF NOT EXISTS `customer` (
-`cust_id` int(11) NOT NULL,
-  `cust_no` varchar(50) DEFAULT NULL,
-  `cust_name` varchar(100) DEFAULT NULL,
+CREATE TABLE `customer` (
+  `cust_id` int(11) NOT NULL,
+  `cust_no` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `cust_name` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `cust_dob` int(11) DEFAULT NULL,
   `custsex_id` int(11) DEFAULT NULL,
-  `cust_address` varchar(100) DEFAULT NULL,
-  `cust_phone` varchar(50) DEFAULT NULL,
-  `cust_email` varchar(100) DEFAULT NULL,
-  `cust_occup` varchar(50) DEFAULT NULL,
+  `cust_address` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `cust_phone` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `cust_email` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `cust_occup` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `custmarried_id` int(11) DEFAULT NULL,
-  `cust_heir` varchar(100) DEFAULT NULL,
-  `cust_heirrel` varchar(50) DEFAULT NULL,
+  `cust_heir` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `cust_heirrel` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `cust_lengthres` int(11) DEFAULT NULL,
   `cust_since` int(11) DEFAULT NULL,
   `custsick_id` int(11) DEFAULT NULL,
   `cust_lastsub` int(11) DEFAULT NULL,
   `cust_active` int(1) NOT NULL DEFAULT '0',
   `cust_lastupd` int(11) DEFAULT NULL,
-  `cust_pic` varchar(100) DEFAULT NULL,
+  `cust_pic` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `customer`
@@ -184,10 +184,10 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 -- Tabellenstruktur für Tabelle `custsex`
 --
 
-CREATE TABLE IF NOT EXISTS `custsex` (
-`custsex_id` int(11) NOT NULL,
-  `custsex_name` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+CREATE TABLE `custsex` (
+  `custsex_id` int(11) NOT NULL,
+  `custsex_name` varchar(50) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `custsex`
@@ -208,11 +208,11 @@ INSERT INTO `custsex` (`custsex_id`, `custsex_name`) VALUES
 -- Tabellenstruktur für Tabelle `custsick`
 --
 
-CREATE TABLE IF NOT EXISTS `custsick` (
-`custsick_id` int(11) NOT NULL,
-  `custsick_name` varchar(50) NOT NULL,
+CREATE TABLE `custsick` (
+  `custsick_id` int(11) NOT NULL,
+  `custsick_name` varchar(50) CHARACTER SET latin1 NOT NULL,
   `custsick_risk` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `custsick`
@@ -232,10 +232,10 @@ INSERT INTO `custsick` (`custsick_id`, `custsick_name`, `custsick_risk`) VALUES
 -- Tabellenstruktur für Tabelle `emplmarried`
 --
 
-CREATE TABLE IF NOT EXISTS `emplmarried` (
-`emplmarried_id` int(11) NOT NULL,
-  `emplmarried_status` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+CREATE TABLE `emplmarried` (
+  `emplmarried_id` int(11) NOT NULL,
+  `emplmarried_status` varchar(15) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `emplmarried`
@@ -253,25 +253,25 @@ INSERT INTO `emplmarried` (`emplmarried_id`, `emplmarried_status`) VALUES
 -- Tabellenstruktur für Tabelle `employee`
 --
 
-CREATE TABLE IF NOT EXISTS `employee` (
-`empl_id` int(11) NOT NULL,
-  `empl_no` varchar(50) DEFAULT NULL,
-  `empl_name` varchar(100) DEFAULT NULL,
+CREATE TABLE `employee` (
+  `empl_id` int(11) NOT NULL,
+  `empl_no` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `empl_name` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   `empl_dob` int(11) DEFAULT NULL,
   `emplsex_id` int(11) NOT NULL DEFAULT '1',
   `emplmarried_id` int(11) NOT NULL,
-  `empl_position` varchar(100) DEFAULT NULL,
+  `empl_position` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   `empl_salary` int(11) DEFAULT NULL,
-  `empl_address` varchar(100) DEFAULT NULL,
-  `empl_phone` varchar(50) DEFAULT NULL,
-  `empl_email` varchar(100) DEFAULT NULL,
+  `empl_address` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `empl_phone` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `empl_email` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   `empl_in` int(11) DEFAULT NULL,
   `empl_out` int(11) DEFAULT NULL,
   `empl_lastupd` int(11) NOT NULL,
   `empl_active` int(1) NOT NULL DEFAULT '0',
-  `empl_pic` varchar(100) DEFAULT NULL,
+  `empl_pic` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `employee`
@@ -298,10 +298,10 @@ INSERT INTO `employee` (`empl_id`, `empl_no`, `empl_name`, `empl_dob`, `emplsex_
 -- Tabellenstruktur für Tabelle `emplsex`
 --
 
-CREATE TABLE IF NOT EXISTS `emplsex` (
-`emplsex_id` int(11) NOT NULL,
-  `emplsex_name` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+CREATE TABLE `emplsex` (
+  `emplsex_id` int(11) NOT NULL,
+  `emplsex_name` varchar(20) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `emplsex`
@@ -317,19 +317,19 @@ INSERT INTO `emplsex` (`emplsex_id`, `emplsex_name`) VALUES
 -- Tabellenstruktur für Tabelle `expenses`
 --
 
-CREATE TABLE IF NOT EXISTS `expenses` (
-`exp_id` int(11) NOT NULL,
+CREATE TABLE `expenses` (
+  `exp_id` int(11) NOT NULL,
   `cust_id` int(6) DEFAULT NULL,
   `exptype_id` int(11) NOT NULL,
   `exp_amount` int(11) NOT NULL,
   `exp_date` int(15) DEFAULT NULL,
-  `exp_text` varchar(100) DEFAULT NULL,
-  `exp_recipient` varchar(75) DEFAULT NULL,
+  `exp_text` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `exp_recipient` varchar(75) CHARACTER SET latin1 DEFAULT NULL,
   `exp_receipt` int(11) DEFAULT NULL,
   `exp_voucher` int(11) DEFAULT NULL,
   `exp_created` int(11) DEFAULT NULL,
   `user_id` int(6) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `expenses`
@@ -348,11 +348,11 @@ INSERT INTO `expenses` (`exp_id`, `cust_id`, `exptype_id`, `exp_amount`, `exp_da
 -- Tabellenstruktur für Tabelle `exptype`
 --
 
-CREATE TABLE IF NOT EXISTS `exptype` (
-`exptype_id` int(11) NOT NULL,
-  `exptype_type` varchar(50) NOT NULL,
-  `exptype_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+CREATE TABLE `exptype` (
+  `exptype_id` int(11) NOT NULL,
+  `exptype_type` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `exptype_short` varchar(8) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `exptype`
@@ -385,12 +385,12 @@ INSERT INTO `exptype` (`exptype_id`, `exptype_type`, `exptype_short`) VALUES
 -- Tabellenstruktur für Tabelle `fees`
 --
 
-CREATE TABLE IF NOT EXISTS `fees` (
-`fee_id` int(11) NOT NULL,
-  `fee_name` varchar(50) NOT NULL,
-  `fee_short` varchar(8) NOT NULL,
+CREATE TABLE `fees` (
+  `fee_id` int(11) NOT NULL,
+  `fee_name` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `fee_short` varchar(8) CHARACTER SET latin1 NOT NULL,
   `fee_value` float DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `fees`
@@ -414,8 +414,8 @@ INSERT INTO `fees` (`fee_id`, `fee_name`, `fee_short`, `fee_value`) VALUES
 -- Tabellenstruktur für Tabelle `incomes`
 --
 
-CREATE TABLE IF NOT EXISTS `incomes` (
-`inc_id` int(11) NOT NULL,
+CREATE TABLE `incomes` (
+  `inc_id` int(11) NOT NULL,
   `inctype_id` int(11) NOT NULL,
   `cust_id` int(11) DEFAULT NULL,
   `loan_id` int(11) DEFAULT NULL,
@@ -424,10 +424,10 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   `inc_amount` int(11) NOT NULL,
   `inc_date` int(15) NOT NULL,
   `inc_receipt` int(11) NOT NULL,
-  `inc_text` varchar(200) NOT NULL,
+  `inc_text` varchar(200) CHARACTER SET latin1 NOT NULL,
   `inc_created` int(11) NOT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `incomes`
@@ -514,11 +514,11 @@ INSERT INTO `incomes` (`inc_id`, `inctype_id`, `cust_id`, `loan_id`, `ltrans_id`
 -- Tabellenstruktur für Tabelle `inctype`
 --
 
-CREATE TABLE IF NOT EXISTS `inctype` (
-`inctype_id` int(11) NOT NULL,
-  `inctype_type` varchar(50) NOT NULL,
-  `inctype_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+CREATE TABLE `inctype` (
+  `inctype_id` int(11) NOT NULL,
+  `inctype_type` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `inctype_short` varchar(8) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `inctype`
@@ -543,11 +543,11 @@ INSERT INTO `inctype` (`inctype_id`, `inctype_type`, `inctype_short`) VALUES
 -- Tabellenstruktur für Tabelle `loans`
 --
 
-CREATE TABLE IF NOT EXISTS `loans` (
-`loan_id` int(11) NOT NULL,
+CREATE TABLE `loans` (
+  `loan_id` int(11) NOT NULL,
   `cust_id` int(11) NOT NULL,
   `loanstatus_id` int(11) NOT NULL,
-  `loan_no` varchar(20) NOT NULL,
+  `loan_no` varchar(20) COLLATE utf8_bin NOT NULL,
   `loan_date` int(15) NOT NULL,
   `loan_dateout` int(11) NOT NULL,
   `loan_issued` int(2) NOT NULL,
@@ -562,18 +562,18 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `loan_rate` decimal(11,0) NOT NULL,
   `loan_period` int(11) NOT NULL,
   `loan_repaytotal` int(11) NOT NULL,
-  `loan_purpose` varchar(250) NOT NULL,
-  `loan_sec1` varchar(250) NOT NULL,
-  `loan_sec2` varchar(250) NOT NULL,
+  `loan_purpose` varchar(250) COLLATE utf8_bin NOT NULL,
+  `loan_sec1` varchar(250) COLLATE utf8_bin NOT NULL,
+  `loan_sec2` varchar(250) COLLATE utf8_bin NOT NULL,
   `loan_guarant1` int(11) NOT NULL,
   `loan_guarant2` int(11) NOT NULL,
   `loan_guarant3` int(11) NOT NULL,
   `loan_feepaid` int(1) NOT NULL DEFAULT '0',
   `loan_created` int(15) DEFAULT NULL,
-  `loan_xtra1` varchar(255) DEFAULT NULL,
+  `loan_xtra1` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `loan_xtraFee1` int(11) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `loans`
@@ -602,11 +602,11 @@ INSERT INTO `loans` (`loan_id`, `cust_id`, `loanstatus_id`, `loan_no`, `loan_dat
 -- Tabellenstruktur für Tabelle `loanstatus`
 --
 
-CREATE TABLE IF NOT EXISTS `loanstatus` (
-`loanstatus_id` int(11) NOT NULL,
-  `loanstatus_status` varchar(50) NOT NULL,
-  `loanstatus_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+CREATE TABLE `loanstatus` (
+  `loanstatus_id` int(11) NOT NULL,
+  `loanstatus_status` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `loanstatus_short` varchar(8) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `loanstatus`
@@ -625,13 +625,13 @@ INSERT INTO `loanstatus` (`loanstatus_id`, `loanstatus_status`, `loanstatus_shor
 -- Tabellenstruktur für Tabelle `logrec`
 --
 
-CREATE TABLE IF NOT EXISTS `logrec` (
-`logrec_id` int(11) NOT NULL,
+CREATE TABLE `logrec` (
+  `logrec_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `logrec_start` int(11) DEFAULT NULL,
   `logrec_end` int(11) DEFAULT NULL,
   `logrec_logout` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `logrec`
@@ -676,8 +676,8 @@ INSERT INTO `logrec` (`logrec_id`, `user_id`, `logrec_start`, `logrec_end`, `log
 -- Tabellenstruktur für Tabelle `ltrans`
 --
 
-CREATE TABLE IF NOT EXISTS `ltrans` (
-`ltrans_id` int(11) NOT NULL,
+CREATE TABLE `ltrans` (
+  `ltrans_id` int(11) NOT NULL,
   `loan_id` int(11) NOT NULL,
   `ltrans_due` int(11) DEFAULT NULL,
   `ltrans_date` int(15) DEFAULT NULL,
@@ -689,7 +689,7 @@ CREATE TABLE IF NOT EXISTS `ltrans` (
   `ltrans_receipt` int(11) DEFAULT NULL,
   `ltrans_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=259 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `ltrans`
@@ -811,14 +811,14 @@ INSERT INTO `ltrans` (`ltrans_id`, `loan_id`, `ltrans_due`, `ltrans_date`, `ltra
 -- Tabellenstruktur für Tabelle `savbalance`
 --
 
-CREATE TABLE IF NOT EXISTS `savbalance` (
-`savbal_id` int(11) NOT NULL,
+CREATE TABLE `savbalance` (
+  `savbal_id` int(11) NOT NULL,
   `cust_id` int(11) NOT NULL,
   `savbal_balance` int(11) NOT NULL,
   `savbal_date` int(11) NOT NULL,
   `savbal_created` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `savbalance`
@@ -933,8 +933,8 @@ INSERT INTO `savbalance` (`savbal_id`, `cust_id`, `savbal_balance`, `savbal_date
 -- Tabellenstruktur für Tabelle `savings`
 --
 
-CREATE TABLE IF NOT EXISTS `savings` (
-`sav_id` int(11) NOT NULL,
+CREATE TABLE `savings` (
+  `sav_id` int(11) NOT NULL,
   `savtype_id` int(11) NOT NULL,
   `sav_mother` int(11) DEFAULT NULL,
   `cust_id` int(11) NOT NULL,
@@ -943,11 +943,11 @@ CREATE TABLE IF NOT EXISTS `savings` (
   `sav_amount` int(15) NOT NULL DEFAULT '0',
   `sav_receipt` int(11) DEFAULT NULL,
   `sav_slip` int(10) NOT NULL,
-  `sav_payer` varchar(255) DEFAULT NULL,
+  `sav_payer` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `sav_fixed` int(11) DEFAULT NULL,
   `sav_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=468 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `savings`
@@ -1102,11 +1102,11 @@ INSERT INTO `savings` (`sav_id`, `savtype_id`, `sav_mother`, `cust_id`, `ltrans_
 -- Tabellenstruktur für Tabelle `savtype`
 --
 
-CREATE TABLE IF NOT EXISTS `savtype` (
-`savtype_id` int(11) NOT NULL,
-  `savtype_type` varchar(20) NOT NULL,
-  `savtype_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+CREATE TABLE `savtype` (
+  `savtype_id` int(11) NOT NULL,
+  `savtype_type` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `savtype_short` varchar(8) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `savtype`
@@ -1129,16 +1129,16 @@ INSERT INTO `savtype` (`savtype_id`, `savtype_type`, `savtype_short`) VALUES
 -- Tabellenstruktur für Tabelle `securities`
 --
 
-CREATE TABLE IF NOT EXISTS `securities` (
-`sec_id` int(11) NOT NULL,
+CREATE TABLE `securities` (
+  `sec_id` int(11) NOT NULL,
   `cust_id` int(8) NOT NULL,
   `loan_id` int(8) NOT NULL,
-  `sec_no` varchar(50) NOT NULL,
-  `sec_name` varchar(100) NOT NULL,
+  `sec_no` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `sec_name` varchar(100) CHARACTER SET latin1 NOT NULL,
   `sec_value` int(11) NOT NULL,
-  `sec_path` varchar(200) NOT NULL,
+  `sec_path` varchar(200) CHARACTER SET latin1 NOT NULL,
   `sec_returned` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `securities`
@@ -1154,12 +1154,12 @@ INSERT INTO `securities` (`sec_id`, `cust_id`, `loan_id`, `sec_no`, `sec_name`, 
 -- Tabellenstruktur für Tabelle `settings`
 --
 
-CREATE TABLE IF NOT EXISTS `settings` (
-`set_id` int(11) NOT NULL,
-  `set_name` varchar(100) NOT NULL,
-  `set_short` varchar(8) NOT NULL,
-  `set_value` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+CREATE TABLE `settings` (
+  `set_id` int(11) NOT NULL,
+  `set_name` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `set_short` varchar(8) CHARACTER SET latin1 NOT NULL,
+  `set_value` varchar(255) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `settings`
@@ -1190,8 +1190,8 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 -- Tabellenstruktur für Tabelle `shares`
 --
 
-CREATE TABLE IF NOT EXISTS `shares` (
-`share_id` int(11) NOT NULL,
+CREATE TABLE `shares` (
+  `share_id` int(11) NOT NULL,
   `cust_id` int(11) NOT NULL,
   `share_date` int(11) NOT NULL,
   `share_amount` int(11) NOT NULL,
@@ -1201,7 +1201,7 @@ CREATE TABLE IF NOT EXISTS `shares` (
   `share_transfrom` int(11) DEFAULT NULL,
   `share_created` int(15) DEFAULT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `shares`
@@ -1318,11 +1318,11 @@ INSERT INTO `shares` (`share_id`, `cust_id`, `share_date`, `share_amount`, `shar
 -- Tabellenstruktur für Tabelle `shareval`
 --
 
-CREATE TABLE IF NOT EXISTS `shareval` (
-`shareval_id` int(11) NOT NULL,
+CREATE TABLE `shareval` (
+  `shareval_id` int(11) NOT NULL,
   `shareval_date` int(11) NOT NULL,
   `shareval_value` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `shareval`
@@ -1338,14 +1338,14 @@ INSERT INTO `shareval` (`shareval_id`, `shareval_date`, `shareval_value`) VALUES
 -- Tabellenstruktur für Tabelle `ugroup`
 --
 
-CREATE TABLE IF NOT EXISTS `ugroup` (
-`ugroup_id` int(11) NOT NULL,
-  `ugroup_name` varchar(100) NOT NULL,
+CREATE TABLE `ugroup` (
+  `ugroup_id` int(11) NOT NULL,
+  `ugroup_name` varchar(100) CHARACTER SET latin1 NOT NULL,
   `ugroup_admin` int(11) NOT NULL,
   `ugroup_delete` int(2) NOT NULL,
   `ugroup_report` int(11) NOT NULL,
   `ugroup_created` int(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `ugroup`
@@ -1363,14 +1363,14 @@ INSERT INTO `ugroup` (`ugroup_id`, `ugroup_name`, `ugroup_admin`, `ugroup_delete
 -- Tabellenstruktur für Tabelle `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
-`user_id` int(11) NOT NULL,
-  `user_name` varchar(200) NOT NULL,
-  `user_pw` varchar(255) NOT NULL,
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL,
+  `user_name` varchar(200) CHARACTER SET latin1 NOT NULL,
+  `user_pw` varchar(255) CHARACTER SET latin1 NOT NULL,
   `ugroup_id` int(11) NOT NULL,
   `empl_id` int(11) NOT NULL,
   `user_created` int(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `user`
@@ -1390,151 +1390,151 @@ INSERT INTO `user` (`user_id`, `user_name`, `user_pw`, `ugroup_id`, `empl_id`, `
 -- Indizes für die Tabelle `custmarried`
 --
 ALTER TABLE `custmarried`
- ADD PRIMARY KEY (`custmarried_id`);
+  ADD PRIMARY KEY (`custmarried_id`);
 
 --
 -- Indizes für die Tabelle `customer`
 --
 ALTER TABLE `customer`
- ADD PRIMARY KEY (`cust_id`);
+  ADD PRIMARY KEY (`cust_id`);
 
 --
 -- Indizes für die Tabelle `custsex`
 --
 ALTER TABLE `custsex`
- ADD PRIMARY KEY (`custsex_id`);
+  ADD PRIMARY KEY (`custsex_id`);
 
 --
 -- Indizes für die Tabelle `custsick`
 --
 ALTER TABLE `custsick`
- ADD PRIMARY KEY (`custsick_id`);
+  ADD PRIMARY KEY (`custsick_id`);
 
 --
 -- Indizes für die Tabelle `emplmarried`
 --
 ALTER TABLE `emplmarried`
- ADD PRIMARY KEY (`emplmarried_id`);
+  ADD PRIMARY KEY (`emplmarried_id`);
 
 --
 -- Indizes für die Tabelle `employee`
 --
 ALTER TABLE `employee`
- ADD PRIMARY KEY (`empl_id`);
+  ADD PRIMARY KEY (`empl_id`);
 
 --
 -- Indizes für die Tabelle `emplsex`
 --
 ALTER TABLE `emplsex`
- ADD PRIMARY KEY (`emplsex_id`);
+  ADD PRIMARY KEY (`emplsex_id`);
 
 --
 -- Indizes für die Tabelle `expenses`
 --
 ALTER TABLE `expenses`
- ADD PRIMARY KEY (`exp_id`);
+  ADD PRIMARY KEY (`exp_id`);
 
 --
 -- Indizes für die Tabelle `exptype`
 --
 ALTER TABLE `exptype`
- ADD PRIMARY KEY (`exptype_id`);
+  ADD PRIMARY KEY (`exptype_id`);
 
 --
 -- Indizes für die Tabelle `fees`
 --
 ALTER TABLE `fees`
- ADD PRIMARY KEY (`fee_id`);
+  ADD PRIMARY KEY (`fee_id`);
 
 --
 -- Indizes für die Tabelle `incomes`
 --
 ALTER TABLE `incomes`
- ADD PRIMARY KEY (`inc_id`);
+  ADD PRIMARY KEY (`inc_id`);
 
 --
 -- Indizes für die Tabelle `inctype`
 --
 ALTER TABLE `inctype`
- ADD PRIMARY KEY (`inctype_id`);
+  ADD PRIMARY KEY (`inctype_id`);
 
 --
 -- Indizes für die Tabelle `loans`
 --
 ALTER TABLE `loans`
- ADD PRIMARY KEY (`loan_id`);
+  ADD PRIMARY KEY (`loan_id`);
 
 --
 -- Indizes für die Tabelle `loanstatus`
 --
 ALTER TABLE `loanstatus`
- ADD PRIMARY KEY (`loanstatus_id`);
+  ADD PRIMARY KEY (`loanstatus_id`);
 
 --
 -- Indizes für die Tabelle `logrec`
 --
 ALTER TABLE `logrec`
- ADD PRIMARY KEY (`logrec_id`);
+  ADD PRIMARY KEY (`logrec_id`);
 
 --
 -- Indizes für die Tabelle `ltrans`
 --
 ALTER TABLE `ltrans`
- ADD PRIMARY KEY (`ltrans_id`);
+  ADD PRIMARY KEY (`ltrans_id`);
 
 --
 -- Indizes für die Tabelle `savbalance`
 --
 ALTER TABLE `savbalance`
- ADD PRIMARY KEY (`savbal_id`);
+  ADD PRIMARY KEY (`savbal_id`);
 
 --
 -- Indizes für die Tabelle `savings`
 --
 ALTER TABLE `savings`
- ADD PRIMARY KEY (`sav_id`);
+  ADD PRIMARY KEY (`sav_id`);
 
 --
 -- Indizes für die Tabelle `savtype`
 --
 ALTER TABLE `savtype`
- ADD PRIMARY KEY (`savtype_id`);
+  ADD PRIMARY KEY (`savtype_id`);
 
 --
 -- Indizes für die Tabelle `securities`
 --
 ALTER TABLE `securities`
- ADD PRIMARY KEY (`sec_id`);
+  ADD PRIMARY KEY (`sec_id`);
 
 --
 -- Indizes für die Tabelle `settings`
 --
 ALTER TABLE `settings`
- ADD PRIMARY KEY (`set_id`);
+  ADD PRIMARY KEY (`set_id`);
 
 --
 -- Indizes für die Tabelle `shares`
 --
 ALTER TABLE `shares`
- ADD PRIMARY KEY (`share_id`);
+  ADD PRIMARY KEY (`share_id`);
 
 --
 -- Indizes für die Tabelle `shareval`
 --
 ALTER TABLE `shareval`
- ADD PRIMARY KEY (`shareval_id`);
+  ADD PRIMARY KEY (`shareval_id`);
 
 --
 -- Indizes für die Tabelle `ugroup`
 --
 ALTER TABLE `ugroup`
- ADD PRIMARY KEY (`ugroup_id`);
+  ADD PRIMARY KEY (`ugroup_id`);
 
 --
 -- Indizes für die Tabelle `user`
 --
 ALTER TABLE `user`
- ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -1544,124 +1544,127 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT für Tabelle `custmarried`
 --
 ALTER TABLE `custmarried`
-MODIFY `custmarried_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `custmarried_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT für Tabelle `customer`
 --
 ALTER TABLE `customer`
-MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=101;
+  MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 --
 -- AUTO_INCREMENT für Tabelle `custsex`
 --
 ALTER TABLE `custsex`
-MODIFY `custsex_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `custsex_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT für Tabelle `custsick`
 --
 ALTER TABLE `custsick`
-MODIFY `custsick_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `custsick_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT für Tabelle `emplmarried`
 --
 ALTER TABLE `emplmarried`
-MODIFY `emplmarried_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `emplmarried_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT für Tabelle `employee`
 --
 ALTER TABLE `employee`
-MODIFY `empl_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `empl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT für Tabelle `emplsex`
 --
 ALTER TABLE `emplsex`
-MODIFY `emplsex_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `emplsex_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `expenses`
 --
 ALTER TABLE `expenses`
-MODIFY `exp_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `exp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT für Tabelle `exptype`
 --
 ALTER TABLE `exptype`
-MODIFY `exptype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+  MODIFY `exptype_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT für Tabelle `fees`
 --
 ALTER TABLE `fees`
-MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT für Tabelle `incomes`
 --
 ALTER TABLE `incomes`
-MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=79;
+  MODIFY `inc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 --
 -- AUTO_INCREMENT für Tabelle `inctype`
 --
 ALTER TABLE `inctype`
-MODIFY `inctype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `inctype_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT für Tabelle `loans`
 --
 ALTER TABLE `loans`
-MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT für Tabelle `loanstatus`
 --
 ALTER TABLE `loanstatus`
-MODIFY `loanstatus_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `loanstatus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT für Tabelle `logrec`
 --
 ALTER TABLE `logrec`
-MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+  MODIFY `logrec_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT für Tabelle `ltrans`
 --
 ALTER TABLE `ltrans`
-MODIFY `ltrans_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=259;
+  MODIFY `ltrans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
 --
 -- AUTO_INCREMENT für Tabelle `savbalance`
 --
 ALTER TABLE `savbalance`
-MODIFY `savbal_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=102;
+  MODIFY `savbal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 --
 -- AUTO_INCREMENT für Tabelle `savings`
 --
 ALTER TABLE `savings`
-MODIFY `sav_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=468;
+  MODIFY `sav_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=468;
 --
 -- AUTO_INCREMENT für Tabelle `savtype`
 --
 ALTER TABLE `savtype`
-MODIFY `savtype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `savtype_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT für Tabelle `securities`
 --
 ALTER TABLE `securities`
-MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `settings`
 --
 ALTER TABLE `settings`
-MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `set_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT für Tabelle `shares`
 --
 ALTER TABLE `shares`
-MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=230;
+  MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
 --
 -- AUTO_INCREMENT für Tabelle `shareval`
 --
 ALTER TABLE `shareval`
-MODIFY `shareval_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `shareval_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `ugroup`
 --
 ALTER TABLE `ugroup`
-MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
