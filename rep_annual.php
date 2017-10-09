@@ -3,7 +3,7 @@
 	require 'functions.php';
 	checkLogin();
 	checkPermissionReport();
-	connect();
+	$db_link = connect();
 	
 	//Variable $year provides the pre-set values for input fields
 	$year = (date("Y",time()))-1; 
@@ -39,7 +39,7 @@
 		if(isset($_POST['select'])){
 			
 			//Sanitize user input
-			$rep_year = sanitize($_POST['rep_year']);
+			$rep_year = sanitize($db_link, $_POST['rep_year']);
 			
 			//Calculate UNIX TIMESTAMP for first and last day of selected month
 			$firstDay = mktime(0, 0, 0, 1, 1, $rep_year);
@@ -54,35 +54,35 @@
 			
 			//Select INCOMES and INCTYPE
 			$sql_incomes = "SELECT * FROM incomes WHERE inc_date BETWEEN $firstDay AND $lastDay";
-			$query_incomes = mysql_query($sql_incomes);
-			checkSQL($query_incomes);
+			$query_incomes = mysqli_query($db_link, $sql_incomes);
+			checkSQL($db_link, $query_incomes);
 			
 			$sql_inctype = "SELECT * FROM inctype";
-			$query_inctype = mysql_query($sql_inctype);
-			checkSQL($query_inctype);
+			$query_inctype = mysqli_query($db_link, $sql_inctype);
+			checkSQL($db_link, $query_inctype);
 			
 			
 			/**** EXPENDITURE RELATED DATA ****/
 			
 			//Select expenses and EXPTYPE
 			$sql_expendit = "SELECT * FROM expenses WHERE exp_date BETWEEN $firstDay AND $lastDay ORDER BY exp_date";
-			$query_expendit = mysql_query($sql_expendit);
-			checkSQL($query_expendit);
+			$query_expendit = mysqli_query($db_link, $sql_expendit);
+			checkSQL($db_link, $query_expendit);
 			
 			$sql_exptype = "SELECT * FROM exptype";
-			$query_exptype = mysql_query($sql_exptype);
-			checkSQL($query_exptype);
+			$query_exptype = mysqli_query($db_link, $sql_exptype);
+			checkSQL($db_link, $query_exptype);
 			
 			
 			/**** CAPITAL RELATED DATA ****/
 			
 			//Select bought and sold Shares from SHARES
 			$sql_shares = "SELECT * FROM shares WHERE share_date BETWEEN $firstDay AND $lastDay";
-			$query_shares = mysql_query($sql_shares);
-			checkSQL ($query_shares);
+			$query_shares = mysqli_query($db_link, $sql_shares);
+			checkSQL($db_link, $query_shares);
 			$total_share_buys = 0;
 			$total_share_sales = 0;
-			while($row_shares = mysql_fetch_assoc($query_shares)){
+			while($row_shares = mysqli_fetch_assoc($query_shares)){
 				if($row_shares['share_amount'] >= 0){
 					$total_share_buys = $total_share_buys + $row_shares['share_value'];
 				}
@@ -93,38 +93,38 @@
 			
 			//Select Saving Deposits from SAVINGS
 			$sql_savdep = "SELECT * FROM savings WHERE sav_date BETWEEN $firstDay AND $lastDay AND savtype_id = 1";
-			$query_savdep = mysql_query($sql_savdep);
-			checkSQL ($query_savdep);
+			$query_savdep = mysqli_query($db_link, $sql_savdep);
+			checkSQL($db_link, $query_savdep);
 			$total_savdep = 0;
-			while($row_savdep = mysql_fetch_assoc($query_savdep)){
+			while($row_savdep = mysqli_fetch_assoc($query_savdep)){
 				$total_savdep = $total_savdep + $row_savdep['sav_amount'];
 			}
 			
 			//Select Loan Recoveries from LOANS
 			$sql_loanrec = "SELECT * FROM ltrans WHERE ltrans_date BETWEEN $firstDay AND $lastDay";
-			$query_loanrec = mysql_query($sql_loanrec);
-			checkSQL ($query_loanrec);
+			$query_loanrec = mysqli_query($db_link, $sql_loanrec);
+			checkSQL($db_link, $query_loanrec);
 			$total_loanrec = 0;
-			while($row_loanrec = mysql_fetch_assoc($query_loanrec)){
+			while($row_loanrec = mysqli_fetch_assoc($query_loanrec)){
 				$total_loanrec = $total_loanrec + $row_loanrec['ltrans_principal'];
 			}
 			
 			//Select Saving Withdrawals from SAVINGS
 			$sql_savwithd = "SELECT * FROM savings WHERE sav_date BETWEEN $firstDay AND $lastDay AND savtype_id = 2";
-			$query_savwithd = mysql_query($sql_savwithd);
-			checkSQL ($query_savwithd);
+			$query_savwithd = mysqli_query($db_link, $sql_savwithd);
+			checkSQL($db_link, $query_savwithd);
 			$total_savwithd = 0;
-			while($row_savwithd = mysql_fetch_assoc($query_savwithd)){
+			while($row_savwithd = mysqli_fetch_assoc($query_savwithd)){
 				$total_savwithd = $total_savwithd + $row_savwithd['sav_amount'];
 			}
 			$total_savwithd = $total_savwithd * (-1);
 			
 			//Select Loans Out from LOANS
 			$sql_loanout = "SELECT * FROM loans WHERE loan_dateout BETWEEN $firstDay AND $lastDay";
-			$query_loanout = mysql_query($sql_loanout);
-			checkSQL ($query_loanout);
+			$query_loanout = mysqli_query($db_link, $sql_loanout);
+			checkSQL($db_link, $query_loanout);
 			$total_loanout = 0;
-			while($row_loanout = mysql_fetch_assoc($query_loanout)){
+			while($row_loanout = mysqli_fetch_assoc($query_loanout)){
 				$total_loanout = $total_loanout + $row_loanout['loan_principal'];
 			}
 
@@ -133,18 +133,18 @@
 			
 			//Select Due Loan Payments from LTRANS
 			$sql_loandue = "SELECT * FROM ltrans, loans, loanstatus WHERE ltrans.loan_id = loans.loan_id AND loans.loanstatus_id = loanstatus.loanstatus_id AND ltrans_due BETWEEN $firstDay AND $lastDay AND loans.loanstatus_id IN (2, 4, 5) ORDER BY ltrans_due, loans.cust_id";
-			$query_loandue = mysql_query($sql_loandue);
-			checkSQL ($query_loandue);
+			$query_loandue = mysqli_query($db_link, $sql_loandue);
+			checkSQL($db_link, $query_loandue);
 			
 			//Select Loan Recoveries from LTRANS
 			$sql_loanrec = "SELECT * FROM ltrans, loans WHERE ltrans.loan_id = loans.loan_id AND ltrans_date BETWEEN $firstDay AND $lastDay ORDER BY ltrans_date, loans.cust_id";
-			$query_loanrec = mysql_query($sql_loanrec);
-			checkSQL ($query_loanrec);
+			$query_loanrec = mysqli_query($db_link, $sql_loanrec);
+			checkSQL($db_link, $query_loanrec);
 			
 			//Select Loans Out from LOANS
 			$sql_loanout = "SELECT * FROM loans, customer WHERE loans.cust_id = customer.cust_id AND loans.loan_dateout BETWEEN $firstDay AND $lastDay ORDER BY loan_dateout, loans.cust_id";
-			$query_loanout = mysql_query($sql_loanout);
-			checkSQL ($query_loanout);
+			$query_loanout = mysqli_query($db_link, $sql_loanout);
+			checkSQL($db_link, $query_loanout);
 			?>	
 									
 			<!-- Export Button -->					
@@ -169,13 +169,13 @@
 				<?PHP
 				//Make array for income types
 				$inctype = array();
-				while($row_inctype = mysql_fetch_assoc($query_inctype)){
+				while($row_inctype = mysqli_fetch_assoc($query_inctype)){
 					$inctype[] = $row_inctype;
 				}
 				
 				//Make array for all incomes for selected month
 				$incomes = array();
-				while($row_incomes = mysql_fetch_assoc($query_incomes)){
+				while($row_incomes = mysqli_fetch_assoc($query_incomes)){
 					$incomes[] = $row_incomes;
 				}
 				
@@ -221,12 +221,12 @@
 				<?PHP
 				
 				$exptype = array();
-				while($row_exptype = mysql_fetch_assoc($query_exptype)){
+				while($row_exptype = mysqli_fetch_assoc($query_exptype)){
 					$exptype[] = $row_exptype;
 				}
 				
 				$expendit = array();
-				while($row_expendit = mysql_fetch_assoc($query_expendit)){
+				while($row_expendit = mysqli_fetch_assoc($query_expendit)){
 					$expendit[] = $row_expendit;
 				}
 				
@@ -275,7 +275,7 @@
 				</tr>
 				<?PHP
 				$total_loandue = 0;
-				while($row_loandue = mysql_fetch_assoc($query_loandue)){
+				while($row_loandue = mysqli_fetch_assoc($query_loandue)){
 					echo '<tr>
 									<td><a href="loan.php?lid='.$row_loandue['loan_id'].'">'.$row_loandue['loan_no'].'</a></td>
 									<td>'.$row_loandue['loanstatus_status'].'</td>
@@ -312,7 +312,7 @@
 				</tr>
 				<?PHP
 				$total_loanrec = 0;
-				while($row_loanrec = mysql_fetch_assoc($query_loanrec)){
+				while($row_loanrec = mysqli_fetch_assoc($query_loanrec)){
 					echo '<tr>
 									<td><a href="loan.php?lid='.$row_loanrec['loan_id'].'">'.$row_loanrec['loan_no'].'</a></td>
 									<td>'.number_format($row_loanrec['ltrans_principaldue'] + $row_loanrec['ltrans_interestdue']).' '.$_SESSION['set_cur'].'</td>
@@ -360,7 +360,7 @@
 				</tr>
 				<?PHP
 				$total_loanout = 0;
-				while($row_loanout = mysql_fetch_assoc($query_loanout)){
+				while($row_loanout = mysqli_fetch_assoc($query_loanout)){
 					echo '<tr>
 									<td><a href="loan.php?lid='.$row_loanout['loan_id'].'">'.$row_loanout['loan_no'].'</a></td>
 									<td>'.$row_loanout['cust_name'].' ('.$row_loanout['cust_no'].')</td>
