@@ -4,7 +4,7 @@ $sixtydays = time() - convertDays(60);
 // Getting expenses
 $sql_exp = "SELECT exp_amount FROM expenses WHERE exp_date > $sixtydays";
 $query_exp = mysqli_query($db_link, $sql_exp);
-checkSQL($query_exp, $db_link);
+checkSQL($db_link, $query_exp);
 $exp_total = 0;
 while($row_exp = mysqli_fetch_assoc($query_exp)){
 	$exp_total = $exp_total + $row_exp['exp_amount'];
@@ -13,7 +13,7 @@ while($row_exp = mysqli_fetch_assoc($query_exp)){
 // Getting income
 $sql_inc = "SELECT inc_amount FROM incomes WHERE inc_date > $sixtydays";
 $query_inc = mysqli_query($db_link, $sql_inc);
-checkSQL($query_inc, $db_link);
+checkSQL($db_link, $query_inc);
 $inc_total = 0;
 while($row_inc = mysqli_fetch_assoc($query_inc)){
 	$inc_total = $inc_total + $row_inc['inc_amount'];
@@ -26,7 +26,7 @@ $exp_percent = $exp_percent === 0 ? 0 : $exp_total/($inc_total+$exp_total)*100;
 // Getting savings
 $sql_sav = "SELECT sav_amount FROM savings WHERE sav_date > $sixtydays";
 $query_sav = mysqli_query($db_link, $sql_sav);
-checkSQL($query_sav, $db_link);
+checkSQL($db_link, $query_sav);
 $sav_depos = 0;
 $sav_withd = 0;
 while($row_sav = mysqli_fetch_assoc($query_sav)){
