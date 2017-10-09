@@ -1,60 +1,60 @@
 <!DOCTYPE HTML>
-<?PHP	
+<?PHP
 	require 'functions.php';
 	checkLogin();
-	connect();
-	
+	$db_link = connect();
+
 	//Generate timestamp
 	$timestamp = time();
-	
+
 	//CREATE-Button
 	if (isset($_POST['create'])){
-				
+
 		//Sanitize user input
-		$empl_no = sanitize($_POST['empl_no']);
-		$empl_name = sanitize($_POST['empl_name']);
-		$empl_dob = strtotime(sanitize($_POST['empl_dob']));
-		$emplsex_id = sanitize($_POST['emplsex_id']);
-		$emplmarried_id = sanitize($_POST['emplmarried_id']);
-		$empl_position = sanitize($_POST['empl_position']);
-		$empl_salary = sanitize($_POST['empl_salary']);
-		$empl_address = sanitize($_POST['empl_address']);
-		$empl_phone = sanitize($_POST['empl_phone']);
-		$empl_email = sanitize($_POST['empl_email']);
-		$empl_in = strtotime(sanitize($_POST['empl_in']));
-		
+		$empl_no = sanitize($db_link, $_POST['empl_no']);
+		$empl_name = sanitize($db_link, $_POST['empl_name']);
+		$empl_dob = strtotime(sanitize($db_link, $_POST['empl_dob']));
+		$emplsex_id = sanitize($db_link, $_POST['emplsex_id']);
+		$emplmarried_id = sanitize($db_link, $_POST['emplmarried_id']);
+		$empl_position = sanitize($db_link, $_POST['empl_position']);
+		$empl_salary = sanitize($db_link, $_POST['empl_salary']);
+		$empl_address = sanitize($db_link, $_POST['empl_address']);
+		$empl_phone = sanitize($db_link, $_POST['empl_phone']);
+		$empl_email = sanitize($db_link, $_POST['empl_email']);
+		$empl_in = strtotime(sanitize($db_link, $_POST['empl_in']));
+
 		//Insert new employee into EMPLOYEE
 		$sql_insert = "INSERT INTO employee (empl_no, empl_name, empl_dob, emplsex_id, emplmarried_id, empl_position, empl_salary, empl_address, empl_phone, empl_email, empl_in, empl_lastupd, user_id) VALUES ('$empl_no', '$empl_name', '$empl_dob', '$emplsex_id', '$emplmarried_id', '$empl_position', '$empl_salary', '$empl_address', '$empl_phone', '$empl_email', $empl_in, $empl_in, '$_SESSION[log_id]')";
-		$query_insert = mysql_query($sql_insert);
-		checkSQL($query_insert);
-		
+		$query_insert = mysqli_query($db_link, $sql_insert);
+		checkSQL($db_link, $query_insert);
+
 		//Get new Employees's ID from EMPLOYEE
 		$sql_maxid = "SELECT MAX(empl_id) FROM employee";
-		$query_maxid = mysql_query ($sql_maxid);
-		checkSQL($query_maxid);
-		$maxid = mysql_fetch_assoc($query_maxid);
+		$query_maxid = mysqli_query($db_link, $sql_maxid);
+		checkSQL($db_link, $query_maxid);
+		$maxid = mysqli_fetch_assoc($query_maxid);
 		$_SESSION['empl_id'] = $maxid['MAX(empl_id)'];
-			
+
 		// Refer to empl_new_pic.php
 		header('Location: empl_new_pic.php');
 	}
-	
+
 	// Select sexes from EMPLSEX for dropdown-menu
 	$sql_sex = "SELECT * FROM emplsex";
-	$query_sex = mysql_query($sql_sex);
-	checkSQL($query_sex);
-	
+	$query_sex = mysqli_query($db_link, $sql_sex);
+	checkSQL($db_link, $query_sex);
+
 	//Select Marital Status for Drop-down-Menu
 	$sql_mstat = "SELECT * FROM emplmarried";
-	$query_mstat = mysql_query($sql_mstat);
-	checkSQL($query_mstat);
-	
+	$query_mstat = mysqli_query($db_link, $sql_mstat);
+	checkSQL($db_link, $query_mstat);
+
 	//Build new EMPL_NO
-	$newEmplNo = buildEmplNo();
+	$newEmplNo = buildEmplNo($db_link);
 ?>
 
 <html>
-	<?PHP includeHead('New Employee',0) ?>	
+	<?PHP includeHead('New Employee',0) ?>
 		<script>
 			function validate(form){
 				fail = validateName(form.empl_name.value)
@@ -77,14 +77,14 @@
 			<a href="empl_curr.php">Current Employees</a>
 			<a href="empl_past.php">Former Employees</a>
 		</div>
-		
+
 		<!-- PAGE HEADING -->
-		<p class="heading">New Employee</p> 
-		
+		<p class="heading">New Employee</p>
+
 		<!-- CONTENT -->
 		<div class="content_center">
 			<form action="empl_new.php" method="post" onSubmit="return validate(this)" enctype="multipart/form-data">
-				
+
 				<table id ="tb_fields" style="max-width:1000px;">
 					<tr>
 						<td>Number:</td>
@@ -103,7 +103,7 @@
 						<td>
 							<select name="emplsex_id" size="1" tabindex=3>';
 								<?PHP
-									while ($row_sex = mysql_fetch_assoc($query_sex)){
+									while ($row_sex = mysqli_fetch_assoc($query_sex)){
 										echo '<option value="'.$row_sex['emplsex_id'].'">'.$row_sex['emplsex_name'].'</option>';
 									}
 								?>
@@ -123,7 +123,7 @@
 						<td>
 							<select name="emplmarried_id" size="1" tabindex=5>';
 								<?PHP
-								while ($row_mstat = mysql_fetch_assoc($query_mstat)){
+								while ($row_mstat = mysqli_fetch_assoc($query_mstat)){
 									echo '<option value="'.$row_mstat['emplmarried_id'].'">'.$row_mstat['emplmarried_status'].'</option>';
 								}
 								?>
