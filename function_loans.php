@@ -23,10 +23,10 @@
 	function updateInterFloat($db_link, $loanID, $principal, $interRate){
 
 		$sql_instalments = "SELECT ltrans_id FROM ltrans WHERE ltrans_date IS NULL AND ltrans.loan_id = '$loanID'";
-		$query_instalments = mysql_query($sql_instalments);
-		checkSQL($query_instalments);
+		$query_instalments = mysqli_query($db_link, $sql_instalments);
+		checkSQL($db_link, $query_instalments);
 		$instalments = array();
-		while($row_inst = mysql_fetch_assoc($query_instalments)) $instalments [] = $row_inst;
+		while($row_inst = mysqli_fetch_assoc($query_instalments)) $instalments [] = $row_inst;
 		$instalCount = count($instalments);
 
 		// Re-calculate monthly rate
@@ -49,8 +49,8 @@
 
 			//Update LTRANS
 			$sql_update_ltrans = "UPDATE ltrans SET ltrans_principaldue = '$ltrans_pDue', ltrans_interestdue = '$ltrans_iDue' WHERE ltrans_id = '$inst[ltrans_id]'";
-			$query_update_ltrans = mysql_query ($sql_update_ltrans);
-			checkSQL($query_update_ltrans);
+			$query_update_ltrans = mysqli_query($db_link, $sql_update_ltrans);
+			checkSQL($db_link, $query_update_ltrans);
 
 			//Reduce remaining principal by paid amount
 			$ltrans_pRemain = $ltrans_pRemain - $ltrans_pDue;
