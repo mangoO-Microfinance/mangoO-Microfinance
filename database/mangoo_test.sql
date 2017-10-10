@@ -1172,7 +1172,7 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 (4, 'Currency Abbreviation', 'SET_CUR', 'UGX'),
 (5, 'Auto-fine Defaulters', 'SET_AUF', ''),
 (6, 'Account Deactivation', 'SET_DEA', ''),
-(7, 'Dashboard Left', 'SET_DBL', 'dashboard/dash_subscr.php'),
+(7, 'Dashboard Left', 'SET_DBL', 'dashboard/dash_stat_cust.php'),
 (8, 'Dashboard Right', 'SET_DBR', 'dashboard/dash_none.php'),
 (9, 'Interest Calculation', 'SET_ICL', 'modules/mod_inter_float.php'),
 (10, 'Guarantor Limit', 'SET_GUA', '3'),
@@ -1665,6 +1665,3 @@ ALTER TABLE `ugroup`
 --
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `custmarried` (
 `custmarried_id` int(11) NOT NULL,
   `custmarried_status` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `custmarried`
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `cust_lastupd` int(11) DEFAULT NULL,
   `cust_pic` varchar(100) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `customer`
@@ -87,7 +87,7 @@ INSERT INTO `customer` (`cust_id`, `cust_no`, `cust_name`, `cust_dob`, `custsex_
 CREATE TABLE IF NOT EXISTS `custsex` (
 `custsex_id` int(11) NOT NULL,
   `custsex_name` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `custsex`
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `custsick` (
 `custsick_id` int(11) NOT NULL,
   `custsick_name` varchar(50) NOT NULL,
   `custsick_risk` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `custsick`
@@ -135,7 +135,7 @@ INSERT INTO `custsick` (`custsick_id`, `custsick_name`, `custsick_risk`) VALUES
 CREATE TABLE IF NOT EXISTS `emplmarried` (
 `emplmarried_id` int(11) NOT NULL,
   `emplmarried_status` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `emplmarried`
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `empl_active` int(1) NOT NULL DEFAULT '0',
   `empl_pic` varchar(100) DEFAULT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `employee`
@@ -189,7 +189,7 @@ INSERT INTO `employee` (`empl_id`, `empl_no`, `empl_name`, `empl_dob`, `emplsex_
 CREATE TABLE IF NOT EXISTS `emplsex` (
 `emplsex_id` int(11) NOT NULL,
   `emplsex_name` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `emplsex`
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `exp_voucher` int(11) DEFAULT NULL,
   `exp_created` int(11) DEFAULT NULL,
   `user_id` int(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `exptype` (
 `exptype_id` int(11) NOT NULL,
   `exptype_type` varchar(50) NOT NULL,
   `exptype_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `exptype`
@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `fees` (
   `fee_name` varchar(50) NOT NULL,
   `fee_short` varchar(8) NOT NULL,
   `fee_value` float DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `fees`
@@ -304,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   `inc_text` varchar(200) NOT NULL,
   `inc_created` int(11) NOT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -316,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `inctype` (
 `inctype_id` int(11) NOT NULL,
   `inctype_type` varchar(50) NOT NULL,
   `inctype_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `inctype`
@@ -371,7 +371,7 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `loan_xtra1` varchar(255) DEFAULT NULL,
   `loan_xtraFee1` int(11) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -383,7 +383,7 @@ CREATE TABLE IF NOT EXISTS `loanstatus` (
 `loanstatus_id` int(11) NOT NULL,
   `loanstatus_status` varchar(50) NOT NULL,
   `loanstatus_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `loanstatus`
@@ -408,7 +408,7 @@ CREATE TABLE IF NOT EXISTS `logrec` (
   `logrec_start` int(11) DEFAULT NULL,
   `logrec_end` int(11) DEFAULT NULL,
   `logrec_logout` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -429,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `ltrans` (
   `ltrans_receipt` int(11) DEFAULT NULL,
   `ltrans_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -444,7 +444,7 @@ CREATE TABLE IF NOT EXISTS `savbalance` (
   `savbal_date` int(11) NOT NULL,
   `savbal_created` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -466,7 +466,7 @@ CREATE TABLE IF NOT EXISTS `savings` (
   `sav_fixed` int(11) DEFAULT NULL,
   `sav_created` int(15) DEFAULT NULL,
   `user_id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -478,7 +478,7 @@ CREATE TABLE IF NOT EXISTS `savtype` (
 `savtype_id` int(11) NOT NULL,
   `savtype_type` varchar(20) NOT NULL,
   `savtype_short` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `savtype`
@@ -510,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `securities` (
   `sec_value` int(11) NOT NULL,
   `sec_path` varchar(200) NOT NULL,
   `sec_returned` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -523,7 +523,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `set_name` varchar(100) NOT NULL,
   `set_short` varchar(8) NOT NULL,
   `set_value` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `settings`
@@ -536,8 +536,8 @@ INSERT INTO `settings` (`set_id`, `set_name`, `set_short`, `set_value`) VALUES
 (4, 'Currency Abbreviation', 'SET_CUR', 'UGX'),
 (5, 'Auto-fine Defaulters', 'SET_AUF', ''),
 (6, 'Account Deactivation', 'SET_DEA', ''),
-(7, 'Dashboard Left', 'SET_DBL', 'dashboard/dash_stat_cust.php'),
-(8, 'Dashboard Right', 'SET_DBR', 'dashboard/dash_loandefaults.php'),
+(7, 'Dashboard Left', 'SET_DBL', 'dashboard/dash_subscr.php'),
+(8, 'Dashboard Right', 'SET_DBR', 'dashboard/dash_none.php'),
 (9, 'Interest Calculation', 'SET_ICL', 'modules/mod_inter_float.php'),
 (10, 'Guarantor Limit', 'SET_GUA', '3'),
 (11, 'Minimum Membership', 'SET_MEM', '6'),
@@ -565,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `shares` (
   `share_transfrom` int(11) DEFAULT NULL,
   `share_created` int(15) DEFAULT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -577,7 +577,7 @@ CREATE TABLE IF NOT EXISTS `shareval` (
 `shareval_id` int(11) NOT NULL,
   `shareval_date` int(11) NOT NULL,
   `shareval_value` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
 
@@ -592,7 +592,7 @@ CREATE TABLE IF NOT EXISTS `ugroup` (
   `ugroup_delete` int(2) NOT NULL,
   `ugroup_report` int(11) NOT NULL,
   `ugroup_created` int(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `ugroup`
@@ -614,7 +614,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `ugroup_id` int(11) NOT NULL,
   `empl_id` int(11) NOT NULL,
   `user_created` int(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 --
 -- Daten für Tabelle `user`
