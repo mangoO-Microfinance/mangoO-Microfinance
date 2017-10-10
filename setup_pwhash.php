@@ -2,23 +2,23 @@
 <?PHP
 	session_start();
 	require_once 'functions.php';
-	
+
 	if(isset($_POST['adminSetup'])){
-		
+
 		// Make new passwort pepper
 		require 'setup_makepepper.php';
-		
+
 		// Include passwort pepper
 		require 'config/pepper.php';
-		
-		// Sanitize user input	
-		$admin_pass = password_hash ((sanitize($_POST['admin_pass'])).$pepper, PASSWORD_DEFAULT);
+
+		// Sanitize user input
+		$admin_pass = password_hash ($_POST['admin_pass'].$pepper, PASSWORD_DEFAULT);
 		$timestamp = time();
 	}
 ?>
 
 <html>
-	<?PHP includeHead('Microfinance Management', 0) ?>	
+	<?PHP includeHead('Microfinance Management', 0) ?>
 		<link rel="stylesheet" type="text/css" href="css/setup.css" />
 		<script>
 			function validate(form){
@@ -33,7 +33,7 @@
 		<div class="content_center">
 			<img src="ico/mangoo_l.png" style="width:380px; margin-top:3em; margin-bottom:2em;"/>
 			<p class="heading">mangoO Setup Assistant</p>
-			
+
 			<div class="setup">
 				<p>Generate Password Hash</p>
 				<form action="setup_pwhash.php" method="post" onsubmit="return validate(this)">
@@ -43,7 +43,7 @@
 				</form>
 			</div>
 
-			<?PHP			
+			<?PHP
 			if(isset($_POST['adminSetup'])) echo '
 				<div class="ui-widget">
 					<div class="ui-state-highlight ui-corner-all" style="width:50%; border:none; background-color:#fa6900; margin: 4em auto; padding: .7em;">
@@ -52,7 +52,7 @@
 					</div>
 				</div>';
 			?>
-			
+
 		</div>
 	</body>
 </html>
