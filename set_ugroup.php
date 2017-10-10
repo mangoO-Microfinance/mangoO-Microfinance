@@ -94,6 +94,7 @@
 			<a href="set_user.php">Users</a>
 			<a href="set_ugroup.php" id="item_selected">Usergroups</a>
 			<a href="set_logrec.php">Log Records</a>
+			<?PHP if (strtoupper(substr(PHP_OS, 0, 5)) === 'LINUX') echo '<a href="set_dbbackup.php">Database Backup</a>' ?>
 		</div>
 
 		<!-- LEFT SIDE: Create New Usergroup Form -->
