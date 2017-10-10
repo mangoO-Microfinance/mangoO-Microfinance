@@ -10,7 +10,7 @@
 	//Select all users from USER
 	$users = array();
 	$user_names = array();
-	$sql_users = "SELECT user.user_id, user.user_name, user.user_created, ugroup.ugroup_id, ugroup.ugroup_name, employee.empl_id, employee.empl_name FROM user, ugroup, employee WHERE ugroup.ugroup_id = user.ugroup_id AND user.empl_id = employee.empl_id ORDER BY user_name";
+	$sql_users = "SELECT user.user_id, user.user_name, user.user_created, ugroup.ugroup_id, ugroup.ugroup_name, employee.empl_id, employee.empl_name FROM user LEFT JOIN ugroup ON ugroup.ugroup_id = user.ugroup_id LEFT JOIN employee ON user.empl_id = employee.empl_id WHERE user.user_id != 0 ORDER BY user_name";
 	$query_users = mysqli_query($db_link, $sql_users);
 	checkSQL($db_link, $query_users);
 	while($row_users = mysqli_fetch_assoc($query_users)){
