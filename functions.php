@@ -1,28 +1,24 @@
-<?PHP	
+<?PHP
 /**
-	* Establish Server & Database Connection
+	* Establish Database Connection
 	*/
 	function connect() {
 		require_once 'config/config.php';
-		
-		/* Server connection */
-		$connect_srv = mysql_connect(DB_HOST, DB_USER, DB_PASS);
-		if (!$connect_srv) header('Location:setup.php');
-		
-		/* Database connection */
-		$connect_db = mysql_select_db(DB_NAME, $connect_srv);
-		if (!$connect_db) header('Location:setup.php');
-	}	
-	
+		$connect = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		if (!$connect) header('Location:setup.php');
+		mysqli_set_charset($connect, 'utf8');
+		return $connect;
+	}
+
 /**
 	* Generate unique fingerprint for every user session
-	* @return string fingerprint : Unique fingerprint generated from remote server address, 
+	* @return string fingerprint : Unique fingerprint generated from remote server address,
 	* random string, and user agent
 	*/
 	function fingerprint(){
 		return $fingerprint = md5($_SERVER['REMOTE_ADDR'].'jikI/20Y,!'.$_SERVER['HTTP_USER_AGENT']);
 	}
-	
+
 /**
 	* Check if current user is logged in
 	*/
@@ -32,7 +28,7 @@
 		if (!isset($_SESSION['log_user']) || $_SESSION['log_fingerprint'] != $fingerprint) logout();
 		session_regenerate_id();
 	}
-	
+
 /**
 	* Check if current user logged out properly last time
 	*/
@@ -52,7 +48,7 @@
 			die();
 		}
 	}
-	
+
 /**
 	* Check if current user has Delete permission
 	*/
@@ -62,7 +58,7 @@
 			die();
 		}
 	}
-	
+
 /**
 	* Check if current user has permission to access Reports
 	*/
@@ -74,43 +70,43 @@
 	}
 
 	/**
-	* Logout procedure: Delete session variables 
+	* Logout procedure: Delete session variables
 	* and cookies, destroy user session.
 	*/
 	function logout(){
 		/* Delete all Session Variables */
 		$_SESSION = array();
-		
+
 		/* If a session cookie was used, delete it */
 		if (ini_get("session.use_cookies")) {
 			$params = session_get_cookie_params();
 			setcookie(session_name(), '', time() - 86400, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
 		}
-		
+
 		/* Finally, delete the Session */
-		session_destroy();													
-		
+		session_destroy();
+
 		/* Forward to logout_success.php */
 		header('Location: logout_success.php');
 		die;
 	}
-	
+
 /**
 	* Check if an SQL statement has succeded
 	*/
-	function checkSQL($sqlquery){
-		if (!$sqlquery) die ('SQL-Statement failed: '.mysql_error());
-	}	
-	
+	function checkSQL($db_link, $sqlquery){
+		if (!$sqlquery) die ('SQL-Statement failed: '.mysqli_error($db_link));
+	}
+
 /**
 	* Pushing system settings into session variables
-	*/	
-	function getSettings(){
+	*/
+	function getSettings($db_link){
 		$sql_settings = "SELECT * FROM settings";
-		$query_settings = mysql_query($sql_settings);
-		checkSQL($query_settings);
-		while($row_settings = mysql_fetch_assoc($query_settings)){
-			
+		$query_settings = mysqli_query($db_link, $sql_settings);
+		checkSQL($db_link, $query_settings, $db_link);
+		while($row_settings = mysqli_fetch_assoc($query_settings)){
+
 			switch ($row_settings['set_short']){
 				case "SET_MSB":
 					$_SESSION['set_msb'] = $row_settings['set_value'];
@@ -166,15 +162,15 @@
 			}
 		}
 	}
-	
+
 /**
 	* Pushing fee settings into session variables
 	*/
-	function getFees(){
+	function getFees($db_link){
 		$sql_fees = "SELECT * FROM fees";
-		$query_fees = mysql_query($sql_fees);
-		checkSQL($query_fees);
-		while ($row_fees = mysql_fetch_assoc($query_fees)){
+		$query_fees = mysqli_query($db_link, $sql_fees);
+		checkSQL($db_link, $query_fees, $db_link);
+		while ($row_fees = mysqli_fetch_assoc($query_fees)){
 			switch ($row_fees['fee_short']){
 				case "FEE_ENT":
 					$_SESSION['fee_entry'] = $row_fees['fee_value'];
@@ -210,31 +206,31 @@
 			}
 		}
 	}
-	
+
 /**
 	* Pushing current share value into a session variable
 	*/
-	function getShareValue(){
+	function getShareValue($db_link){
 		$sql_shareval = "SELECT shareval_value FROM shareval WHERE shareval_id IN (SELECT MAX(shareval_id) FROM shareval)";
-		$query_shareval = mysql_query($sql_shareval);
-		checkSQL($query_shareval);
-		$result_shareval = mysql_fetch_assoc($query_shareval);
+		$query_shareval = mysqli_query($db_link, $sql_shareval);
+		checkSQL($db_link, $query_shareval, $db_link);
+		$result_shareval = mysqli_fetch_assoc($query_shareval);
 		$_SESSION['share_value'] = $result_shareval['shareval_value'];
 	}
-	
+
 /**
 	* Sanitize and secure user input
 	* @param string var : User Input
 	* @return string var : Secured and sanitized User Input
 	*/
-	function sanitize($var) {
+	function sanitize($db_link, $var) {
 		if(get_magic_quotes_gpc()) $var = stripslashes($var);
 		$var = htmlentities($var);
 		$var = strip_tags($var);
-		$var = mysql_real_escape_string($var);
+		$var = mysqli_real_escape_string($db_link, $var);
 		return $var;
 	}
-	
+
 /**
 	* Convert a number of days into UNIX timestamp seconds
 	* @param int days : Number of days
@@ -248,29 +244,29 @@
 	* Convert a number of months into UNIX timestamp seconds
 	* @param int months : Number of months
 	* @return int seconds : Lenght of number of days in seconds
-	*/	
+	*/
 	function convertMonths($months){
 		return $seconds = $months * 2635200; // Seconds for 30.5 days
 	}
-	
+
 /**
 	* Check if a GET parameter with a Customer ID has been set
 	* If not, return to start page.
 	*/
-	function getCustID(){
-		if (isset($_GET['cust'])) $_SESSION['cust_id'] = sanitize($_GET['cust']);
+	function getCustID($db_link){
+		if (isset($_GET['cust'])) $_SESSION['cust_id'] = sanitize($db_link, $_GET['cust']);
 		else header('Location: start.php');
 	}
-	
+
 /**
 	* Check if a GET parameter with a Loan ID has been set
 	* If not, return to customer page.
 	*/
-	function getLoanID(){
-		if (isset($_GET['lid'])) $_SESSION['loan_id'] = sanitize($_GET['lid']);
+	function getLoanID($db_link){
+		if (isset($_GET['lid'])) $_SESSION['loan_id'] = sanitize($db_link, $_GET['lid']);
 		else header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
-	
+
 /**
 	* Generate HTML Header Section
 	* @param string title : Page title
@@ -309,7 +305,7 @@
 	* @param int tab_no : Number of currently selected menu tab.
 	*/
 	function includeMenu($tab_no){
-		echo '		
+		echo '
 		<!-- MENU HEADER -->
 		<div id="menu_header">
 			<img src="ico/mangoo_logo_m.png" style="margin: 1em 0 0 .75em;"/>
@@ -323,12 +319,12 @@
 				</ul>
 			</div>
 		</div>';
-		
+
 		echo '
 		<!-- MENU TABS -->
-		<div id="menu_tabs"> 
+		<div id="menu_tabs">
 			<ul>
-				<li'; 
+				<li';
 				if ($tab_no == 1) echo ' id="tab_selected"';
 				echo '><a href="start.php"><i class="fa fa-tachometer fa-fw"></i> Dashboard</a></li>
 				<li';
@@ -343,13 +339,13 @@
 				<li';
 				if ($tab_no == 7) echo ' id="tab_selected"';
 				echo '><a href="empl_curr.php"><i class="fa fa-male fa-fw"></i> Employees</a></li>';
-				
+
 				if ($_SESSION['log_report'] == 1){
 					echo '<li';
 					if ($tab_no == 5) echo ' id="tab_selected"';
 					echo '><a href="rep_incomes.php"><i class="fa fa-line-chart fa-fw"></i> Reports</a></li>';
 				}
-				
+
 				if ($_SESSION['log_admin'] == 1){
 					echo '<li';
 					if ($tab_no == 6) echo ' id="tab_selected"';
@@ -358,7 +354,7 @@
 			echo '</ul>
 		</div>';
 	}
-	
+
 /**
 	* Generate a Javascript alert message
 	* @param string text : Message text
@@ -368,50 +364,49 @@
 						alert(\''.$text.'\')
 					</script>';
 	}
-	
-/**	
+
+/**
 	* Calculate a given customer's savings account balance
 	* @return int sav_balance : Current savings account balance for given customer
 	*/
-	function getSavingsBalance($cust_id){
+	function getSavingsBalance($db_link, $cust_id){
 		$sql_savbal = "SELECT savbal_balance FROM savbalance WHERE cust_id = $cust_id";
-		$query_savbal = mysql_query($sql_savbal);
-		checkSQL($query_savbal);
-		
-		$savbal = mysql_fetch_assoc($query_savbal);
-		
+		$query_savbal = mysqli_query($db_link, $sql_savbal);
+		checkSQL($db_link, $query_savbal, $db_link);
+
+		$savbal = mysqli_fetch_assoc($query_savbal);
+
 		return $savbal['savbal_balance'];
 	}
-	
+
 /**
 	* Update savings account balance for SPECIFIC customer
 	*/
-	function updateSavingsBalance($cust_id){
+	function updateSavingsBalance($db_link, $cust_id){
 		$sql_savbal_upd = "UPDATE savbalance SET savbal_balance = (SELECT SUM(sav_amount) FROM savings WHERE cust_id = $cust_id) WHERE cust_id = $cust_id";
-		$query_savbal_upd = mysql_query($sql_savbal_upd);
-		checkSQL($query_savbal_upd);
+		$query_savbal_upd = mysqli_query($db_link, $sql_savbal_upd);
+		checkSQL($db_link, $query_savbal_upd, $db_link);
 	}
 
 /**
 	* Update savings account balance for ALL customers
 	*/
-	function updateSavingsBalanceAll(){
+	function updateSavingsBalanceAll($db_link){
 		$sql_savbal_upd_all = "UPDATE savbalance SET savbalance.savbal_balance = (SELECT SUM(savings.sav_amount) FROM savings WHERE savings.cust_id = savbalance.cust_id)";
-		$query_savbal_upd_all = mysql_query($sql_savbal_upd_all);
-		checkSQL($query_savbal_upd_all);
+		$query_savbal_upd_all = mysqli_query($db_link, $sql_savbal_upd_all);
+		checkSQL($db_link, $query_savbal_upd_all, $db_link);
 	}
-	
+
 /**
 	* Calculate balances for a specific loan
 	* @return array $loanbal : Array with principal balance,
 	*/
-	function getLoanBalance($loan_id){
-		
+	function getLoanBalance($db_link, $loan_id){
 		//Select Loan Balance from LTRANS
 		$sql_balances = "SELECT ltrans_principaldue, ltrans_interestdue, ltrans_principal, ltrans_interest FROM ltrans WHERE ltrans.loan_id = '$loan_id'";
-		$query_balances = mysql_query($sql_balances);
-		checkSQL($query_balances);
-		
+		$query_balances = mysqli_query($db_link, $sql_balances);
+		checkSQL($db_link, $query_balances, $db_link);
+
 		//Calculate outstanding balances
 		$loan_balances = array(
 			"pdue" => 0,
@@ -420,55 +415,55 @@
 			"ipaid" => 0,
 			"balance" => 0
 		);
-		while ($row_balances = mysql_fetch_assoc($query_balances)){
+		while ($row_balances = mysqli_fetch_assoc($query_balances)){
 			$loan_balances['pdue'] = $loan_balances['pdue'] + $row_balances['ltrans_principaldue'];
 			$loan_balances['idue'] = $loan_balances['idue'] + $row_balances['ltrans_interestdue'];
 			$loan_balances['ppaid'] = $loan_balances['ppaid'] + $row_balances['ltrans_principal'];
 			$loan_balances['ipaid'] = $loan_balances['ipaid'] + $row_balances['ltrans_interest'];
 		}
 		$loan_balances['balance'] = ($loan_balances['pdue'] + $loan_balances['idue']) - ($loan_balances['ppaid'] + $loan_balances['ipaid']);
-		
+
 		return $loan_balances;
 	}
-	
+
 /**
 	* Calculate current customer's share account balance
 	* @return int share_balace : Current share account balance
 	*/
-	function getShareBalance($cust_id){
+	function getShareBalance($db_link, $cust_id){
 		$sql_sharebal = "SELECT share_amount, share_value FROM shares WHERE cust_id = $cust_id";
-		$query_sharebal = mysql_query($sql_sharebal);
-		checkSQL($query_sharebal);
+		$query_sharebal = mysqli_query($db_link, $sql_sharebal);
+		checkSQL($db_link, $query_sharebal, $db_link);
 		$sharebal = array("amount" => "0", "value" => "0");
-		while($row_sharebal = mysql_fetch_assoc($query_sharebal)){
+		while($row_sharebal = mysqli_fetch_assoc($query_sharebal)){
 			$sharebal['amount'] = $sharebal['amount'] + $row_sharebal['share_amount'];
 			$sharebal['value'] = $sharebal['value'] + $row_sharebal['share_value'];
 		}
 		return $sharebal;
 	}
-	
+
 /**
 	* Get current customer's details
 	* @return array result_cust : Associative array with the details of the current customer
 	*/
-	function getCustomer($custID){
+	function getCustomer($db_link, $custID){
 		$sql_cust = "SELECT * FROM customer LEFT JOIN custsex ON customer.custsex_id = custsex.custsex_id LEFT JOIN custmarried ON customer.custmarried_id = custmarried.custmarried_id LEFT JOIN custsick ON customer.custsick_id = custsick.custsick_id LEFT JOIN user ON customer.user_id = user.user_id WHERE cust_id = '$custID'";
-		$query_cust = mysql_query($sql_cust);
-		checkSQL($query_cust);
-		$result_cust = mysql_fetch_assoc($query_cust);
-		
+		$query_cust = mysqli_query($db_link, $sql_cust);
+		checkSQL($db_link, $query_cust, $db_link);
+		$result_cust = mysqli_fetch_assoc($query_cust);
+
 		return $result_cust;
 	}
-	
+
 /**
 	* Get all customers except current one
 	* @return array query_custother : Array with the result of the SQL query
 	*/
-	function getCustOther(){
+	function getCustOther($db_link){
 		$sql_custother = "SELECT * FROM customer LEFT JOIN custsex ON custsex.custsex_id = customer.custsex_id WHERE cust_id NOT IN (0, $_SESSION[cust_id]) ORDER BY cust_id";
-		$query_custother = mysql_query($sql_custother);
-		checkSQL($query_custother);
-		
+		$query_custother = mysqli_query($db_link, $sql_custother);
+		checkSQL($db_link, $query_custother, $db_link);
+
 		return $query_custother;
 	}
 
@@ -476,11 +471,11 @@
 	* Get all active customers
 	* @return array query_custact : Array with the result of the SQL query
 	*/
-	function getCustAct(){
+	function getCustAct($db_link){
 		$sql_custact = "SELECT * FROM customer LEFT JOIN custsex ON custsex.custsex_id = customer.custsex_id WHERE cust_id != 0 AND cust_active = 1 ORDER BY cust_id";
-		$query_custact = mysql_query($sql_custact);
-		checkSQL($query_custact);
-		
+		$query_custact = mysqli_query($db_link, $sql_custact);
+		checkSQL($db_link, $query_custact, $db_link);
+
 		return $query_custact;
 	}
 
@@ -488,30 +483,54 @@
 	* Get all inactive customers
 	* @return array query_custinact : Array with the result of the SQL query
 	*/
-	function getCustInact(){
+	function getCustInact($db_link){
 		$sql_custinact = "SELECT * FROM customer LEFT JOIN custsex ON custsex.custsex_id = customer.custsex_id WHERE cust_id != 0 AND cust_active != 1 ORDER BY cust_id";
-		$query_custinact = mysql_query($sql_custinact);
-		checkSQL($query_custinact);
-		
+		$query_custinact = mysqli_query($db_link, $sql_custinact);
+		checkSQL($db_link, $query_custinact, $db_link);
+
 		return $query_custinact;
 	}
-	
+
+/**
+	* Get all customers
+	* @return array query_custall : Array with the result of the SQL query
+	*/
+	function getCustAll($db_link){
+		$sql_custall = "SELECT * FROM customer LEFT JOIN custsex ON custsex.custsex_id = customer.custsex_id WHERE cust_id !=0";
+		$query_custall = mysqli_query($db_link, $sql_custall);
+		checkSQL($db_link, $query_custall, $db_link);
+
+		return $query_custall;
+	}
+
+/**
+	* Get customers with overdue subscription fee
+	* @return array query_custoverdue : Array with the result of the SQL query
+	*/
+	function getCustOverdue($db_link){
+		$last_subscr = time() - convertDays(365); //Seconds for 365 days
+		$sql_custoverdue = "SELECT * FROM customer WHERE cust_active = 1 AND cust_lastsub < $last_subscr ORDER BY cust_lastsub, cust_id";
+		$query_custoverdue = mysqli_query($db_link, $sql_custoverdue);
+		checkSQL($db_link, $query_custoverdue, $db_link);
+
+		return $query_custoverdue;
+	}
+
 /**
 	* Build new customer number
 	* @return varchar custNo :  Newly build customer number
-	*/	
-	function buildCustNo(){		
-		
+	*/
+	function buildCustNo($db_link){
 		// Determine biggest customer ID
 		$sql_maxID = "SELECT MAX(cust_id) AS maxid FROM customer";
-		$query_maxID = mysql_query($sql_maxID);
-		checkSQL($query_maxID);
-		$result_maxID = mysql_fetch_array($query_maxID);
+		$query_maxID = mysqli_query($db_link, $sql_maxID);
+		checkSQL($db_link, $query_maxID);
+		$result_maxID = mysqli_fetch_array($query_maxID);
 
 		// Read customer number format
 		$cnParts = explode("%", $_SESSION['set_cno']);
 		$cnCount = count($cnParts);
-		
+
 		// Build customer number
 		$i = 0;
 		$custNo = "";
@@ -533,7 +552,7 @@
 					$custNo = $custNo.$cnParts[$i];
 			}
 		}
-		
+
 		// Return customer number
 		return $custNo;
 	}
@@ -542,12 +561,12 @@
 	* Get current employee
 	* @return array result_empl :  Associative array with the details of the current employee
 	*/
-	function getEmployee($empl_id){
+	function getEmployee($db_link, $empl_id){
 		$sql_empl = "SELECT * FROM employee LEFT JOIN user ON employee.empl_id = user.empl_id WHERE employee.empl_id = $empl_id";
-		$query_empl = mysql_query($sql_empl);
-		checkSQL($query_empl);
-		$result_empl = mysql_fetch_assoc($query_empl);
-		
+		$query_empl = mysqli_query($db_link, $sql_empl);
+		checkSQL($db_link, $query_empl, $db_link);
+		$result_empl = mysqli_fetch_assoc($query_empl);
+
 		return $result_empl;
 	}
 
@@ -555,12 +574,12 @@
 	* Get all current employees
 	* @return array query_emplcurr : Array with the result of the SQL query
 	*/
-	function getEmplCurr(){
+	function getEmplCurr($db_link){
 		$timestamp = time();
 		$sql_emplcurr = "SELECT * FROM employee LEFT JOIN emplsex ON employee.emplsex_id = emplsex.emplsex_id LEFT JOIN emplmarried ON employee.emplmarried_id = emplmarried.emplmarried_id WHERE empl_id != 0 AND (empl_out > $timestamp OR empl_out IS NULL) ORDER BY empl_id";
-		$query_emplcurr = mysql_query($sql_emplcurr);
-		checkSQL($query_emplcurr);
-		
+		$query_emplcurr = mysqli_query($db_link, $sql_emplcurr);
+		checkSQL($db_link, $query_emplcurr, $db_link);
+
 		return $query_emplcurr;
 	}
 
@@ -568,31 +587,30 @@
 	* Get all past employees
 	* @return array query_emplpast : Array with the result of the SQL query
 	*/
-	function getEmplPast(){
+	function getEmplPast($db_link){
 		$timestamp = time();
 		$sql_emplpast = "SELECT * FROM employee LEFT JOIN emplsex ON employee.emplsex_id = emplsex.emplsex_id LEFT JOIN emplmarried ON employee.emplmarried_id = emplmarried.emplmarried_id WHERE empl_id != 0 AND empl_out < $timestamp ORDER BY empl_id";
-		$query_emplpast = mysql_query($sql_emplpast);
-		checkSQL($query_emplpast);
-		
+		$query_emplpast = mysqli_query($db_link, $sql_emplpast);
+		checkSQL($db_link, $query_emplpast, $db_link);
+
 		return $query_emplpast;
 	}
-	
+
 /**
 	* Build new employee number
 	* @return varchar emplNo :  Newly build employee number
-	*/	
-	function buildEmplNo(){		
-		
+	*/
+	function buildEmplNo($db_link){
 		// Determine biggest employee ID
 		$sql_maxID = "SELECT MAX(empl_id) AS maxid FROM employee";
-		$query_maxID = mysql_query($sql_maxID);
-		checkSQL($query_maxID);
-		$result_maxID = mysql_fetch_array($query_maxID);
+		$query_maxID = mysqli_query($db_link, $sql_maxID);
+		checkSQL($db_link, $query_maxID, $db_link);
+		$result_maxID = mysqli_fetch_array($query_maxID);
 
 		// Read employee number format
 		$enParts = explode("%", $_SESSION['set_eno']);
 		$enCount = count($enParts);
-		
+
 		// Build customer number
 		$i = 0;
 		$emplNo = "";
@@ -614,8 +632,20 @@
 					$emplNo = $emplNo.$enParts[$i];
 			}
 		}
-		
+
 		// Return customer number
 		return $emplNo;
+	}
+
+/**
+	* Get all overdue Loan Instalments
+	* @return array query_overdue : Array with the result of the SQL query
+	*/
+	function getLtransOverdue($db_link){
+		$timestamp = time();
+		$sql_overdue = "SELECT * FROM ltrans LEFT JOIN loans ON ltrans.loan_id = loans.loan_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE ltrans_due <= $timestamp AND ltrans_date IS NULL AND loanstatus_id = 2 ORDER BY ltrans_due";
+		$query_overdue = mysqli_query($db_link, $sql_overdue);
+		checkSQL($db_link, $query_overdue, $db_link);
+		return $query_overdue;
 	}
 ?>
