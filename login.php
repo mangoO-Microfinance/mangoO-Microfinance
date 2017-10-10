@@ -53,7 +53,7 @@
 			// Find LOGREC_ID for current user
 			$sql_logrecid = "SELECT MAX(logrec_id) FROM logrec WHERE user_id = '$_SESSION[log_id]'";
 			$query_logrecid = mysqli_query($db_link, $sql_logrecid);
-			checkSQL ($db_link, $query_logrecid);
+			checkSQL($db_link, $db_link, $query_logrecid);
 			$logrecid = mysqli_fetch_array($query_logrecid);
 			$_SESSION['logrec_id'] = $logrecid['MAX(logrec_id)'];
 
