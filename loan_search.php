@@ -2,7 +2,7 @@
 <?PHP
 	require 'functions.php';
 	checkLogin();
-	connect();
+	$db_link = connect();
 ?>
 
 <html>
