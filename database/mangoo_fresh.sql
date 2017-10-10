@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
 --
 
 INSERT INTO `employee` (`empl_id`, `empl_no`, `empl_name`, `empl_dob`, `emplsex_id`, `emplmarried_id`, `empl_position`, `empl_salary`, `empl_address`, `empl_phone`, `empl_email`, `empl_in`, `empl_out`, `empl_lastupd`, `empl_active`, `empl_pic`, `user_id`) VALUES
-(0, '0', '0', 0, 0, 0, '', 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1);
+(0, '0', NULL, 0, 0, 0, '', 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -905,4 +905,4 @@ MODIFY `ugroup_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;

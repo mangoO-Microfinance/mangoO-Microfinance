@@ -278,7 +278,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`empl_id`, `empl_no`, `empl_name`, `empl_dob`, `emplsex_id`, `emplmarried_id`, `empl_position`, `empl_salary`, `empl_address`, `empl_phone`, `empl_email`, `empl_in`, `empl_out`, `empl_lastupd`, `empl_active`, `empl_pic`, `user_id`) VALUES
-(0, '0', '0', 0, 0, 0, '', 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1),
+(0, '0', NULL, 0, 0, 0, '', 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1),
 (1, '001', 'Simon Peter', 18486000, 1, 2, 'Leader', 500000, 'Bethsaida', '01234567', '', 1551600, NULL, 1458731310, 0, 'uploads/photos/employees/empl1_146x190.jpg', 1),
 (2, '002', 'Andrew', -3600, 1, 1, 'First Officer', 0, 'Bethsaida', '0123456789', '', 334274400, NULL, 1458731385, 0, 'uploads/photos/employees/empl2_146x190.jpg', 1),
 (3, '003', 'James, Son of Zebedee', -3600, 1, 2, '', 0, 'Capharnaum', '01234567', '', -3600, NULL, 1457528117, 0, 'uploads/photos/employees/empl3_146x190.jpg', 1),
