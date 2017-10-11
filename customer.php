@@ -11,7 +11,8 @@
 	$timestamp = time();
 
 	//Calculate Balance on Savings account
-	$savbalance = getSavingsBalance($db_link, $_SESSION['cust_id']);
+	$sav_balance = getSavingsBalance($db_link, $_SESSION['cust_id']);
+	$sav_fixed = getSavingsFixed($db_link, $_SESSION['cust_id']);
 
 	//UPDATE-Button
 	if (isset($_POST['update'])){
@@ -100,7 +101,7 @@
 				fail = validateDate(form.subscr_date.value)
 				fail += validateReceipt(form.subscr_receipt.value)
 				if (document.getElementById('subscr_from_sav').checked){
-					fail += validateOverdraft(<?PHP echo $_SESSION['fee_subscr']; ?>, <?PHP echo $savbalance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)}
+					fail += validateOverdraft(<?PHP echo $_SESSION['fee_subscr']; ?>, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>, <?PHP echo $sav_fixed; ?>)}
 				if (fail == "") return true
 				else { alert(fail); return false }
 			}
@@ -292,7 +293,7 @@
 				}
 
 				echo '<tr class="balance">
-								<td colspan="4" >Balance: '.number_format($savbalance).' '.$_SESSION['set_cur'].'</td>
+								<td colspan="4" >Balance: '.number_format($sav_balance).' '.$_SESSION['set_cur'].'</td>
 							</tr>';
 			 ?>
 			</table>

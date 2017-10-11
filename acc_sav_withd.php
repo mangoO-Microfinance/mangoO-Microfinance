@@ -8,8 +8,10 @@
 	//Generate Timestamp
 	$timestamp = time();
 
-	// Get savings balance for current customer
+	// Update savings balance for current customer and store into variable
+	updateSavingsBalance ($db_link, $_SESSION['cust_id']);
 	$sav_balance = getSavingsBalance($db_link, $_SESSION['cust_id']);
+	$sav_fixed = getSavingsFixed($db_link, $_SESSION['cust_id']);
 
 	// WITHDRAW-Button
 	if (isset($_POST['withdraw'])){
@@ -64,14 +66,15 @@
 	<?PHP includeHead('Savings Withdrawal',0) ?>
 		<script>
 			function validate(form){
-				var savbalance = <?PHP echo $savbalance; ?>;
+				var savbalance = <?PHP echo $sav_balance; ?>;
+				var savfixed = <?PHP echo $sav_fixed; ?>;
 				var minsavbal = <?PHP echo $_SESSION['set_msb']; ?>;
 				if (document.getElementById('sav_deduct').checked) var wd_fee = <?PHP echo $_SESSION['fee_withdraw']; ?>;
 					else var wd_fee = 0;
 				fail = validateDate(form.sav_date.value)
 				fail += validateSlip(form.sav_slip.value)
 				fail += validateAmount(form.sav_amount.value)
-				fail += validateOverdraft(form.sav_amount.value, savbalance, wd_fee, minsavbal)
+				fail += validateOverdraft(form.sav_amount.value, savbalance, wd_fee, minsavbal, savfixed)
 				fail += validateReceipt(form.sav_receipt.value)
 				if (fail == "") return true
 				else { alert(fail); return false }

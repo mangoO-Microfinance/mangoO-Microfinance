@@ -367,23 +367,38 @@
 
 /**
 	* Calculate a given customer's savings account balance
-	* @return int sav_balance : Current savings account balance for given customer
+	* @return int savbal : Current savings account balance for given customer
 	*/
 	function getSavingsBalance($db_link, $cust_id){
 		$sql_savbal = "SELECT savbal_balance FROM savbalance WHERE cust_id = $cust_id";
 		$query_savbal = mysqli_query($db_link, $sql_savbal);
-		checkSQL($db_link, $query_savbal, $db_link);
+		checkSQL($db_link, $query_savbal);
 
 		$savbal = mysqli_fetch_assoc($query_savbal);
 
 		return $savbal['savbal_balance'];
 	}
 
+	/**
+		* Calculate a given customer's fixed savings
+		* @return int savfixed : Balance of currently fixed savings for given customer
+		*/
+		function getSavingsFixed($db_link, $cust_id){
+			$sql_savfixed = "SELECT savbal_fixed FROM savbalance WHERE cust_id = $cust_id";
+			$query_savfixed = mysqli_query($db_link, $sql_savfixed);
+			checkSQL($db_link, $query_savfixed);
+
+			$savfixed = mysqli_fetch_assoc($query_savfixed);
+
+			return $savfixed['savbal_fixed'];
+		}
+
 /**
 	* Update savings account balance for SPECIFIC customer
 	*/
 	function updateSavingsBalance($db_link, $cust_id){
-		$sql_savbal_upd = "UPDATE savbalance SET savbal_balance = (SELECT SUM(sav_amount) FROM savings WHERE cust_id = $cust_id) WHERE cust_id = $cust_id";
+		$timestamp = time();
+		$sql_savbal_upd = "UPDATE savbalance SET savbal_balance = (SELECT SUM(sav_amount) FROM savings WHERE cust_id = $cust_id), savbal_fixed = (SELECT SUM(sav_amount) FROM savings WHERE cust_id = $cust_id and sav_fixed > $timestamp) WHERE cust_id = $cust_id";
 		$query_savbal_upd = mysqli_query($db_link, $sql_savbal_upd);
 		checkSQL($db_link, $query_savbal_upd, $db_link);
 	}
