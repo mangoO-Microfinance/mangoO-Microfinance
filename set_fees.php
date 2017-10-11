@@ -79,6 +79,14 @@
 		$sql_upd_inctype = "UPDATE inctype SET inctype_type = '$new_xFee1_name' WHERE inctype_short = 'INC_XL1'";
 		$query_upd_inctype = mysqli_query($db_link, $sql_upd_inctype);
 		checkSQL($db_link, $query_upd_inctype);
+
+		//Update option to include or exclude fixed deposits in coverage of default fines
+		if (isset($_POST['fixed4Fine'])) $new_f4f = sanitize($db_link, $_POST['fixed4Fine']);
+		else $new_f4f = 0;
+		$sql_upd_f4f = "UPDATE settings SET set_value = '$new_f4f' WHERE set_short = 'SET_F4F'";
+		$query_upd_f4f = mysqli_query($db_link, $sql_upd_f4f);
+		checkSQL($db_link, $query_upd_f4f);
+
 	}
 
 	//Get current Fees and Charges
@@ -86,6 +94,9 @@
 
 	//Get current Share Value
 	getShareValue($db_link);
+
+	//Get current Settings
+	getSettings($db_link);
 ?>
 
 
@@ -173,6 +184,14 @@
 						<td>Loan Default Fine</td>
 						<td>
 							<input type="number" min="0" name="ldefaultfine" value="<?PHP echo $_SESSION['fee_loanfine'] ?>" placeholder="<?PHP echo $_SESSION['set_cur']; ?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<td><span>Use Fixed Saving Deposits to pay Loan Default Fine</span></td>
+						<td>
+							<input type="radio" name="fixed4Fine" value="1" <?PHP if ($_SESSION['set_f4f'] == 1) echo 'checked="checked"'; ?> /> On
+							<input type="radio" name="fixed4Fine" value="0" <?PHP if ($_SESSION['set_f4f'] != 1) echo 'checked="checked"'; ?> style="margin-left:.75em;" /> Off
 						</td>
 					</tr>
 

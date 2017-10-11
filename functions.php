@@ -159,6 +159,9 @@
 				case "SET_CSI":
 					$_SESSION['set_csi'] = $row_settings['set_value'];
 					break;
+				case "SET_F4F":
+					$_SESSION['set_f4f'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}

@@ -315,7 +315,14 @@
 				fail = validateDate(form.fine_date.value)
 				fail += validateAmount(form.fine_amount.value)
 				if (form.fine_sav.checked){
-					fail += validateOverdraft(form.fine_amount.value, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>, <?PHP echo $sav_fixed; ?>)
+					<?PHP
+					if ($_SESSION['set_f4f'] == 1) {
+						echo "fail += validateOverdraft(form.fine_amount.value, ".$sav_balance.", 0, ".$_SESSION['set_msb'].", 0)";
+					}
+					else {
+						echo "fail += validateOverdraft(form.fine_amount.value, ".$sav_balance.", 0, ".$_SESSION['set_msb'].", ".$sav_fixed.")";
+					}
+					?>
 				}
 				fail += validateReceipt(form.fine_receipt.value)
 				if (fail == "") return true
