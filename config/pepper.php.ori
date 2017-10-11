@@ -1,4 +1,3 @@
-
 <?PHP
 /**
 	*	Password pepper

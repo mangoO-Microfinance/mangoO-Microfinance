@@ -2,37 +2,37 @@
 <?PHP
 	require 'functions.php';
 	checkLogin();
-	connect();
+	$db_link = connect();
 	$timestamp = time();
 	
 	//NEW EXPENDITURE-Button
 	if(isset($_POST['expnew'])){
 		
 		//Sanitize user input
-		$exptype_id = sanitize($_POST['exptype_id']);
-		$exp_amount = sanitize($_POST['exp_amount']);
-		$exp_date = strtotime(sanitize($_POST['exp_date']));
-		$exp_text = sanitize($_POST['exp_text']);
-		$exp_recipient = sanitize($_POST['exp_recipient']);
-		$exp_receipt = sanitize($_POST['exp_receipt']);
-		$exp_voucher = sanitize($_POST['exp_voucher']);
+		$exptype_id = sanitize($db_link, $_POST['exptype_id']);
+		$exp_amount = sanitize($db_link, $_POST['exp_amount']);
+		$exp_date = strtotime(sanitize($db_link, $_POST['exp_date']));
+		$exp_text = sanitize($db_link, $_POST['exp_text']);
+		$exp_recipient = sanitize($db_link, $_POST['exp_recipient']);
+		$exp_receipt = sanitize($db_link, $_POST['exp_receipt']);
+		$exp_voucher = sanitize($db_link, $_POST['exp_voucher']);
 		
 		//Insert into expenses
 		$sql_expnew = "INSERT INTO expenses (exptype_id, exp_amount, exp_date, exp_text, exp_recipient, exp_receipt, exp_voucher, exp_created, user_id) VALUES ('$exptype_id', '$exp_amount', '$exp_date','$exp_text', '$exp_recipient', '$exp_receipt', '$exp_voucher', '$timestamp', '$_SESSION[log_id]')";
-		$query_expnew = mysql_query($sql_expnew);
-		checkSQL($query_expnew);
+		$query_expnew = mysqli_query($db_link, $sql_expnew);
+		checkSQL($db_link, $query_expnew);
 	}
 			
 	//Select recent expenses from EXPENSES
 	$sixtydays = time() - convertDays(60);
 	$sql_expcur = "SELECT * FROM expenses LEFT JOIN exptype ON expenses.exptype_id = exptype.exptype_id WHERE exp_date > $sixtydays ORDER BY exp_date DESC, exp_voucher DESC";
-	$query_expcur = mysql_query($sql_expcur);
-	checkSQL($query_expcur);
+	$query_expcur = mysqli_query($db_link, $sql_expcur);
+	checkSQL($db_link, $query_expcur);
 	
 	//Select types of expenses from EXPTYPE
 	$sql_exptype = "SELECT * FROM exptype ORDER BY exptype_type";
-	$query_exptype = mysql_query($sql_exptype);
-	checkSQL($query_exptype);
+	$query_exptype = mysqli_query($db_link, $sql_exptype);
+	checkSQL($db_link, $query_exptype);
 ?>
 
 <html>
@@ -77,7 +77,7 @@
 						<td>
 							<select name="exptype_id">
 								<?PHP
-								while ($row_exptype = mysql_fetch_assoc($query_exptype)){
+								while ($row_exptype = mysqli_fetch_assoc($query_exptype)){
 									echo '<option value="'.$row_exptype['exptype_id'].'">'.$row_exptype['exptype_type'].'</option>';
 								}
 								?>
@@ -121,7 +121,7 @@
 					<th>Delete</th>
 				</tr>
 			<?PHP
-			while ($row_expcur = mysql_fetch_assoc($query_expcur)){
+			while ($row_expcur = mysqli_fetch_assoc($query_expcur)){
 				if ($row_expcur['cust_id'] != 0 AND $row_expcur['cust_id'] != NULL){
 					$result_cust = getCustomer($row_expcur['cust_id']);
 					$exp_recipient = $result_cust['cust_name'].' (<a href="customer.php?cust='.$row_expcur['cust_id'].'">'.$result_cust['cust_no'].'</a>)';

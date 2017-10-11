@@ -2,52 +2,52 @@
 <?PHP
 	require 'functions.php';
 	checkLogin();
-	connect();
-	getCustID();
+	$db_link = connect();
+	getCustID($db_link);
 
 	//Generate timestamp
 	$timestamp = time();
-		
+
 	// Get savings balance for current customer
-	$sav_balance = getSavingsBalance($_SESSION['cust_id']);
-	
+	$sav_balance = getSavingsBalance($db_link, $_SESSION['cust_id']);
+
 	// DEPOSIT-Button
 	if (isset($_POST['deposit'])){
-		
+
 		// Sanitize user input
-		$sav_date = strtotime(sanitize($_POST['sav_date']));
-		$sav_amount = sanitize($_POST['sav_amount']);
-		$sav_receipt = sanitize($_POST['sav_receipt']);
-		$sav_payer = sanitize($_POST['sav_payer']);
-		if($_POST['sav_fixed'] != "") $sav_fixed = strtotime(sanitize($_POST['sav_fixed']));
+		$sav_date = strtotime(sanitize($db_link, $_POST['sav_date']));
+		$sav_amount = sanitize($db_link, $_POST['sav_amount']);
+		$sav_receipt = sanitize($db_link, $_POST['sav_receipt']);
+		$sav_payer = sanitize($db_link, $_POST['sav_payer']);
+		if($_POST['sav_fixed'] != "") $sav_fixed = strtotime(sanitize($db_link, $_POST['sav_fixed']));
 		else $sav_fixed = NULL;
-		$savtype_id = sanitize($_POST['savtype_id']);
-		
+		$savtype_id = sanitize($db_link, $_POST['savtype_id']);
+
 		// Insert savings transaction into SAVINGS
 		$sql_insert = "INSERT INTO savings (savtype_id, cust_id, sav_date, sav_amount, sav_receipt, sav_payer, sav_fixed, sav_created, user_id) VALUES ('$savtype_id', '$_SESSION[cust_id]', '$sav_date', '$sav_amount', '$sav_receipt', '$sav_payer', '$sav_fixed', '$timestamp', '$_SESSION[log_id]')";
-		$query_insert = mysql_query($sql_insert);
-		checkSQL($query_insert);
-		
+		$query_insert = mysqli_query($db_link, $sql_insert);
+		checkSQL($db_link, $query_insert);
+
 		// Update savings account balance
-		updateSavingsBalance($_SESSION['cust_id']);
-		
+		updateSavingsBalance($db_link, $_SESSION['cust_id']);
+
 		// Include Expense, if transaction was Savings Interest
 		if ($savtype_id == 3){
 			$sql_expense = "INSERT INTO expenses (cust_id, exptype_id, exp_amount, exp_date, exp_voucher, exp_created, user_id) VALUES ('$_SESSION[cust_id]', '19', '$sav_amount', '$sav_date', '$sav_receipt', '$timestamp', '$_SESSION[log_id]')";
-			$query_expense = mysql_query($sql_expense);
-			checkSQL($query_expense);
+			$query_expense = mysqli_query($db_link, $sql_expense);
+			checkSQL($db_link, $query_expense);
 		}
-		
+
 		//Refer to acc_sav_depos.php
 		header('Location: acc_sav_depos.php?cust='.$_SESSION['cust_id']);
 	}
-	
+
 	//Get current customer's details
-	$result_cust = getCustomer($_SESSION['cust_id']);
+	$result_cust = getCustomer($db_link, $_SESSION['cust_id']);
 ?>
 
 <html>
-	<?PHP includeHead('Savings Deposit',0) ?>	
+	<?PHP includeHead('Savings Deposit',0) ?>
 		<script>
 			function validate(form){
 				fail = validateDate(form.sav_date.value)
@@ -60,7 +60,7 @@
 		<script src="functions_validate.js"></script>
 		<script src="function_randCheck.js"></script>
 	</head>
-	
+
 	<body>
 		<!-- MENU -->
 		<?PHP includeMenu(2); ?>
@@ -76,12 +76,12 @@
 			<a href="cust_act.php">Active Cust.</a>
 			<a href="cust_inact.php">Inactive Cust.</a>
 		</div>
-				
+
 		<!-- LEFT SIDE: Input for new Deposit -->
 		<div class="content_left" style="width:35%;">
-			
+
 			<p class="heading_narrow">Deposit for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
-			
+
 			<form action="acc_sav_depos.php" method="post" onsubmit="return validate(this);">
 				<table id="tb_fields">
 					<tr>
@@ -124,12 +124,12 @@
 				</table>
 			</form>
 		</div>
-			
+
 		<!-- RIGHT SIDE: Statement for Savings Account -->
-		<div class="content_right" style="width:65%;">			
-			
+		<div class="content_right" style="width:65%;">
+
 			<?PHP include 'acc_sav_list.php'; ?>
-			
+
 		</div>
 	</body>
 </html>

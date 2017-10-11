@@ -1,12 +1,10 @@
 <?PHP
 // Select all customers
-$sql_customers = "SELECT * FROM customer LEFT JOIN custsex ON custsex.custsex_id = customer.custsex_id WHERE cust_id !=0";
-$query_customers = mysql_query($sql_customers);
-checkSQL($query_customers);
+$query_customers = getCustAll($db_link);
 
 // Fill array
 $customers = array();
-while ($row_customers = mysql_fetch_assoc($query_customers)) {
+while ($row_customers = mysqli_fetch_assoc($query_customers)) {
     $customers[] = $row_customers;
 }
 

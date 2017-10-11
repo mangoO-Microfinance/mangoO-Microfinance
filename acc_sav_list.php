@@ -1,8 +1,8 @@
 <?PHP
 // Select Savings Transactions from SAVINGS
 $sql_sav = "SELECT * FROM savings LEFT JOIN savtype ON savings.savtype_id = savtype.savtype_id LEFT JOIN user ON savings.user_id = user.user_id WHERE cust_id = '$_SESSION[cust_id]' ORDER BY sav_date DESC, sav_id DESC";
-$query_sav = mysql_query($sql_sav);
-checkSQL($query_sav);
+$query_sav = mysqli_query($db_link, $sql_sav);
+checkSQL($db_link, $query_sav);
 
 // Make array for exporting data
 $sav_exp_date = date("Y-m-d",time());
@@ -56,7 +56,7 @@ $_SESSION['sav_exp_title'] = $_SESSION['cust_id'].'_savings_'.$sav_exp_date;
 		<th>Delete</th>
 	</tr>
  <?PHP
-	while($row_sav = mysql_fetch_assoc($query_sav)){
+	while($row_sav = mysqli_fetch_assoc($query_sav)){
 		echo '<tr>
 						<td>'.date("d.m.Y",$row_sav['sav_date']).'</td>';
 			if ($_SESSION['set_sfx'] == 1){

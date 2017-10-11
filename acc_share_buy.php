@@ -1,76 +1,76 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	checkLogin();	
-	connect();
-	getCustID();
-	
+	checkLogin();
+	$db_link = connect();
+	getCustID($db_link);
+
 	//Generate timestamp
 	$timestamp = time();
-	
+
 	//Get current share value
-	getShareValue();
-	
+	getShareValue($db_link);
+
 	//BUY SHARE-Button
 	if (isset($_POST['sharebuy'])){
-		
+
 		//Sanitize user input
-		$share_date = strtotime(sanitize($_POST['share_date']));
-		$share_receipt = sanitize($_POST['share_receipt']);
-		$share_amount = sanitize($_POST['share_amount']);
+		$share_date = strtotime(sanitize($db_link, $_POST['share_date']));
+		$share_receipt = sanitize($db_link, $_POST['share_receipt']);
+		$share_amount = sanitize($db_link, $_POST['share_amount']);
 		$share_value = $_SESSION['share_value'] * $share_amount;
-		
+
 		//Insert into SHARES
 		$sql_insert_sh = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_receipt, share_created, user_id) VALUES ('$_SESSION[cust_id]', '$share_date', '$share_amount', '$share_value', '$share_receipt', $timestamp, '$_SESSION[log_id]')";
-		$query_insert_sh = mysql_query($sql_insert_sh);
-		checkSQL($query_insert_sh);
-		
+		$query_insert_sh = mysqli_query($db_link, $sql_insert_sh);
+		checkSQL($db_link, $query_insert_sh);
+
 		header('Location: acc_share_buy.php?cust='.$_SESSION['cust_id']);
 	}
 
 	//TRANSFER-Button
 	if (isset($_POST['shtrans'])){
-		$shtrans_cust = sanitize($_POST['shtrans_cust']);
-		
+		$shtrans_cust = sanitize($db_link, $_POST['shtrans_cust']);
+
 		$sql_shfrom = "SELECT * FROM shares WHERE cust_id = '$shtrans_cust'";
-		$query_shfrom = mysql_query($sql_shfrom);
-		checkSQL($query_shfrom);
-		
+		$query_shfrom = mysqli_query($db_link, $sql_shfrom);
+		checkSQL($db_link, $query_shfrom);
+
 		$shfrom_amount = 0;
 		$shfrom_value = 0;
-		while($row_shfrom = mysql_fetch_assoc($query_shfrom)){
+		while($row_shfrom = mysqli_fetch_assoc($query_shfrom)){
 			$shfrom_amount = $shfrom_amount + $row_shfrom['share_amount'];
 			$shfrom_value = $shfrom_value + $row_shfrom['share_value'];
 		}
-		
+
 		//Insert into SHARES for Target Customer
 		$sql_shto = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_trans, share_transfrom, share_created, user_id) VALUES ('$_SESSION[cust_id]', '$timestamp', '$shfrom_amount', '$shfrom_value', '1', '$shtrans_cust', $timestamp, '$_SESSION[log_id]')";
-		$query_shto = mysql_query($sql_shto);
-		checkSQL($query_shto);
-		
+		$query_shto = mysqli_query($db_link, $sql_shto);
+		checkSQL($db_link, $query_shto);
+
 		//Empty Share Account for Source Customer
 		$shfrom_amount_del = $shfrom_amount * (-1);
 		$shfrom_value_del = $shfrom_value * (-1);
 		$sql_shdel = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_trans, share_created, user_id) VALUES ('$shtrans_cust', '$timestamp', '$shfrom_amount_del', '$shfrom_value_del', '1', $timestamp, '$_SESSION[log_id]')";
-		$query_shdel = mysql_query($sql_shdel);
-		checkSQL($query_shdel);
-		
+		$query_shdel = mysqli_query($db_link, $sql_shdel);
+		checkSQL($db_link, $query_shdel);
+
 		//Set Source Customer inactive
 		$sql_inactive = "UPDATE customer SET cust_active = '0', cust_lastupd = '$timestamp', user_id = '$_SESSION[log_id]' WHERE cust_id = '$shtrans_cust'";
-		$query_inactive = mysql_query($sql_inactive);
+		$query_inactive = mysqli_query($db_link, $sql_inactive);
 
 		header('Location: customer.php?cust='.$_SESSION['cust_id']);
 	}
-	
+
 	//Get current customer's details
-	$result_cust = getCustomer($_SESSION['cust_id']);
-	
+	$result_cust = getCustomer($db_link, $_SESSION['cust_id']);
+
 	//Get all other customers
-	$query_custother = getCustOther();
+	$query_custother = getCustOther($db_link);
 ?>
 
 <html>
-<?PHP includeHead('Buying Shares',0) ?>	
+<?PHP includeHead('Buying Shares',0) ?>
 	<script>
 		function validate(form){
 			fail = validateDate(form.share_date.value)
@@ -78,7 +78,7 @@
 			if (fail == "") return true
 			else { alert(fail); return false }
 		}
-		
+
 		function setVisibility(id, visibility) {
 			document.getElementById(id).style.display = visibility;
 		}
@@ -86,7 +86,7 @@
 	<script src="functions_validate.js"></script>
 	<script src="function_randCheck.js"></script>
 </head>
-	
+
 <body>
 	<!-- MENU -->
 		<?PHP includeMenu(2); ?>
@@ -102,14 +102,14 @@
 			<a href="cust_act.php">Active Cust.</a>
 			<a href="cust_inact.php">Inactive Cust.</a>
 		</div>
-			
+
 		<!-- Left Side: Input for Share Addition -->
 		<div class="content_left">
-			
+
 			<p class="heading_narrow">Share Buy for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
-		
+
 			<form action="acc_share_buy.php" method="post" onSubmit="return validate(this)">
-				
+
 				<table id="tb_fields">
 					<tr>
 						<td>Date:</td>
@@ -143,7 +143,7 @@
 					</tr>
 				</table>
 			</form>
-			
+
 			<!-- HIDDEN SECTION: Transfer Shares from other Customer -->
 			<div id="content_hidden">
 				<form name="share_transfer" action="acc_share_buy.php" method="post">
@@ -151,7 +151,7 @@
 					<br/>
 					<select name="shtrans_cust">
 						<?PHP
-						while ($row_custother = mysql_fetch_assoc($query_custother)){
+						while ($row_custother = mysqli_fetch_assoc($query_custother)){
 							echo '<option value="'.$row_custother['cust_id'].'">'.
 											$row_custother['cust_no'].' '.$row_custother['cust_name'].
 										'</option>';
@@ -165,8 +165,8 @@
 				</form>
 			</div>
 		</div>
-		
-		<!-- RIGHT SIDE: Share Account Details -->			
+
+		<!-- RIGHT SIDE: Share Account Details -->
 		<div class="content_right">
 			<?PHP include 'acc_share_list.php'; ?>
 		</div>

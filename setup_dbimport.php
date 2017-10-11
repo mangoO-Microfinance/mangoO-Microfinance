@@ -9,13 +9,11 @@ else $fileSQL = 'database/mangoo_fresh.sql';
 $progressFilename = $fileSQL.'_filepointer'; 	// Temporary file for progress
 $errorFilename = $fileSQL.'_error'; 					// Temporary file for errors
 $maxRuntime = 2;															// Should be less than script execution time limit
-$deadline = time()+ $maxRuntime; 
+$deadline = time()+ $maxRuntime;
 
 // Database connection
-$db_connect = mysql_connect($_SESSION['db_host'], $_SESSION['db_user'], $_SESSION['db_pass']);
-if(!$db_connect) die('Could not connect to host '.$_SESSION['db_host'].': '.mysql_error());
-$db_select = mysql_select_db($_SESSION['db_name']);
-if(!$db_select) die('Could not select database '.$_SESSION['db_name'].': '.mysql_error());
+$db_link = mysqli_connect($_SESSION['db_host'], $_SESSION['db_user'], $_SESSION['db_pass'], $_SESSION['db_name']);
+if(!$db_link) die('Could not connect to host '.$_SESSION['db_host'].': '.mysqli_error($db_link));
 
 // Open import file
 ($fp = fopen($fileSQL, 'r')) OR die('Failed to open file:'.$fileSQL);
@@ -37,7 +35,7 @@ if(file_exists($progressFilename) ){
 $queryCount = 0;
 $query = '';
 while(time() < $deadline AND ($line = fgets($fp, 1024000))){
-    
+
 	// Skipping comment lines
 	if(substr($line,0,2)=='--' OR trim($line)=='' ){
     continue;
@@ -45,13 +43,13 @@ while(time() < $deadline AND ($line = fgets($fp, 1024000))){
 
 	$query .= $line;
 	if(substr(trim($query),-1)==';' ){
-		if(!mysql_query($query) ){
-			$error = 'Error performing query <strong>' . $query . ' : ' . mysql_error();
+		if(!mysqli_query($db_link, $query) ){
+			$error = 'Error performing query <strong>' . $query . ' : ' . mysqli_error($db_link);
 			file_put_contents($errorFilename, $error."\n");
 			exit;
 		}
 		$query = '';
-		file_put_contents($progressFilename, ftell($fp)); // Save current file pointer position 
+		file_put_contents($progressFilename, ftell($fp)); // Save current file pointer position
 		$queryCount++;
 	}
 }
@@ -70,7 +68,7 @@ else{
 ?>
 
 <html>
-	<?PHP includeHead('Microfinance Management', 0) ?>	
+	<?PHP includeHead('Microfinance Management', 0) ?>
 		<meta http-equiv="refresh" content="<?PHP echo ($maxRuntime+1); ?>">
 		<link rel="stylesheet" type="text/css" href="css/setup.css" />
 	</head>

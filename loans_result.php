@@ -2,20 +2,20 @@
 <?PHP
 	require 'functions.php';
 	checkLogin();
-	connect();
+	$db_link = connect();
 	
 	//Select from LOANS depending on Search or not Search
 	if (isset($_POST['loan_no'])){
-		$loan_search = sanitize($_POST['loan_no']);
+		$loan_search = sanitize($db_link, $_POST['loan_no']);
 		$sql_loansearch = "SELECT * FROM loans LEFT JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE loan_no LIKE '%$loan_search%'";
-		$query_loansearch = mysql_query($sql_loansearch);
-		checkSQL ($query_loansearch);
+		$query_loansearch = mysqli_query($db_link, $sql_loansearch);
+		checkSQL($db_link, $query_loansearch);
 	}
 	elseif (isset($_POST['loan_status'])){
-		$loan_search = sanitize($_POST['loan_status']);
+		$loan_search = sanitize($db_link, $_POST['loan_status']);
 		$sql_loansearch = "SELECT * FROM loans LEFT JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE loans.loanstatus_id = '$loan_search'";
-		$query_loansearch = mysql_query($sql_loansearch);
-		checkSQL ($query_loansearch);
+		$query_loansearch = mysqli_query($db_link, $sql_loansearch);
+		checkSQL($db_link, $query_loansearch);
 	}
 	else header('Location: start.php');
 ?>
@@ -60,7 +60,7 @@
 					<th>Issued</th>
 				</tr>
 				<?PHP		
-				while ($row_loansearch = mysql_fetch_assoc($query_loansearch)){
+				while ($row_loansearch = mysqli_fetch_assoc($query_loansearch)){
 					echo '<tr>
 									<td><a href="loan.php?lid='.$row_loansearch['loan_id'].'">'.$row_loansearch['loan_no'].'</a></td>
 									<td>'.$row_loansearch['cust_name'].' (<a href="customer.php?cust='.$row_loansearch['cust_id'].'">'.$row_loansearch['cust_no'].'</a>)</td>

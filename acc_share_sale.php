@@ -1,46 +1,46 @@
 <!DOCTYPE HTML>
 <?PHP
 	require 'functions.php';
-	checkLogin();	
-	connect();
-	
-	getCustID();
-	
+	checkLogin();
+	$db_link = connect();
+
+	getCustID($db_link);
+
 	//Generate timestamp
 	$timestamp = time();
-	
+
 	//Get current share value
-	getShareValue();
-	
+	getShareValue($db_link);
+
 	//Get current customer's details
-	$result_cust = getCustomer($_SESSION['cust_id']);
+	$result_cust = getCustomer($db_link, $_SESSION['cust_id']);
 
 	//Get current customer's share balance
-	$share_balance = getShareBalance($_SESSION['cust_id']);
-	
+	$share_balance = getShareBalance($db_link, $_SESSION['cust_id']);
+
 	//Get all other customers
-	$query_custother = getCustOther();
-	
+	$query_custother = getCustOther($db_link);
+
 	//SELL SHARE-Button
 	if (isset($_POST['sharesell'])){
-		
+
 		//Sanitize user input
-		$share_date = strtotime(sanitize($_POST['share_date']));
-		$share_receipt = sanitize($_POST['share_receipt']);
-		$share_amount = (sanitize($_POST['share_amount'])) * (-1);
+		$share_date = strtotime(sanitize($db_link, $_POST['share_date']));
+		$share_receipt = sanitize($db_link, $_POST['share_receipt']);
+		$share_amount = (sanitize($db_link, $_POST['share_amount'])) * (-1);
 		$share_value = $_SESSION['share_value'] * $share_amount;
-		
+
 		//Insert into SHARES
 		$sql_insert_sh = "INSERT INTO shares (cust_id, share_date, share_amount, share_value, share_receipt, share_created, user_id) VALUES ('$_SESSION[cust_id]', '$share_date', '$share_amount', '$share_value', '$share_receipt', $timestamp, '$_SESSION[log_id]')";
-		$query_insert_sh = mysql_query($sql_insert_sh);
-		checkSQL($query_insert_sh);
-		
+		$query_insert_sh = mysqli_query($db_link, $sql_insert_sh);
+		checkSQL($db_link, $query_insert_sh);
+
 		header('Location: acc_share_sale.php?cust='.$_SESSION['cust_id']);
 	}
 ?>
 
 <html>
-<?PHP includeHead('Sell Shares',0) ?>	
+<?PHP includeHead('Sell Shares',0) ?>
 	<script>
 		function validate(form){
 			fail = validateDate(form.share_date.value)
@@ -48,7 +48,7 @@
 			if (fail == "") return true
 			else { alert(fail); return false }
 		}
-		
+
 		function setVisibility(id, visibility) {
 			document.getElementById(id).style.display = visibility;
 		}
@@ -56,7 +56,7 @@
 	<script src="functions_validate.js"></script>
 	<script src="function_randCheck.js"></script>
 </head>
-	
+
 <body>
 	<!-- MENU -->
 		<?PHP includeMenu(2); ?>
@@ -72,14 +72,14 @@
 			<a href="cust_act.php">Active Cust.</a>
 			<a href="cust_inact.php">Inactive Cust.</a>
 		</div>
-			
+
 		<!-- Left Side: Input for Share Addition -->
 		<div class="content_left">
-			
+
 			<p class="heading_narrow">Share Sale for <?PHP echo $result_cust['cust_name'].' ('.$result_cust['cust_no'].')'; ?></p>
-		
+
 			<form action="acc_share_sale.php" method="post" onSubmit="return validate(this)">
-				
+
 				<table id="tb_fields">
 					<tr>
 						<td>Date:</td>
@@ -113,8 +113,8 @@
 				</table>
 			</form>
 		</div>
-		
-		<!-- RIGHT SIDE: Share Account Details -->			
+
+		<!-- RIGHT SIDE: Share Account Details -->
 		<div class="content_right">
 			<?PHP include 'acc_share_list.php'; ?>
 		</div>

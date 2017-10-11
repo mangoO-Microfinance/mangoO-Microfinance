@@ -22,8 +22,8 @@ while ($i <= $loan_period){
 	
 	//Insert into LTRANS
 	$sql_insert_ltrans = "INSERT INTO ltrans (loan_id, ltrans_due, ltrans_principaldue, ltrans_interestdue, user_id) VALUES ('$_SESSION[loan_id]', '$ltrans_due', '$ltrans_princp_due', '$ltrans_inter_due', '$_SESSION[log_id]')";
-	$query_insert_ltrans = mysql_query ($sql_insert_ltrans);
-	checkSQL($query_insert_ltrans);
+	$query_insert_ltrans = mysqli_query($db_link, $sql_insert_ltrans);
+	checkSQL($db_link, $query_insert_ltrans);
 	
 	//Reduce remaining principal by paid amount 
 	$ltrans_princp_remain = $ltrans_princp_remain - $ltrans_princp_due;
