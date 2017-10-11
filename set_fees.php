@@ -190,8 +190,8 @@
 					<tr>
 						<td><span>Use Fixed Saving Deposits to pay Loan Default Fine</span></td>
 						<td>
-							<input type="radio" name="fixed4Fine" value="1" <?PHP if ($_SESSION['set_f4f'] == 1) echo 'checked="checked"'; ?> /> On
-							<input type="radio" name="fixed4Fine" value="0" <?PHP if ($_SESSION['set_f4f'] != 1) echo 'checked="checked"'; ?> style="margin-left:.75em;" /> Off
+							<input type="radio" name="fixed4Fine" value="1" <?PHP if ($_SESSION['set_f4f'] == 1) echo 'checked="checked"'; ?> /> Yes
+							<input type="radio" name="fixed4Fine" value="0" <?PHP if ($_SESSION['set_f4f'] != 1) echo 'checked="checked"'; ?> style="margin-left:.75em;" /> No
 						</td>
 					</tr>
 
