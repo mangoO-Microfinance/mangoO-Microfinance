@@ -5,11 +5,19 @@
 	$db_link = connect();
 	getLoanID($db_link);
 
-	//Retrieve loan_id and loan_no of newly created loan from LOANS. Pass securities to SESSION variable.
-	$sql_loan = "SELECT loan_id, loan_no, loan_sec1, loan_sec2 FROM loans WHERE loan_id = '$_SESSION[loan_id]'";
+
+	//Retrieve loan_id and loan_no of newly created loan from LOANS.
+	$sql_loan = "SELECT loan_id, loan_no FROM loans WHERE loan_id = '$_SESSION[loan_id]'";
 	$query_loan = mysqli_query($db_link, $sql_loan);
 	checkSQL($db_link, $query_loan);
 	$result_loan = mysqli_fetch_assoc($query_loan);
+
+	// Select Securities from SECURITIES
+	$securities = getLoanSecurities($db_link, $_SESSION['loan_id']);
+	foreach ($securities as $s){
+		if ($s['sec_no'] == 1) $security1 = $s;
+		elseif ($s['sec_no'] == 2) $security2 = $s;
+	}
 
 	// Generate timestamp
 	$timestamp = time();
@@ -30,7 +38,7 @@
 			//Determine where file 1 is going to be stored and create file name
 			$path_part1 = pathinfo($_FILES['sec1']['name']);
 			$extension1 = $path_part1['extension'];
-			$file_name1 = $result_loan['loan_id'].'_sec-01';
+			$file_name1 = $security1['loan_id'].'_01';
 
 			//Add original filename 1 to target path 1
 			$target_path1 = $target_path.$file_name1.'.'.$extension1;
@@ -38,10 +46,11 @@
 			//Move uploaded file 1 from temporary storage to final location
 			move_uploaded_file($_FILES['sec1']['tmp_name'], $target_path1);
 
-			//INSERT information on Security 1 into SECURITIES
-			$sql_insert_sec1 = "INSERT INTO securities (cust_id, loan_id, sec_no, sec_path, sec_returned) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', 1, '$target_path1', 0)";
-			$query_insert_sec1 = mysqli_query($db_link, $sql_insert_sec1);
-			checkSQL($db_link, $query_insert_sec1);
+			//UPDATE file path for security 1 in SECURITIES
+			$sql_update_sec1_path = "UPDATE securities SET sec_path = '$target_path1' WHERE sec_id = '$security1[sec_id]'";
+			$query_update_sec1_path = mysqli_query($db_link, $sql_update_sec1_path);
+			checkSQL($db_link, $query_update_sec1_path);
+
 		}
 
 		//Check if a file was uploaded for security 2
@@ -50,7 +59,7 @@
 			//Determine where file 2 is going to be stored and create file name
 			$path_part2 = pathinfo($_FILES['sec2']['name']);
 			$extension2 = $path_part2['extension'];
-			$file_name2 = $result_loan['loan_id'].'_sec-02';
+			$file_name2 = $security2['loan_id'].'_02';
 
 			//Add original filename to target path 2
 			$target_path2 = $target_path.$file_name2.'.'.$extension2;
@@ -58,10 +67,10 @@
 			//Move uploaded file 2 from temporary storage to final location
 			move_uploaded_file($_FILES['sec2']['tmp_name'], $target_path2);
 
-			//INSERT information on Security 2 into SECURITIES
-			$sql_insert_sec2 = "INSERT INTO securities (cust_id, loan_id, sec_no, sec_path, sec_returned) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', 2, '$target_path2', 0)";
-			$query_insert_sec2 = mysqli_query($db_link, $sql_insert_sec2);
-			checkSQL($db_link, $query_insert_sec2);
+			//UPDATE file path for security 2 in SECURITIES
+			$sql_update_sec2_path = "UPDATE securities SET sec_path = '$target_path2' WHERE sec_id = '$security2[sec_id]'";
+			$query_update_sec2_path = mysqli_query($db_link, $sql_update_sec2_path);
+			checkSQL($db_link, $query_update_sec2_path);
 		}
 
 		//Unset session variables and refer to LOAN.PHP
@@ -92,14 +101,14 @@
 			<form enctype="multipart/form-data" action="loan_sec.php" method="POST">
 				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 				<label for="sec1" class="file-upload">
-					<i class="fa fa-file-text-o"></i> <?PHP echo $result_loan['loan_sec1']; ?>
+					<i class="fa fa-file-text-o"></i> <?PHP echo $security1['sec_name']; ?>
 				</label>
 				<input type="file" name="sec1" id="sec1" accept=".pdf,.jpg,.jpeg,.png,.tif,.tiff,.doc,.docx,.xls,.xlsx,.odt,.ods,.txt" />
 				<br/>
 				<?PHP
-				if ($result_loan['loan_sec2'] != ""){
+				if ($security2['sec_name'] != ""){
 					echo '<label for="sec2" class="file-upload">
-									<i class="fa fa-file-text-o"></i> '.$result_loan['loan_sec2'].'
+									<i class="fa fa-file-text-o"></i> '.$security2['sec_name'].'
 								</label>
 								<input type="file" name="sec2" id="sec2" accept=".pdf,.jpg,.jpeg,.png,.tif,.tiff,.doc,.docx,.xls,.xlsx,.odt,.ods,.txt" />
 								<br/>';

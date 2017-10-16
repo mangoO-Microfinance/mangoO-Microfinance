@@ -666,4 +666,17 @@
 		checkSQL($db_link, $query_overdue, $db_link);
 		return $query_overdue;
 	}
+
+/**
+	* Get all securities which belong to a given loan
+	* @return array securities : Array with the result of the SQL query
+	*/
+	function getLoanSecurities($db_link, $loan_id){
+		$sql_secur = "SELECT * FROM securities WHERE loan_id = $loan_id";
+		$query_secur = mysqli_query($db_link, $sql_secur);
+		checkSQL($db_link, $query_secur);
+		$securities = array();
+		while ($row_secur = mysqli_fetch_assoc($query_secur)) $securities[] = $row_secur;
+		return $securities;
+	}
 ?>

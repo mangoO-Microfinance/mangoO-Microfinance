@@ -26,6 +26,7 @@
 			<a href="loan_search.php">Search</a>
 			<a href="loans_act.php" id="item_selected">Active Loans</a>
 			<a href="loans_pend.php">Pending Loans</a>
+			<a href="loans_securities.php">Loan Securities</a>
 		</div>
 
 		<!-- CONTENT -->

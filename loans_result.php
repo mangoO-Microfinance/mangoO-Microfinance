@@ -3,7 +3,7 @@
 	require 'functions.php';
 	checkLogin();
 	$db_link = connect();
-	
+
 	//Select from LOANS depending on Search or not Search
 	if (isset($_POST['loan_no'])){
 		$loan_search = sanitize($db_link, $_POST['loan_no']);
@@ -19,23 +19,24 @@
 	}
 	else header('Location: start.php');
 ?>
-	
+
 <html>
-	<?PHP includeHead('Loans Search Result',1) ?>	
+	<?PHP includeHead('Loans Search Result',1) ?>
 	<body>
-		
+
 		<!-- MENU -->
 		<?PHP includeMenu(3); ?>
 		<div id="menu_main">
 			<a href="loan_search.php" id="item_selected">Search</a>
 			<a href="loans_act.php">Active Loans</a>
 			<a href="loans_pend.php">Pending Loans</a>
+			<a href="loans_securities.php">Loan Securities</a>
 		</div>
-		
+
 		<div id="content_center">
-			
+
 			<!-- SEARCH RESULTS -->
-			<table id="tb_table">				
+			<table id="tb_table">
 				<colgroup>
 					<col width="7.5%" />
 					<col width="25%" />
@@ -59,7 +60,7 @@
 					<th>Applied for on</th>
 					<th>Issued</th>
 				</tr>
-				<?PHP		
+				<?PHP
 				while ($row_loansearch = mysqli_fetch_assoc($query_loansearch)){
 					echo '<tr>
 									<td><a href="loan.php?lid='.$row_loansearch['loan_id'].'">'.$row_loansearch['loan_no'].'</a></td>
@@ -69,7 +70,7 @@
 									<td>'.number_format($row_loansearch['loan_principal']).' '.$_SESSION['set_cur'].'</td>
 									<td>'.number_format(($row_loansearch['loan_repaytotal'] - $row_loansearch['loan_principal'])).' '.$_SESSION['set_cur'].'</td>
 									<td>'.date("d.m.Y",$row_loansearch['loan_date']).'</td>
-									<td>';									
+									<td>';
 									if ($row_loansearch['loan_dateout'] == 0) echo "No";
 									else echo date("d.m.Y", $row_loansearch['loan_dateout']);
 						echo	'</td>

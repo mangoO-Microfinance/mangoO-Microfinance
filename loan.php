@@ -9,7 +9,7 @@
 	$timestamp = time();
 
 	// Select details of current loan from LOANS, LOANSTATUS, CUSTOMER
-	$sql_loan = "SELECT * FROM loans JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id JOIN customer ON loans.cust_id = customer.cust_id WHERE loan_id = $_SESSION[loan_id]";
+	$sql_loan = "SELECT * FROM loans JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id JOIN customer ON loans.cust_id = customer.cust_id WHERE loans.loan_id = $_SESSION[loan_id]";
 	$query_loan = mysqli_query($db_link, $sql_loan);
 	checkSQL($db_link, $query_loan);
 	$result_loan = mysqli_fetch_assoc($query_loan);
@@ -255,15 +255,11 @@
 	$guarantors = array();
 	while ($row_guarant = mysqli_fetch_assoc($query_guarant)) $guarantors[] = $row_guarant;
 
-	// Select Securities from SECURITIES and get file paths for securities
-	$sql_secur = "SELECT * FROM securities WHERE loan_id = $_SESSION[loan_id]";
-	$query_secur = mysqli_query($db_link, $sql_secur);
-	checkSQL($db_link, $query_secur);
-	$securities = array();
-	while ($row_secur = mysqli_fetch_assoc($query_secur)) $securities[] = $row_secur;
+	// Select Securities from SECURITIES
+	$securities = getLoanSecurities($db_link, $_SESSION['loan_id']);
 	foreach ($securities as $s){
-		if ($s['sec_no'] == 1) $sec_path1 = $s['sec_path'];
-		elseif ($s['sec_no'] == 2) $sec_path2 = $s['sec_path'];
+		if ($s['sec_no'] == 1) $security1 = $s;
+		elseif ($s['sec_no'] == 2) $security2 = $s;
 	}
 
 	//Prepare array data export
@@ -337,7 +333,7 @@
 		<!-- MENU -->
 		<?PHP includeMenu(3); ?>
 		<div id="menu_main">
-			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
+			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Customer</a>
 			<a href="loan_search.php">Search</a>
 			<a href="loans_act.php">Active Loans</a>
 			<a href="loans_pend.php">Pending Loans</a>
@@ -397,15 +393,19 @@
 						<td>Secur. 1:</td>
 						<td>
 							<?PHP
-							if (isset($sec_path1)) echo '<a href="'.$sec_path1.'" target=_blank>'.$result_loan['loan_sec1'].' <i class="fa fa-eye"></i></a>';
-							elseif ($result_loan['loan_sec1'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$result_loan['loan_sec1'].' <i class="fa fa-upload"></i></a>';
+							if(isset($security1)){
+								if ($security1['sec_path'] != "") echo '<a href="'.$security1['sec_path'].'" target=_blank>'.$security1['sec_name'].' <i class="fa fa-eye"></i></a>';
+								elseif ($security1['sec_name'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$security1['sec_name'].' <i class="fa fa-upload"></i></a>';
+							}
 							?>
 						</td>
 						<td>Secur. 2:</td>
 						<td>
 							<?PHP
-							if (isset($sec_path2)) echo '<a href="'.$sec_path2.'" target=_blank>'.$result_loan['loan_sec2'].' <i class="fa fa-eye"></i></a>';
-							elseif ($result_loan['loan_sec2'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$result_loan['loan_sec2'].' <i class="fa fa-upload"></i></a>';
+							if(isset($security2)){
+								if ($security2['sec_path'] != "") echo '<a href="'.$security2['sec_path'].'" target=_blank>'.$security2['sec_name'].' <i class="fa fa-eye"></i></a>';
+								elseif ($security2['sec_name'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$security2['sec_name'].' <i class="fa fa-upload"></i></a>';
+							}
 							?>
 						</td>
 					</tr>
