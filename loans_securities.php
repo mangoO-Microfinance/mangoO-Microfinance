@@ -12,7 +12,7 @@
 	$_SESSION['rep_exp_title'] = $rep_year.'-'.$rep_month.'_loan-securities';
 
 	//Select loans that have securities
-	$sql_loans = "SELECT * FROM loans LEFT JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE loan_id IN (SELECT DISTINCT loan_id FROM securities) ORDER BY loan_dateout, loans.cust_id";
+	$sql_loans = "SELECT * FROM loans LEFT JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id LEFT JOIN customer ON loans.cust_id = customer.cust_id WHERE loan_id IN (SELECT DISTINCT loan_id FROM securities WHERE sec_returned = 0) ORDER BY loan_dateout, loans.cust_id";
 	$query_loans = mysqli_query($db_link, $sql_loans);
 	checkSQL($db_link, $query_loans);
 ?>
@@ -59,6 +59,8 @@
 				$count = 0;
 				while ($row_loans = mysqli_fetch_assoc($query_loans)){
 					$securities = getLoanSecurities($db_link, $row_loans['loan_id']);
+					$security1 = NULL;
+					$security2 = NULL;
 					foreach ($securities as $s){
 						if ($s['sec_no'] == 1) $security1 = $s;
 						elseif ($s['sec_no'] == 2) $security2 = $s;

@@ -100,13 +100,15 @@
 
 			<form enctype="multipart/form-data" action="loan_sec.php" method="POST">
 				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-				<label for="sec1" class="file-upload">
-					<i class="fa fa-file-text-o"></i> <?PHP echo $security1['sec_name']; ?>
-				</label>
-				<input type="file" name="sec1" id="sec1" accept=".pdf,.jpg,.jpeg,.png,.tif,.tiff,.doc,.docx,.xls,.xlsx,.odt,.ods,.txt" />
-				<br/>
 				<?PHP
-				if ($security2['sec_name'] != ""){
+				if (isset($security1) AND $security1['sec_name'] != ""){
+					echo '<label for="sec1" class="file-upload">
+									<i class="fa fa-file-text-o"></i> '.$security1['sec_name'].'
+								</label>
+								<input type="file" name="sec1" id="sec1" accept=".pdf,.jpg,.jpeg,.png,.tif,.tiff,.doc,.docx,.xls,.xlsx,.odt,.ods,.txt" />
+								<br/>';
+				}
+				if (isset($security2) AND $security2['sec_name'] != ""){
 					echo '<label for="sec2" class="file-upload">
 									<i class="fa fa-file-text-o"></i> '.$security2['sec_name'].'
 								</label>
