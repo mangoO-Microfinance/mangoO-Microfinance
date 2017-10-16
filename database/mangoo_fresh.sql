@@ -361,8 +361,6 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `loan_period` int(11) NOT NULL,
   `loan_repaytotal` int(11) NOT NULL,
   `loan_purpose` varchar(250) NOT NULL,
-  `loan_sec1` varchar(250) NOT NULL,
-  `loan_sec2` varchar(250) NOT NULL,
   `loan_guarant1` int(11) NOT NULL,
   `loan_guarant2` int(11) NOT NULL,
   `loan_guarant3` int(11) NOT NULL,
@@ -441,6 +439,7 @@ CREATE TABLE IF NOT EXISTS `savbalance` (
 `savbal_id` int(11) NOT NULL,
   `cust_id` int(11) NOT NULL,
   `savbal_balance` int(11) NOT NULL,
+  `savbal_fixed` int(11) NOT NULL,
   `savbal_date` int(11) NOT NULL,
   `savbal_created` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
