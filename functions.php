@@ -651,7 +651,7 @@
 			}
 		}
 
-		// Return customer number
+		// Return employee number
 		return $emplNo;
 	}
 
@@ -679,4 +679,17 @@
 		while ($row_secur = mysqli_fetch_assoc($query_secur)) $securities[] = $row_secur;
 		return $securities;
 	}
+
+/**
+	* Get details of a given loan security
+	* @return array result_sec : Array with the result of the SQL query
+	*/
+	function getSecurity($db_link, $sec_id){
+		$sql_sec = "SELECT * FROM securities LEFT JOIN loans ON securities.loan_id = loans.loan_id LEFT JOIN customer ON securities.cust_id = customer.cust_id WHERE sec_id = $sec_id";
+		$query_sec = mysqli_query($db_link, $sql_sec);
+		checkSQL($db_link, $query_sec);
+		$result_sec = mysqli_fetch_assoc($query_sec);
+		return $result_sec;
+	}
+
 ?>
