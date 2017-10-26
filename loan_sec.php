@@ -96,7 +96,7 @@
 		</div>
 
 		<div class="content_center">
-			<p class="heading">Upload Document Scans for Loan <?PHP echo $result_loan['loan_no']; ?></p>
+			<p class="heading">Upload Documents for Loan <?PHP echo $result_loan['loan_no']; ?></p>
 
 			<form enctype="multipart/form-data" action="loan_sec.php" method="POST">
 				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />

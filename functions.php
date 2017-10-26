@@ -335,7 +335,7 @@
 				echo '><a href="cust_search.php"><i class="fa fa-group fa-fw"></i> Customers</a></li>
 				<li';
 				if ($tab_no == 3) echo ' id="tab_selected"';
-				echo '><a href="loan_search.php"><i class="fa fa-percent fa-fw"></i> Loans</a></li>
+				echo '><a href="loans_search.php"><i class="fa fa-percent fa-fw"></i> Loans</a></li>
 				<li';
 				if ($tab_no == 4) echo ' id="tab_selected"';
 				echo '><a href="books_expense.php"><i class="fa fa-calculator fa-fw"></i> Accounting</a></li>

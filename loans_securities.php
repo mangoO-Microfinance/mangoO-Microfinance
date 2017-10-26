@@ -23,7 +23,7 @@
 		<!-- MENU -->
 		<?PHP includeMenu(3);	?>
 		<div id="menu_main">
-			<a href="loan_search.php">Search</a>
+			<a href="loans_search.php">Search</a>
 			<a href="loans_act.php">Active Loans</a>
 			<a href="loans_pend.php">Pending Loans</a>
 			<a href="loans_securities.php" id="item_selected">Loan Securities</a>

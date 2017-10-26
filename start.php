@@ -22,7 +22,7 @@
 		<div id="menu_main">
 			<a href="cust_search.php">Search Customer</a>
 			<a href="cust_new.php">New Customer</a>
-			<a href="loan_search.php">Search Loan</a>
+			<a href="loans_search.php">Search Loan</a>
 		</div>
 
 		<!-- Left Side of Dashboard -->
