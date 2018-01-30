@@ -48,16 +48,28 @@
 		$loan_insurance = $loan_principal / 100 * $_SESSION['fee_loaninsurance'];
 
 		//Insert Loan into LOANS
-		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_insurance, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_sec1, loan_sec2, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, loan_xtra1, loan_xtraFee1, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_insurance', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_sec1', '$loan_sec2', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$loan_xtra1', '$loan_xtraFee1', '$_SESSION[log_id]')";
+		$sql_insert_loan = "INSERT INTO loans (cust_id, loanstatus_id, loan_no, loan_date, loan_issued, loan_principal, loan_interest, loan_appfee_receipt, loan_fee, loan_insurance, loan_rate, loan_period, loan_repaytotal, loan_purpose, loan_guarant1, loan_guarant2, loan_guarant3, loan_created, loan_xtra1, loan_xtraFee1, user_id) VALUES ('$_SESSION[cust_id]', '1', '$loan_no', '$loan_date', '0', '$loan_principal', '$loan_interest', '$loan_appfee_receipt', '$loan_fee', '$loan_insurance', '$loan_rate', '$loan_period', $loan_repaytotal, '$loan_purpose', '$loan_guarant1', '$loan_guarant2', '$loan_guarant3', $timestamp, '$loan_xtra1', '$loan_xtraFee1', '$_SESSION[log_id]')";
 		$query_insert_loan = mysqli_query($db_link, $sql_insert_loan);
 		checkSQL($db_link, $query_insert_loan);
 
-		//Retrieve LOAN_ID of newly created loan from LOANS and pass to SESSION variable.
+		//Retrieve LOAN_ID of newly created loan from LOANS and pass to SESSION variable
 		$sql_newloanid = "SELECT MAX(loan_id) FROM loans WHERE cust_id = '$_SESSION[cust_id]'";
 		$query_newloanid = mysqli_query($db_link, $sql_newloanid);
 		checkSQL($db_link, $query_newloanid);
 		$result_newloanid = mysqli_fetch_assoc($query_newloanid);
 		$_SESSION['loan_id'] = $result_newloanid['MAX(loan_id)'];
+
+		//Insert loan securities into SECURITIES
+		if($loan_sec1 != ""){
+			$sql_insert_sec1 = "INSERT INTO securities (cust_id, loan_id, sec_no, sec_name, sec_value, sec_path, sec_returned) VALUES ($_SESSION[cust_id], $_SESSION[loan_id], '1', '$loan_sec1', 0, '', 0)";
+			$query_insert_sec1 = mysqli_query($db_link, $sql_insert_sec1);
+			checkSQL($db_link, $query_insert_sec1);
+		}
+		if($loan_sec2 != ""){
+			$sql_insert_sec2 = "INSERT INTO securities (cust_id, loan_id, sec_no, sec_name, sec_value, sec_path, sec_returned) VALUES ($_SESSION[cust_id], $_SESSION[loan_id], '2', '$loan_sec2', 0, '', 0)";
+			$query_insert_sec2 = mysqli_query($db_link, $sql_insert_sec2);
+			checkSQL($db_link, $query_insert_sec2);
+		}
 
 		//Insert Loan Application Fee into INCOMES
 		$sql_inc_laf = "INSERT INTO incomes (cust_id, loan_id, inctype_id, inc_amount, inc_date, inc_receipt, inc_created, user_id) VALUES ('$_SESSION[cust_id]', '$_SESSION[loan_id]', '7', '$_SESSION[fee_loanappl]', '$loan_date', '$loan_appfee_receipt', $timestamp, '$_SESSION[log_id]')";

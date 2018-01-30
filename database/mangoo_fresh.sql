@@ -361,8 +361,6 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `loan_period` int(11) NOT NULL,
   `loan_repaytotal` int(11) NOT NULL,
   `loan_purpose` varchar(250) NOT NULL,
-  `loan_sec1` varchar(250) NOT NULL,
-  `loan_sec2` varchar(250) NOT NULL,
   `loan_guarant1` int(11) NOT NULL,
   `loan_guarant2` int(11) NOT NULL,
   `loan_guarant3` int(11) NOT NULL,
@@ -441,6 +439,7 @@ CREATE TABLE IF NOT EXISTS `savbalance` (
 `savbal_id` int(11) NOT NULL,
   `cust_id` int(11) NOT NULL,
   `savbal_balance` int(11) NOT NULL,
+  `savbal_fixed` int(11) NOT NULL,
   `savbal_date` int(11) NOT NULL,
   `savbal_created` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
@@ -509,7 +508,11 @@ CREATE TABLE IF NOT EXISTS `securities` (
   `sec_name` varchar(100) NOT NULL,
   `sec_value` int(11) NOT NULL,
   `sec_path` varchar(200) NOT NULL,
-  `sec_returned` int(1) NOT NULL
+  `sec_returned` int(1) NOT NULL DEFAULT '0',
+  `sec_date` int(11) NOT NULL,
+  `sec_returned_date` int(11) NOT NULL,
+  `sec_lastupd` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------

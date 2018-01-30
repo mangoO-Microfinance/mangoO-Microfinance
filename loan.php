@@ -9,7 +9,7 @@
 	$timestamp = time();
 
 	// Select details of current loan from LOANS, LOANSTATUS, CUSTOMER
-	$sql_loan = "SELECT * FROM loans JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id JOIN customer ON loans.cust_id = customer.cust_id WHERE loan_id = $_SESSION[loan_id]";
+	$sql_loan = "SELECT * FROM loans JOIN loanstatus ON loans.loanstatus_id = loanstatus.loanstatus_id JOIN customer ON loans.cust_id = customer.cust_id WHERE loans.loan_id = $_SESSION[loan_id]";
 	$query_loan = mysqli_query($db_link, $sql_loan);
 	checkSQL($db_link, $query_loan);
 	$result_loan = mysqli_fetch_assoc($query_loan);
@@ -17,6 +17,7 @@
 
 	// Get current customer's savings account balance
 	$sav_balance = getSavingsBalance($db_link, $_SESSION['cust_id']);
+	$sav_fixed = getSavingsFixed($db_link, $_SESSION['cust_id']);
 
 	/** UPDATE STATUS Button **/
 	if (isset($_POST['updatestatus'])){
@@ -254,15 +255,11 @@
 	$guarantors = array();
 	while ($row_guarant = mysqli_fetch_assoc($query_guarant)) $guarantors[] = $row_guarant;
 
-	// Select Securities from SECURITIES and get file paths for securities
-	$sql_secur = "SELECT * FROM securities WHERE loan_id = $_SESSION[loan_id]";
-	$query_secur = mysqli_query($db_link, $sql_secur);
-	checkSQL($db_link, $query_secur);
-	$securities = array();
-	while ($row_secur = mysqli_fetch_assoc($query_secur)) $securities[] = $row_secur;
+	// Select Securities from SECURITIES
+	$securities = getLoanSecurities($db_link, $_SESSION['loan_id']);
 	foreach ($securities as $s){
-		if ($s['sec_no'] == 1) $sec_path1 = $s['sec_path'];
-		elseif ($s['sec_no'] == 2) $sec_path2 = $s['sec_path'];
+		if ($s['sec_no'] == 1) $security1 = $s;
+		elseif ($s['sec_no'] == 2) $security2 = $s;
 	}
 
 	//Prepare array data export
@@ -304,7 +301,7 @@
 				fail += validateAmount(form.loan_repay_amount.value)
 				fail += validateReceipt(form.loan_repay_receipt.value)
 				if (form.loan_repay_sav.checked){
-					fail += validateOverdraft(form.loan_repay_amount.value, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
+					fail += validateOverdraft(form.loan_repay_amount.value, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>, <?PHP echo $sav_fixed; ?>)
 				}
 				if (fail == "") return true
 				else {alert(fail); return false}
@@ -314,7 +311,14 @@
 				fail = validateDate(form.fine_date.value)
 				fail += validateAmount(form.fine_amount.value)
 				if (form.fine_sav.checked){
-					fail += validateOverdraft(form.fine_amount.value, <?PHP echo $sav_balance; ?>, 0, <?PHP echo $_SESSION['set_msb']; ?>)
+					<?PHP
+					if ($_SESSION['set_f4f'] == 1) {
+						echo "fail += validateOverdraft(form.fine_amount.value, ".$sav_balance.", 0, ".$_SESSION['set_msb'].", 0)";
+					}
+					else {
+						echo "fail += validateOverdraft(form.fine_amount.value, ".$sav_balance.", 0, ".$_SESSION['set_msb'].", ".$sav_fixed.")";
+					}
+					?>
 				}
 				fail += validateReceipt(form.fine_receipt.value)
 				if (fail == "") return true
@@ -329,10 +333,11 @@
 		<!-- MENU -->
 		<?PHP includeMenu(3); ?>
 		<div id="menu_main">
-			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Back</a>
-			<a href="loan_search.php">Search</a>
+			<a href="customer.php?cust=<?PHP echo $_SESSION['cust_id'] ?>">Customer</a>
+			<a href="loans_search.php">Search</a>
 			<a href="loans_act.php">Active Loans</a>
 			<a href="loans_pend.php">Pending Loans</a>
+			<a href="loans_securities.php">Loan Securities</a>
 		</div>
 
 		<!-- LEFT SIDE: Loan Details -->
@@ -389,15 +394,19 @@
 						<td>Secur. 1:</td>
 						<td>
 							<?PHP
-							if (isset($sec_path1)) echo '<a href="'.$sec_path1.'" target=_blank>'.$result_loan['loan_sec1'].' <i class="fa fa-eye"></i></a>';
-							elseif ($result_loan['loan_sec1'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$result_loan['loan_sec1'].' <i class="fa fa-upload"></i></a>';
+							if(isset($security1)){
+								if ($security1['sec_path'] != "") echo '<a href="'.$security1['sec_path'].'" target=_blank>'.$security1['sec_name'].' <i class="fa fa-eye"></i></a>';
+								elseif ($security1['sec_name'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$security1['sec_name'].' <i class="fa fa-upload"></i></a>';
+							}
 							?>
 						</td>
 						<td>Secur. 2:</td>
 						<td>
 							<?PHP
-							if (isset($sec_path2)) echo '<a href="'.$sec_path2.'" target=_blank>'.$result_loan['loan_sec2'].' <i class="fa fa-eye"></i></a>';
-							elseif ($result_loan['loan_sec2'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$result_loan['loan_sec2'].' <i class="fa fa-upload"></i></a>';
+							if(isset($security2)){
+								if ($security2['sec_path'] != "") echo '<a href="'.$security2['sec_path'].'" target=_blank>'.$security2['sec_name'].' <i class="fa fa-eye"></i></a>';
+								elseif ($security2['sec_name'] != "") echo '<a href="loan_sec.php?lid='.$_SESSION['loan_id'].'">'.$security2['sec_name'].' <i class="fa fa-upload"></i></a>';
+							}
 							?>
 						</td>
 					</tr>
@@ -671,7 +680,6 @@
 								</table>';
 				?>
 			</form>
-
 		</div>
 	</body>
 </html>

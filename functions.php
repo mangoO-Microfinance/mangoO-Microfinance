@@ -159,6 +159,9 @@
 				case "SET_CSI":
 					$_SESSION['set_csi'] = $row_settings['set_value'];
 					break;
+				case "SET_F4F":
+					$_SESSION['set_f4f'] = $row_settings['set_value'];
+					break;
 			}
 		}
 	}
@@ -332,7 +335,7 @@
 				echo '><a href="cust_search.php"><i class="fa fa-group fa-fw"></i> Customers</a></li>
 				<li';
 				if ($tab_no == 3) echo ' id="tab_selected"';
-				echo '><a href="loan_search.php"><i class="fa fa-percent fa-fw"></i> Loans</a></li>
+				echo '><a href="loans_search.php"><i class="fa fa-percent fa-fw"></i> Loans</a></li>
 				<li';
 				if ($tab_no == 4) echo ' id="tab_selected"';
 				echo '><a href="books_expense.php"><i class="fa fa-calculator fa-fw"></i> Accounting</a></li>
@@ -367,23 +370,38 @@
 
 /**
 	* Calculate a given customer's savings account balance
-	* @return int sav_balance : Current savings account balance for given customer
+	* @return int savbal : Current savings account balance for given customer
 	*/
 	function getSavingsBalance($db_link, $cust_id){
 		$sql_savbal = "SELECT savbal_balance FROM savbalance WHERE cust_id = $cust_id";
 		$query_savbal = mysqli_query($db_link, $sql_savbal);
-		checkSQL($db_link, $query_savbal, $db_link);
+		checkSQL($db_link, $query_savbal);
 
 		$savbal = mysqli_fetch_assoc($query_savbal);
 
 		return $savbal['savbal_balance'];
 	}
 
+	/**
+		* Calculate a given customer's fixed savings
+		* @return int savfixed : Balance of currently fixed savings for given customer
+		*/
+		function getSavingsFixed($db_link, $cust_id){
+			$sql_savfixed = "SELECT savbal_fixed FROM savbalance WHERE cust_id = $cust_id";
+			$query_savfixed = mysqli_query($db_link, $sql_savfixed);
+			checkSQL($db_link, $query_savfixed);
+
+			$savfixed = mysqli_fetch_assoc($query_savfixed);
+
+			return $savfixed['savbal_fixed'];
+		}
+
 /**
 	* Update savings account balance for SPECIFIC customer
 	*/
 	function updateSavingsBalance($db_link, $cust_id){
-		$sql_savbal_upd = "UPDATE savbalance SET savbal_balance = (SELECT SUM(sav_amount) FROM savings WHERE cust_id = $cust_id) WHERE cust_id = $cust_id";
+		$timestamp = time();
+		$sql_savbal_upd = "UPDATE savbalance SET savbal_balance = (SELECT SUM(sav_amount) FROM savings WHERE cust_id = $cust_id), savbal_fixed = (SELECT SUM(sav_amount) FROM savings WHERE cust_id = $cust_id and sav_fixed > $timestamp) WHERE cust_id = $cust_id";
 		$query_savbal_upd = mysqli_query($db_link, $sql_savbal_upd);
 		checkSQL($db_link, $query_savbal_upd, $db_link);
 	}
@@ -633,7 +651,7 @@
 			}
 		}
 
-		// Return customer number
+		// Return employee number
 		return $emplNo;
 	}
 
@@ -648,4 +666,30 @@
 		checkSQL($db_link, $query_overdue, $db_link);
 		return $query_overdue;
 	}
+
+/**
+	* Get all securities which belong to a given loan
+	* @return array securities : Array with the result of the SQL query
+	*/
+	function getLoanSecurities($db_link, $loan_id){
+		$sql_secur = "SELECT * FROM securities WHERE loan_id = $loan_id";
+		$query_secur = mysqli_query($db_link, $sql_secur);
+		checkSQL($db_link, $query_secur);
+		$securities = array();
+		while ($row_secur = mysqli_fetch_assoc($query_secur)) $securities[] = $row_secur;
+		return $securities;
+	}
+
+/**
+	* Get details of a given loan security
+	* @return array result_sec : Array with the result of the SQL query
+	*/
+	function getSecurity($db_link, $sec_id){
+		$sql_sec = "SELECT * FROM securities LEFT JOIN loans ON securities.loan_id = loans.loan_id LEFT JOIN customer ON securities.cust_id = customer.cust_id WHERE sec_id = $sec_id";
+		$query_sec = mysqli_query($db_link, $sql_sec);
+		checkSQL($db_link, $query_sec);
+		$result_sec = mysqli_fetch_assoc($query_sec);
+		return $result_sec;
+	}
+
 ?>

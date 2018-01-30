@@ -8,7 +8,8 @@
 	//Generate timestamp
 	$timestamp = time();
 
-	// Get savings balance for current customer
+	// Update savings balance for current customer and store into variable
+	updateSavingsBalance ($db_link, $_SESSION['cust_id']);
 	$sav_balance = getSavingsBalance($db_link, $_SESSION['cust_id']);
 
 	// DEPOSIT-Button

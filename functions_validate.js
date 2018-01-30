@@ -45,10 +45,12 @@ function validateAmount(field) {
 	return ""
 }
 
-function validateOverdraft(field, balance, wd_fee, minsavbal){
-	field = (field * 1) + (wd_fee * 1)
-	balance = (balance * 1) + (minsavbal * -1)
-	if (field > balance) return "No Overdrafts on Savings Account allowed.\nMinimum savings balance is " + minsavbal + "."
+function validateOverdraft(field, balance, wd_fee, minsavbal, fixed){
+	fieldTotal = (field * 1) + (wd_fee * 1)
+	balanceMin = (balance * 1) + (minsavbal * -1)
+	balanceFix = (balance * 1) + (fixed * -1)
+	if (fieldTotal > balanceMin) return "Withdrawal not permitted.\nMinimum savings balance is " + minsavbal + "."
+	if (fieldTotal > balanceFix) return "Withdrawal not permitted.\nFixed deposits on this account are " + fixed + "."
 	return ""
 }
 
