@@ -63,7 +63,7 @@
 
 			<?PHP
 			if (isset($result_sec['sec_path']))
-				echo '<img src="'.$result_sec['sec_path'].'" title="" style="max-width:350px; max-height:175px;">';
+				echo '<a href="'.$result_sec['sec_path'].'" target=_blank><img src="'.$result_sec['sec_path'].'" title="" style="max-width:350px; max-height:175px;"></a>';
 			?>
 
 			<form action="security.php" method="post" onSubmit="return validate(this)">
