@@ -1367,18 +1367,24 @@ CREATE TABLE `securities` (
   `sec_name` varchar(200) COLLATE utf8_bin NOT NULL,
   `sec_value` int(11) NOT NULL,
   `sec_path` varchar(200) COLLATE utf8_bin NOT NULL,
-  `sec_returned` int(1) NOT NULL
+  `sec_returned` int(1) NOT NULL DEFAULT '0',
+  `sec_date` int(11) NOT NULL,
+  `sec_returned_date` int(11) NOT NULL,
+  `sec_lastupd` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `securities`
 --
 
-INSERT INTO `securities` (`sec_id`, `cust_id`, `loan_id`, `sec_no`, `sec_name`, `sec_value`, `sec_path`, `sec_returned`) VALUES
-(1, 100, 1, '1', 'Ox', 0, 'uploads/securities/1_01.jpg', 0),
-(2, 100, 1, '2', 'Motoca', 0, '', 0),
-(4, 15, 19, '1', 'Savings account at Equity', 0, '', 0),
-(5, 15, 19, '2', 'Two Chickens', 0, 'uploads/securities/19_02.jpg', 0);
+INSERT INTO `securities` (`sec_id`, `cust_id`, `loan_id`, `sec_no`, `sec_name`, `sec_value`, `sec_path`, `sec_returned`, `sec_date`, `sec_returned_date`, `sec_lastupd`, `user_id`) VALUES
+(1, 100, 1, '1', 'Ox', 0, 'uploads/securities/1_01.jpg', 0, 0, 0, 1517345081, 1),
+(2, 100, 1, '2', 'Motoca', 0, '', 0, 0, 0, 0, 0),
+(4, 15, 19, '1', 'Savings account at Stanbic', 0, '', 0, 0, 0, 1517345109, 1),
+(5, 15, 19, '2', 'Two Chickens', 0, 'uploads/securities/19_02.jpg', 0, 0, 0, 0, 0),
+(6, 50, 9, '1', 'Family home', 0, 'uploads/securities/9_01.png', 0, 0, 0, 0, 0),
+(7, 40, 10, '2', 'Taxi', 0, 'uploads/securities/10_02.jpg', 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 

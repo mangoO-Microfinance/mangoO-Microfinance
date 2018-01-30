@@ -508,7 +508,11 @@ CREATE TABLE IF NOT EXISTS `securities` (
   `sec_name` varchar(100) NOT NULL,
   `sec_value` int(11) NOT NULL,
   `sec_path` varchar(200) NOT NULL,
-  `sec_returned` int(1) NOT NULL
+  `sec_returned` int(1) NOT NULL DEFAULT '0',
+  `sec_date` int(11) NOT NULL,
+  `sec_returned_date` int(11) NOT NULL,
+  `sec_lastupd` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;;
 
 -- --------------------------------------------------------
