@@ -42,7 +42,7 @@
 				</colgroup>
 				<tr>
 					<form class="export" action="rep_export.php" method="post">
-						<th class="title" colspan="5">Loan Securities
+						<th class="title" colspan="5">Current Loan Securities
 						<!-- Export Button -->
 						<input type="submit" name="export_rep" value="Export" />
 						</th>
@@ -68,8 +68,12 @@
 					echo '<tr>
 									<td><a href="loan.php?lid='.$row_loans['loan_id'].'">'.$row_loans['loan_no'].'</a></td>
 									<td>'.$row_loans['cust_name'].' (<a href="customer.php?cust='.$row_loans['cust_id'].'">'.$row_loans['cust_no'].')</a></td>
-									<td>'.$row_loans['loanstatus_status'].'</td>';
-				  if ($security1['sec_path'] != "") {
+									<td>'.$row_loans['loanstatus_status'].'</td>
+									<td><a href="security.php?security='.$security1['sec_id'].'">'.$security1['sec_name'].'</a></td>
+									<td><a href="security.php?security='.$security2['sec_id'].'">'.$security2['sec_name'].'</a></td>
+									';
+				  /*
+					if ($security1['sec_path'] != "") {
 						echo '<td><a href="'.$security1['sec_path'].'" target="_blank">'.$security1['sec_name'].' <i class="fa fa-eye"></i></a></td>';
 					}
 					else echo '<td>'.$security1['sec_name'].'</td>';
@@ -77,6 +81,7 @@
 						echo '<td><a href="'.$security2['sec_path'].'" target="_blank">'.$security2['sec_name'].' <i class="fa fa-eye"></i></a></td>';
 					}
 					else echo '<td>'.$security2['sec_name'].'</td>';
+					*/
 					echo '</tr>';
 
 					// Export Array
