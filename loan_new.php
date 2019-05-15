@@ -213,10 +213,12 @@
 						<td>Security 2:</td>
 						<td><input type="text" name="loan_sec2" placeholder="Second Security" /></td>
 					</tr>
-					<tr>
-						<td style="font-weight:bold;">Guarantor 1:</td>
+					<?PHP
+					for($i=1; $i<=$_SESSION['set_maxguar']; $i++){ ?>
+						<tr>
+						<td style="font-weight:bold;">Guarantor <?PHP echo $i ?>:</td>
 						<td>
-							<select name="loan_guarant1" style="width:158px;">
+							<select name="loan_guarant<?PHP echo $i ?>" style="width:158px;">
 								<option selected="selected"></option>
 								<?PHP
 								foreach ($guarantors as $g){
@@ -225,30 +227,7 @@
 								?>
 							</select>
 						</td>
-						<td style="font-weight:bold;">Guarantor 2:</td>
-						<td>
-							<select name="loan_guarant2" style="width:158px;">
-								<option selected="selected"></option>
-								<?PHP
-								foreach ($guarantors as $g){
-									echo '<option value="'.$g['cust_id'].'">'.$g['cust_no'].' '.$g['cust_name'].'</option>';
-								}
-								?>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td style="font-weight:bold;">Guarantor 3:</td>
-						<td>
-							<select name="loan_guarant3" style="width:158px;">
-								<option selected="selected"></option>
-								<?PHP
-								foreach ($guarantors as $g){
-									echo '<option value="'.$g['cust_id'].'">'.$g['cust_no'].' '.$g['cust_name'].'</option>';
-								}
-								?>
-							</select>
-						</td>
+					<?PHP } ?>
 						<td><?PHP if($_SESSION['set_xl1'] != "") echo $_SESSION['set_xl1'].':'; ?></td>
 						<td><?PHP if($_SESSION['set_xl1'] != "") echo '<input type="text" name="loan_xtra1" id="loan_xtra1" />'; ?></td>
 					</tr>
